@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'core/app.dart';
 import 'core/bloc_observer.dart';
 import 'firebase_options.dart';
+import 'core/services/service_locator.dart' as sl;
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -12,5 +13,6 @@ void main() async {
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
   );
+  await sl.init();
   runApp(const App());
 }
