@@ -4,6 +4,7 @@ import 'package:flashcards/presentation/blocs/auth/auth_bloc.dart';
 import 'package:get_it/get_it.dart';
 import '../../domain/repositories/auth/auth_repository_contract.dart';
 import '../../domain/repositories/auth/auth_repository_impl.dart';
+import '../../presentation/blocs/apple_sign_in/apple_signin_bloc.dart';
 import '../../presentation/blocs/forgot_password/forgot_password_bloc.dart';
 import '../../presentation/blocs/google_sign_in/google_signin_bloc.dart';
 import '../../presentation/blocs/sign_in/signin_bloc.dart';
@@ -15,7 +16,7 @@ Future<void> init() async {
   FirebaseAuth auth = FirebaseAuth.instance;
   FirebaseFirestore firestore = FirebaseFirestore.instance;
 
-  final authRepository = AuthRepositoryImpl(auth: FirebaseAuth.instance);
+  final authRepository = AuthRepositoryImpl(auth: auth);
 
   ///Repositories
 
@@ -27,5 +28,5 @@ Future<void> init() async {
   sl.registerFactory(() => SigninBloc(auth: sl()));
   sl.registerFactory(() => ForgotPasswordBloc(auth: sl()));
   sl.registerFactory(() => GoogleSigninBloc(auth: sl()));
-  // sl.registerFactory(() => AppleSigninBloc(auth: sl()));
+  sl.registerFactory(() => AppleSigninBloc(auth: sl()));
 }
