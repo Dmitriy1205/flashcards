@@ -74,25 +74,25 @@ class _$AuthEventCopyWithImpl<$Res, $Val extends AuthEvent>
 }
 
 /// @nodoc
-abstract class _$$_LogoutEventCopyWith<$Res> {
-  factory _$$_LogoutEventCopyWith(
-          _$_LogoutEvent value, $Res Function(_$_LogoutEvent) then) =
-      __$$_LogoutEventCopyWithImpl<$Res>;
+abstract class _$$LogoutEventImplCopyWith<$Res> {
+  factory _$$LogoutEventImplCopyWith(
+          _$LogoutEventImpl value, $Res Function(_$LogoutEventImpl) then) =
+      __$$LogoutEventImplCopyWithImpl<$Res>;
 }
 
 /// @nodoc
-class __$$_LogoutEventCopyWithImpl<$Res>
-    extends _$AuthEventCopyWithImpl<$Res, _$_LogoutEvent>
-    implements _$$_LogoutEventCopyWith<$Res> {
-  __$$_LogoutEventCopyWithImpl(
-      _$_LogoutEvent _value, $Res Function(_$_LogoutEvent) _then)
+class __$$LogoutEventImplCopyWithImpl<$Res>
+    extends _$AuthEventCopyWithImpl<$Res, _$LogoutEventImpl>
+    implements _$$LogoutEventImplCopyWith<$Res> {
+  __$$LogoutEventImplCopyWithImpl(
+      _$LogoutEventImpl _value, $Res Function(_$LogoutEventImpl) _then)
       : super(_value, _then);
 }
 
 /// @nodoc
 
-class _$_LogoutEvent implements _LogoutEvent {
-  const _$_LogoutEvent();
+class _$LogoutEventImpl implements _LogoutEvent {
+  const _$LogoutEventImpl();
 
   @override
   String toString() {
@@ -100,9 +100,9 @@ class _$_LogoutEvent implements _LogoutEvent {
   }
 
   @override
-  bool operator ==(dynamic other) {
+  bool operator ==(Object other) {
     return identical(this, other) ||
-        (other.runtimeType == runtimeType && other is _$_LogoutEvent);
+        (other.runtimeType == runtimeType && other is _$LogoutEventImpl);
   }
 
   @override
@@ -172,24 +172,24 @@ class _$_LogoutEvent implements _LogoutEvent {
 }
 
 abstract class _LogoutEvent implements AuthEvent {
-  const factory _LogoutEvent() = _$_LogoutEvent;
+  const factory _LogoutEvent() = _$LogoutEventImpl;
 }
 
 /// @nodoc
-abstract class _$$_InitUserEventCopyWith<$Res> {
-  factory _$$_InitUserEventCopyWith(
-          _$_InitUserEvent value, $Res Function(_$_InitUserEvent) then) =
-      __$$_InitUserEventCopyWithImpl<$Res>;
+abstract class _$$InitUserEventImplCopyWith<$Res> {
+  factory _$$InitUserEventImplCopyWith(
+          _$InitUserEventImpl value, $Res Function(_$InitUserEventImpl) then) =
+      __$$InitUserEventImplCopyWithImpl<$Res>;
   @useResult
   $Res call({User? user});
 }
 
 /// @nodoc
-class __$$_InitUserEventCopyWithImpl<$Res>
-    extends _$AuthEventCopyWithImpl<$Res, _$_InitUserEvent>
-    implements _$$_InitUserEventCopyWith<$Res> {
-  __$$_InitUserEventCopyWithImpl(
-      _$_InitUserEvent _value, $Res Function(_$_InitUserEvent) _then)
+class __$$InitUserEventImplCopyWithImpl<$Res>
+    extends _$AuthEventCopyWithImpl<$Res, _$InitUserEventImpl>
+    implements _$$InitUserEventImplCopyWith<$Res> {
+  __$$InitUserEventImplCopyWithImpl(
+      _$InitUserEventImpl _value, $Res Function(_$InitUserEventImpl) _then)
       : super(_value, _then);
 
   @pragma('vm:prefer-inline')
@@ -197,7 +197,7 @@ class __$$_InitUserEventCopyWithImpl<$Res>
   $Res call({
     Object? user = freezed,
   }) {
-    return _then(_$_InitUserEvent(
+    return _then(_$InitUserEventImpl(
       user: freezed == user
           ? _value.user
           : user // ignore: cast_nullable_to_non_nullable
@@ -208,8 +208,8 @@ class __$$_InitUserEventCopyWithImpl<$Res>
 
 /// @nodoc
 
-class _$_InitUserEvent implements _InitUserEvent {
-  const _$_InitUserEvent({required this.user});
+class _$InitUserEventImpl implements _InitUserEvent {
+  const _$InitUserEventImpl({required this.user});
 
   @override
   final User? user;
@@ -220,10 +220,10 @@ class _$_InitUserEvent implements _InitUserEvent {
   }
 
   @override
-  bool operator ==(dynamic other) {
+  bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$_InitUserEvent &&
+            other is _$InitUserEventImpl &&
             (identical(other.user, user) || other.user == user));
   }
 
@@ -233,8 +233,8 @@ class _$_InitUserEvent implements _InitUserEvent {
   @JsonKey(ignore: true)
   @override
   @pragma('vm:prefer-inline')
-  _$$_InitUserEventCopyWith<_$_InitUserEvent> get copyWith =>
-      __$$_InitUserEventCopyWithImpl<_$_InitUserEvent>(this, _$identity);
+  _$$InitUserEventImplCopyWith<_$InitUserEventImpl> get copyWith =>
+      __$$InitUserEventImplCopyWithImpl<_$InitUserEventImpl>(this, _$identity);
 
   @override
   @optionalTypeArgs
@@ -300,11 +300,12 @@ class _$_InitUserEvent implements _InitUserEvent {
 }
 
 abstract class _InitUserEvent implements AuthEvent {
-  const factory _InitUserEvent({required final User? user}) = _$_InitUserEvent;
+  const factory _InitUserEvent({required final User? user}) =
+      _$InitUserEventImpl;
 
   User? get user;
   @JsonKey(ignore: true)
-  _$$_InitUserEventCopyWith<_$_InitUserEvent> get copyWith =>
+  _$$InitUserEventImplCopyWith<_$InitUserEventImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }
 
@@ -380,24 +381,25 @@ class _$AuthStateCopyWithImpl<$Res, $Val extends AuthState>
 }
 
 /// @nodoc
-abstract class _$$_InitialCopyWith<$Res> {
-  factory _$$_InitialCopyWith(
-          _$_Initial value, $Res Function(_$_Initial) then) =
-      __$$_InitialCopyWithImpl<$Res>;
+abstract class _$$InitialImplCopyWith<$Res> {
+  factory _$$InitialImplCopyWith(
+          _$InitialImpl value, $Res Function(_$InitialImpl) then) =
+      __$$InitialImplCopyWithImpl<$Res>;
 }
 
 /// @nodoc
-class __$$_InitialCopyWithImpl<$Res>
-    extends _$AuthStateCopyWithImpl<$Res, _$_Initial>
-    implements _$$_InitialCopyWith<$Res> {
-  __$$_InitialCopyWithImpl(_$_Initial _value, $Res Function(_$_Initial) _then)
+class __$$InitialImplCopyWithImpl<$Res>
+    extends _$AuthStateCopyWithImpl<$Res, _$InitialImpl>
+    implements _$$InitialImplCopyWith<$Res> {
+  __$$InitialImplCopyWithImpl(
+      _$InitialImpl _value, $Res Function(_$InitialImpl) _then)
       : super(_value, _then);
 }
 
 /// @nodoc
 
-class _$_Initial extends _Initial {
-  const _$_Initial() : super._();
+class _$InitialImpl extends _Initial {
+  const _$InitialImpl() : super._();
 
   @override
   String toString() {
@@ -405,9 +407,9 @@ class _$_Initial extends _Initial {
   }
 
   @override
-  bool operator ==(dynamic other) {
+  bool operator ==(Object other) {
     return identical(this, other) ||
-        (other.runtimeType == runtimeType && other is _$_Initial);
+        (other.runtimeType == runtimeType && other is _$InitialImpl);
   }
 
   @override
@@ -489,30 +491,30 @@ class _$_Initial extends _Initial {
 }
 
 abstract class _Initial extends AuthState {
-  const factory _Initial() = _$_Initial;
+  const factory _Initial() = _$InitialImpl;
   const _Initial._() : super._();
 }
 
 /// @nodoc
-abstract class _$$_UnauthenticaredStateCopyWith<$Res> {
-  factory _$$_UnauthenticaredStateCopyWith(_$_UnauthenticaredState value,
-          $Res Function(_$_UnauthenticaredState) then) =
-      __$$_UnauthenticaredStateCopyWithImpl<$Res>;
+abstract class _$$UnauthenticaredStateImplCopyWith<$Res> {
+  factory _$$UnauthenticaredStateImplCopyWith(_$UnauthenticaredStateImpl value,
+          $Res Function(_$UnauthenticaredStateImpl) then) =
+      __$$UnauthenticaredStateImplCopyWithImpl<$Res>;
 }
 
 /// @nodoc
-class __$$_UnauthenticaredStateCopyWithImpl<$Res>
-    extends _$AuthStateCopyWithImpl<$Res, _$_UnauthenticaredState>
-    implements _$$_UnauthenticaredStateCopyWith<$Res> {
-  __$$_UnauthenticaredStateCopyWithImpl(_$_UnauthenticaredState _value,
-      $Res Function(_$_UnauthenticaredState) _then)
+class __$$UnauthenticaredStateImplCopyWithImpl<$Res>
+    extends _$AuthStateCopyWithImpl<$Res, _$UnauthenticaredStateImpl>
+    implements _$$UnauthenticaredStateImplCopyWith<$Res> {
+  __$$UnauthenticaredStateImplCopyWithImpl(_$UnauthenticaredStateImpl _value,
+      $Res Function(_$UnauthenticaredStateImpl) _then)
       : super(_value, _then);
 }
 
 /// @nodoc
 
-class _$_UnauthenticaredState extends _UnauthenticaredState {
-  const _$_UnauthenticaredState() : super._();
+class _$UnauthenticaredStateImpl extends _UnauthenticaredState {
+  const _$UnauthenticaredStateImpl() : super._();
 
   @override
   String toString() {
@@ -520,9 +522,10 @@ class _$_UnauthenticaredState extends _UnauthenticaredState {
   }
 
   @override
-  bool operator ==(dynamic other) {
+  bool operator ==(Object other) {
     return identical(this, other) ||
-        (other.runtimeType == runtimeType && other is _$_UnauthenticaredState);
+        (other.runtimeType == runtimeType &&
+            other is _$UnauthenticaredStateImpl);
   }
 
   @override
@@ -604,25 +607,25 @@ class _$_UnauthenticaredState extends _UnauthenticaredState {
 }
 
 abstract class _UnauthenticaredState extends AuthState {
-  const factory _UnauthenticaredState() = _$_UnauthenticaredState;
+  const factory _UnauthenticaredState() = _$UnauthenticaredStateImpl;
   const _UnauthenticaredState._() : super._();
 }
 
 /// @nodoc
-abstract class _$$_AuthenticatedStateCopyWith<$Res> {
-  factory _$$_AuthenticatedStateCopyWith(_$_AuthenticatedState value,
-          $Res Function(_$_AuthenticatedState) then) =
-      __$$_AuthenticatedStateCopyWithImpl<$Res>;
+abstract class _$$AuthenticatedStateImplCopyWith<$Res> {
+  factory _$$AuthenticatedStateImplCopyWith(_$AuthenticatedStateImpl value,
+          $Res Function(_$AuthenticatedStateImpl) then) =
+      __$$AuthenticatedStateImplCopyWithImpl<$Res>;
   @useResult
   $Res call({User user});
 }
 
 /// @nodoc
-class __$$_AuthenticatedStateCopyWithImpl<$Res>
-    extends _$AuthStateCopyWithImpl<$Res, _$_AuthenticatedState>
-    implements _$$_AuthenticatedStateCopyWith<$Res> {
-  __$$_AuthenticatedStateCopyWithImpl(
-      _$_AuthenticatedState _value, $Res Function(_$_AuthenticatedState) _then)
+class __$$AuthenticatedStateImplCopyWithImpl<$Res>
+    extends _$AuthStateCopyWithImpl<$Res, _$AuthenticatedStateImpl>
+    implements _$$AuthenticatedStateImplCopyWith<$Res> {
+  __$$AuthenticatedStateImplCopyWithImpl(_$AuthenticatedStateImpl _value,
+      $Res Function(_$AuthenticatedStateImpl) _then)
       : super(_value, _then);
 
   @pragma('vm:prefer-inline')
@@ -630,7 +633,7 @@ class __$$_AuthenticatedStateCopyWithImpl<$Res>
   $Res call({
     Object? user = null,
   }) {
-    return _then(_$_AuthenticatedState(
+    return _then(_$AuthenticatedStateImpl(
       user: null == user
           ? _value.user
           : user // ignore: cast_nullable_to_non_nullable
@@ -641,8 +644,8 @@ class __$$_AuthenticatedStateCopyWithImpl<$Res>
 
 /// @nodoc
 
-class _$_AuthenticatedState extends _AuthenticatedState {
-  const _$_AuthenticatedState({required this.user}) : super._();
+class _$AuthenticatedStateImpl extends _AuthenticatedState {
+  const _$AuthenticatedStateImpl({required this.user}) : super._();
 
   @override
   final User user;
@@ -653,10 +656,10 @@ class _$_AuthenticatedState extends _AuthenticatedState {
   }
 
   @override
-  bool operator ==(dynamic other) {
+  bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$_AuthenticatedState &&
+            other is _$AuthenticatedStateImpl &&
             (identical(other.user, user) || other.user == user));
   }
 
@@ -666,8 +669,8 @@ class _$_AuthenticatedState extends _AuthenticatedState {
   @JsonKey(ignore: true)
   @override
   @pragma('vm:prefer-inline')
-  _$$_AuthenticatedStateCopyWith<_$_AuthenticatedState> get copyWith =>
-      __$$_AuthenticatedStateCopyWithImpl<_$_AuthenticatedState>(
+  _$$AuthenticatedStateImplCopyWith<_$AuthenticatedStateImpl> get copyWith =>
+      __$$AuthenticatedStateImplCopyWithImpl<_$AuthenticatedStateImpl>(
           this, _$identity);
 
   @override
@@ -747,35 +750,35 @@ class _$_AuthenticatedState extends _AuthenticatedState {
 
 abstract class _AuthenticatedState extends AuthState {
   const factory _AuthenticatedState({required final User user}) =
-      _$_AuthenticatedState;
+      _$AuthenticatedStateImpl;
   const _AuthenticatedState._() : super._();
 
   User get user;
   @JsonKey(ignore: true)
-  _$$_AuthenticatedStateCopyWith<_$_AuthenticatedState> get copyWith =>
+  _$$AuthenticatedStateImplCopyWith<_$AuthenticatedStateImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }
 
 /// @nodoc
-abstract class _$$_UndefinedStateCopyWith<$Res> {
-  factory _$$_UndefinedStateCopyWith(
-          _$_UndefinedState value, $Res Function(_$_UndefinedState) then) =
-      __$$_UndefinedStateCopyWithImpl<$Res>;
+abstract class _$$UndefinedStateImplCopyWith<$Res> {
+  factory _$$UndefinedStateImplCopyWith(_$UndefinedStateImpl value,
+          $Res Function(_$UndefinedStateImpl) then) =
+      __$$UndefinedStateImplCopyWithImpl<$Res>;
 }
 
 /// @nodoc
-class __$$_UndefinedStateCopyWithImpl<$Res>
-    extends _$AuthStateCopyWithImpl<$Res, _$_UndefinedState>
-    implements _$$_UndefinedStateCopyWith<$Res> {
-  __$$_UndefinedStateCopyWithImpl(
-      _$_UndefinedState _value, $Res Function(_$_UndefinedState) _then)
+class __$$UndefinedStateImplCopyWithImpl<$Res>
+    extends _$AuthStateCopyWithImpl<$Res, _$UndefinedStateImpl>
+    implements _$$UndefinedStateImplCopyWith<$Res> {
+  __$$UndefinedStateImplCopyWithImpl(
+      _$UndefinedStateImpl _value, $Res Function(_$UndefinedStateImpl) _then)
       : super(_value, _then);
 }
 
 /// @nodoc
 
-class _$_UndefinedState extends _UndefinedState {
-  const _$_UndefinedState() : super._();
+class _$UndefinedStateImpl extends _UndefinedState {
+  const _$UndefinedStateImpl() : super._();
 
   @override
   String toString() {
@@ -783,9 +786,9 @@ class _$_UndefinedState extends _UndefinedState {
   }
 
   @override
-  bool operator ==(dynamic other) {
+  bool operator ==(Object other) {
     return identical(this, other) ||
-        (other.runtimeType == runtimeType && other is _$_UndefinedState);
+        (other.runtimeType == runtimeType && other is _$UndefinedStateImpl);
   }
 
   @override
@@ -867,6 +870,6 @@ class _$_UndefinedState extends _UndefinedState {
 }
 
 abstract class _UndefinedState extends AuthState {
-  const factory _UndefinedState() = _$_UndefinedState;
+  const factory _UndefinedState() = _$UndefinedStateImpl;
   const _UndefinedState._() : super._();
 }

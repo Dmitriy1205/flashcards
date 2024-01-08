@@ -20,4 +20,11 @@ class AppStrings {
   static const String buttonSend = 'Send';
   static const String apple = 'Apple';
   static const String google = 'Google';
+  static const String collections = 'Collections';
+  static const String edit = 'Edit';
+  static const String newList = 'New List';
+  static const String create = 'Create';
+  static const String giveMe = 'Give a name to your list';
+  static const String cancel = 'Cancel';
+
 }
