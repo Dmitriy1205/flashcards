@@ -26,5 +26,11 @@ class AppStrings {
   static const String create = 'Create';
   static const String giveMe = 'Give a name to your list';
   static const String cancel = 'Cancel';
+  static const String cards = 'Cards';
+  static const String noCollection = 'No collections';
+  static const String done = 'Done';
+  static const String front = 'Front';
+  static const String back = 'Back';
+
 
 }

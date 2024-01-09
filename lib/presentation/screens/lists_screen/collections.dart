@@ -1,5 +1,6 @@
 import 'package:flashcards/core/const/colors.dart';
 import 'package:flashcards/core/themes/theme.dart';
+import 'package:flashcards/presentation/blocs/cards/cards_bloc.dart';
 import 'package:flashcards/presentation/blocs/lists/lists_bloc.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -13,7 +14,6 @@ class Collections extends StatefulWidget {
 }
 
 class _CollectionsState extends State<Collections> {
-
   @override
   Widget build(BuildContext context) {
     return Column(
@@ -37,10 +37,12 @@ class _CollectionsState extends State<Collections> {
                                       !context
                                           .read<ListsBloc>()
                                           .collectionsList[i]['toDelete'];
-                                  setState(() {});
-                                  },
+                                  setState(() {
+                                    print('setstate');
+                                  });
+                                },
                                 child: Container(
-                                  decoration: BoxDecoration(
+                                  decoration: const BoxDecoration(
                                     shape: BoxShape.circle,
                                   ),
                                   child: Padding(
@@ -48,12 +50,12 @@ class _CollectionsState extends State<Collections> {
                                     child: context
                                             .watch<ListsBloc>()
                                             .collectionsList[i]['toDelete']
-                                        ? Icon(
+                                        ? const Icon(
                                             Icons.check_circle,
                                             size: 23.0,
                                             color: AppColors.mainAccent,
                                           )
-                                        : Icon(
+                                        : const Icon(
                                             Icons.radio_button_unchecked,
                                             size: 23.0,
                                             color: AppColors.mainAccent,
@@ -77,7 +79,11 @@ class _CollectionsState extends State<Collections> {
                             onTap: () {
                               context
                                   .read<ListsBloc>()
-                                  .add(const ListsEvent.selectCollection());
+                                  .add(ListsEvent.selectCollection(
+                                    collectionsListName: context
+                                        .read<ListsBloc>()
+                                        .collectionsList[i]['name'],
+                                  ));
                             },
                             child: ListTile(
                               title: Text(
@@ -87,7 +93,11 @@ class _CollectionsState extends State<Collections> {
                                     .copyWith(fontSize: 18),
                               ),
                               subtitle: Text(
-                                '10 cards',
+                                context
+                                    .read<CardsBloc>()
+                                    .cardsList
+                                    .length
+                                    .toString(),
                                 style: AppTheme.themeData.textTheme.labelSmall!
                                     .copyWith(
                                   color: AppColors.mainAccent,

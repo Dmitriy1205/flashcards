@@ -1,3 +1,4 @@
+import 'package:flashcards/presentation/blocs/cards/cards_bloc.dart';
 import 'package:flashcards/presentation/blocs/lists/lists_bloc.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -20,6 +21,9 @@ class Providers extends StatelessWidget {
         ),
         BlocProvider(
           create: (context) => sl<ListsBloc>(),
+        ),
+        BlocProvider(
+          create: (context) => sl<CardsBloc>(),
         ),
       ],
       child: child,

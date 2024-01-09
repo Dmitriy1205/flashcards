@@ -3,15 +3,15 @@ import 'package:flashcards/core/const/strings.dart';
 import 'package:flashcards/core/themes/theme.dart';
 import 'package:flashcards/presentation/blocs/lists/lists_bloc.dart';
 import 'package:flashcards/presentation/screens/lists_screen/collections.dart';
-import 'package:flashcards/presentation/screens/lists_screen/view_flash_card.dart';
+import 'package:flashcards/presentation/screens/cards/view_flash_card.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/svg.dart';
 
-import 'cards.dart';
+import '../cards/cards.dart';
 
 class Lists extends StatefulWidget {
-  Lists({Key? key}) : super(key: key);
+  const Lists({Key? key}) : super(key: key);
 
   @override
   State<Lists> createState() => _ListsState();
@@ -24,7 +24,7 @@ class _ListsState extends State<Lists> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        leading: Navigator.of(context).canPop() ? null : Icon(Icons.backspace),
+        automaticallyImplyLeading: false,
         title: Column(
           children: [
             // SafeArea(
@@ -37,14 +37,13 @@ class _ListsState extends State<Lists> {
               mainAxisSize: MainAxisSize.max,
               children: [
                 Text(
-                  '${AppStrings.collections}',
+                  AppStrings.collections,
                   style: AppTheme.themeData.textTheme.titleLarge,
                 ),
                 GestureDetector(
                   onTap: () {
                     context.read<ListsBloc>().isEditMode =
                         !context.read<ListsBloc>().isEditMode;
-                    print(context.read<ListsBloc>().isEditMode);
                     setState(() {});
                   },
                   child: Text(
@@ -64,6 +63,15 @@ class _ListsState extends State<Lists> {
         listener: (context, state) {
           state.maybeMap(
               newList: (_) {},
+              viewCards: (selectedCollection) {
+                Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                        builder: (context) => Cards(
+                              collectionName:
+                                  selectedCollection.collectionsListName,
+                            )));
+              },
               orElse: () {
                 print('Error in bloclistener');
               });
@@ -74,13 +82,10 @@ class _ListsState extends State<Lists> {
           }, newList: (_) {
             return Collections();
           }, viewCards: (_) {
-            print('viewCards');
-            return Cards();
-          }, viewIndividualCard: (_) {
-            return ViewFlashCard();
+            return Collections();
           }, orElse: () {
-            return Center(
-              child: Text('Error blocBuilder'),
+            return const Center(
+              child: Text(AppStrings.noCollection),
             );
           });
         },
@@ -90,7 +95,7 @@ class _ListsState extends State<Lists> {
               onTap: () {
                 context
                     .read<ListsBloc>()
-                    .add(ListsEvent.deleteSelectedCollection());
+                    .add(const ListsEvent.deleteSelectedCollection());
                 context.read<ListsBloc>().isEditMode = false;
               },
               child: SizedBox(
@@ -109,6 +114,7 @@ class _ListsState extends State<Lists> {
                     context: context,
                     builder: (_) {
                       return AlertDialog(
+                        backgroundColor: Colors.white,
                         title: Column(
                           children: [
                             Text(
@@ -130,7 +136,7 @@ class _ListsState extends State<Lists> {
                                   .copyWith(
                                       color: AppColors.mainAccent,
                                       fontWeight: FontWeight.w700),
-                              border: OutlineInputBorder(
+                              border: const OutlineInputBorder(
                                   borderRadius:
                                       BorderRadius.all(Radius.circular(15)))),
                         ),

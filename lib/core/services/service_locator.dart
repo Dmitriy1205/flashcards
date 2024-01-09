@@ -1,6 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flashcards/presentation/blocs/auth/auth_bloc.dart';
+import 'package:flashcards/presentation/blocs/cards/cards_bloc.dart';
 import 'package:flashcards/presentation/blocs/lists/lists_bloc.dart';
 import 'package:get_it/get_it.dart';
 import '../../domain/repositories/auth/auth_repository_contract.dart';
@@ -29,6 +30,7 @@ Future<void> init() async {
   sl.registerFactory(() => ForgotPasswordBloc(auth: sl()));
   sl.registerFactory(() => GoogleSigninBloc(auth: sl()));
   sl.registerFactory(() => ListsBloc());
+  sl.registerFactory(() => CardsBloc());
   // sl.registerFactory(() => AppleSigninBloc(auth: sl()));
 
 }
