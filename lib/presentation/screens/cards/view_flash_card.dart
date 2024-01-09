@@ -102,7 +102,6 @@ class _ViewFlashCardState extends State<ViewFlashCard> {
 }
 
 class RotationY extends StatelessWidget {
-  //Degrees to rads constant
   static const double degrees2Radians = pi / 180;
 
   final Widget child;
@@ -116,7 +115,7 @@ class RotationY extends StatelessWidget {
     return Transform(
         alignment: FractionalOffset.center,
         transform: Matrix4.identity()
-          ..setEntry(3, 2, 0.001) //These are magic numbers, just use them :)
+          ..setEntry(3, 2, 0.001)
           ..rotateY(rotationY * degrees2Radians),
         child: child);
   }

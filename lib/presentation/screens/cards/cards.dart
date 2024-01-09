@@ -47,7 +47,7 @@ class _CardsState extends State<Cards> {
                   ),
                   Text(
                     AppStrings.cards,
-                    style: AppTheme.themeData.textTheme.titleLarge,
+                    style: AppTheme.themeData.textTheme.headlineLarge,
                   ),
                 ]),
                 context.read<CardsBloc>().isEditMode
@@ -130,6 +130,8 @@ class _CardsState extends State<Cards> {
                     color: AppColors.background,
                     child: ListView.builder(
                         itemBuilder: (context, i) {
+                          CardEntity card =
+                              context.read<CardsBloc>().cardsList[i]['name'];
                           return Padding(
                             padding: const EdgeInsets.only(
                                 left: 24, right: 24, bottom: 11, top: 11),
@@ -140,14 +142,14 @@ class _CardsState extends State<Cards> {
                                         flex: 1,
                                         child: InkWell(
                                           onTap: () {
-                                            context
-                                                    .read<CardsBloc>()
-                                                    .cardsList[i]['toDelete'] =
-                                                !context
-                                                    .read<CardsBloc>()
-                                                    .cardsList[i]['toDelete'];
                                             setState(() {
-                                              print('setstate');
+                                              context
+                                                          .read<CardsBloc>()
+                                                          .cardsList[i]
+                                                      ['toDelete'] =
+                                                  !context
+                                                      .read<CardsBloc>()
+                                                      .cardsList[i]['toDelete'];
                                             });
                                           },
                                           child: Container(
@@ -198,20 +200,19 @@ class _CardsState extends State<Cards> {
                                                 builder: (context) =>
                                                     ViewFlashCard(
                                                       card: CardEntity(
-                                                          front: 'Front',
-                                                          back: 'BACK'),
+                                                          front: card.front,
+                                                          back: card.back),
                                                     )));
                                       },
                                       child: ListTile(
                                         title: Text(
-                                          context.read<CardsBloc>().cardsList[i]
-                                              ['name'],
+                                          card.front,
                                           style: AppTheme
                                               .themeData.textTheme.titleMedium!
                                               .copyWith(fontSize: 18),
                                         ),
                                         subtitle: Text(
-                                          'back',
+                                          card.back,
                                           style: AppTheme
                                               .themeData.textTheme.labelSmall!
                                               .copyWith(

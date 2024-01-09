@@ -38,7 +38,7 @@ class _ListsState extends State<Lists> {
               children: [
                 Text(
                   AppStrings.collections,
-                  style: AppTheme.themeData.textTheme.titleLarge,
+                  style: AppTheme.themeData.textTheme.headlineLarge,
                 ),
                 GestureDetector(
                   onTap: () {

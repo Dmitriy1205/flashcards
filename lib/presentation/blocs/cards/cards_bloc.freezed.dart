@@ -18,30 +18,21 @@ final _privateConstructorUsedError = UnsupportedError(
 mixin _$CardsEvent {
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
-    required TResult Function() started,
-    required TResult Function() selectCard,
     required TResult Function() editCard,
-    required TResult Function() selectProfile,
     required TResult Function() deleteSelectedCards,
     required TResult Function(String front, String back) createNewCard,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult? Function()? started,
-    TResult? Function()? selectCard,
     TResult? Function()? editCard,
-    TResult? Function()? selectProfile,
     TResult? Function()? deleteSelectedCards,
     TResult? Function(String front, String back)? createNewCard,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
-    TResult Function()? started,
-    TResult Function()? selectCard,
     TResult Function()? editCard,
-    TResult Function()? selectProfile,
     TResult Function()? deleteSelectedCards,
     TResult Function(String front, String back)? createNewCard,
     required TResult orElse(),
@@ -49,30 +40,21 @@ mixin _$CardsEvent {
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult map<TResult extends Object?>({
-    required TResult Function(_Started value) started,
-    required TResult Function(_SelectCard value) selectCard,
     required TResult Function(_EditCard value) editCard,
-    required TResult Function(_SelectProfile value) selectProfile,
     required TResult Function(_DeleteSelectedCards value) deleteSelectedCards,
     required TResult Function(_CreateNewCard value) createNewCard,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
-    TResult? Function(_Started value)? started,
-    TResult? Function(_SelectCard value)? selectCard,
     TResult? Function(_EditCard value)? editCard,
-    TResult? Function(_SelectProfile value)? selectProfile,
     TResult? Function(_DeleteSelectedCards value)? deleteSelectedCards,
     TResult? Function(_CreateNewCard value)? createNewCard,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult maybeMap<TResult extends Object?>({
-    TResult Function(_Started value)? started,
-    TResult Function(_SelectCard value)? selectCard,
     TResult Function(_EditCard value)? editCard,
-    TResult Function(_SelectProfile value)? selectProfile,
     TResult Function(_DeleteSelectedCards value)? deleteSelectedCards,
     TResult Function(_CreateNewCard value)? createNewCard,
     required TResult orElse(),
@@ -96,258 +78,6 @@ class _$CardsEventCopyWithImpl<$Res, $Val extends CardsEvent>
   final $Val _value;
   // ignore: unused_field
   final $Res Function($Val) _then;
-}
-
-/// @nodoc
-abstract class _$$StartedImplCopyWith<$Res> {
-  factory _$$StartedImplCopyWith(
-          _$StartedImpl value, $Res Function(_$StartedImpl) then) =
-      __$$StartedImplCopyWithImpl<$Res>;
-}
-
-/// @nodoc
-class __$$StartedImplCopyWithImpl<$Res>
-    extends _$CardsEventCopyWithImpl<$Res, _$StartedImpl>
-    implements _$$StartedImplCopyWith<$Res> {
-  __$$StartedImplCopyWithImpl(
-      _$StartedImpl _value, $Res Function(_$StartedImpl) _then)
-      : super(_value, _then);
-}
-
-/// @nodoc
-
-class _$StartedImpl implements _Started {
-  const _$StartedImpl();
-
-  @override
-  String toString() {
-    return 'CardsEvent.started()';
-  }
-
-  @override
-  bool operator ==(Object other) {
-    return identical(this, other) ||
-        (other.runtimeType == runtimeType && other is _$StartedImpl);
-  }
-
-  @override
-  int get hashCode => runtimeType.hashCode;
-
-  @override
-  @optionalTypeArgs
-  TResult when<TResult extends Object?>({
-    required TResult Function() started,
-    required TResult Function() selectCard,
-    required TResult Function() editCard,
-    required TResult Function() selectProfile,
-    required TResult Function() deleteSelectedCards,
-    required TResult Function(String front, String back) createNewCard,
-  }) {
-    return started();
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult? whenOrNull<TResult extends Object?>({
-    TResult? Function()? started,
-    TResult? Function()? selectCard,
-    TResult? Function()? editCard,
-    TResult? Function()? selectProfile,
-    TResult? Function()? deleteSelectedCards,
-    TResult? Function(String front, String back)? createNewCard,
-  }) {
-    return started?.call();
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult maybeWhen<TResult extends Object?>({
-    TResult Function()? started,
-    TResult Function()? selectCard,
-    TResult Function()? editCard,
-    TResult Function()? selectProfile,
-    TResult Function()? deleteSelectedCards,
-    TResult Function(String front, String back)? createNewCard,
-    required TResult orElse(),
-  }) {
-    if (started != null) {
-      return started();
-    }
-    return orElse();
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult map<TResult extends Object?>({
-    required TResult Function(_Started value) started,
-    required TResult Function(_SelectCard value) selectCard,
-    required TResult Function(_EditCard value) editCard,
-    required TResult Function(_SelectProfile value) selectProfile,
-    required TResult Function(_DeleteSelectedCards value) deleteSelectedCards,
-    required TResult Function(_CreateNewCard value) createNewCard,
-  }) {
-    return started(this);
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult? mapOrNull<TResult extends Object?>({
-    TResult? Function(_Started value)? started,
-    TResult? Function(_SelectCard value)? selectCard,
-    TResult? Function(_EditCard value)? editCard,
-    TResult? Function(_SelectProfile value)? selectProfile,
-    TResult? Function(_DeleteSelectedCards value)? deleteSelectedCards,
-    TResult? Function(_CreateNewCard value)? createNewCard,
-  }) {
-    return started?.call(this);
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult maybeMap<TResult extends Object?>({
-    TResult Function(_Started value)? started,
-    TResult Function(_SelectCard value)? selectCard,
-    TResult Function(_EditCard value)? editCard,
-    TResult Function(_SelectProfile value)? selectProfile,
-    TResult Function(_DeleteSelectedCards value)? deleteSelectedCards,
-    TResult Function(_CreateNewCard value)? createNewCard,
-    required TResult orElse(),
-  }) {
-    if (started != null) {
-      return started(this);
-    }
-    return orElse();
-  }
-}
-
-abstract class _Started implements CardsEvent {
-  const factory _Started() = _$StartedImpl;
-}
-
-/// @nodoc
-abstract class _$$SelectCardImplCopyWith<$Res> {
-  factory _$$SelectCardImplCopyWith(
-          _$SelectCardImpl value, $Res Function(_$SelectCardImpl) then) =
-      __$$SelectCardImplCopyWithImpl<$Res>;
-}
-
-/// @nodoc
-class __$$SelectCardImplCopyWithImpl<$Res>
-    extends _$CardsEventCopyWithImpl<$Res, _$SelectCardImpl>
-    implements _$$SelectCardImplCopyWith<$Res> {
-  __$$SelectCardImplCopyWithImpl(
-      _$SelectCardImpl _value, $Res Function(_$SelectCardImpl) _then)
-      : super(_value, _then);
-}
-
-/// @nodoc
-
-class _$SelectCardImpl implements _SelectCard {
-  const _$SelectCardImpl();
-
-  @override
-  String toString() {
-    return 'CardsEvent.selectCard()';
-  }
-
-  @override
-  bool operator ==(Object other) {
-    return identical(this, other) ||
-        (other.runtimeType == runtimeType && other is _$SelectCardImpl);
-  }
-
-  @override
-  int get hashCode => runtimeType.hashCode;
-
-  @override
-  @optionalTypeArgs
-  TResult when<TResult extends Object?>({
-    required TResult Function() started,
-    required TResult Function() selectCard,
-    required TResult Function() editCard,
-    required TResult Function() selectProfile,
-    required TResult Function() deleteSelectedCards,
-    required TResult Function(String front, String back) createNewCard,
-  }) {
-    return selectCard();
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult? whenOrNull<TResult extends Object?>({
-    TResult? Function()? started,
-    TResult? Function()? selectCard,
-    TResult? Function()? editCard,
-    TResult? Function()? selectProfile,
-    TResult? Function()? deleteSelectedCards,
-    TResult? Function(String front, String back)? createNewCard,
-  }) {
-    return selectCard?.call();
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult maybeWhen<TResult extends Object?>({
-    TResult Function()? started,
-    TResult Function()? selectCard,
-    TResult Function()? editCard,
-    TResult Function()? selectProfile,
-    TResult Function()? deleteSelectedCards,
-    TResult Function(String front, String back)? createNewCard,
-    required TResult orElse(),
-  }) {
-    if (selectCard != null) {
-      return selectCard();
-    }
-    return orElse();
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult map<TResult extends Object?>({
-    required TResult Function(_Started value) started,
-    required TResult Function(_SelectCard value) selectCard,
-    required TResult Function(_EditCard value) editCard,
-    required TResult Function(_SelectProfile value) selectProfile,
-    required TResult Function(_DeleteSelectedCards value) deleteSelectedCards,
-    required TResult Function(_CreateNewCard value) createNewCard,
-  }) {
-    return selectCard(this);
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult? mapOrNull<TResult extends Object?>({
-    TResult? Function(_Started value)? started,
-    TResult? Function(_SelectCard value)? selectCard,
-    TResult? Function(_EditCard value)? editCard,
-    TResult? Function(_SelectProfile value)? selectProfile,
-    TResult? Function(_DeleteSelectedCards value)? deleteSelectedCards,
-    TResult? Function(_CreateNewCard value)? createNewCard,
-  }) {
-    return selectCard?.call(this);
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult maybeMap<TResult extends Object?>({
-    TResult Function(_Started value)? started,
-    TResult Function(_SelectCard value)? selectCard,
-    TResult Function(_EditCard value)? editCard,
-    TResult Function(_SelectProfile value)? selectProfile,
-    TResult Function(_DeleteSelectedCards value)? deleteSelectedCards,
-    TResult Function(_CreateNewCard value)? createNewCard,
-    required TResult orElse(),
-  }) {
-    if (selectCard != null) {
-      return selectCard(this);
-    }
-    return orElse();
-  }
-}
-
-abstract class _SelectCard implements CardsEvent {
-  const factory _SelectCard() = _$SelectCardImpl;
 }
 
 /// @nodoc
@@ -388,10 +118,7 @@ class _$EditCardImpl implements _EditCard {
   @override
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
-    required TResult Function() started,
-    required TResult Function() selectCard,
     required TResult Function() editCard,
-    required TResult Function() selectProfile,
     required TResult Function() deleteSelectedCards,
     required TResult Function(String front, String back) createNewCard,
   }) {
@@ -401,10 +128,7 @@ class _$EditCardImpl implements _EditCard {
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult? Function()? started,
-    TResult? Function()? selectCard,
     TResult? Function()? editCard,
-    TResult? Function()? selectProfile,
     TResult? Function()? deleteSelectedCards,
     TResult? Function(String front, String back)? createNewCard,
   }) {
@@ -414,10 +138,7 @@ class _$EditCardImpl implements _EditCard {
   @override
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
-    TResult Function()? started,
-    TResult Function()? selectCard,
     TResult Function()? editCard,
-    TResult Function()? selectProfile,
     TResult Function()? deleteSelectedCards,
     TResult Function(String front, String back)? createNewCard,
     required TResult orElse(),
@@ -431,10 +152,7 @@ class _$EditCardImpl implements _EditCard {
   @override
   @optionalTypeArgs
   TResult map<TResult extends Object?>({
-    required TResult Function(_Started value) started,
-    required TResult Function(_SelectCard value) selectCard,
     required TResult Function(_EditCard value) editCard,
-    required TResult Function(_SelectProfile value) selectProfile,
     required TResult Function(_DeleteSelectedCards value) deleteSelectedCards,
     required TResult Function(_CreateNewCard value) createNewCard,
   }) {
@@ -444,10 +162,7 @@ class _$EditCardImpl implements _EditCard {
   @override
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
-    TResult? Function(_Started value)? started,
-    TResult? Function(_SelectCard value)? selectCard,
     TResult? Function(_EditCard value)? editCard,
-    TResult? Function(_SelectProfile value)? selectProfile,
     TResult? Function(_DeleteSelectedCards value)? deleteSelectedCards,
     TResult? Function(_CreateNewCard value)? createNewCard,
   }) {
@@ -457,10 +172,7 @@ class _$EditCardImpl implements _EditCard {
   @override
   @optionalTypeArgs
   TResult maybeMap<TResult extends Object?>({
-    TResult Function(_Started value)? started,
-    TResult Function(_SelectCard value)? selectCard,
     TResult Function(_EditCard value)? editCard,
-    TResult Function(_SelectProfile value)? selectProfile,
     TResult Function(_DeleteSelectedCards value)? deleteSelectedCards,
     TResult Function(_CreateNewCard value)? createNewCard,
     required TResult orElse(),
@@ -474,132 +186,6 @@ class _$EditCardImpl implements _EditCard {
 
 abstract class _EditCard implements CardsEvent {
   const factory _EditCard() = _$EditCardImpl;
-}
-
-/// @nodoc
-abstract class _$$SelectProfileImplCopyWith<$Res> {
-  factory _$$SelectProfileImplCopyWith(
-          _$SelectProfileImpl value, $Res Function(_$SelectProfileImpl) then) =
-      __$$SelectProfileImplCopyWithImpl<$Res>;
-}
-
-/// @nodoc
-class __$$SelectProfileImplCopyWithImpl<$Res>
-    extends _$CardsEventCopyWithImpl<$Res, _$SelectProfileImpl>
-    implements _$$SelectProfileImplCopyWith<$Res> {
-  __$$SelectProfileImplCopyWithImpl(
-      _$SelectProfileImpl _value, $Res Function(_$SelectProfileImpl) _then)
-      : super(_value, _then);
-}
-
-/// @nodoc
-
-class _$SelectProfileImpl implements _SelectProfile {
-  const _$SelectProfileImpl();
-
-  @override
-  String toString() {
-    return 'CardsEvent.selectProfile()';
-  }
-
-  @override
-  bool operator ==(Object other) {
-    return identical(this, other) ||
-        (other.runtimeType == runtimeType && other is _$SelectProfileImpl);
-  }
-
-  @override
-  int get hashCode => runtimeType.hashCode;
-
-  @override
-  @optionalTypeArgs
-  TResult when<TResult extends Object?>({
-    required TResult Function() started,
-    required TResult Function() selectCard,
-    required TResult Function() editCard,
-    required TResult Function() selectProfile,
-    required TResult Function() deleteSelectedCards,
-    required TResult Function(String front, String back) createNewCard,
-  }) {
-    return selectProfile();
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult? whenOrNull<TResult extends Object?>({
-    TResult? Function()? started,
-    TResult? Function()? selectCard,
-    TResult? Function()? editCard,
-    TResult? Function()? selectProfile,
-    TResult? Function()? deleteSelectedCards,
-    TResult? Function(String front, String back)? createNewCard,
-  }) {
-    return selectProfile?.call();
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult maybeWhen<TResult extends Object?>({
-    TResult Function()? started,
-    TResult Function()? selectCard,
-    TResult Function()? editCard,
-    TResult Function()? selectProfile,
-    TResult Function()? deleteSelectedCards,
-    TResult Function(String front, String back)? createNewCard,
-    required TResult orElse(),
-  }) {
-    if (selectProfile != null) {
-      return selectProfile();
-    }
-    return orElse();
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult map<TResult extends Object?>({
-    required TResult Function(_Started value) started,
-    required TResult Function(_SelectCard value) selectCard,
-    required TResult Function(_EditCard value) editCard,
-    required TResult Function(_SelectProfile value) selectProfile,
-    required TResult Function(_DeleteSelectedCards value) deleteSelectedCards,
-    required TResult Function(_CreateNewCard value) createNewCard,
-  }) {
-    return selectProfile(this);
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult? mapOrNull<TResult extends Object?>({
-    TResult? Function(_Started value)? started,
-    TResult? Function(_SelectCard value)? selectCard,
-    TResult? Function(_EditCard value)? editCard,
-    TResult? Function(_SelectProfile value)? selectProfile,
-    TResult? Function(_DeleteSelectedCards value)? deleteSelectedCards,
-    TResult? Function(_CreateNewCard value)? createNewCard,
-  }) {
-    return selectProfile?.call(this);
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult maybeMap<TResult extends Object?>({
-    TResult Function(_Started value)? started,
-    TResult Function(_SelectCard value)? selectCard,
-    TResult Function(_EditCard value)? editCard,
-    TResult Function(_SelectProfile value)? selectProfile,
-    TResult Function(_DeleteSelectedCards value)? deleteSelectedCards,
-    TResult Function(_CreateNewCard value)? createNewCard,
-    required TResult orElse(),
-  }) {
-    if (selectProfile != null) {
-      return selectProfile(this);
-    }
-    return orElse();
-  }
-}
-
-abstract class _SelectProfile implements CardsEvent {
-  const factory _SelectProfile() = _$SelectProfileImpl;
 }
 
 /// @nodoc
@@ -641,10 +227,7 @@ class _$DeleteSelectedCardsImpl implements _DeleteSelectedCards {
   @override
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
-    required TResult Function() started,
-    required TResult Function() selectCard,
     required TResult Function() editCard,
-    required TResult Function() selectProfile,
     required TResult Function() deleteSelectedCards,
     required TResult Function(String front, String back) createNewCard,
   }) {
@@ -654,10 +237,7 @@ class _$DeleteSelectedCardsImpl implements _DeleteSelectedCards {
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult? Function()? started,
-    TResult? Function()? selectCard,
     TResult? Function()? editCard,
-    TResult? Function()? selectProfile,
     TResult? Function()? deleteSelectedCards,
     TResult? Function(String front, String back)? createNewCard,
   }) {
@@ -667,10 +247,7 @@ class _$DeleteSelectedCardsImpl implements _DeleteSelectedCards {
   @override
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
-    TResult Function()? started,
-    TResult Function()? selectCard,
     TResult Function()? editCard,
-    TResult Function()? selectProfile,
     TResult Function()? deleteSelectedCards,
     TResult Function(String front, String back)? createNewCard,
     required TResult orElse(),
@@ -684,10 +261,7 @@ class _$DeleteSelectedCardsImpl implements _DeleteSelectedCards {
   @override
   @optionalTypeArgs
   TResult map<TResult extends Object?>({
-    required TResult Function(_Started value) started,
-    required TResult Function(_SelectCard value) selectCard,
     required TResult Function(_EditCard value) editCard,
-    required TResult Function(_SelectProfile value) selectProfile,
     required TResult Function(_DeleteSelectedCards value) deleteSelectedCards,
     required TResult Function(_CreateNewCard value) createNewCard,
   }) {
@@ -697,10 +271,7 @@ class _$DeleteSelectedCardsImpl implements _DeleteSelectedCards {
   @override
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
-    TResult? Function(_Started value)? started,
-    TResult? Function(_SelectCard value)? selectCard,
     TResult? Function(_EditCard value)? editCard,
-    TResult? Function(_SelectProfile value)? selectProfile,
     TResult? Function(_DeleteSelectedCards value)? deleteSelectedCards,
     TResult? Function(_CreateNewCard value)? createNewCard,
   }) {
@@ -710,10 +281,7 @@ class _$DeleteSelectedCardsImpl implements _DeleteSelectedCards {
   @override
   @optionalTypeArgs
   TResult maybeMap<TResult extends Object?>({
-    TResult Function(_Started value)? started,
-    TResult Function(_SelectCard value)? selectCard,
     TResult Function(_EditCard value)? editCard,
-    TResult Function(_SelectProfile value)? selectProfile,
     TResult Function(_DeleteSelectedCards value)? deleteSelectedCards,
     TResult Function(_CreateNewCard value)? createNewCard,
     required TResult orElse(),
@@ -801,10 +369,7 @@ class _$CreateNewCardImpl implements _CreateNewCard {
   @override
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
-    required TResult Function() started,
-    required TResult Function() selectCard,
     required TResult Function() editCard,
-    required TResult Function() selectProfile,
     required TResult Function() deleteSelectedCards,
     required TResult Function(String front, String back) createNewCard,
   }) {
@@ -814,10 +379,7 @@ class _$CreateNewCardImpl implements _CreateNewCard {
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult? Function()? started,
-    TResult? Function()? selectCard,
     TResult? Function()? editCard,
-    TResult? Function()? selectProfile,
     TResult? Function()? deleteSelectedCards,
     TResult? Function(String front, String back)? createNewCard,
   }) {
@@ -827,10 +389,7 @@ class _$CreateNewCardImpl implements _CreateNewCard {
   @override
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
-    TResult Function()? started,
-    TResult Function()? selectCard,
     TResult Function()? editCard,
-    TResult Function()? selectProfile,
     TResult Function()? deleteSelectedCards,
     TResult Function(String front, String back)? createNewCard,
     required TResult orElse(),
@@ -844,10 +403,7 @@ class _$CreateNewCardImpl implements _CreateNewCard {
   @override
   @optionalTypeArgs
   TResult map<TResult extends Object?>({
-    required TResult Function(_Started value) started,
-    required TResult Function(_SelectCard value) selectCard,
     required TResult Function(_EditCard value) editCard,
-    required TResult Function(_SelectProfile value) selectProfile,
     required TResult Function(_DeleteSelectedCards value) deleteSelectedCards,
     required TResult Function(_CreateNewCard value) createNewCard,
   }) {
@@ -857,10 +413,7 @@ class _$CreateNewCardImpl implements _CreateNewCard {
   @override
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
-    TResult? Function(_Started value)? started,
-    TResult? Function(_SelectCard value)? selectCard,
     TResult? Function(_EditCard value)? editCard,
-    TResult? Function(_SelectProfile value)? selectProfile,
     TResult? Function(_DeleteSelectedCards value)? deleteSelectedCards,
     TResult? Function(_CreateNewCard value)? createNewCard,
   }) {
@@ -870,10 +423,7 @@ class _$CreateNewCardImpl implements _CreateNewCard {
   @override
   @optionalTypeArgs
   TResult maybeMap<TResult extends Object?>({
-    TResult Function(_Started value)? started,
-    TResult Function(_SelectCard value)? selectCard,
     TResult Function(_EditCard value)? editCard,
-    TResult Function(_SelectProfile value)? selectProfile,
     TResult Function(_DeleteSelectedCards value)? deleteSelectedCards,
     TResult Function(_CreateNewCard value)? createNewCard,
     required TResult orElse(),

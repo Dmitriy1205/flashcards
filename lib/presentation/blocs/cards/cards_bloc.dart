@@ -1,4 +1,5 @@
 import 'package:bloc/bloc.dart';
+import 'package:flashcards/domain/entities/card_entity/card_entity.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 
 part 'cards_event.dart';
@@ -14,13 +15,18 @@ class CardsBloc extends Bloc<CardsEvent, CardsState> {
 
   final List<Map<String, dynamic>> cardsList = [
     {
-      'name': 'How can i help you with such a complicated task?',
+      'name': CardEntity(
+          front: 'How can i help you with such a complicated task?',
+          back: 'Back'),
       'toDelete': false
     },
-    {'name': 'Sad', 'toDelete': false},
-    {'name': 'Happy', 'toDelete': false},
-    {'name': 'Anxious', 'toDelete': false},
-    {'name': 'A sleep', 'toDelete': false}
+    {'name': CardEntity(front: 'Sad', back: 'sad Back'), 'toDelete': false},
+    {'name': CardEntity(front: 'Happy', back: 'Happy Back'), 'toDelete': false},
+    {
+      'name': CardEntity(front: 'Anxious', back: 'Anxious Back'),
+      'toDelete': false
+    },
+    {'name': CardEntity(front: 'sleep', back: 'sleep Back'), 'toDelete': false}
   ];
   bool isEditMode = false;
 
@@ -29,9 +35,6 @@ class CardsBloc extends Bloc<CardsEvent, CardsState> {
         createNewCard: (event) => _createNewCard(event, emit),
         deleteSelectedCards: (event) => _deleteSelectedCards(event, emit),
         editCard: (event) => _editCard(event, emit),
-        selectCard: (event) => _selectCard(event, emit),
-        selectProfile: (event) => _selectProfile(event, emit),
-        started: (event) => _started(event, emit),
       );
 
   Future<void> _createNewCard(
@@ -41,15 +44,9 @@ class CardsBloc extends Bloc<CardsEvent, CardsState> {
 
   Future<void> _editCard(CardsEvent event, Emitter<CardsState> emit) async {}
 
-  Future<void> _selectCard(CardsEvent event, Emitter<CardsState> emit) async {
-    emit(const CardsState.viewIndividualCard());
-  }
-
-  Future<void> _selectProfile(
-      CardsEvent event, Emitter<CardsState> emit) async {}
-
-  Future<void> _started(CardsEvent event, Emitter<CardsState> emit) async {}
-
   Future<void> _deleteSelectedCards(
-      CardsEvent event, Emitter<CardsState> emit) async {}
+      CardsEvent event, Emitter<CardsState> emit) async {
+    cardsList.removeWhere((element) => element['toDelete']);
+    emit(const CardsState.initial());
+  }
 }
