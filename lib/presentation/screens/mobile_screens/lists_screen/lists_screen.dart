@@ -2,13 +2,14 @@ import 'package:flashcards/core/const/colors.dart';
 import 'package:flashcards/core/const/strings.dart';
 import 'package:flashcards/core/themes/theme.dart';
 import 'package:flashcards/presentation/blocs/lists/lists_bloc.dart';
-import 'package:flashcards/presentation/screens/lists_screen/collections.dart';
-import 'package:flashcards/presentation/screens/cards/view_flash_card.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/svg.dart';
 
+import '../../../blocs/auth/auth_bloc.dart';
 import '../cards/cards.dart';
+import 'collections.dart';
+
 
 class Lists extends StatefulWidget {
   const Lists({Key? key}) : super(key: key);
@@ -40,6 +41,9 @@ class _ListsState extends State<Lists> {
                   AppStrings.collections,
                   style: AppTheme.themeData.textTheme.headlineLarge,
                 ),
+                Container(child: GestureDetector(onTap: () {
+                  context.read<AuthBloc>().add(const AuthEvent.logout());
+                },child: Text('logout',style: TextStyle(color: Colors.black),)),),
                 GestureDetector(
                   onTap: () {
                     context.read<ListsBloc>().isEditMode =

@@ -69,6 +69,7 @@ class DefaultFirebaseOptions {
     messagingSenderId: '393510478049',
     projectId: 'flashcards-5984c',
     storageBucket: 'flashcards-5984c.appspot.com',
+    androidClientId: '393510478049-ketfkj1s0apvatgbm8q53tam1i4kvkmp.apps.googleusercontent.com',
     iosClientId: '393510478049-0a6ajnahhrp200orlg169r85dsfefdj2.apps.googleusercontent.com',
     iosBundleId: 'com.pandascode.flashcards',
   );

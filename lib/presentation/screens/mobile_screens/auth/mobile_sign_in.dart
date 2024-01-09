@@ -1,7 +1,6 @@
 import 'dart:io';
 
 import 'package:flashcards/core/validator/field_validator.dart';
-import 'package:flashcards/presentation/screens/lists_screen/lists_screen.dart';
 import 'package:flashcards/presentation/screens/mobile_screens/auth/mobile_forgot_password.dart';
 import 'package:flashcards/presentation/widgets/app_text_field.dart';
 import 'package:flashcards/presentation/widgets/apple_signin_button.dart';
@@ -19,6 +18,7 @@ import '../../../../core/services/service_locator.dart';
 import '../../../../core/themes/theme.dart';
 import '../../../blocs/sign_in/signin_bloc.dart';
 import '../../../widgets/app_elevated_button.dart';
+import '../lists_screen/lists_screen.dart';
 import 'mobile_sign_up.dart';
 
 class MobileSignInScreen extends StatefulWidget {
@@ -198,7 +198,7 @@ class _MobileSignInScreenState extends State<MobileSignInScreen> {
                                                 context,
                                                 MaterialPageRoute(
                                                   builder: (context) =>
-                                                   Lists(),
+                                                   MobileSignUpScreen(),
                                                 ),
                                               );
                                             }),

@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'package:flashcards/presentation/screens/mobile_screens/lists_screen/lists_screen.dart';
 import 'package:flashcards/presentation/screens/web_screens/auth/web_forgot_password.dart';
 import 'package:flashcards/presentation/screens/web_screens/web_main.dart';
 import 'package:flutter/foundation.dart';
@@ -67,23 +68,23 @@ final GoRouter router = GoRouter(
               final st = _bloc.state;
 
               return st.maybeMap(
-                  authenticated: (_) => '/mobile_main',
+                  authenticated: (_) => '/mobile_list',
                   unauthenticated: (_) => '/',
                   orElse: () => null);
             },
           ),
     GoRoute(
-        path: '/mobile_main',
+        path: '/mobile_list',
         pageBuilder: (context, state) => pageTransition<void>(
               context: context,
               state: state,
-              child: const MainScreen(),
+              child: const Lists(),
             ),
         redirect: (contest, state) {
           final st = _bloc.state;
 
           return st.maybeMap(
-              authenticated: (_) => '/mobile_main',
+              authenticated: (_) => '/mobile_list',
               unauthenticated: (_) => '/',
               orElse: () => null);
         }),
