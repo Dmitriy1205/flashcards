@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:flashcards/core/validator/field_validator.dart';
 import 'package:flashcards/presentation/screens/lists_screen/lists_screen.dart';
 import 'package:flashcards/presentation/screens/mobile_screens/auth/mobile_forgot_password.dart';
@@ -237,15 +239,15 @@ class _MobileSignInScreenState extends State<MobileSignInScreen> {
                         const SizedBox(
                           height: 39,
                         ),
-                        Row(
+                        Platform.isIOS ? Row(
                           children: [
-                            const AppleSignInButton(),
+                             AppleSignInButton(),
                             const SizedBox(
                               width: 24,
                             ),
                             GoogleSignInButton(),
                           ],
-                        ),
+                        ) : SizedBox(child: GoogleSignInButton()),
                       ],
                     ),
                   ),

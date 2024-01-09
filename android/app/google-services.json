@@ -14,6 +14,14 @@
       },
       "oauth_client": [
         {
+          "client_id": "393510478049-ketfkj1s0apvatgbm8q53tam1i4kvkmp.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.pandascode.flashcards",
+            "certificate_hash": "1c365e3db7c943ee25141b747c8aea1b1b61e43e"
+          }
+        },
+        {
           "client_id": "393510478049-11vac3lm77l0273eq00v7j7q0q6c0let.apps.googleusercontent.com",
           "client_type": 3
         }
@@ -29,6 +37,13 @@
             {
               "client_id": "393510478049-11vac3lm77l0273eq00v7j7q0q6c0let.apps.googleusercontent.com",
               "client_type": 3
+            },
+            {
+              "client_id": "393510478049-0a6ajnahhrp200orlg169r85dsfefdj2.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.pandascode.flashcards"
+              }
             }
           ]
         }
