@@ -22,9 +22,9 @@ class AppStrings {
   static const String google = 'Google';
   static const String collections = 'Collections';
   static const String edit = 'Edit';
-  static const String newList = 'New List';
+  static const String newCollection = 'New Collection';
   static const String create = 'Create';
-  static const String giveMe = 'Give a name to your list';
+  static const String giveName = 'Give a name to your collection';
   static const String cancel = 'Cancel';
   static const String cards = 'Cards';
   static const String card = 'Card';

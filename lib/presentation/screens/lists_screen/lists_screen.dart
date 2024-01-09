@@ -117,26 +117,45 @@ class _ListsState extends State<Lists> {
                         backgroundColor: Colors.white,
                         title: Column(
                           children: [
-                            Text(
-                              AppStrings.newList,
-                              style: AppTheme.themeData.textTheme.titleMedium!
-                                  .copyWith(fontSize: 18),
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                InkWell(
+                                  onTap: () {
+                                    Navigator.pop(context);
+                                  },
+                                  child: SvgPicture.asset(
+                                    'assets/icons/left_arrow.svg',
+                                    height: 12,
+                                    width: 6,
+                                  ),
+                                ),
+                                Expanded(
+                                  child: Align(
+                                    alignment: Alignment.center,
+                                    child: Text(
+                                      AppStrings.newCollection,
+                                      style: AppTheme
+                                          .themeData.textTheme.titleMedium!
+                                          .copyWith(fontSize: 18),
+                                    ),
+                                  ),
+                                ),
+                              ],
                             ),
-                            Text(AppStrings.giveMe,
+                            Text(AppStrings.giveName,
                                 style: AppTheme.themeData.textTheme.labelSmall!
                                     .copyWith(color: AppColors.mainAccent))
                           ],
                         ),
                         content: TextField(
+                          style: AppTheme.themeData.textTheme.labelMedium!
+                              .copyWith(
+                                  color: AppColors.mainAccent,
+                                  fontWeight: FontWeight.w700),
                           controller: nameTextEditingController,
-                          decoration: InputDecoration(
-                              hintText: 'Name',
-                              hintStyle: AppTheme
-                                  .themeData.textTheme.labelMedium!
-                                  .copyWith(
-                                      color: AppColors.mainAccent,
-                                      fontWeight: FontWeight.w700),
-                              border: const OutlineInputBorder(
+                          decoration: const InputDecoration(
+                              border: OutlineInputBorder(
                                   borderRadius:
                                       BorderRadius.all(Radius.circular(15)))),
                         ),
@@ -151,6 +170,7 @@ class _ListsState extends State<Lists> {
                                 context.read<ListsBloc>().add(
                                     ListsEvent.createNewList(
                                         name: nameTextEditingController.text));
+                                nameTextEditingController.clear();
                                 Navigator.of(context).pop();
                               }
                             },
