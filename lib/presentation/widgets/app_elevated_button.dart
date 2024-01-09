@@ -10,7 +10,8 @@ class AppElevatedButton extends StatelessWidget {
   final VoidCallback? onPressed;
   final TextStyle? style;
   final double? borderRadius;
-  final Widget? widget;
+  final Widget? widget;final Color? color;
+
 
   const AppElevatedButton({
     required this.text,
@@ -19,7 +20,7 @@ class AppElevatedButton extends StatelessWidget {
     this.style,
     this.showArrow = false,
     this.showPrefix = false,
-    this.borderRadius, this.widget,
+    this.borderRadius, this.widget, this.color,
   });
 
   @override
@@ -29,7 +30,7 @@ class AppElevatedButton extends StatelessWidget {
       child: ElevatedButton(
         onPressed: onPressed,
         style: ElevatedButton.styleFrom(
-          backgroundColor: AppColors.mainAccent,
+          backgroundColor: color ?? AppColors.mainAccent,
           shape: RoundedRectangleBorder(
               borderRadius: borderRadius == null
                   ? BorderRadius.circular(14)
