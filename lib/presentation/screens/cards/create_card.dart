@@ -8,8 +8,10 @@ import 'package:flutter_svg/svg.dart';
 
 class CreateCard extends StatelessWidget {
   CreateCard({Key? key}) : super(key: key);
-  TextEditingController frontTextEditingController = TextEditingController();
-  TextEditingController backTextEditingController = TextEditingController();
+  final TextEditingController frontTextEditingController =
+      TextEditingController();
+  final TextEditingController backTextEditingController =
+      TextEditingController();
 
   @override
   Widget build(BuildContext context) {
@@ -46,6 +48,7 @@ class CreateCard extends StatelessWidget {
                   context.read<CardsBloc>().add(CardsEvent.createNewCard(
                       front: frontTextEditingController.text,
                       back: backTextEditingController.text));
+                  Navigator.pop(context);
                 }
               },
               child: Text(

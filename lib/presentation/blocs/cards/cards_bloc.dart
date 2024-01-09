@@ -35,11 +35,15 @@ class CardsBloc extends Bloc<CardsEvent, CardsState> {
       );
 
   Future<void> _createNewCard(
-      CardsEvent event, Emitter<CardsState> emit) async {}
+      CardsEvent event, Emitter<CardsState> emit) async {
+    emit(const CardsState.initial());
+  }
 
   Future<void> _editCard(CardsEvent event, Emitter<CardsState> emit) async {}
 
-  Future<void> _selectCard(CardsEvent event, Emitter<CardsState> emit) async {}
+  Future<void> _selectCard(CardsEvent event, Emitter<CardsState> emit) async {
+    emit(const CardsState.viewIndividualCard());
+  }
 
   Future<void> _selectProfile(
       CardsEvent event, Emitter<CardsState> emit) async {}

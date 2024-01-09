@@ -1,6 +1,7 @@
 import 'package:flashcards/core/const/colors.dart';
 import 'package:flashcards/core/const/strings.dart';
 import 'package:flashcards/core/themes/theme.dart';
+import 'package:flashcards/domain/entities/card_entity/card_entity.dart';
 import 'package:flashcards/presentation/blocs/cards/cards_bloc.dart';
 import 'package:flashcards/presentation/screens/cards/create_card.dart';
 import 'package:flashcards/presentation/screens/cards/view_flash_card.dart';
@@ -9,8 +10,8 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/svg.dart';
 
 class Cards extends StatefulWidget {
-  Cards({Key? key, required this.collectionName}) : super(key: key);
-  String collectionName;
+  const Cards({Key? key, required this.collectionName}) : super(key: key);
+  final String collectionName;
 
   @override
   State<Cards> createState() => _CardsState();
@@ -95,12 +96,7 @@ class _CardsState extends State<Cards> {
       ),
       body: BlocConsumer<CardsBloc, CardsState>(
         listener: (context, state) async {
-          state.maybeMap(
-              viewIndividualCard: (_) {
-                Navigator.push(context,
-                    MaterialPageRoute(builder: (context) => ViewFlashCard()));
-              },
-              orElse: () {});
+          state.maybeMap(orElse: () {});
         },
         builder: (context, state) {
           return state.maybeMap(initial: (_) {
@@ -181,7 +177,7 @@ class _CardsState extends State<Cards> {
                                           ),
                                         ),
                                       )
-                                    : SizedBox(),
+                                    : const SizedBox(),
                                 SizedBox(
                                   width: context.read<CardsBloc>().isEditMode
                                       ? 18
@@ -195,7 +191,17 @@ class _CardsState extends State<Cards> {
                                         borderRadius: BorderRadius.all(
                                             Radius.circular(10))),
                                     child: GestureDetector(
-                                      onTap: () {},
+                                      onTap: () {
+                                        Navigator.push(
+                                            context,
+                                            MaterialPageRoute(
+                                                builder: (context) =>
+                                                    ViewFlashCard(
+                                                      card: CardEntity(
+                                                          front: 'Front',
+                                                          back: 'BACK'),
+                                                    )));
+                                      },
                                       child: ListTile(
                                         title: Text(
                                           context.read<CardsBloc>().cardsList[i]
@@ -205,7 +211,7 @@ class _CardsState extends State<Cards> {
                                               .copyWith(fontSize: 18),
                                         ),
                                         subtitle: Text(
-                                          '10 cards',
+                                          'back',
                                           style: AppTheme
                                               .themeData.textTheme.labelSmall!
                                               .copyWith(
@@ -262,7 +268,7 @@ class _CardsState extends State<Cards> {
                 height: 76,
                 width: 76,
                 child: SvgPicture.asset(
-                  'assets/icons/floating_action_button.svg',
+                  'assets/icons/add_card.svg',
                   height: 18,
                   width: 9,
                 ),
