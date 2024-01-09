@@ -1,6 +1,7 @@
 import 'dart:io';
 
 import 'package:flashcards/core/validator/field_validator.dart';
+import 'package:flashcards/presentation/screens/lists_screen/lists_screen.dart';
 import 'package:flashcards/presentation/screens/mobile_screens/auth/mobile_forgot_password.dart';
 import 'package:flashcards/presentation/widgets/app_text_field.dart';
 import 'package:flashcards/presentation/widgets/apple_signin_button.dart';
@@ -197,7 +198,7 @@ class _MobileSignInScreenState extends State<MobileSignInScreen> {
                                                 context,
                                                 MaterialPageRoute(
                                                   builder: (context) =>
-                                                  const MobileSignUpScreen(),
+                                                   Lists(),
                                                 ),
                                               );
                                             }),

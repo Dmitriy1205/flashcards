@@ -1,9 +1,6 @@
 import 'package:flashcards/core/providers/providers.dart';
 import 'package:flashcards/core/router/router.dart';
 import 'package:flashcards/core/themes/theme.dart';
-import 'package:flashcards/presentation/screens/mobile_screens/auth/mobile_sign_up.dart';
-import 'package:flashcards/presentation/screens/web_screens/auth/web_sign_up.dart';
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 
 import '../presentation/screens/mobile_screens/auth/mobile_sign_in.dart';
@@ -26,3 +23,4 @@ class App extends StatelessWidget {
     );
   }
 }
+
