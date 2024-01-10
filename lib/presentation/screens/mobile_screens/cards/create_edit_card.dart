@@ -1,4 +1,5 @@
 import 'package:flashcards/core/const/colors.dart';
+import 'package:flashcards/core/const/icons.dart';
 import 'package:flashcards/core/const/strings.dart';
 import 'package:flashcards/core/themes/theme.dart';
 import 'package:flashcards/domain/entities/card_entity/card_entity.dart';
@@ -47,7 +48,7 @@ class _CreateEditCardState extends State<CreateEditCard> {
                   Navigator.of(context).pop();
                 },
                 child: SvgPicture.asset(
-                  'assets/icons/left_arrow.svg',
+                  AppIcons.leftArrow,
                   height: 21,
                   width: 19,
                 ),
@@ -72,6 +73,7 @@ class _CreateEditCardState extends State<CreateEditCard> {
                         front: frontTextEditingController.text,
                         back: backTextEditingController.text));
                   } else {
+                    Navigator.pop(context);
                     Navigator.pushReplacement(
                         context,
                         MaterialPageRoute(
@@ -146,13 +148,13 @@ class _CreateEditCardState extends State<CreateEditCard> {
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   SvgPicture.asset(
-                    'assets/icons/image.svg',
+                    AppIcons.addImage,
                     height: 76,
                     width: 76,
                   ),
                   const SizedBox(width: 70),
                   SvgPicture.asset(
-                    'assets/icons/edit_2.svg',
+                    AppIcons.edit2,
                     height: 76,
                     width: 76,
                   ),

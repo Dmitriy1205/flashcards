@@ -1,4 +1,5 @@
 import 'package:flashcards/core/const/colors.dart';
+import 'package:flashcards/core/const/icons.dart';
 import 'package:flashcards/core/const/strings.dart';
 import 'package:flashcards/core/themes/theme.dart';
 import 'package:flashcards/domain/entities/card_entity/card_entity.dart';
@@ -39,7 +40,7 @@ class _CardsState extends State<Cards> {
                     Navigator.of(context).pop();
                   },
                   child: SvgPicture.asset(
-                    'assets/icons/left_arrow.svg',
+                    AppIcons.leftArrow,
                     height: 21,
                     width: 19,
                   ),
@@ -75,7 +76,7 @@ class _CardsState extends State<Cards> {
                       borderRadius: const BorderRadius.only(
                           bottomLeft: Radius.circular(7)),
                       icon: SvgPicture.asset(
-                        'assets/icons/menu_icon.svg',
+                        AppIcons.menuIcon,
                         height: 23,
                         width: 23,
                       ),
@@ -85,13 +86,13 @@ class _CardsState extends State<Cards> {
                           child: Row(
                             children: [
                               SvgPicture.asset(
-                                'assets/icons/share_black.svg',
+                                AppIcons.shareBlack,
                                 height: 23,
                                 width: 23,
                               ),
                               SizedBox(width: 23),
                               Text(
-                                'Share',
+                                AppStrings.share,
                                 style: AppTheme.themeData.textTheme.labelMedium,
                               ),
                             ],
@@ -107,13 +108,13 @@ class _CardsState extends State<Cards> {
                           child: Row(
                             children: [
                               SvgPicture.asset(
-                                'assets/icons/edit_black.svg',
+                                AppIcons.editBlack,
                                 height: 23,
                                 width: 23,
                               ),
-                              SizedBox(width: 23),
+                              const SizedBox(width: 23),
                               Text(
-                                'Edit',
+                                AppStrings.edit,
                                 style: AppTheme.themeData.textTheme.labelMedium,
                               ),
                             ],
@@ -124,7 +125,7 @@ class _CardsState extends State<Cards> {
                           child: Row(
                             children: [
                               SvgPicture.asset(
-                                'assets/icons/file_import.svg',
+                                AppIcons.fileImport,
                                 height: 23,
                                 width: 23,
                               ),
@@ -141,13 +142,13 @@ class _CardsState extends State<Cards> {
                           child: Row(
                             children: [
                               SvgPicture.asset(
-                                'assets/icons/file_pdf.svg',
+                                AppIcons.filePdf,
                                 height: 23,
                                 width: 23,
                               ),
                               SizedBox(width: 23),
                               Text(
-                                'File Pdf',
+                                AppStrings.filePdf,
                                 style: AppTheme.themeData.textTheme.labelMedium,
                               ),
                             ],
@@ -158,13 +159,13 @@ class _CardsState extends State<Cards> {
                           child: Row(
                             children: [
                               SvgPicture.asset(
-                                'assets/icons/learn_now.svg',
+                                AppIcons.learnNow,
                                 height: 23,
                                 width: 23,
                               ),
                               SizedBox(width: 23),
                               Text(
-                                'Learn Now',
+                                AppStrings.learnNow,
                                 style: AppTheme.themeData.textTheme.labelMedium,
                               ),
                             ],
@@ -173,16 +174,6 @@ class _CardsState extends State<Cards> {
                       ],
                       onChanged: (_) {},
                     )
-              // DropdownMenu(
-              //         trailingIcon: SvgPicture.asset(
-              //           'assets/icons/edit_icon.svg',
-              //           height: 23,
-              //           width: 23,
-              //         ),
-              //         dropdownMenuEntries: [
-              //           DropdownMenuEntry(label: 'sa', value: false)
-              //         ],
-              //       ),
             ],
           ),
         ]),
@@ -291,9 +282,7 @@ class _CardsState extends State<Cards> {
                                             context,
                                             MaterialPageRoute(
                                                 builder: (context) =>
-                                                    ViewFlashCard(
-                                                      card: card
-                                                    )));
+                                                    ViewFlashCard(card: card)));
                                       },
                                       child: ListTile(
                                         title: Text(
@@ -311,7 +300,7 @@ class _CardsState extends State<Cards> {
                                           ),
                                         ),
                                         trailing: SvgPicture.asset(
-                                          'assets/icons/right_arrow.svg',
+                                          AppIcons.rightArrow,
                                           height: 18,
                                           width: 9,
                                         ),
@@ -345,7 +334,7 @@ class _CardsState extends State<Cards> {
                 height: 76,
                 width: 76,
                 child: SvgPicture.asset(
-                  'assets/icons/red_bucket.svg',
+                  AppIcons.redBucket,
                   height: 18,
                   width: 9,
                 ),
@@ -360,51 +349,12 @@ class _CardsState extends State<Cards> {
                 height: 76,
                 width: 76,
                 child: SvgPicture.asset(
-                  'assets/icons/add_card.svg',
+                  AppIcons.addCard,
                   height: 18,
                   width: 9,
                 ),
               ),
             ),
     );
-  }
-
-  Widget dropDown() {
-    return DropdownMenu(dropdownMenuEntries: [
-      DropdownMenuEntry(label: 'edit', value: null),
-      DropdownMenuEntry(
-        label: 'add',
-        value: null,
-      ),
-      DropdownMenuEntry(
-        label: 'add2', value: null,
-        // child: GestureDetector(
-        //   onTap: () {},
-        //   child: SvgPicture.asset(
-        //     'assets/icons/share.svg',
-        //     height: 21,
-        //     width: 19,
-        //   ),
-        // ),
-      ),
-      // const SizedBox(
-      //   width: 29,
-      // ),
-      DropdownMenuEntry(
-        label: 'add3', value: null,
-        // child: GestureDetector(
-        //   onTap: () {
-        //     context.read<CardsBloc>().isEditMode =
-        //     !context.read<CardsBloc>().isEditMode;
-        //     setState(() {});
-        //   },
-        //   child: SvgPicture.asset(
-        //     'assets/icons/edit.svg',
-        //     height: 23,
-        //     width: 23,
-        //   ),
-        // ),
-      )
-    ]);
   }
 }

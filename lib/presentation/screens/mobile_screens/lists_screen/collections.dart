@@ -1,4 +1,5 @@
 import 'package:flashcards/core/const/colors.dart';
+import 'package:flashcards/core/const/icons.dart';
 import 'package:flashcards/core/const/strings.dart';
 import 'package:flashcards/core/themes/theme.dart';
 import 'package:flashcards/presentation/blocs/cards/cards_bloc.dart';
@@ -101,7 +102,7 @@ class _CollectionsState extends State<Collections> {
                                 ),
                               ),
                               trailing: SvgPicture.asset(
-                                'assets/icons/right_arrow.svg',
+                                AppIcons.rightArrow,
                                 height: 18,
                                 width: 9,
                               ),
@@ -135,20 +136,20 @@ class _CollectionsState extends State<Collections> {
                         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                         children: [
                           SvgPicture.asset(
-                            'assets/icons/hamburger.svg',
+                            AppIcons.hamburger,
                             height: 27.5,
                             width: 30,
                           ),
                           GestureDetector(
                             onTap: () {},
                             child: SvgPicture.asset(
-                              'assets/icons/hat.svg',
+                              AppIcons.hat,
                               height: 27.5,
                               width: 30,
                             ),
                           ),
                           SvgPicture.asset(
-                            'assets/icons/profile.svg',
+                            AppIcons.profile,
                             height: 27.5,
                             width: 30,
                           ),

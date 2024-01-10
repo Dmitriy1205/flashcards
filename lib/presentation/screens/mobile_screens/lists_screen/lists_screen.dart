@@ -1,4 +1,5 @@
 import 'package:flashcards/core/const/colors.dart';
+import 'package:flashcards/core/const/icons.dart';
 import 'package:flashcards/core/const/strings.dart';
 import 'package:flashcards/core/themes/theme.dart';
 import 'package:flashcards/presentation/blocs/lists/lists_bloc.dart';
@@ -23,19 +24,16 @@ class _ListsState extends State<Lists> {
   @override
   Widget build(BuildContext context) {
     return BlocConsumer<ListsBloc, ListsState>(listener: (context, state) {
-      state.maybeMap(
-          viewCards: (selectedCollection) {
-            Navigator.push(
-                context,
-                MaterialPageRoute(
-                    builder: (context) => Cards(
-                          collectionName:
-                              selectedCollection.collectionsListName,
-                        )));
-          },
-          orElse: () {
-            print('Error in bloclistener');
-          });
+      state.maybeMap(viewCards: (selectedCollection) {
+        Navigator.push(
+            context,
+            MaterialPageRoute(
+                builder: (context) => Cards(
+                      collectionName: selectedCollection.collectionsListName,
+                    )));
+      }, orElse: () {
+        print('Error in bloclistener');
+      });
     }, builder: (context, state) {
       return Scaffold(
         appBar: AppBar(
@@ -107,7 +105,7 @@ class _ListsState extends State<Lists> {
                   height: 76,
                   width: 76,
                   child: SvgPicture.asset(
-                    'assets/icons/red_bucket.svg',
+                    AppIcons.redBucket,
                     height: 18,
                     width: 9,
                   ),
@@ -130,7 +128,7 @@ class _ListsState extends State<Lists> {
                                       Navigator.pop(context);
                                     },
                                     child: SvgPicture.asset(
-                                      'assets/icons/left_arrow.svg',
+                                      AppIcons.leftArrow,
                                       height: 12,
                                       width: 6,
                                     ),
@@ -191,7 +189,7 @@ class _ListsState extends State<Lists> {
                   height: 76,
                   width: 76,
                   child: SvgPicture.asset(
-                    'assets/icons/floating_action_button.svg',
+                    AppIcons.addCollection,
                     height: 18,
                     width: 9,
                   ),

@@ -32,6 +32,8 @@ class AppStrings {
   static const String done = 'Done';
   static const String front = 'Front';
   static const String back = 'Back';
-
-
+  static const String filePdf = 'File Pdf';
+  static const String learnNow = 'Learn Now';
+  static const String share = 'Share';
+  static const String logout = 'Logout';
 }
