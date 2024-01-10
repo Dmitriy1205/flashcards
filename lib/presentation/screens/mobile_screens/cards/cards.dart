@@ -9,7 +9,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/svg.dart';
 
-import 'create_card.dart';
+import 'create_edit_card.dart';
 
 class Cards extends StatefulWidget {
   const Cards({Key? key, required this.collectionName}) : super(key: key);
@@ -35,8 +35,7 @@ class _CardsState extends State<Cards> {
               Row(children: [
                 GestureDetector(
                   onTap: () {
-                    context
-                        .read<ListsBloc>().add(ListsEvent.started());
+                    context.read<ListsBloc>().add(ListsEvent.started());
                     Navigator.of(context).pop();
                   },
                   child: SvgPicture.asset(
@@ -293,9 +292,7 @@ class _CardsState extends State<Cards> {
                                             MaterialPageRoute(
                                                 builder: (context) =>
                                                     ViewFlashCard(
-                                                      card: CardEntity(
-                                                          front: card.front,
-                                                          back: card.back),
+                                                      card: card
                                                     )));
                                       },
                                       child: ListTile(
@@ -357,7 +354,7 @@ class _CardsState extends State<Cards> {
           : GestureDetector(
               onTap: () {
                 Navigator.push(context,
-                    MaterialPageRoute(builder: (context) => CreateCard()));
+                    MaterialPageRoute(builder: (context) => CreateEditCard()));
               },
               child: SizedBox(
                 height: 76,

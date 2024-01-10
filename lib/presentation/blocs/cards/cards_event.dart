@@ -3,7 +3,7 @@ part of 'cards_bloc.dart';
 @freezed
 class CardsEvent with _$CardsEvent {
 
-  const factory CardsEvent.editCard() = _EditCard;
+  const factory CardsEvent.editCard({required CardEntity card}) = _EditCard;
 
   const factory CardsEvent.deleteSelectedCards() = _DeleteSelectedCards;
 

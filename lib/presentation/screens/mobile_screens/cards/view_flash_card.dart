@@ -6,6 +6,7 @@ import 'package:flashcards/core/themes/theme.dart';
 import 'package:flashcards/domain/entities/card_entity/card_entity.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
+import 'create_edit_card.dart';
 
 class ViewFlashCard extends StatefulWidget {
   const ViewFlashCard({Key? key, required this.card}) : super(key: key);
@@ -30,7 +31,7 @@ class _ViewFlashCardState extends State<ViewFlashCard> {
               Row(children: [
                 GestureDetector(
                   onTap: () {
-                    Navigator.of(context).pop();
+                    Navigator.pop(context);
                   },
                   child: SvgPicture.asset(
                     'assets/icons/left_arrow.svg',
@@ -48,10 +49,15 @@ class _ViewFlashCardState extends State<ViewFlashCard> {
               ]),
               TextButton(
                 onPressed: () {
-                  Navigator.pop(context);
+                  Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) => CreateEditCard(
+                                card: widget.card,
+                              )));
                 },
                 child: Text(
-                  AppStrings.done,
+                  AppStrings.edit,
                   style: AppTheme.themeData.textTheme.titleLarge!.copyWith(
                     fontSize: 20,
                   ),
