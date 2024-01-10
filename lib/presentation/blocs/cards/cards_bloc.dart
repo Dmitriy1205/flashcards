@@ -38,7 +38,11 @@ class CardsBloc extends Bloc<CardsEvent, CardsState> {
       );
 
   Future<void> _createNewCard(
-      CardsEvent event, Emitter<CardsState> emit) async {
+      _CreateNewCard event, Emitter<CardsState> emit) async {
+    cardsList.add({
+      'name': CardEntity(front: event.front, back: event.back),
+      'toDelete': false
+    });
     emit(const CardsState.initial());
   }
 
