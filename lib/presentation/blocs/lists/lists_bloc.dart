@@ -35,22 +35,27 @@ class ListsBloc extends Bloc<ListsEvent, ListsState> {
       _CreateNewList event, Emitter<ListsState> emit) async {
     print('_createNewList in bloc');
     collectionsList.add({'name': event.name, 'toDelete': false});
-    emit(ListsState.newList());
+    emit(const ListsState.loading());
+    emit(const ListsState.initial());
   }
-
-
 
   Future<void> _selectCollection(
       _SelectCollection event, Emitter<ListsState> emit) async {
-    emit( ListsState.viewCards(
-        collectionsListName: event.collectionsListName));
+    print('collectionsListName in bloc');
+    emit(ListsState.viewCards(collectionsListName: event.collectionsListName));
+    emit(const ListsState.loading());
+    emit(const ListsState.initial());
   }
 
   Future<void> _deleteSelectedCollection(
       _DeleteSelecteCollection event, Emitter<ListsState> emit) async {
     collectionsList.removeWhere((element) => element['toDelete']);
-    emit(const ListsState.newList());
+    emit(const ListsState.loading());
+    emit(const ListsState.initial());
   }
 
-  Future<void> _started(ListsEvent event, Emitter<ListsState> emit) async {}
+  Future<void> _started(ListsEvent event, Emitter<ListsState> emit) async {
+    emit(const ListsState.loading());
+    emit(const ListsState.initial());
+  }
 }

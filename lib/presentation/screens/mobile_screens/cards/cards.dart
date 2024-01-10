@@ -3,6 +3,7 @@ import 'package:flashcards/core/const/strings.dart';
 import 'package:flashcards/core/themes/theme.dart';
 import 'package:flashcards/domain/entities/card_entity/card_entity.dart';
 import 'package:flashcards/presentation/blocs/cards/cards_bloc.dart';
+import 'package:flashcards/presentation/blocs/lists/lists_bloc.dart';
 import 'package:flashcards/presentation/screens/mobile_screens/cards/view_flash_card.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -26,74 +27,166 @@ class _CardsState extends State<Cards> {
     return Scaffold(
       appBar: AppBar(
         automaticallyImplyLeading: false,
-        title: Column(
-          children: [
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              mainAxisSize: MainAxisSize.max,
-              children: [
-                Row(children: [
-                  GestureDetector(
-                    onTap: () {
-                      Navigator.of(context).pop();
-                    },
-                    child: SvgPicture.asset(
-                      'assets/icons/left_arrow.svg',
-                      height: 21,
-                      width: 19,
-                    ),
-                  ),
-                  const SizedBox(
+        title: Column(children: [
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            mainAxisSize: MainAxisSize.max,
+            children: [
+              Row(children: [
+                GestureDetector(
+                  onTap: () {
+                    context
+                        .read<ListsBloc>().add(ListsEvent.started());
+                    Navigator.of(context).pop();
+                  },
+                  child: SvgPicture.asset(
+                    'assets/icons/left_arrow.svg',
+                    height: 21,
                     width: 19,
                   ),
-                  Text(
-                    AppStrings.cards,
-                    style: AppTheme.themeData.textTheme.headlineLarge,
-                  ),
-                ]),
-                context.read<CardsBloc>().isEditMode
-                    ? TextButton(
-                        onPressed: () {
-                          context.read<CardsBloc>().isEditMode = false;
-                          setState(() {});
-                        },
-                        child: Text(
-                          AppStrings.cancel,
-                          style:
-                              AppTheme.themeData.textTheme.titleLarge!.copyWith(
-                            fontSize: 20,
+                ),
+                const SizedBox(
+                  width: 19,
+                ),
+                Text(
+                  AppStrings.cards,
+                  style: AppTheme.themeData.textTheme.headlineLarge,
+                ),
+              ]),
+              context.read<CardsBloc>().isEditMode
+                  ? TextButton(
+                      onPressed: () {
+                        context.read<CardsBloc>().isEditMode = false;
+                        setState(() {});
+                      },
+                      child: Text(
+                        AppStrings.cancel,
+                        style:
+                            AppTheme.themeData.textTheme.titleLarge!.copyWith(
+                          fontSize: 20,
+                        ),
+                      ),
+                    )
+                  : DropdownButton<String>(
+                      isDense: true,
+                      padding: const EdgeInsets.only(
+                        right: 23,
+                      ),
+                      underline: const Text(''),
+                      borderRadius: const BorderRadius.only(
+                          bottomLeft: Radius.circular(7)),
+                      icon: SvgPicture.asset(
+                        'assets/icons/menu_icon.svg',
+                        height: 23,
+                        width: 23,
+                      ),
+                      items: [
+                        DropdownMenuItem<String>(
+                          value: 'false',
+                          child: Row(
+                            children: [
+                              SvgPicture.asset(
+                                'assets/icons/share_black.svg',
+                                height: 23,
+                                width: 23,
+                              ),
+                              SizedBox(width: 23),
+                              Text(
+                                'Share',
+                                style: AppTheme.themeData.textTheme.labelMedium,
+                              ),
+                            ],
                           ),
                         ),
-                      )
-                    : Row(children: [
-                        GestureDetector(
-                          onTap: () {},
-                          child: SvgPicture.asset(
-                            'assets/icons/share.svg',
-                            height: 21,
-                            width: 19,
-                          ),
-                        ),
-                        const SizedBox(
-                          width: 29,
-                        ),
-                        GestureDetector(
+                        DropdownMenuItem<String>(
+                          value: 'false',
                           onTap: () {
                             context.read<CardsBloc>().isEditMode =
                                 !context.read<CardsBloc>().isEditMode;
                             setState(() {});
                           },
-                          child: SvgPicture.asset(
-                            'assets/icons/edit.svg',
-                            height: 23,
-                            width: 23,
+                          child: Row(
+                            children: [
+                              SvgPicture.asset(
+                                'assets/icons/edit_black.svg',
+                                height: 23,
+                                width: 23,
+                              ),
+                              SizedBox(width: 23),
+                              Text(
+                                'Edit',
+                                style: AppTheme.themeData.textTheme.labelMedium,
+                              ),
+                            ],
                           ),
                         ),
-                      ])
-              ],
-            ),
-          ],
-        ),
+                        DropdownMenuItem<String>(
+                          value: 'false',
+                          child: Row(
+                            children: [
+                              SvgPicture.asset(
+                                'assets/icons/file_import.svg',
+                                height: 23,
+                                width: 23,
+                              ),
+                              SizedBox(width: 23),
+                              Text(
+                                'File Import',
+                                style: AppTheme.themeData.textTheme.labelMedium,
+                              ),
+                            ],
+                          ),
+                        ),
+                        DropdownMenuItem<String>(
+                          value: 'false',
+                          child: Row(
+                            children: [
+                              SvgPicture.asset(
+                                'assets/icons/file_pdf.svg',
+                                height: 23,
+                                width: 23,
+                              ),
+                              SizedBox(width: 23),
+                              Text(
+                                'File Pdf',
+                                style: AppTheme.themeData.textTheme.labelMedium,
+                              ),
+                            ],
+                          ),
+                        ),
+                        DropdownMenuItem<String>(
+                          value: 'false',
+                          child: Row(
+                            children: [
+                              SvgPicture.asset(
+                                'assets/icons/learn_now.svg',
+                                height: 23,
+                                width: 23,
+                              ),
+                              SizedBox(width: 23),
+                              Text(
+                                'Learn Now',
+                                style: AppTheme.themeData.textTheme.labelMedium,
+                              ),
+                            ],
+                          ),
+                        ),
+                      ],
+                      onChanged: (_) {},
+                    )
+              // DropdownMenu(
+              //         trailingIcon: SvgPicture.asset(
+              //           'assets/icons/edit_icon.svg',
+              //           height: 23,
+              //           width: 23,
+              //         ),
+              //         dropdownMenuEntries: [
+              //           DropdownMenuEntry(label: 'sa', value: false)
+              //         ],
+              //       ),
+            ],
+          ),
+        ]),
       ),
       body: BlocConsumer<CardsBloc, CardsState>(
         listener: (context, state) async {
@@ -277,5 +370,44 @@ class _CardsState extends State<Cards> {
               ),
             ),
     );
+  }
+
+  Widget dropDown() {
+    return DropdownMenu(dropdownMenuEntries: [
+      DropdownMenuEntry(label: 'edit', value: null),
+      DropdownMenuEntry(
+        label: 'add',
+        value: null,
+      ),
+      DropdownMenuEntry(
+        label: 'add2', value: null,
+        // child: GestureDetector(
+        //   onTap: () {},
+        //   child: SvgPicture.asset(
+        //     'assets/icons/share.svg',
+        //     height: 21,
+        //     width: 19,
+        //   ),
+        // ),
+      ),
+      // const SizedBox(
+      //   width: 29,
+      // ),
+      DropdownMenuEntry(
+        label: 'add3', value: null,
+        // child: GestureDetector(
+        //   onTap: () {
+        //     context.read<CardsBloc>().isEditMode =
+        //     !context.read<CardsBloc>().isEditMode;
+        //     setState(() {});
+        //   },
+        //   child: SvgPicture.asset(
+        //     'assets/icons/edit.svg',
+        //     height: 23,
+        //     width: 23,
+        //   ),
+        // ),
+      )
+    ]);
   }
 }

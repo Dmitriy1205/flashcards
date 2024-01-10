@@ -7,7 +7,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/svg.dart';
 
 class Collections extends StatefulWidget {
-  Collections({Key? key}) : super(key: key);
+  const Collections({Key? key}) : super(key: key);
 
   @override
   State<Collections> createState() => _CollectionsState();
