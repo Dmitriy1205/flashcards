@@ -622,7 +622,7 @@ mixin _$ListsState {
   TResult when<TResult extends Object?>({
     required TResult Function() initial,
     required TResult Function(String collectionsListName) viewCards,
-    required TResult Function() newList,
+    required TResult Function() loading,
     required TResult Function() viewCollections,
   }) =>
       throw _privateConstructorUsedError;
@@ -630,7 +630,7 @@ mixin _$ListsState {
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? initial,
     TResult? Function(String collectionsListName)? viewCards,
-    TResult? Function()? newList,
+    TResult? Function()? loading,
     TResult? Function()? viewCollections,
   }) =>
       throw _privateConstructorUsedError;
@@ -638,7 +638,7 @@ mixin _$ListsState {
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? initial,
     TResult Function(String collectionsListName)? viewCards,
-    TResult Function()? newList,
+    TResult Function()? loading,
     TResult Function()? viewCollections,
     required TResult orElse(),
   }) =>
@@ -647,7 +647,7 @@ mixin _$ListsState {
   TResult map<TResult extends Object?>({
     required TResult Function(_Initial value) initial,
     required TResult Function(_ViewCards value) viewCards,
-    required TResult Function(_NewList value) newList,
+    required TResult Function(_Loading value) loading,
     required TResult Function(_ViewCollections value) viewCollections,
   }) =>
       throw _privateConstructorUsedError;
@@ -655,7 +655,7 @@ mixin _$ListsState {
   TResult? mapOrNull<TResult extends Object?>({
     TResult? Function(_Initial value)? initial,
     TResult? Function(_ViewCards value)? viewCards,
-    TResult? Function(_NewList value)? newList,
+    TResult? Function(_Loading value)? loading,
     TResult? Function(_ViewCollections value)? viewCollections,
   }) =>
       throw _privateConstructorUsedError;
@@ -663,7 +663,7 @@ mixin _$ListsState {
   TResult maybeMap<TResult extends Object?>({
     TResult Function(_Initial value)? initial,
     TResult Function(_ViewCards value)? viewCards,
-    TResult Function(_NewList value)? newList,
+    TResult Function(_Loading value)? loading,
     TResult Function(_ViewCollections value)? viewCollections,
     required TResult orElse(),
   }) =>
@@ -728,7 +728,7 @@ class _$InitialImpl implements _Initial {
   TResult when<TResult extends Object?>({
     required TResult Function() initial,
     required TResult Function(String collectionsListName) viewCards,
-    required TResult Function() newList,
+    required TResult Function() loading,
     required TResult Function() viewCollections,
   }) {
     return initial();
@@ -739,7 +739,7 @@ class _$InitialImpl implements _Initial {
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? initial,
     TResult? Function(String collectionsListName)? viewCards,
-    TResult? Function()? newList,
+    TResult? Function()? loading,
     TResult? Function()? viewCollections,
   }) {
     return initial?.call();
@@ -750,7 +750,7 @@ class _$InitialImpl implements _Initial {
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? initial,
     TResult Function(String collectionsListName)? viewCards,
-    TResult Function()? newList,
+    TResult Function()? loading,
     TResult Function()? viewCollections,
     required TResult orElse(),
   }) {
@@ -765,7 +765,7 @@ class _$InitialImpl implements _Initial {
   TResult map<TResult extends Object?>({
     required TResult Function(_Initial value) initial,
     required TResult Function(_ViewCards value) viewCards,
-    required TResult Function(_NewList value) newList,
+    required TResult Function(_Loading value) loading,
     required TResult Function(_ViewCollections value) viewCollections,
   }) {
     return initial(this);
@@ -776,7 +776,7 @@ class _$InitialImpl implements _Initial {
   TResult? mapOrNull<TResult extends Object?>({
     TResult? Function(_Initial value)? initial,
     TResult? Function(_ViewCards value)? viewCards,
-    TResult? Function(_NewList value)? newList,
+    TResult? Function(_Loading value)? loading,
     TResult? Function(_ViewCollections value)? viewCollections,
   }) {
     return initial?.call(this);
@@ -787,7 +787,7 @@ class _$InitialImpl implements _Initial {
   TResult maybeMap<TResult extends Object?>({
     TResult Function(_Initial value)? initial,
     TResult Function(_ViewCards value)? viewCards,
-    TResult Function(_NewList value)? newList,
+    TResult Function(_Loading value)? loading,
     TResult Function(_ViewCollections value)? viewCollections,
     required TResult orElse(),
   }) {
@@ -869,7 +869,7 @@ class _$ViewCardsImpl implements _ViewCards {
   TResult when<TResult extends Object?>({
     required TResult Function() initial,
     required TResult Function(String collectionsListName) viewCards,
-    required TResult Function() newList,
+    required TResult Function() loading,
     required TResult Function() viewCollections,
   }) {
     return viewCards(collectionsListName);
@@ -880,7 +880,7 @@ class _$ViewCardsImpl implements _ViewCards {
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? initial,
     TResult? Function(String collectionsListName)? viewCards,
-    TResult? Function()? newList,
+    TResult? Function()? loading,
     TResult? Function()? viewCollections,
   }) {
     return viewCards?.call(collectionsListName);
@@ -891,7 +891,7 @@ class _$ViewCardsImpl implements _ViewCards {
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? initial,
     TResult Function(String collectionsListName)? viewCards,
-    TResult Function()? newList,
+    TResult Function()? loading,
     TResult Function()? viewCollections,
     required TResult orElse(),
   }) {
@@ -906,7 +906,7 @@ class _$ViewCardsImpl implements _ViewCards {
   TResult map<TResult extends Object?>({
     required TResult Function(_Initial value) initial,
     required TResult Function(_ViewCards value) viewCards,
-    required TResult Function(_NewList value) newList,
+    required TResult Function(_Loading value) loading,
     required TResult Function(_ViewCollections value) viewCollections,
   }) {
     return viewCards(this);
@@ -917,7 +917,7 @@ class _$ViewCardsImpl implements _ViewCards {
   TResult? mapOrNull<TResult extends Object?>({
     TResult? Function(_Initial value)? initial,
     TResult? Function(_ViewCards value)? viewCards,
-    TResult? Function(_NewList value)? newList,
+    TResult? Function(_Loading value)? loading,
     TResult? Function(_ViewCollections value)? viewCollections,
   }) {
     return viewCards?.call(this);
@@ -928,7 +928,7 @@ class _$ViewCardsImpl implements _ViewCards {
   TResult maybeMap<TResult extends Object?>({
     TResult Function(_Initial value)? initial,
     TResult Function(_ViewCards value)? viewCards,
-    TResult Function(_NewList value)? newList,
+    TResult Function(_Loading value)? loading,
     TResult Function(_ViewCollections value)? viewCollections,
     required TResult orElse(),
   }) {
@@ -950,35 +950,35 @@ abstract class _ViewCards implements ListsState {
 }
 
 /// @nodoc
-abstract class _$$NewListImplCopyWith<$Res> {
-  factory _$$NewListImplCopyWith(
-          _$NewListImpl value, $Res Function(_$NewListImpl) then) =
-      __$$NewListImplCopyWithImpl<$Res>;
+abstract class _$$LoadingImplCopyWith<$Res> {
+  factory _$$LoadingImplCopyWith(
+          _$LoadingImpl value, $Res Function(_$LoadingImpl) then) =
+      __$$LoadingImplCopyWithImpl<$Res>;
 }
 
 /// @nodoc
-class __$$NewListImplCopyWithImpl<$Res>
-    extends _$ListsStateCopyWithImpl<$Res, _$NewListImpl>
-    implements _$$NewListImplCopyWith<$Res> {
-  __$$NewListImplCopyWithImpl(
-      _$NewListImpl _value, $Res Function(_$NewListImpl) _then)
+class __$$LoadingImplCopyWithImpl<$Res>
+    extends _$ListsStateCopyWithImpl<$Res, _$LoadingImpl>
+    implements _$$LoadingImplCopyWith<$Res> {
+  __$$LoadingImplCopyWithImpl(
+      _$LoadingImpl _value, $Res Function(_$LoadingImpl) _then)
       : super(_value, _then);
 }
 
 /// @nodoc
 
-class _$NewListImpl implements _NewList {
-  const _$NewListImpl();
+class _$LoadingImpl implements _Loading {
+  const _$LoadingImpl();
 
   @override
   String toString() {
-    return 'ListsState.newList()';
+    return 'ListsState.loading()';
   }
 
   @override
   bool operator ==(Object other) {
     return identical(this, other) ||
-        (other.runtimeType == runtimeType && other is _$NewListImpl);
+        (other.runtimeType == runtimeType && other is _$LoadingImpl);
   }
 
   @override
@@ -989,10 +989,10 @@ class _$NewListImpl implements _NewList {
   TResult when<TResult extends Object?>({
     required TResult Function() initial,
     required TResult Function(String collectionsListName) viewCards,
-    required TResult Function() newList,
+    required TResult Function() loading,
     required TResult Function() viewCollections,
   }) {
-    return newList();
+    return loading();
   }
 
   @override
@@ -1000,10 +1000,10 @@ class _$NewListImpl implements _NewList {
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? initial,
     TResult? Function(String collectionsListName)? viewCards,
-    TResult? Function()? newList,
+    TResult? Function()? loading,
     TResult? Function()? viewCollections,
   }) {
-    return newList?.call();
+    return loading?.call();
   }
 
   @override
@@ -1011,12 +1011,12 @@ class _$NewListImpl implements _NewList {
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? initial,
     TResult Function(String collectionsListName)? viewCards,
-    TResult Function()? newList,
+    TResult Function()? loading,
     TResult Function()? viewCollections,
     required TResult orElse(),
   }) {
-    if (newList != null) {
-      return newList();
+    if (loading != null) {
+      return loading();
     }
     return orElse();
   }
@@ -1026,10 +1026,10 @@ class _$NewListImpl implements _NewList {
   TResult map<TResult extends Object?>({
     required TResult Function(_Initial value) initial,
     required TResult Function(_ViewCards value) viewCards,
-    required TResult Function(_NewList value) newList,
+    required TResult Function(_Loading value) loading,
     required TResult Function(_ViewCollections value) viewCollections,
   }) {
-    return newList(this);
+    return loading(this);
   }
 
   @override
@@ -1037,10 +1037,10 @@ class _$NewListImpl implements _NewList {
   TResult? mapOrNull<TResult extends Object?>({
     TResult? Function(_Initial value)? initial,
     TResult? Function(_ViewCards value)? viewCards,
-    TResult? Function(_NewList value)? newList,
+    TResult? Function(_Loading value)? loading,
     TResult? Function(_ViewCollections value)? viewCollections,
   }) {
-    return newList?.call(this);
+    return loading?.call(this);
   }
 
   @override
@@ -1048,19 +1048,19 @@ class _$NewListImpl implements _NewList {
   TResult maybeMap<TResult extends Object?>({
     TResult Function(_Initial value)? initial,
     TResult Function(_ViewCards value)? viewCards,
-    TResult Function(_NewList value)? newList,
+    TResult Function(_Loading value)? loading,
     TResult Function(_ViewCollections value)? viewCollections,
     required TResult orElse(),
   }) {
-    if (newList != null) {
-      return newList(this);
+    if (loading != null) {
+      return loading(this);
     }
     return orElse();
   }
 }
 
-abstract class _NewList implements ListsState {
-  const factory _NewList() = _$NewListImpl;
+abstract class _Loading implements ListsState {
+  const factory _Loading() = _$LoadingImpl;
 }
 
 /// @nodoc
@@ -1103,7 +1103,7 @@ class _$ViewCollectionsImpl implements _ViewCollections {
   TResult when<TResult extends Object?>({
     required TResult Function() initial,
     required TResult Function(String collectionsListName) viewCards,
-    required TResult Function() newList,
+    required TResult Function() loading,
     required TResult Function() viewCollections,
   }) {
     return viewCollections();
@@ -1114,7 +1114,7 @@ class _$ViewCollectionsImpl implements _ViewCollections {
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? initial,
     TResult? Function(String collectionsListName)? viewCards,
-    TResult? Function()? newList,
+    TResult? Function()? loading,
     TResult? Function()? viewCollections,
   }) {
     return viewCollections?.call();
@@ -1125,7 +1125,7 @@ class _$ViewCollectionsImpl implements _ViewCollections {
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? initial,
     TResult Function(String collectionsListName)? viewCards,
-    TResult Function()? newList,
+    TResult Function()? loading,
     TResult Function()? viewCollections,
     required TResult orElse(),
   }) {
@@ -1140,7 +1140,7 @@ class _$ViewCollectionsImpl implements _ViewCollections {
   TResult map<TResult extends Object?>({
     required TResult Function(_Initial value) initial,
     required TResult Function(_ViewCards value) viewCards,
-    required TResult Function(_NewList value) newList,
+    required TResult Function(_Loading value) loading,
     required TResult Function(_ViewCollections value) viewCollections,
   }) {
     return viewCollections(this);
@@ -1151,7 +1151,7 @@ class _$ViewCollectionsImpl implements _ViewCollections {
   TResult? mapOrNull<TResult extends Object?>({
     TResult? Function(_Initial value)? initial,
     TResult? Function(_ViewCards value)? viewCards,
-    TResult? Function(_NewList value)? newList,
+    TResult? Function(_Loading value)? loading,
     TResult? Function(_ViewCollections value)? viewCollections,
   }) {
     return viewCollections?.call(this);
@@ -1162,7 +1162,7 @@ class _$ViewCollectionsImpl implements _ViewCollections {
   TResult maybeMap<TResult extends Object?>({
     TResult Function(_Initial value)? initial,
     TResult Function(_ViewCards value)? viewCards,
-    TResult Function(_NewList value)? newList,
+    TResult Function(_Loading value)? loading,
     TResult Function(_ViewCollections value)? viewCollections,
     required TResult orElse(),
   }) {

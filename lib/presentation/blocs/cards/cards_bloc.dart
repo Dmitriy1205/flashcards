@@ -9,7 +9,7 @@ part 'cards_state.dart';
 part 'cards_bloc.freezed.dart';
 
 class CardsBloc extends Bloc<CardsEvent, CardsState> {
-  CardsBloc() : super(const CardsState.initial()) {
+  CardsBloc() : super(CardsState.initial(cardsList: [])) {
     on<CardsEvent>(_mapEventToState);
   }
 
@@ -38,8 +38,14 @@ class CardsBloc extends Bloc<CardsEvent, CardsState> {
       );
 
   Future<void> _createNewCard(
-      CardsEvent event, Emitter<CardsState> emit) async {
-    emit(const CardsState.initial());
+      _CreateNewCard event, Emitter<CardsState> emit) async {
+    cardsList.add({
+      'name': CardEntity(front: event.front, back: event.back),
+      'toDelete': false
+    });
+    print(cardsList.length);
+    emit(CardsState.loading());
+    emit(CardsState.initial(cardsList: cardsList));
   }
 
   Future<void> _editCard(CardsEvent event, Emitter<CardsState> emit) async {}
@@ -47,6 +53,8 @@ class CardsBloc extends Bloc<CardsEvent, CardsState> {
   Future<void> _deleteSelectedCards(
       CardsEvent event, Emitter<CardsState> emit) async {
     cardsList.removeWhere((element) => element['toDelete']);
-    emit(const CardsState.initial());
+    print(cardsList.length);
+    emit(CardsState.loading());
+    emit(CardsState.initial(cardsList: cardsList));
   }
 }

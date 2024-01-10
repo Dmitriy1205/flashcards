@@ -1,4 +1,5 @@
 import 'package:flashcards/core/const/colors.dart';
+import 'package:flashcards/core/const/strings.dart';
 import 'package:flashcards/core/themes/theme.dart';
 import 'package:flashcards/presentation/blocs/cards/cards_bloc.dart';
 import 'package:flashcards/presentation/blocs/lists/lists_bloc.dart';
@@ -7,7 +8,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/svg.dart';
 
 class Collections extends StatefulWidget {
-  Collections({Key? key}) : super(key: key);
+  const Collections({Key? key}) : super(key: key);
 
   @override
   State<Collections> createState() => _CollectionsState();
@@ -93,11 +94,7 @@ class _CollectionsState extends State<Collections> {
                                     .copyWith(fontSize: 18),
                               ),
                               subtitle: Text(
-                                context
-                                    .read<CardsBloc>()
-                                    .cardsList
-                                    .length
-                                    .toString(),
+                                '${context.read<CardsBloc>().cardsList.length.toString()} ${AppStrings.cards.toLowerCase()}',
                                 style: AppTheme.themeData.textTheme.labelSmall!
                                     .copyWith(
                                   color: AppColors.mainAccent,

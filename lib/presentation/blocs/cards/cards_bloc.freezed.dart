@@ -451,23 +451,23 @@ abstract class _CreateNewCard implements CardsEvent {
 mixin _$CardsState {
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
-    required TResult Function() initial,
+    required TResult Function(List<Map<String, dynamic>>? cardsList) initial,
     required TResult Function() viewIndividualCard,
-    required TResult Function() viewProfile,
+    required TResult Function() loading,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult? Function()? initial,
+    TResult? Function(List<Map<String, dynamic>>? cardsList)? initial,
     TResult? Function()? viewIndividualCard,
-    TResult? Function()? viewProfile,
+    TResult? Function()? loading,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
-    TResult Function()? initial,
+    TResult Function(List<Map<String, dynamic>>? cardsList)? initial,
     TResult Function()? viewIndividualCard,
-    TResult Function()? viewProfile,
+    TResult Function()? loading,
     required TResult orElse(),
   }) =>
       throw _privateConstructorUsedError;
@@ -475,21 +475,21 @@ mixin _$CardsState {
   TResult map<TResult extends Object?>({
     required TResult Function(_Initial value) initial,
     required TResult Function(_ViewIndividualCard value) viewIndividualCard,
-    required TResult Function(_ViewProfile value) viewProfile,
+    required TResult Function(_Loading value) loading,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
     TResult? Function(_Initial value)? initial,
     TResult? Function(_ViewIndividualCard value)? viewIndividualCard,
-    TResult? Function(_ViewProfile value)? viewProfile,
+    TResult? Function(_Loading value)? loading,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult maybeMap<TResult extends Object?>({
     TResult Function(_Initial value)? initial,
     TResult Function(_ViewIndividualCard value)? viewIndividualCard,
-    TResult Function(_ViewProfile value)? viewProfile,
+    TResult Function(_Loading value)? loading,
     required TResult orElse(),
   }) =>
       throw _privateConstructorUsedError;
@@ -518,6 +518,8 @@ abstract class _$$InitialImplCopyWith<$Res> {
   factory _$$InitialImplCopyWith(
           _$InitialImpl value, $Res Function(_$InitialImpl) then) =
       __$$InitialImplCopyWithImpl<$Res>;
+  @useResult
+  $Res call({List<Map<String, dynamic>>? cardsList});
 }
 
 /// @nodoc
@@ -527,57 +529,91 @@ class __$$InitialImplCopyWithImpl<$Res>
   __$$InitialImplCopyWithImpl(
       _$InitialImpl _value, $Res Function(_$InitialImpl) _then)
       : super(_value, _then);
+
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? cardsList = freezed,
+  }) {
+    return _then(_$InitialImpl(
+      cardsList: freezed == cardsList
+          ? _value._cardsList
+          : cardsList // ignore: cast_nullable_to_non_nullable
+              as List<Map<String, dynamic>>?,
+    ));
+  }
 }
 
 /// @nodoc
 
 class _$InitialImpl implements _Initial {
-  const _$InitialImpl();
+  const _$InitialImpl({required final List<Map<String, dynamic>>? cardsList})
+      : _cardsList = cardsList;
+
+  final List<Map<String, dynamic>>? _cardsList;
+  @override
+  List<Map<String, dynamic>>? get cardsList {
+    final value = _cardsList;
+    if (value == null) return null;
+    if (_cardsList is EqualUnmodifiableListView) return _cardsList;
+    // ignore: implicit_dynamic_type
+    return EqualUnmodifiableListView(value);
+  }
 
   @override
   String toString() {
-    return 'CardsState.initial()';
+    return 'CardsState.initial(cardsList: $cardsList)';
   }
 
   @override
   bool operator ==(Object other) {
     return identical(this, other) ||
-        (other.runtimeType == runtimeType && other is _$InitialImpl);
+        (other.runtimeType == runtimeType &&
+            other is _$InitialImpl &&
+            const DeepCollectionEquality()
+                .equals(other._cardsList, _cardsList));
   }
 
   @override
-  int get hashCode => runtimeType.hashCode;
+  int get hashCode =>
+      Object.hash(runtimeType, const DeepCollectionEquality().hash(_cardsList));
+
+  @JsonKey(ignore: true)
+  @override
+  @pragma('vm:prefer-inline')
+  _$$InitialImplCopyWith<_$InitialImpl> get copyWith =>
+      __$$InitialImplCopyWithImpl<_$InitialImpl>(this, _$identity);
 
   @override
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
-    required TResult Function() initial,
+    required TResult Function(List<Map<String, dynamic>>? cardsList) initial,
     required TResult Function() viewIndividualCard,
-    required TResult Function() viewProfile,
+    required TResult Function() loading,
   }) {
-    return initial();
+    return initial(cardsList);
   }
 
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult? Function()? initial,
+    TResult? Function(List<Map<String, dynamic>>? cardsList)? initial,
     TResult? Function()? viewIndividualCard,
-    TResult? Function()? viewProfile,
+    TResult? Function()? loading,
   }) {
-    return initial?.call();
+    return initial?.call(cardsList);
   }
 
   @override
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
-    TResult Function()? initial,
+    TResult Function(List<Map<String, dynamic>>? cardsList)? initial,
     TResult Function()? viewIndividualCard,
-    TResult Function()? viewProfile,
+    TResult Function()? loading,
     required TResult orElse(),
   }) {
     if (initial != null) {
-      return initial();
+      return initial(cardsList);
     }
     return orElse();
   }
@@ -587,7 +623,7 @@ class _$InitialImpl implements _Initial {
   TResult map<TResult extends Object?>({
     required TResult Function(_Initial value) initial,
     required TResult Function(_ViewIndividualCard value) viewIndividualCard,
-    required TResult Function(_ViewProfile value) viewProfile,
+    required TResult Function(_Loading value) loading,
   }) {
     return initial(this);
   }
@@ -597,7 +633,7 @@ class _$InitialImpl implements _Initial {
   TResult? mapOrNull<TResult extends Object?>({
     TResult? Function(_Initial value)? initial,
     TResult? Function(_ViewIndividualCard value)? viewIndividualCard,
-    TResult? Function(_ViewProfile value)? viewProfile,
+    TResult? Function(_Loading value)? loading,
   }) {
     return initial?.call(this);
   }
@@ -607,7 +643,7 @@ class _$InitialImpl implements _Initial {
   TResult maybeMap<TResult extends Object?>({
     TResult Function(_Initial value)? initial,
     TResult Function(_ViewIndividualCard value)? viewIndividualCard,
-    TResult Function(_ViewProfile value)? viewProfile,
+    TResult Function(_Loading value)? loading,
     required TResult orElse(),
   }) {
     if (initial != null) {
@@ -618,7 +654,13 @@ class _$InitialImpl implements _Initial {
 }
 
 abstract class _Initial implements CardsState {
-  const factory _Initial() = _$InitialImpl;
+  const factory _Initial(
+      {required final List<Map<String, dynamic>>? cardsList}) = _$InitialImpl;
+
+  List<Map<String, dynamic>>? get cardsList;
+  @JsonKey(ignore: true)
+  _$$InitialImplCopyWith<_$InitialImpl> get copyWith =>
+      throw _privateConstructorUsedError;
 }
 
 /// @nodoc
@@ -659,9 +701,9 @@ class _$ViewIndividualCardImpl implements _ViewIndividualCard {
   @override
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
-    required TResult Function() initial,
+    required TResult Function(List<Map<String, dynamic>>? cardsList) initial,
     required TResult Function() viewIndividualCard,
-    required TResult Function() viewProfile,
+    required TResult Function() loading,
   }) {
     return viewIndividualCard();
   }
@@ -669,9 +711,9 @@ class _$ViewIndividualCardImpl implements _ViewIndividualCard {
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult? Function()? initial,
+    TResult? Function(List<Map<String, dynamic>>? cardsList)? initial,
     TResult? Function()? viewIndividualCard,
-    TResult? Function()? viewProfile,
+    TResult? Function()? loading,
   }) {
     return viewIndividualCard?.call();
   }
@@ -679,9 +721,9 @@ class _$ViewIndividualCardImpl implements _ViewIndividualCard {
   @override
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
-    TResult Function()? initial,
+    TResult Function(List<Map<String, dynamic>>? cardsList)? initial,
     TResult Function()? viewIndividualCard,
-    TResult Function()? viewProfile,
+    TResult Function()? loading,
     required TResult orElse(),
   }) {
     if (viewIndividualCard != null) {
@@ -695,7 +737,7 @@ class _$ViewIndividualCardImpl implements _ViewIndividualCard {
   TResult map<TResult extends Object?>({
     required TResult Function(_Initial value) initial,
     required TResult Function(_ViewIndividualCard value) viewIndividualCard,
-    required TResult Function(_ViewProfile value) viewProfile,
+    required TResult Function(_Loading value) loading,
   }) {
     return viewIndividualCard(this);
   }
@@ -705,7 +747,7 @@ class _$ViewIndividualCardImpl implements _ViewIndividualCard {
   TResult? mapOrNull<TResult extends Object?>({
     TResult? Function(_Initial value)? initial,
     TResult? Function(_ViewIndividualCard value)? viewIndividualCard,
-    TResult? Function(_ViewProfile value)? viewProfile,
+    TResult? Function(_Loading value)? loading,
   }) {
     return viewIndividualCard?.call(this);
   }
@@ -715,7 +757,7 @@ class _$ViewIndividualCardImpl implements _ViewIndividualCard {
   TResult maybeMap<TResult extends Object?>({
     TResult Function(_Initial value)? initial,
     TResult Function(_ViewIndividualCard value)? viewIndividualCard,
-    TResult Function(_ViewProfile value)? viewProfile,
+    TResult Function(_Loading value)? loading,
     required TResult orElse(),
   }) {
     if (viewIndividualCard != null) {
@@ -730,35 +772,35 @@ abstract class _ViewIndividualCard implements CardsState {
 }
 
 /// @nodoc
-abstract class _$$ViewProfileImplCopyWith<$Res> {
-  factory _$$ViewProfileImplCopyWith(
-          _$ViewProfileImpl value, $Res Function(_$ViewProfileImpl) then) =
-      __$$ViewProfileImplCopyWithImpl<$Res>;
+abstract class _$$LoadingImplCopyWith<$Res> {
+  factory _$$LoadingImplCopyWith(
+          _$LoadingImpl value, $Res Function(_$LoadingImpl) then) =
+      __$$LoadingImplCopyWithImpl<$Res>;
 }
 
 /// @nodoc
-class __$$ViewProfileImplCopyWithImpl<$Res>
-    extends _$CardsStateCopyWithImpl<$Res, _$ViewProfileImpl>
-    implements _$$ViewProfileImplCopyWith<$Res> {
-  __$$ViewProfileImplCopyWithImpl(
-      _$ViewProfileImpl _value, $Res Function(_$ViewProfileImpl) _then)
+class __$$LoadingImplCopyWithImpl<$Res>
+    extends _$CardsStateCopyWithImpl<$Res, _$LoadingImpl>
+    implements _$$LoadingImplCopyWith<$Res> {
+  __$$LoadingImplCopyWithImpl(
+      _$LoadingImpl _value, $Res Function(_$LoadingImpl) _then)
       : super(_value, _then);
 }
 
 /// @nodoc
 
-class _$ViewProfileImpl implements _ViewProfile {
-  const _$ViewProfileImpl();
+class _$LoadingImpl implements _Loading {
+  const _$LoadingImpl();
 
   @override
   String toString() {
-    return 'CardsState.viewProfile()';
+    return 'CardsState.loading()';
   }
 
   @override
   bool operator ==(Object other) {
     return identical(this, other) ||
-        (other.runtimeType == runtimeType && other is _$ViewProfileImpl);
+        (other.runtimeType == runtimeType && other is _$LoadingImpl);
   }
 
   @override
@@ -767,33 +809,33 @@ class _$ViewProfileImpl implements _ViewProfile {
   @override
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
-    required TResult Function() initial,
+    required TResult Function(List<Map<String, dynamic>>? cardsList) initial,
     required TResult Function() viewIndividualCard,
-    required TResult Function() viewProfile,
+    required TResult Function() loading,
   }) {
-    return viewProfile();
+    return loading();
   }
 
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult? Function()? initial,
+    TResult? Function(List<Map<String, dynamic>>? cardsList)? initial,
     TResult? Function()? viewIndividualCard,
-    TResult? Function()? viewProfile,
+    TResult? Function()? loading,
   }) {
-    return viewProfile?.call();
+    return loading?.call();
   }
 
   @override
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
-    TResult Function()? initial,
+    TResult Function(List<Map<String, dynamic>>? cardsList)? initial,
     TResult Function()? viewIndividualCard,
-    TResult Function()? viewProfile,
+    TResult Function()? loading,
     required TResult orElse(),
   }) {
-    if (viewProfile != null) {
-      return viewProfile();
+    if (loading != null) {
+      return loading();
     }
     return orElse();
   }
@@ -803,9 +845,9 @@ class _$ViewProfileImpl implements _ViewProfile {
   TResult map<TResult extends Object?>({
     required TResult Function(_Initial value) initial,
     required TResult Function(_ViewIndividualCard value) viewIndividualCard,
-    required TResult Function(_ViewProfile value) viewProfile,
+    required TResult Function(_Loading value) loading,
   }) {
-    return viewProfile(this);
+    return loading(this);
   }
 
   @override
@@ -813,9 +855,9 @@ class _$ViewProfileImpl implements _ViewProfile {
   TResult? mapOrNull<TResult extends Object?>({
     TResult? Function(_Initial value)? initial,
     TResult? Function(_ViewIndividualCard value)? viewIndividualCard,
-    TResult? Function(_ViewProfile value)? viewProfile,
+    TResult? Function(_Loading value)? loading,
   }) {
-    return viewProfile?.call(this);
+    return loading?.call(this);
   }
 
   @override
@@ -823,16 +865,16 @@ class _$ViewProfileImpl implements _ViewProfile {
   TResult maybeMap<TResult extends Object?>({
     TResult Function(_Initial value)? initial,
     TResult Function(_ViewIndividualCard value)? viewIndividualCard,
-    TResult Function(_ViewProfile value)? viewProfile,
+    TResult Function(_Loading value)? loading,
     required TResult orElse(),
   }) {
-    if (viewProfile != null) {
-      return viewProfile(this);
+    if (loading != null) {
+      return loading(this);
     }
     return orElse();
   }
 }
 
-abstract class _ViewProfile implements CardsState {
-  const factory _ViewProfile() = _$ViewProfileImpl;
+abstract class _Loading implements CardsState {
+  const factory _Loading() = _$LoadingImpl;
 }

@@ -45,10 +45,10 @@ class CreateCard extends StatelessWidget {
               onPressed: () {
                 if (frontTextEditingController.text.isNotEmpty &&
                     backTextEditingController.text.isNotEmpty) {
+                  Navigator.pop(context);
                   context.read<CardsBloc>().add(CardsEvent.createNewCard(
                       front: frontTextEditingController.text,
                       back: backTextEditingController.text));
-                  Navigator.pop(context);
                 }
               },
               child: Text(

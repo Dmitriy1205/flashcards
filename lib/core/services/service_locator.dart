@@ -31,8 +31,8 @@ Future<void> init() async {
   sl.registerFactory(() => ForgotPasswordBloc(auth: sl()));
   sl.registerFactory(() => GoogleSigninBloc(auth: sl()));
 
-  sl.registerFactory(() => ListsBloc());
-  sl.registerFactory(() => CardsBloc());
+  sl.registerLazySingleton(() => ListsBloc());
+  sl.registerLazySingleton(() => CardsBloc());
 
   sl.registerFactory(() => AppleSigninBloc(auth: sl()));
 
