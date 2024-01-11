@@ -117,9 +117,10 @@ class _ViewFlashCardState extends State<ViewFlashCard> {
                                             : widget.card.back,
                                         textAlign: TextAlign.center,
                                         style: AppTheme
-                                            .themeData.textTheme.titleMedium!
+                                            .themeData.textTheme.headlineSmall!
                                             .copyWith(
                                           fontSize: 24,
+                                          color: Color(0xFF3C39D1),
                                         ),
                                       ),
                                     ),
