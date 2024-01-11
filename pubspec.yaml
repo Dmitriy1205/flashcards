@@ -36,6 +36,7 @@ dependencies:
   freezed_annotation: ^2.4.1
   flutter_svg: ^2.0.9
   crypto: ^3.0.3
+  async: ^2.8.2
 
 
 

@@ -1,3 +1,5 @@
+import 'dart:async';
+import 'package:async/async.dart';
 import 'package:flashcards/core/const/colors.dart';
 import 'package:flashcards/core/const/icons.dart';
 import 'package:flashcards/core/const/strings.dart';
@@ -16,6 +18,13 @@ class Collections extends StatefulWidget {
 }
 
 class _CollectionsState extends State<Collections> {
+
+
+  @override
+  void initState() {
+
+  }
+
   @override
   Widget build(BuildContext context) {
     return Column(
@@ -125,7 +134,7 @@ class _CollectionsState extends State<Collections> {
               children: [
                 Positioned(
                   left: 24,
-                  bottom: 34,
+                  bottom: 36,
                   child: Container(
                     width: 254,
                     height: 73,
@@ -163,4 +172,6 @@ class _CollectionsState extends State<Collections> {
       ],
     );
   }
+
+
 }

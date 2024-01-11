@@ -88,17 +88,45 @@ class _ViewFlashCardState extends State<ViewFlashCard> {
                           return RotationY(
                             rotationY: value,
                             child: Card(
-                                child: Container(
-                                    width: 380,
-                                    height: 470,
-                                    color: Colors.white,
-                                    child: Center(
-                                      child: value >= 90
-                                          ? RotationY(
-                                              rotationY: value >= 90 ? 180 : 0,
-                                              child: Text(widget.card.front))
-                                          : Text(widget.card.back),
-                                    ))),
+                              child: Container(
+                                decoration: BoxDecoration(
+                                  color: Colors.white,
+                                  borderRadius: const BorderRadius.all(
+                                      Radius.circular(15)),
+                                  boxShadow: [
+                                    BoxShadow(
+                                      color: Colors.grey.withOpacity(0.5),
+                                      spreadRadius: 2,
+                                      blurRadius: 3,
+                                      offset: const Offset(
+                                          0, 3), // changes position of shadow
+                                    ),
+                                  ],
+                                ),
+                                width: 380,
+                                height: 470,
+                                child: Center(
+                                  child: RotationY(
+                                    rotationY: value >= 90 ? 180 : 0,
+                                    child: Padding(
+                                      padding: const EdgeInsets.symmetric(
+                                          horizontal: 50),
+                                      child: Text(
+                                        value >= 90
+                                            ? widget.card.front
+                                            : widget.card.back,
+                                        textAlign: TextAlign.center,
+                                        style: AppTheme
+                                            .themeData.textTheme.titleMedium!
+                                            .copyWith(
+                                          fontSize: 24,
+                                        ),
+                                      ),
+                                    ),
+                                  ),
+                                ),
+                              ),
+                            ),
                           );
                         },
                       ))),

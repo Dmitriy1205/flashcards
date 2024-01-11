@@ -5,7 +5,7 @@ import 'package:flashcards/core/themes/theme.dart';
 import 'package:flashcards/domain/entities/card_entity/card_entity.dart';
 import 'package:flashcards/presentation/blocs/cards/cards_bloc.dart';
 import 'package:flashcards/presentation/blocs/lists/lists_bloc.dart';
-import 'package:flashcards/presentation/screens/mobile_screens/cards/view_flash_card.dart';
+import 'package:flashcards/presentation/screens/mobile_screens/lists_screen/cards/view_flash_card.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/svg.dart';
@@ -36,7 +36,7 @@ class _CardsState extends State<Cards> {
               Row(children: [
                 GestureDetector(
                   onTap: () {
-                    context.read<ListsBloc>().add(ListsEvent.started());
+                    context.read<ListsBloc>().add(const ListsEvent.started());
                     Navigator.of(context).pop();
                   },
                   child: SvgPicture.asset(
@@ -67,7 +67,13 @@ class _CardsState extends State<Cards> {
                         ),
                       ),
                     )
-                  : DropdownButton<String>(
+                  : Theme(
+                    data: Theme.of(context).copyWith(
+                      splashColor: Colors.transparent, // <- Here
+                      highlightColor: Colors.transparent, // <- Here
+                      hoverColor: Colors.transparent, // <- Here
+                    ),
+                    child: DropdownButton<String>(
                       isDense: true,
                       padding: const EdgeInsets.only(
                         right: 23,
@@ -90,10 +96,11 @@ class _CardsState extends State<Cards> {
                                 height: 23,
                                 width: 23,
                               ),
-                              SizedBox(width: 23),
+                              const SizedBox(width: 23),
                               Text(
                                 AppStrings.share,
-                                style: AppTheme.themeData.textTheme.labelMedium,
+                                style: AppTheme
+                                    .themeData.textTheme.labelMedium,
                               ),
                             ],
                           ),
@@ -115,7 +122,8 @@ class _CardsState extends State<Cards> {
                               const SizedBox(width: 23),
                               Text(
                                 AppStrings.edit,
-                                style: AppTheme.themeData.textTheme.labelMedium,
+                                style: AppTheme
+                                    .themeData.textTheme.labelMedium,
                               ),
                             ],
                           ),
@@ -129,10 +137,11 @@ class _CardsState extends State<Cards> {
                                 height: 23,
                                 width: 23,
                               ),
-                              SizedBox(width: 23),
+                              const SizedBox(width: 23),
                               Text(
                                 'File Import',
-                                style: AppTheme.themeData.textTheme.labelMedium,
+                                style: AppTheme
+                                    .themeData.textTheme.labelMedium,
                               ),
                             ],
                           ),
@@ -146,10 +155,11 @@ class _CardsState extends State<Cards> {
                                 height: 23,
                                 width: 23,
                               ),
-                              SizedBox(width: 23),
+                              const SizedBox(width: 23),
                               Text(
                                 AppStrings.filePdf,
-                                style: AppTheme.themeData.textTheme.labelMedium,
+                                style: AppTheme
+                                    .themeData.textTheme.labelMedium,
                               ),
                             ],
                           ),
@@ -163,17 +173,19 @@ class _CardsState extends State<Cards> {
                                 height: 23,
                                 width: 23,
                               ),
-                              SizedBox(width: 23),
+                              const SizedBox(width: 23),
                               Text(
                                 AppStrings.learnNow,
-                                style: AppTheme.themeData.textTheme.labelMedium,
+                                style: AppTheme
+                                    .themeData.textTheme.labelMedium,
                               ),
                             ],
                           ),
                         ),
                       ],
                       onChanged: (_) {},
-                    )
+                    ),
+                  )
             ],
           ),
         ]),
@@ -323,35 +335,43 @@ class _CardsState extends State<Cards> {
         },
       ),
       floatingActionButton: context.watch<CardsBloc>().isEditMode
-          ? GestureDetector(
-              onTap: () {
-                context
-                    .read<CardsBloc>()
-                    .add(const CardsEvent.deleteSelectedCards());
-                context.read<CardsBloc>().isEditMode = false;
-              },
-              child: SizedBox(
-                height: 76,
-                width: 76,
-                child: SvgPicture.asset(
-                  AppIcons.redBucket,
-                  height: 18,
-                  width: 9,
+          ? Padding(
+              padding: const EdgeInsets.only(bottom: 60),
+              child: GestureDetector(
+                onTap: () {
+                  context
+                      .read<CardsBloc>()
+                      .add(const CardsEvent.deleteSelectedCards());
+                  context.read<CardsBloc>().isEditMode = false;
+                },
+                child: SizedBox(
+                  height: 76,
+                  width: 76,
+                  child: SvgPicture.asset(
+                    AppIcons.redBucket,
+                    height: 18,
+                    width: 9,
+                  ),
                 ),
               ),
             )
-          : GestureDetector(
-              onTap: () {
-                Navigator.push(context,
-                    MaterialPageRoute(builder: (context) => CreateEditCard()));
-              },
-              child: SizedBox(
-                height: 76,
-                width: 76,
-                child: SvgPicture.asset(
-                  AppIcons.addCard,
-                  height: 18,
-                  width: 9,
+          : Padding(
+              padding: const EdgeInsets.only(bottom: 60),
+              child: GestureDetector(
+                onTap: () {
+                  Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) => CreateEditCard()));
+                },
+                child: SizedBox(
+                  height: 76,
+                  width: 76,
+                  child: SvgPicture.asset(
+                    AppIcons.addCard,
+                    height: 18,
+                    width: 9,
+                  ),
                 ),
               ),
             ),
