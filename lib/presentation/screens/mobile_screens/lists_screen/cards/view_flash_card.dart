@@ -19,6 +19,7 @@ class ViewFlashCard extends StatefulWidget {
 
 class _ViewFlashCardState extends State<ViewFlashCard> {
   bool isFlipped = false;
+  bool disableInitialAnimation = true;
 
   @override
   Widget build(BuildContext context) {
@@ -75,11 +76,14 @@ class _ViewFlashCardState extends State<ViewFlashCard> {
                   child: GestureDetector(
                       onTap: () {
                         setState(() {
+                          disableInitialAnimation = false;
                           isFlipped = !isFlipped;
                         });
                       },
                       child: TweenAnimationBuilder(
-                        duration: const Duration(milliseconds: 700),
+                        duration: disableInitialAnimation
+                            ? Duration(milliseconds: 0)
+                            : Duration(milliseconds: 700),
                         curve: Curves.easeOut,
                         tween: Tween(
                             begin: isFlipped ? 180.0 : 0.0,
