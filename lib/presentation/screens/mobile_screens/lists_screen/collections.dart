@@ -80,34 +80,32 @@ class _CollectionsState extends State<Collections> {
                               color: Colors.white,
                               borderRadius:
                                   BorderRadius.all(Radius.circular(10))),
-                          child: GestureDetector(
-                            onTap: () {
+                          child: ListTile(
+                            onTap: (){
                               context
                                   .read<ListsBloc>()
                                   .add(ListsEvent.selectCollection(
-                                    collectionsListName: widget
-                                        .collectionsList[i]['name'],
-                                  ));
+                                collectionsListName: widget
+                                    .collectionsList[i]['name'],
+                              ));
                             },
-                            child: ListTile(
-                              title: Text(
-                                widget.collectionsList[i]
-                                    ['name'],
-                                style: AppTheme.themeData.textTheme.titleMedium!
-                                    .copyWith(fontSize: 18),
+                            title: Text(
+                              widget.collectionsList[i]
+                                  ['name'],
+                              style: AppTheme.themeData.textTheme.titleMedium!
+                                  .copyWith(fontSize: 18),
+                            ),
+                            subtitle: Text(
+                              '${context.read<CardsBloc>().cardsList.length.toString()} ${AppStrings.cards.toLowerCase()}',
+                              style: AppTheme.themeData.textTheme.labelSmall!
+                                  .copyWith(
+                                color: AppColors.mainAccent,
                               ),
-                              subtitle: Text(
-                                '${context.read<CardsBloc>().cardsList.length.toString()} ${AppStrings.cards.toLowerCase()}',
-                                style: AppTheme.themeData.textTheme.labelSmall!
-                                    .copyWith(
-                                  color: AppColors.mainAccent,
-                                ),
-                              ),
-                              trailing: SvgPicture.asset(
-                                AppIcons.rightArrow,
-                                height: 18,
-                                width: 9,
-                              ),
+                            ),
+                            trailing: SvgPicture.asset(
+                              AppIcons.rightArrow,
+                              height: 18,
+                              width: 9,
                             ),
                           ),
                         ),

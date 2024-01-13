@@ -48,44 +48,6 @@ class _ListsState extends State<Lists> {
             child: Text(AppStrings.noCollection),
           );
         }),
-        // floatingActionButton: context.watch<ListsBloc>().isEditMode
-        //     ? Padding(
-        //         padding: const EdgeInsets.only(bottom: 20.0),
-        //         child: GestureDetector(
-        //           onTap: () {
-        //             context
-        //                 .read<ListsBloc>()
-        //                 .add(const ListsEvent.deleteSelectedCollection());
-        //             context.read<ListsBloc>().isEditMode = false;
-        //           },
-        //           child: SizedBox(
-        //             height: 76,
-        //             width: 76,
-        //             child: SvgPicture.asset(
-        //               AppIcons.redBucket,
-        //               height: 18,
-        //               width: 9,
-        //             ),
-        //           ),
-        //         ),
-        //       )
-        //     : Padding(
-        //         padding: const EdgeInsets.only(bottom: 20.0),
-        //         child: GestureDetector(
-        //           onTap: () {
-        //             dialog();
-        //           },
-        //           child: SizedBox(
-        //             height: 76,
-        //             width: 76,
-        //             child: SvgPicture.asset(
-        //               AppIcons.addCollection,
-        //               height: 18,
-        //               width: 9,
-        //             ),
-        //           ),
-        //         ),
-        //       ),
       );
     });
   }

@@ -5,13 +5,17 @@ import 'package:flashcards/core/themes/theme.dart';
 import 'package:flashcards/domain/entities/card_entity/card_entity.dart';
 import 'package:flashcards/presentation/blocs/cards/cards_bloc.dart';
 import 'package:flashcards/presentation/screens/mobile_screens/lists_screen/cards/view_flash_card.dart';
+import 'package:flashcards/presentation/widgets/custom_text_input.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:image_picker/image_picker.dart';
+import 'dart:io';
 
 class CreateEditCard extends StatefulWidget {
-  CreateEditCard({Key? key, this.card}) : super(key: key);
-  CardEntity? card;
+  const CreateEditCard({Key? key, this.card}) : super(key: key);
+  final CardEntity? card;
 
   @override
   State<CreateEditCard> createState() => _CreateEditCardState();
@@ -36,6 +40,7 @@ class _CreateEditCardState extends State<CreateEditCard> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: AppColors.background,
       appBar: AppBar(
         automaticallyImplyLeading: false,
         title: Row(
@@ -103,7 +108,7 @@ class _CreateEditCardState extends State<CreateEditCard> {
       ),
       body: SingleChildScrollView(
         child: Container(
-          color: AppColors.background,
+          // color: AppColors.background,
           child: Column(
             children: [
               Padding(
@@ -112,16 +117,15 @@ class _CreateEditCardState extends State<CreateEditCard> {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Text(
-                      AppStrings.front,
-                      style: AppTheme.themeData.textTheme.titleMedium,
+                    Padding(
+                      padding: const EdgeInsets.only(bottom: 12, left: 12),
+                      child: Text(
+                        AppStrings.front,
+                        style: AppTheme.themeData.textTheme.titleMedium,
+                      ),
                     ),
-                    Container(
-                      color: Colors.white,
-                      width: 382,
-                      height: 163,
-                      child: TextField(controller: frontTextEditingController),
-                    ),
+                    CustomTextInput(
+                        textEditingController: frontTextEditingController)
                   ],
                 ),
               ),
@@ -131,34 +135,17 @@ class _CreateEditCardState extends State<CreateEditCard> {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Text(
-                      AppStrings.back,
-                      style: AppTheme.themeData.textTheme.titleMedium,
+                    Padding(
+                      padding: const EdgeInsets.only(bottom: 12, left: 12),
+                      child: Text(
+                        AppStrings.back,
+                        style: AppTheme.themeData.textTheme.titleMedium,
+                      ),
                     ),
-                    Container(
-                      color: Colors.white,
-                      width: 382,
-                      height: 163,
-                      child: TextField(controller: backTextEditingController),
-                    ),
+                    CustomTextInput(
+                        textEditingController: backTextEditingController)
                   ],
                 ),
-              ),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  SvgPicture.asset(
-                    AppIcons.addImage,
-                    height: 76,
-                    width: 76,
-                  ),
-                  const SizedBox(width: 70),
-                  SvgPicture.asset(
-                    AppIcons.edit2,
-                    height: 76,
-                    width: 76,
-                  ),
-                ],
               ),
             ],
           ),
@@ -166,4 +153,5 @@ class _CreateEditCardState extends State<CreateEditCard> {
       ),
     );
   }
+
 }
