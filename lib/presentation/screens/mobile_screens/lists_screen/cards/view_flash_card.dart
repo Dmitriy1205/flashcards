@@ -82,8 +82,8 @@ class _ViewFlashCardState extends State<ViewFlashCard> {
                       },
                       child: TweenAnimationBuilder(
                         duration: disableInitialAnimation
-                            ? Duration(milliseconds: 0)
-                            : Duration(milliseconds: 700),
+                            ? const Duration(milliseconds: 0)
+                            : const Duration(milliseconds: 700),
                         curve: Curves.easeOut,
                         tween: Tween(
                             begin: isFlipped ? 180.0 : 0.0,
@@ -124,7 +124,7 @@ class _ViewFlashCardState extends State<ViewFlashCard> {
                                             .themeData.textTheme.headlineSmall!
                                             .copyWith(
                                           fontSize: 24,
-                                          color: Color(0xFF3C39D1),
+                                          color: const Color(0xFF3C39D1),
                                         ),
                                       ),
                                     ),

@@ -14,8 +14,11 @@ class AppIcons{
   static const String fileImport = 'assets/icons/file_import.svg';
   static const String filePdf = 'assets/icons/file_pdf.svg';
   static const String learnNow = 'assets/icons/learn_now.svg';
-  static const String hamburger = 'assets/icons/hamburger.svg';
+  static const String selectedHat = 'assets/icons/selected_hat.svg';
+  static const String defaultHamburger = 'assets/icons/default_hamburger.svg';
+  static const String selectedHamburger = 'assets/icons/selected_hamburger.svg';
   static const String hat = 'assets/icons/hat.svg';
-  static const String profile = 'assets/icons/profile.svg';
-  static const String addCollection = 'assets/icons/floating_action_button.svg';
+  static const String defaultProfile = 'assets/icons/default_profile.svg';
+  static const String selectedProfile = 'assets/icons/selected_profile.svg';
+  static const String addCollection = 'assets/icons/add_collection.svg';
 }

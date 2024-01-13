@@ -1,4 +1,6 @@
 import 'package:bloc/bloc.dart';
+import 'package:flashcards/core/services/service_locator.dart';
+import 'package:flashcards/data/remote/empty.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 
 part 'lists_event.dart';
@@ -8,17 +10,13 @@ part 'lists_state.dart';
 part 'lists_bloc.freezed.dart';
 
 class ListsBloc extends Bloc<ListsEvent, ListsState> {
-  ListsBloc() : super(const ListsState.initial()) {
+  ListsBloc({required this.data})
+      : super(
+            ListsState.viewCollections(collectionsList: data.collectionsList)) {
     on<ListsEvent>(_mapEventToState);
   }
 
-  final List<Map<String, dynamic>> collectionsList = [
-    {'name': 'Deck1', 'toDelete': false},
-    {'name': 'English', 'toDelete': false},
-    {'name': 'Cities', 'toDelete': false},
-    {'name': 'Names', 'toDelete': false},
-    {'name': 'Memo', 'toDelete': false}
-  ];
+  final MockData data;
 
   bool isEditMode = false;
 
@@ -34,28 +32,27 @@ class ListsBloc extends Bloc<ListsEvent, ListsState> {
   Future<void> _createNewList(
       _CreateNewList event, Emitter<ListsState> emit) async {
     print('_createNewList in bloc');
-    collectionsList.add({'name': event.name, 'toDelete': false});
+    data.collectionsList.add({'name': event.name, 'toDelete': false});
     emit(const ListsState.loading());
-    emit(const ListsState.initial());
+    emit(ListsState.viewCollections(collectionsList: data.collectionsList));
   }
 
   Future<void> _selectCollection(
       _SelectCollection event, Emitter<ListsState> emit) async {
     print('collectionsListName in bloc');
     emit(ListsState.viewCards(collectionsListName: event.collectionsListName));
-    emit(const ListsState.loading());
-    emit(const ListsState.initial());
+    emit(ListsState.viewCollections(collectionsList: data.collectionsList));
   }
 
   Future<void> _deleteSelectedCollection(
       _DeleteSelecteCollection event, Emitter<ListsState> emit) async {
-    collectionsList.removeWhere((element) => element['toDelete']);
+    data.collectionsList.removeWhere((element) => element['toDelete']);
     emit(const ListsState.loading());
-    emit(const ListsState.initial());
+    emit(ListsState.viewCollections(collectionsList: data.collectionsList));
   }
 
   Future<void> _started(ListsEvent event, Emitter<ListsState> emit) async {
     emit(const ListsState.loading());
-    emit(const ListsState.initial());
+    emit(ListsState.viewCollections(collectionsList: data.collectionsList));
   }
 }

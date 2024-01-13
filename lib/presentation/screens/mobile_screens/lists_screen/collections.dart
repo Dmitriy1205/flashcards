@@ -6,25 +6,21 @@ import 'package:flashcards/core/const/strings.dart';
 import 'package:flashcards/core/themes/theme.dart';
 import 'package:flashcards/presentation/blocs/cards/cards_bloc.dart';
 import 'package:flashcards/presentation/blocs/lists/lists_bloc.dart';
+import 'package:flashcards/presentation/widgets/navigationBar.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/svg.dart';
 
 class Collections extends StatefulWidget {
-  const Collections({Key? key}) : super(key: key);
+  const Collections({Key? key, required this.collectionsList})
+      : super(key: key);
+  final List<Map<String, dynamic>> collectionsList;
 
   @override
   State<Collections> createState() => _CollectionsState();
 }
 
 class _CollectionsState extends State<Collections> {
-
-
-  @override
-  void initState() {
-
-  }
-
   @override
   Widget build(BuildContext context) {
     return Column(
@@ -38,15 +34,14 @@ class _CollectionsState extends State<Collections> {
                     padding: const EdgeInsets.only(
                         left: 24, right: 24, bottom: 11, top: 11),
                     child: Row(children: [
-                      context.read<ListsBloc>().isEditMode
+                      context.watch<ListsBloc>().isEditMode
                           ? Flexible(
                               flex: 1,
                               child: InkWell(
                                 onTap: () {
-                                  context.read<ListsBloc>().collectionsList[i]
+                                  widget.collectionsList[i]
                                           ['toDelete'] =
-                                      !context
-                                          .read<ListsBloc>()
+                                      !widget
                                           .collectionsList[i]['toDelete'];
                                   setState(() {
                                     print('setstate');
@@ -58,8 +53,7 @@ class _CollectionsState extends State<Collections> {
                                   ),
                                   child: Padding(
                                     padding: const EdgeInsets.all(10.0),
-                                    child: context
-                                            .watch<ListsBloc>()
+                                    child: widget
                                             .collectionsList[i]['toDelete']
                                         ? const Icon(
                                             Icons.check_circle,
@@ -91,14 +85,13 @@ class _CollectionsState extends State<Collections> {
                               context
                                   .read<ListsBloc>()
                                   .add(ListsEvent.selectCollection(
-                                    collectionsListName: context
-                                        .read<ListsBloc>()
+                                    collectionsListName: widget
                                         .collectionsList[i]['name'],
                                   ));
                             },
                             child: ListTile(
                               title: Text(
-                                context.read<ListsBloc>().collectionsList[i]
+                                widget.collectionsList[i]
                                     ['name'],
                                 style: AppTheme.themeData.textTheme.titleMedium!
                                     .copyWith(fontSize: 18),
@@ -122,56 +115,10 @@ class _CollectionsState extends State<Collections> {
                     ]),
                   );
                 },
-                itemCount: context.read<ListsBloc>().collectionsList.length),
+                itemCount: widget.collectionsList.length),
           ),
         ),
-        Align(
-          alignment: Alignment.centerLeft,
-          child: SizedBox(
-            width: 284,
-            height: 113,
-            child: Stack(
-              children: [
-                Positioned(
-                  left: 24,
-                  bottom: 36,
-                  child: Container(
-                    width: 254,
-                    height: 73,
-                    decoration: const BoxDecoration(
-                        borderRadius: BorderRadius.all(Radius.circular(50)),
-                        color: Colors.white),
-                    child: Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                        children: [
-                          SvgPicture.asset(
-                            AppIcons.hamburger,
-                            height: 27.5,
-                            width: 30,
-                          ),
-                          GestureDetector(
-                            onTap: () {},
-                            child: SvgPicture.asset(
-                              AppIcons.hat,
-                              height: 27.5,
-                              width: 30,
-                            ),
-                          ),
-                          SvgPicture.asset(
-                            AppIcons.profile,
-                            height: 27.5,
-                            width: 30,
-                          ),
-                        ]),
-                  ),
-                )
-              ],
-            ),
-          ),
-        )
       ],
     );
   }
-
-
 }
