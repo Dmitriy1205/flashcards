@@ -56,8 +56,7 @@ class _CustomTextInputState extends State<CustomTextInput> {
                   maxLength: 400,
                 ),
               ),
-              Container(
-                height: 64,
+              SizedBox(
                 child: showImages(),
               ),
             ],
@@ -93,41 +92,57 @@ class _CustomTextInputState extends State<CustomTextInput> {
 
   Widget showImages() {
     return _images.isNotEmpty
-        ? ListView.builder(
-            scrollDirection: Axis.horizontal,
-            itemCount: _images.length,
-            itemBuilder: (_, index) {
-              return Padding(
-                padding: const EdgeInsets.only(left: 4.0),
-                child: Stack(
-                  children: [
-                    Container(
-                        width: 60,
-                        height: 60,
-                        decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(10),
-                            border: Border.all(color: AppColors.background)),
-                        child: Image.file(_images[index]!, fit: BoxFit.cover)),
-                    Positioned(
-                      top: 0,
-                      right: 0,
-                      child: InkWell(
-                          onTap: () {
-                            setState(() {
-                              _images.removeAt(index);
-                            });
-                          },
-                          child: const Icon(
-                            Icons.close,
-                          )),
-                    )
-                  ],
+        ? SizedBox(
+      height: 59, // Set a fixed height for the SizedBox
+      child: ListView.builder(
+        scrollDirection: Axis.horizontal,
+        itemCount: _images.length,
+        itemBuilder: (_, index) {
+          return Padding(
+            padding: const EdgeInsets.only(left: 4.0),
+            child: Stack(
+              children: [
+                Positioned(
+                  child: ClipRRect(
+                    borderRadius: BorderRadius.circular(10),
+                    child: Container(
+                      width: 60,
+                      height: 60,
+                      decoration: BoxDecoration(
+                        border: Border.all(color: AppColors.background),
+                      ),
+                      child: Image.file(_images[index]!, fit: BoxFit.cover),
+                    ),
+                  ),
                 ),
-              );
-            },
-          )
+                Positioned(
+                  top: -8,
+                  right: -8,
+                  child: InkWell(
+                    onTap: () {
+                      setState(() {
+                        _images.removeAt(index);
+                      });
+                    },
+                    child: Container(
+                      decoration: BoxDecoration(
+                        border: Border.all(color: AppColors.background),
+                        borderRadius: BorderRadius.circular(10),
+                        color: Colors.white,
+                      ),
+                      child: const Icon(Icons.highlight_remove_outlined),
+                    ),
+                  ),
+                )
+              ],
+            ),
+          );
+        },
+      ),
+    )
         : const SizedBox();
   }
+
 
   Future<void> _getImages() async {
     try {

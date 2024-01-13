@@ -7,11 +7,9 @@ import 'package:flashcards/presentation/blocs/cards/cards_bloc.dart';
 import 'package:flashcards/presentation/screens/mobile_screens/lists_screen/cards/view_flash_card.dart';
 import 'package:flashcards/presentation/widgets/custom_text_input.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/svg.dart';
-import 'package:image_picker/image_picker.dart';
-import 'dart:io';
+
 
 class CreateEditCard extends StatefulWidget {
   const CreateEditCard({Key? key, this.card}) : super(key: key);
