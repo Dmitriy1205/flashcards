@@ -50,12 +50,14 @@ class AppTheme {
       titleLarge:TextStyle(
         fontWeight: FontWeight.w600,
         fontSize: 28,
-        color: Color(0xFF00C9A8),
+
+        color: AppColors.mainAccent,
       ) ,
       titleMedium:TextStyle(
         fontWeight: FontWeight.w700,
         fontSize: 16,
-        color: Color(0xFF00C9A8),
+
+        color: AppColors.mainAccent,
       ) ,
       titleSmall:TextStyle(
         fontWeight: FontWeight.w600,

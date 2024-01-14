@@ -71,8 +71,7 @@ final GoRouter router = GoRouter(
           )
         : GoRoute(
             path: '/',
-            pageBuilder: (c, s) =>  MaterialPage(child:
-            // HomeMobile()
+            pageBuilder: (c, s) =>  const MaterialPage(child:
                 MobileSignInScreen()
                 ),
             redirect: (contest, state) {
@@ -89,11 +88,10 @@ final GoRouter router = GoRouter(
         pageBuilder: (context, state) => fadeAnimation<void>(
               context: context,
               state: state,
-              child: const Lists(),
+              child: const HomeMobile(),
             ),
         redirect: (contest, state) {
           final st = _bloc.state;
-
           return st.maybeMap(
               authenticated: (_) => '/mobile_list',
               unauthenticated: (_) => '/',

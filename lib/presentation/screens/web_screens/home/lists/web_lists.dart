@@ -58,7 +58,7 @@ class _WebListsScreenState extends State<WebListsScreen> {
         backgroundColor: AppColors.background,
         body: const Padding(
           padding: EdgeInsets.only(left: 65.0,top: 40,right: 65.0,bottom: 200),
-          child: WebCollections(),
+          child: WebCollections(collectionsList: [],),
         ),
         floatingActionButton: context.watch<ListsBloc>().isEditMode
             ? Padding(

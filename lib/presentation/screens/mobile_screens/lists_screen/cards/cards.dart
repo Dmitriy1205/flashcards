@@ -2,6 +2,7 @@ import 'package:flashcards/core/const/colors.dart';
 import 'package:flashcards/core/const/icons.dart';
 import 'package:flashcards/core/const/strings.dart';
 import 'package:flashcards/core/themes/theme.dart';
+import 'package:flashcards/data/remote/empty.dart';
 import 'package:flashcards/domain/entities/card_entity/card_entity.dart';
 import 'package:flashcards/presentation/blocs/cards/cards_bloc.dart';
 import 'package:flashcards/presentation/blocs/lists/lists_bloc.dart';
@@ -68,124 +69,124 @@ class _CardsState extends State<Cards> {
                       ),
                     )
                   : Theme(
-                    data: Theme.of(context).copyWith(
-                      splashColor: Colors.transparent, // <- Here
-                      highlightColor: Colors.transparent, // <- Here
-                      hoverColor: Colors.transparent, // <- Here
-                    ),
-                    child: DropdownButton<String>(
-                      isDense: true,
-                      padding: const EdgeInsets.only(
-                        right: 23,
+                      data: Theme.of(context).copyWith(
+                        splashColor: Colors.transparent, // <- Here
+                        highlightColor: Colors.transparent, // <- Here
+                        hoverColor: Colors.transparent, // <- Here
                       ),
-                      underline: const Text(''),
-                      borderRadius: const BorderRadius.only(
-                          bottomLeft: Radius.circular(7)),
-                      icon: SvgPicture.asset(
-                        AppIcons.menuIcon,
-                        height: 23,
-                        width: 23,
+                      child: DropdownButton<String>(
+                        isDense: true,
+                        padding: const EdgeInsets.only(
+                          right: 23,
+                        ),
+                        underline: const Text(''),
+                        borderRadius: const BorderRadius.only(
+                            bottomLeft: Radius.circular(7)),
+                        icon: SvgPicture.asset(
+                          AppIcons.menuIcon,
+                          height: 23,
+                          width: 23,
+                        ),
+                        items: [
+                          DropdownMenuItem<String>(
+                            value: 'false',
+                            child: Row(
+                              children: [
+                                SvgPicture.asset(
+                                  AppIcons.shareBlack,
+                                  height: 23,
+                                  width: 23,
+                                ),
+                                const SizedBox(width: 23),
+                                Text(
+                                  AppStrings.share,
+                                  style:
+                                      AppTheme.themeData.textTheme.labelMedium,
+                                ),
+                              ],
+                            ),
+                          ),
+                          DropdownMenuItem<String>(
+                            value: 'false',
+                            onTap: () {
+                              context.read<CardsBloc>().isEditMode =
+                                  !context.read<CardsBloc>().isEditMode;
+                              setState(() {});
+                            },
+                            child: Row(
+                              children: [
+                                SvgPicture.asset(
+                                  AppIcons.editBlack,
+                                  height: 23,
+                                  width: 23,
+                                ),
+                                const SizedBox(width: 23),
+                                Text(
+                                  AppStrings.edit,
+                                  style:
+                                      AppTheme.themeData.textTheme.labelMedium,
+                                ),
+                              ],
+                            ),
+                          ),
+                          DropdownMenuItem<String>(
+                            value: 'false',
+                            child: Row(
+                              children: [
+                                SvgPicture.asset(
+                                  AppIcons.fileImport,
+                                  height: 23,
+                                  width: 23,
+                                ),
+                                const SizedBox(width: 23),
+                                Text(
+                                  'File Import',
+                                  style:
+                                      AppTheme.themeData.textTheme.labelMedium,
+                                ),
+                              ],
+                            ),
+                          ),
+                          DropdownMenuItem<String>(
+                            value: 'false',
+                            child: Row(
+                              children: [
+                                SvgPicture.asset(
+                                  AppIcons.filePdf,
+                                  height: 23,
+                                  width: 23,
+                                ),
+                                const SizedBox(width: 23),
+                                Text(
+                                  AppStrings.filePdf,
+                                  style:
+                                      AppTheme.themeData.textTheme.labelMedium,
+                                ),
+                              ],
+                            ),
+                          ),
+                          DropdownMenuItem<String>(
+                            value: 'false',
+                            child: Row(
+                              children: [
+                                SvgPicture.asset(
+                                  AppIcons.learnNow,
+                                  height: 23,
+                                  width: 23,
+                                ),
+                                const SizedBox(width: 23),
+                                Text(
+                                  AppStrings.learnNow,
+                                  style:
+                                      AppTheme.themeData.textTheme.labelMedium,
+                                ),
+                              ],
+                            ),
+                          ),
+                        ],
+                        onChanged: (_) {},
                       ),
-                      items: [
-                        DropdownMenuItem<String>(
-                          value: 'false',
-                          child: Row(
-                            children: [
-                              SvgPicture.asset(
-                                AppIcons.shareBlack,
-                                height: 23,
-                                width: 23,
-                              ),
-                              const SizedBox(width: 23),
-                              Text(
-                                AppStrings.share,
-                                style: AppTheme
-                                    .themeData.textTheme.labelMedium,
-                              ),
-                            ],
-                          ),
-                        ),
-                        DropdownMenuItem<String>(
-                          value: 'false',
-                          onTap: () {
-                            context.read<CardsBloc>().isEditMode =
-                                !context.read<CardsBloc>().isEditMode;
-                            setState(() {});
-                          },
-                          child: Row(
-                            children: [
-                              SvgPicture.asset(
-                                AppIcons.editBlack,
-                                height: 23,
-                                width: 23,
-                              ),
-                              const SizedBox(width: 23),
-                              Text(
-                                AppStrings.edit,
-                                style: AppTheme
-                                    .themeData.textTheme.labelMedium,
-                              ),
-                            ],
-                          ),
-                        ),
-                        DropdownMenuItem<String>(
-                          value: 'false',
-                          child: Row(
-                            children: [
-                              SvgPicture.asset(
-                                AppIcons.fileImport,
-                                height: 23,
-                                width: 23,
-                              ),
-                              const SizedBox(width: 23),
-                              Text(
-                                'File Import',
-                                style: AppTheme
-                                    .themeData.textTheme.labelMedium,
-                              ),
-                            ],
-                          ),
-                        ),
-                        DropdownMenuItem<String>(
-                          value: 'false',
-                          child: Row(
-                            children: [
-                              SvgPicture.asset(
-                                AppIcons.filePdf,
-                                height: 23,
-                                width: 23,
-                              ),
-                              const SizedBox(width: 23),
-                              Text(
-                                AppStrings.filePdf,
-                                style: AppTheme
-                                    .themeData.textTheme.labelMedium,
-                              ),
-                            ],
-                          ),
-                        ),
-                        DropdownMenuItem<String>(
-                          value: 'false',
-                          child: Row(
-                            children: [
-                              SvgPicture.asset(
-                                AppIcons.learnNow,
-                                height: 23,
-                                width: 23,
-                              ),
-                              const SizedBox(width: 23),
-                              Text(
-                                AppStrings.learnNow,
-                                style: AppTheme
-                                    .themeData.textTheme.labelMedium,
-                              ),
-                            ],
-                          ),
-                        ),
-                      ],
-                      onChanged: (_) {},
-                    ),
-                  )
+                    )
             ],
           ),
         ]),
@@ -195,7 +196,7 @@ class _CardsState extends State<Cards> {
           state.maybeMap(orElse: () {});
         },
         builder: (context, state) {
-          return state.maybeMap(initial: (_) {
+          return state.maybeMap(initial: (data) {
             return Column(
               children: [
                 Container(
@@ -212,7 +213,7 @@ class _CardsState extends State<Cards> {
                                 .copyWith(fontSize: 18),
                           ),
                           Text(
-                            '${context.read<CardsBloc>().cardsList.length} cards',
+                            '${data.cardsList!.length} cards',
                             style: AppTheme.themeData.textTheme.labelSmall!
                                 .copyWith(
                               color: AppColors.mainAccent,
@@ -226,8 +227,7 @@ class _CardsState extends State<Cards> {
                     color: AppColors.background,
                     child: ListView.builder(
                         itemBuilder: (context, i) {
-                          CardEntity card =
-                              context.read<CardsBloc>().cardsList[i]['name'];
+                          CardEntity card = data.cardsList![i];
                           return Padding(
                             padding: const EdgeInsets.only(
                                 left: 24, right: 24, bottom: 11, top: 11),
@@ -239,13 +239,9 @@ class _CardsState extends State<Cards> {
                                         child: InkWell(
                                           onTap: () {
                                             setState(() {
-                                              context
-                                                          .read<CardsBloc>()
-                                                          .cardsList[i]
-                                                      ['toDelete'] =
-                                                  !context
-                                                      .read<CardsBloc>()
-                                                      .cardsList[i]['toDelete'];
+                                              /// TODO ======
+                                              data.cardsList![i] =
+                                                  data.cardsList![i];
                                             });
                                           },
                                           child: Container(
@@ -257,7 +253,9 @@ class _CardsState extends State<Cards> {
                                                   const EdgeInsets.all(10.0),
                                               child: context
                                                       .watch<CardsBloc>()
-                                                      .cardsList[i]['toDelete']
+                                                      .cardsListToDelete
+                                                      .contains(MockData
+                                                          .cardsList[i].id)
                                                   ? const Icon(
                                                       Icons.check_circle,
                                                       size: 23.0,
@@ -324,7 +322,7 @@ class _CardsState extends State<Cards> {
                             ),
                           );
                         },
-                        itemCount: context.read<CardsBloc>().cardsList.length),
+                        itemCount: MockData.cardsList.length),
                   ),
                 ),
               ],
@@ -339,9 +337,8 @@ class _CardsState extends State<Cards> {
               padding: const EdgeInsets.only(bottom: 60),
               child: GestureDetector(
                 onTap: () {
-                  context
-                      .read<CardsBloc>()
-                      .add(const CardsEvent.deleteSelectedCards());
+                  context.read<CardsBloc>().add(CardsEvent.deleteSelectedCards(
+                      context.read<CardsBloc>().cardsListToDelete));
                   context.read<CardsBloc>().isEditMode = false;
                 },
                 child: SizedBox(

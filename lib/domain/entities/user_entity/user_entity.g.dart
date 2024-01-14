@@ -15,8 +15,7 @@ _$UserEntityImpl _$$UserEntityImplFromJson(Map<String, dynamic> json) =>
       email: json['email'] as String,
       userPhoto: json['userPhoto'] as String,
       collections: (json['collections'] as List<dynamic>)
-          .map((e) =>
-              CollectionEntity.fromJson(Map<String, String>.from(e as Map)))
+          .map((e) => CollectionEntity.fromJson(e as Map<String, dynamic>))
           .toList(),
     );
 

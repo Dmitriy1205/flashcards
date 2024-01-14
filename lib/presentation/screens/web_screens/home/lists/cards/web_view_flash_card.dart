@@ -62,64 +62,64 @@ class _WebViewFlashCardState extends State<WebViewFlashCard> {
           color: AppColors.background,
           child: Row(
             children: [
-              Padding(
-                padding: const EdgeInsets.only(top: 35.0),
-                child: Container(
-                  width: MediaQuery.of(context).size.width/3.5,
-                  color: AppColors.background,
-                  child: ListView.builder(
-                      shrinkWrap: true,
-                      itemCount: context.read<CardsBloc>().cardsList.length,
-                      itemBuilder: (context, index) {
-                        CardEntity card =
-                            context.read<CardsBloc>().cardsList[index]['name'];
-                        return Padding(
-                          padding: const EdgeInsets.only(bottom: 36, left: 43),
-                          child: InkWell(
-                            onTap: () {
-                              setState(() {
-                                pickedCard = CardEntity(front: card.front, back: card.back);
-                              });
-
-                            },
-                            child: Container(
-                              width: 380,
-                              height: 148,
-                              decoration: BoxDecoration(
-                                  color: Colors.white,
-                                  borderRadius: BorderRadius.circular(10)),
-                              child: Padding(
-                                padding: const EdgeInsets.symmetric(
-                                    horizontal: 13.0),
-                                child: Column(
-                                  mainAxisAlignment: MainAxisAlignment.center,
-                                  crossAxisAlignment: CrossAxisAlignment.center,
-                                  children: [
-                                    Text(
-                                      card.front,
-                                      textAlign: TextAlign.center,
-                                      style: AppTheme
-                                          .themeData.textTheme.labelMedium!
-                                          .copyWith(
-                                              color: AppColors.mainAccent),
-                                    ),
-                                    Text(
-                                      card.back,
-                                      style: AppTheme
-                                          .themeData.textTheme.labelSmall!
-                                          .copyWith(
-                                        color: AppColors.greenBlack,
-                                      ),
-                                    ),
-                                  ],
-                                ),
-                              ),
-                            ),
-                          ),
-                        );
-                      }),
-                ),
-              ),
+              // Padding(
+              //   padding: const EdgeInsets.only(top: 35.0),
+              //   child: Container(
+              //     width: MediaQuery.of(context).size.width/3.5,
+              //     color: AppColors.background,
+              //     child: ListView.builder(
+              //         shrinkWrap: true,
+              //         itemCount: context.read<CardsBloc>().cardsList.length,
+              //         itemBuilder: (context, index) {
+              //           CardEntity card =
+              //               context.read<CardsBloc>().cardsList[index]['name'];
+              //           return Padding(
+              //             padding: const EdgeInsets.only(bottom: 36, left: 43),
+              //             child: InkWell(
+              //               onTap: () {
+              //                 setState(() {
+              //                   pickedCard = CardEntity(front: card.front, back: card.back);
+              //                 });
+              //
+              //               },
+              //               child: Container(
+              //                 width: 380,
+              //                 height: 148,
+              //                 decoration: BoxDecoration(
+              //                     color: Colors.white,
+              //                     borderRadius: BorderRadius.circular(10)),
+              //                 child: Padding(
+              //                   padding: const EdgeInsets.symmetric(
+              //                       horizontal: 13.0),
+              //                   child: Column(
+              //                     mainAxisAlignment: MainAxisAlignment.center,
+              //                     crossAxisAlignment: CrossAxisAlignment.center,
+              //                     children: [
+              //                       Text(
+              //                         card.front,
+              //                         textAlign: TextAlign.center,
+              //                         style: AppTheme
+              //                             .themeData.textTheme.labelMedium!
+              //                             .copyWith(
+              //                                 color: AppColors.mainAccent),
+              //                       ),
+              //                       Text(
+              //                         card.back,
+              //                         style: AppTheme
+              //                             .themeData.textTheme.labelSmall!
+              //                             .copyWith(
+              //                           color: AppColors.greenBlack,
+              //                         ),
+              //                       ),
+              //                     ],
+              //                   ),
+              //                 ),
+              //               ),
+              //             ),
+              //           );
+              //         }),
+              //   ),
+              // ),
               Expanded(
                 child: Padding(
                   padding: const EdgeInsets.only(

@@ -623,7 +623,7 @@ mixin _$ListsState {
     required TResult Function() initial,
     required TResult Function(String collectionsListName) viewCards,
     required TResult Function() loading,
-    required TResult Function(List<Map<String, dynamic>> collectionsList)
+    required TResult Function(List<CollectionEntity> collectionsList)
         viewCollections,
   }) =>
       throw _privateConstructorUsedError;
@@ -632,8 +632,7 @@ mixin _$ListsState {
     TResult? Function()? initial,
     TResult? Function(String collectionsListName)? viewCards,
     TResult? Function()? loading,
-    TResult? Function(List<Map<String, dynamic>> collectionsList)?
-        viewCollections,
+    TResult? Function(List<CollectionEntity> collectionsList)? viewCollections,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
@@ -641,8 +640,7 @@ mixin _$ListsState {
     TResult Function()? initial,
     TResult Function(String collectionsListName)? viewCards,
     TResult Function()? loading,
-    TResult Function(List<Map<String, dynamic>> collectionsList)?
-        viewCollections,
+    TResult Function(List<CollectionEntity> collectionsList)? viewCollections,
     required TResult orElse(),
   }) =>
       throw _privateConstructorUsedError;
@@ -732,7 +730,7 @@ class _$InitialImpl implements _Initial {
     required TResult Function() initial,
     required TResult Function(String collectionsListName) viewCards,
     required TResult Function() loading,
-    required TResult Function(List<Map<String, dynamic>> collectionsList)
+    required TResult Function(List<CollectionEntity> collectionsList)
         viewCollections,
   }) {
     return initial();
@@ -744,8 +742,7 @@ class _$InitialImpl implements _Initial {
     TResult? Function()? initial,
     TResult? Function(String collectionsListName)? viewCards,
     TResult? Function()? loading,
-    TResult? Function(List<Map<String, dynamic>> collectionsList)?
-        viewCollections,
+    TResult? Function(List<CollectionEntity> collectionsList)? viewCollections,
   }) {
     return initial?.call();
   }
@@ -756,8 +753,7 @@ class _$InitialImpl implements _Initial {
     TResult Function()? initial,
     TResult Function(String collectionsListName)? viewCards,
     TResult Function()? loading,
-    TResult Function(List<Map<String, dynamic>> collectionsList)?
-        viewCollections,
+    TResult Function(List<CollectionEntity> collectionsList)? viewCollections,
     required TResult orElse(),
   }) {
     if (initial != null) {
@@ -876,7 +872,7 @@ class _$ViewCardsImpl implements _ViewCards {
     required TResult Function() initial,
     required TResult Function(String collectionsListName) viewCards,
     required TResult Function() loading,
-    required TResult Function(List<Map<String, dynamic>> collectionsList)
+    required TResult Function(List<CollectionEntity> collectionsList)
         viewCollections,
   }) {
     return viewCards(collectionsListName);
@@ -888,8 +884,7 @@ class _$ViewCardsImpl implements _ViewCards {
     TResult? Function()? initial,
     TResult? Function(String collectionsListName)? viewCards,
     TResult? Function()? loading,
-    TResult? Function(List<Map<String, dynamic>> collectionsList)?
-        viewCollections,
+    TResult? Function(List<CollectionEntity> collectionsList)? viewCollections,
   }) {
     return viewCards?.call(collectionsListName);
   }
@@ -900,8 +895,7 @@ class _$ViewCardsImpl implements _ViewCards {
     TResult Function()? initial,
     TResult Function(String collectionsListName)? viewCards,
     TResult Function()? loading,
-    TResult Function(List<Map<String, dynamic>> collectionsList)?
-        viewCollections,
+    TResult Function(List<CollectionEntity> collectionsList)? viewCollections,
     required TResult orElse(),
   }) {
     if (viewCards != null) {
@@ -999,7 +993,7 @@ class _$LoadingImpl implements _Loading {
     required TResult Function() initial,
     required TResult Function(String collectionsListName) viewCards,
     required TResult Function() loading,
-    required TResult Function(List<Map<String, dynamic>> collectionsList)
+    required TResult Function(List<CollectionEntity> collectionsList)
         viewCollections,
   }) {
     return loading();
@@ -1011,8 +1005,7 @@ class _$LoadingImpl implements _Loading {
     TResult? Function()? initial,
     TResult? Function(String collectionsListName)? viewCards,
     TResult? Function()? loading,
-    TResult? Function(List<Map<String, dynamic>> collectionsList)?
-        viewCollections,
+    TResult? Function(List<CollectionEntity> collectionsList)? viewCollections,
   }) {
     return loading?.call();
   }
@@ -1023,8 +1016,7 @@ class _$LoadingImpl implements _Loading {
     TResult Function()? initial,
     TResult Function(String collectionsListName)? viewCards,
     TResult Function()? loading,
-    TResult Function(List<Map<String, dynamic>> collectionsList)?
-        viewCollections,
+    TResult Function(List<CollectionEntity> collectionsList)? viewCollections,
     required TResult orElse(),
   }) {
     if (loading != null) {
@@ -1081,7 +1073,7 @@ abstract class _$$ViewCollectionsImplCopyWith<$Res> {
           $Res Function(_$ViewCollectionsImpl) then) =
       __$$ViewCollectionsImplCopyWithImpl<$Res>;
   @useResult
-  $Res call({List<Map<String, dynamic>> collectionsList});
+  $Res call({List<CollectionEntity> collectionsList});
 }
 
 /// @nodoc
@@ -1101,7 +1093,7 @@ class __$$ViewCollectionsImplCopyWithImpl<$Res>
       collectionsList: null == collectionsList
           ? _value._collectionsList
           : collectionsList // ignore: cast_nullable_to_non_nullable
-              as List<Map<String, dynamic>>,
+              as List<CollectionEntity>,
     ));
   }
 }
@@ -1110,12 +1102,12 @@ class __$$ViewCollectionsImplCopyWithImpl<$Res>
 
 class _$ViewCollectionsImpl implements _ViewCollections {
   const _$ViewCollectionsImpl(
-      {required final List<Map<String, dynamic>> collectionsList})
+      {required final List<CollectionEntity> collectionsList})
       : _collectionsList = collectionsList;
 
-  final List<Map<String, dynamic>> _collectionsList;
+  final List<CollectionEntity> _collectionsList;
   @override
-  List<Map<String, dynamic>> get collectionsList {
+  List<CollectionEntity> get collectionsList {
     if (_collectionsList is EqualUnmodifiableListView) return _collectionsList;
     // ignore: implicit_dynamic_type
     return EqualUnmodifiableListView(_collectionsList);
@@ -1152,7 +1144,7 @@ class _$ViewCollectionsImpl implements _ViewCollections {
     required TResult Function() initial,
     required TResult Function(String collectionsListName) viewCards,
     required TResult Function() loading,
-    required TResult Function(List<Map<String, dynamic>> collectionsList)
+    required TResult Function(List<CollectionEntity> collectionsList)
         viewCollections,
   }) {
     return viewCollections(collectionsList);
@@ -1164,8 +1156,7 @@ class _$ViewCollectionsImpl implements _ViewCollections {
     TResult? Function()? initial,
     TResult? Function(String collectionsListName)? viewCards,
     TResult? Function()? loading,
-    TResult? Function(List<Map<String, dynamic>> collectionsList)?
-        viewCollections,
+    TResult? Function(List<CollectionEntity> collectionsList)? viewCollections,
   }) {
     return viewCollections?.call(collectionsList);
   }
@@ -1176,8 +1167,7 @@ class _$ViewCollectionsImpl implements _ViewCollections {
     TResult Function()? initial,
     TResult Function(String collectionsListName)? viewCards,
     TResult Function()? loading,
-    TResult Function(List<Map<String, dynamic>> collectionsList)?
-        viewCollections,
+    TResult Function(List<CollectionEntity> collectionsList)? viewCollections,
     required TResult orElse(),
   }) {
     if (viewCollections != null) {
@@ -1226,10 +1216,10 @@ class _$ViewCollectionsImpl implements _ViewCollections {
 
 abstract class _ViewCollections implements ListsState {
   const factory _ViewCollections(
-          {required final List<Map<String, dynamic>> collectionsList}) =
+          {required final List<CollectionEntity> collectionsList}) =
       _$ViewCollectionsImpl;
 
-  List<Map<String, dynamic>> get collectionsList;
+  List<CollectionEntity> get collectionsList;
   @JsonKey(ignore: true)
   _$$ViewCollectionsImplCopyWith<_$ViewCollectionsImpl> get copyWith =>
       throw _privateConstructorUsedError;

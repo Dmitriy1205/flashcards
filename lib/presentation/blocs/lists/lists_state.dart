@@ -10,5 +10,5 @@ class ListsState with _$ListsState {
   const factory ListsState.loading() = _Loading;
 
   const factory ListsState.viewCollections(
-      {required List<Map<String, dynamic>> collectionsList}) = _ViewCollections;
+      {required List<CollectionEntity> collectionsList}) = _ViewCollections;
 }

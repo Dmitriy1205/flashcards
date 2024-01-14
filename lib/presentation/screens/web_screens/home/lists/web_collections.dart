@@ -1,6 +1,8 @@
 import 'package:flashcards/core/const/colors.dart';
 import 'package:flashcards/core/const/strings.dart';
 import 'package:flashcards/core/themes/theme.dart';
+import 'package:flashcards/data/remote/empty.dart';
+import 'package:flashcards/domain/entities/collection_entity/collection_entity.dart';
 import 'package:flashcards/presentation/blocs/cards/cards_bloc.dart';
 import 'package:flashcards/presentation/blocs/lists/lists_bloc.dart';
 import 'package:flutter/material.dart';
@@ -8,7 +10,9 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 class WebCollections extends StatefulWidget {
-  const WebCollections({Key? key}) : super(key: key);
+  const WebCollections({Key? key, required this.collectionsList})
+      : super(key: key);
+  final List<CollectionEntity> collectionsList;
 
   @override
   State<WebCollections> createState() => _WebCollectionsState();
@@ -30,10 +34,10 @@ class _WebCollectionsState extends State<WebCollections> {
                         flex: 1,
                         child: InkWell(
                           onTap: () {
-                            context.read<ListsBloc>().collectionsList[i]
-                                    ['toDelete'] =
-                                !context.read<ListsBloc>().collectionsList[i]
-                                    ['toDelete'];
+                            context
+                                .watch<ListsBloc>()
+                                .listIdToDelete
+                                .add(widget.collectionsList[i]);
                           },
                           child: Container(
                             decoration: const BoxDecoration(
@@ -43,7 +47,8 @@ class _WebCollectionsState extends State<WebCollections> {
                               padding: const EdgeInsets.all(10.0),
                               child: context
                                       .watch<ListsBloc>()
-                                      .collectionsList[i]['toDelete']
+                                      .listIdToDelete
+                                      .contains(widget.collectionsList[i].id)
                                   ? const Icon(
                                       Icons.check_circle,
                                       size: 23.0,
@@ -69,24 +74,23 @@ class _WebCollectionsState extends State<WebCollections> {
                         color: Colors.white,
                         borderRadius: BorderRadius.all(Radius.circular(10))),
                     child: ListTile(
-                      onTap: (){
+                      onTap: () {
                         context
                             .read<ListsBloc>()
                             .add(ListsEvent.selectCollection(
-                          collectionsListName: context
-                              .read<ListsBloc>()
-                              .collectionsList[i]['name'],
-                        ));
+                              collectionsListName:
+                                  widget.collectionsList[i].collectionName,
+                            ));
                       },
                       contentPadding:
                           const EdgeInsets.only(left: 28, right: 33),
                       title: Text(
-                        context.read<ListsBloc>().collectionsList[i]['name'],
+                        widget.collectionsList[i].collectionName,
                         style: AppTheme.themeData.textTheme.titleMedium!
                             .copyWith(fontSize: 18),
                       ),
                       subtitle: Text(
-                        '${context.read<CardsBloc>().cardsList.length.toString()} ${AppStrings.cards.toLowerCase()}',
+                        '${MockData.cardsList.length.toString()} ${AppStrings.cards.toLowerCase()}',
                         style:
                             AppTheme.themeData.textTheme.labelSmall!.copyWith(
                           color: AppColors.mainAccent,
@@ -103,7 +107,7 @@ class _WebCollectionsState extends State<WebCollections> {
               ]),
             );
           },
-          itemCount: context.read<ListsBloc>().collectionsList.length),
+          itemCount: widget.collectionsList.length),
     );
   }
 }
