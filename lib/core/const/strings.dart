@@ -32,6 +32,9 @@ class AppStrings {
   static const String done = 'Done';
   static const String front = 'Front';
   static const String back = 'Back';
+  static const String profile = 'Profile';
+  static const String language = 'Language';
+  static const String english = 'English';
 
 
 }

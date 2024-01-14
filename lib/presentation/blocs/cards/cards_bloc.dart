@@ -13,22 +13,33 @@ class CardsBloc extends Bloc<CardsEvent, CardsState> {
     on<CardsEvent>(_mapEventToState);
   }
 
+  bool isEditMode = false;
+  int id = 6;
   final List<Map<String, dynamic>> cardsList = [
     {
       'name': CardEntity(
+          id: '1',
           front: 'How can i help you with such a complicated task?',
           back: 'Back'),
       'toDelete': false
     },
-    {'name': CardEntity(front: 'Sad', back: 'sad Back'), 'toDelete': false},
-    {'name': CardEntity(front: 'Happy', back: 'Happy Back'), 'toDelete': false},
     {
-      'name': CardEntity(front: 'Anxious', back: 'Anxious Back'),
+      'name': CardEntity(id: '2', front: 'Sad', back: 'sad Back'),
       'toDelete': false
     },
-    {'name': CardEntity(front: 'sleep', back: 'sleep Back'), 'toDelete': false}
+    {
+      'name': CardEntity(id: '3', front: 'Happy', back: 'Happy Back'),
+      'toDelete': false
+    },
+    {
+      'name': CardEntity(id: '4', front: 'Anxious', back: 'Anxious Back'),
+      'toDelete': false
+    },
+    {
+      'name': CardEntity(id: '5', front: 'sleep', back: 'sleep Back'),
+      'toDelete': false
+    }
   ];
-  bool isEditMode = false;
 
   Future<void> _mapEventToState(CardsEvent event, Emitter<CardsState> emit) =>
       event.map(
@@ -39,8 +50,11 @@ class CardsBloc extends Bloc<CardsEvent, CardsState> {
 
   Future<void> _createNewCard(
       _CreateNewCard event, Emitter<CardsState> emit) async {
+    id++;
+    print('id $id');
     cardsList.add({
-      'name': CardEntity(front: event.front, back: event.back),
+      'name':
+      CardEntity(id: id.toString(), front: event.front, back: event.back),
       'toDelete': false
     });
     print(cardsList.length);
@@ -48,7 +62,14 @@ class CardsBloc extends Bloc<CardsEvent, CardsState> {
     emit(CardsState.initial(cardsList: cardsList));
   }
 
-  Future<void> _editCard(CardsEvent event, Emitter<CardsState> emit) async {}
+  Future<void> _editCard(_EditCard event, Emitter<CardsState> emit) async {
+    print('event.card.id ${event.card.id}');
+    cardsList.removeWhere(
+            (element) => (element['name'] as CardEntity).id == event.card.id);
+    cardsList.add({'name': event.card, 'toDelete': false});
+    emit(CardsState.loading());
+    emit(CardsState.initial(cardsList: cardsList));
+  }
 
   Future<void> _deleteSelectedCards(
       CardsEvent event, Emitter<CardsState> emit) async {

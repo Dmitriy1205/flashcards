@@ -17,7 +17,7 @@ class ListsBloc extends Bloc<ListsEvent, ListsState> {
     {'name': 'English', 'toDelete': false},
     {'name': 'Cities', 'toDelete': false},
     {'name': 'Names', 'toDelete': false},
-    {'name': 'Memo', 'toDelete': false}
+    {'name': 'Memo', 'toDelete': false},
   ];
 
   bool isEditMode = false;

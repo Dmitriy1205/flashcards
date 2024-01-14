@@ -20,6 +20,7 @@ CardEntity _$CardEntityFromJson(Map<String, dynamic> json) {
 
 /// @nodoc
 mixin _$CardEntity {
+  String? get id => throw _privateConstructorUsedError;
   String get front => throw _privateConstructorUsedError;
   String get back => throw _privateConstructorUsedError;
 
@@ -35,7 +36,7 @@ abstract class $CardEntityCopyWith<$Res> {
           CardEntity value, $Res Function(CardEntity) then) =
       _$CardEntityCopyWithImpl<$Res, CardEntity>;
   @useResult
-  $Res call({String front, String back});
+  $Res call({String? id, String front, String back});
 }
 
 /// @nodoc
@@ -51,10 +52,15 @@ class _$CardEntityCopyWithImpl<$Res, $Val extends CardEntity>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
+    Object? id = freezed,
     Object? front = null,
     Object? back = null,
   }) {
     return _then(_value.copyWith(
+      id: freezed == id
+          ? _value.id
+          : id // ignore: cast_nullable_to_non_nullable
+              as String?,
       front: null == front
           ? _value.front
           : front // ignore: cast_nullable_to_non_nullable
@@ -75,7 +81,7 @@ abstract class _$$CardEntityImplCopyWith<$Res>
       __$$CardEntityImplCopyWithImpl<$Res>;
   @override
   @useResult
-  $Res call({String front, String back});
+  $Res call({String? id, String front, String back});
 }
 
 /// @nodoc
@@ -89,10 +95,15 @@ class __$$CardEntityImplCopyWithImpl<$Res>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
+    Object? id = freezed,
     Object? front = null,
     Object? back = null,
   }) {
     return _then(_$CardEntityImpl(
+      id: freezed == id
+          ? _value.id
+          : id // ignore: cast_nullable_to_non_nullable
+              as String?,
       front: null == front
           ? _value.front
           : front // ignore: cast_nullable_to_non_nullable
@@ -108,11 +119,13 @@ class __$$CardEntityImplCopyWithImpl<$Res>
 /// @nodoc
 @JsonSerializable()
 class _$CardEntityImpl implements _CardEntity {
-  _$CardEntityImpl({required this.front, required this.back});
+  _$CardEntityImpl({this.id, required this.front, required this.back});
 
   factory _$CardEntityImpl.fromJson(Map<String, dynamic> json) =>
       _$$CardEntityImplFromJson(json);
 
+  @override
+  final String? id;
   @override
   final String front;
   @override
@@ -120,7 +133,7 @@ class _$CardEntityImpl implements _CardEntity {
 
   @override
   String toString() {
-    return 'CardEntity(front: $front, back: $back)';
+    return 'CardEntity(id: $id, front: $front, back: $back)';
   }
 
   @override
@@ -128,13 +141,14 @@ class _$CardEntityImpl implements _CardEntity {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$CardEntityImpl &&
+            (identical(other.id, id) || other.id == id) &&
             (identical(other.front, front) || other.front == front) &&
             (identical(other.back, back) || other.back == back));
   }
 
   @JsonKey(ignore: true)
   @override
-  int get hashCode => Object.hash(runtimeType, front, back);
+  int get hashCode => Object.hash(runtimeType, id, front, back);
 
   @JsonKey(ignore: true)
   @override
@@ -152,12 +166,15 @@ class _$CardEntityImpl implements _CardEntity {
 
 abstract class _CardEntity implements CardEntity {
   factory _CardEntity(
-      {required final String front,
+      {final String? id,
+      required final String front,
       required final String back}) = _$CardEntityImpl;
 
   factory _CardEntity.fromJson(Map<String, dynamic> json) =
       _$CardEntityImpl.fromJson;
 
+  @override
+  String? get id;
   @override
   String get front;
   @override
