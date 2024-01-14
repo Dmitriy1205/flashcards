@@ -66,8 +66,9 @@ final GoRouter router = GoRouter(
           )
         : GoRoute(
             path: '/',
-            pageBuilder: (c, s) =>  MaterialPage(child: HomeMobile()
-                // MobileSignInScreen()
+            pageBuilder: (c, s) =>  MaterialPage(child:
+            // HomeMobile()
+                MobileSignInScreen()
                 ),
             redirect: (contest, state) {
               final st = _bloc.state;

@@ -1,5 +1,4 @@
 import 'package:bloc/bloc.dart';
-import 'package:flashcards/core/services/service_locator.dart';
 import 'package:flashcards/data/remote/empty.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 

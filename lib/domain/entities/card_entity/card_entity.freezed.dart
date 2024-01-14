@@ -20,9 +20,11 @@ CardEntity _$CardEntityFromJson(Map<String, dynamic> json) {
 
 /// @nodoc
 mixin _$CardEntity {
-  String? get id => throw _privateConstructorUsedError;
+  String get id => throw _privateConstructorUsedError;
   String get front => throw _privateConstructorUsedError;
   String get back => throw _privateConstructorUsedError;
+  List<String>? get frontImages => throw _privateConstructorUsedError;
+  List<String>? get backImages => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
@@ -36,7 +38,12 @@ abstract class $CardEntityCopyWith<$Res> {
           CardEntity value, $Res Function(CardEntity) then) =
       _$CardEntityCopyWithImpl<$Res, CardEntity>;
   @useResult
-  $Res call({String? id, String front, String back});
+  $Res call(
+      {String id,
+      String front,
+      String back,
+      List<String>? frontImages,
+      List<String>? backImages});
 }
 
 /// @nodoc
@@ -52,15 +59,17 @@ class _$CardEntityCopyWithImpl<$Res, $Val extends CardEntity>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? id = freezed,
+    Object? id = null,
     Object? front = null,
     Object? back = null,
+    Object? frontImages = freezed,
+    Object? backImages = freezed,
   }) {
     return _then(_value.copyWith(
-      id: freezed == id
+      id: null == id
           ? _value.id
           : id // ignore: cast_nullable_to_non_nullable
-              as String?,
+              as String,
       front: null == front
           ? _value.front
           : front // ignore: cast_nullable_to_non_nullable
@@ -69,6 +78,14 @@ class _$CardEntityCopyWithImpl<$Res, $Val extends CardEntity>
           ? _value.back
           : back // ignore: cast_nullable_to_non_nullable
               as String,
+      frontImages: freezed == frontImages
+          ? _value.frontImages
+          : frontImages // ignore: cast_nullable_to_non_nullable
+              as List<String>?,
+      backImages: freezed == backImages
+          ? _value.backImages
+          : backImages // ignore: cast_nullable_to_non_nullable
+              as List<String>?,
     ) as $Val);
   }
 }
@@ -81,7 +98,12 @@ abstract class _$$CardEntityImplCopyWith<$Res>
       __$$CardEntityImplCopyWithImpl<$Res>;
   @override
   @useResult
-  $Res call({String? id, String front, String back});
+  $Res call(
+      {String id,
+      String front,
+      String back,
+      List<String>? frontImages,
+      List<String>? backImages});
 }
 
 /// @nodoc
@@ -95,15 +117,17 @@ class __$$CardEntityImplCopyWithImpl<$Res>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? id = freezed,
+    Object? id = null,
     Object? front = null,
     Object? back = null,
+    Object? frontImages = freezed,
+    Object? backImages = freezed,
   }) {
     return _then(_$CardEntityImpl(
-      id: freezed == id
+      id: null == id
           ? _value.id
           : id // ignore: cast_nullable_to_non_nullable
-              as String?,
+              as String,
       front: null == front
           ? _value.front
           : front // ignore: cast_nullable_to_non_nullable
@@ -112,6 +136,14 @@ class __$$CardEntityImplCopyWithImpl<$Res>
           ? _value.back
           : back // ignore: cast_nullable_to_non_nullable
               as String,
+      frontImages: freezed == frontImages
+          ? _value._frontImages
+          : frontImages // ignore: cast_nullable_to_non_nullable
+              as List<String>?,
+      backImages: freezed == backImages
+          ? _value._backImages
+          : backImages // ignore: cast_nullable_to_non_nullable
+              as List<String>?,
     ));
   }
 }
@@ -119,21 +151,47 @@ class __$$CardEntityImplCopyWithImpl<$Res>
 /// @nodoc
 @JsonSerializable()
 class _$CardEntityImpl implements _CardEntity {
-  _$CardEntityImpl({this.id, required this.front, required this.back});
+  _$CardEntityImpl(
+      {required this.id,
+      required this.front,
+      required this.back,
+      final List<String>? frontImages,
+      final List<String>? backImages})
+      : _frontImages = frontImages,
+        _backImages = backImages;
 
   factory _$CardEntityImpl.fromJson(Map<String, dynamic> json) =>
       _$$CardEntityImplFromJson(json);
 
   @override
-  final String? id;
+  final String id;
   @override
   final String front;
   @override
   final String back;
+  final List<String>? _frontImages;
+  @override
+  List<String>? get frontImages {
+    final value = _frontImages;
+    if (value == null) return null;
+    if (_frontImages is EqualUnmodifiableListView) return _frontImages;
+    // ignore: implicit_dynamic_type
+    return EqualUnmodifiableListView(value);
+  }
+
+  final List<String>? _backImages;
+  @override
+  List<String>? get backImages {
+    final value = _backImages;
+    if (value == null) return null;
+    if (_backImages is EqualUnmodifiableListView) return _backImages;
+    // ignore: implicit_dynamic_type
+    return EqualUnmodifiableListView(value);
+  }
 
   @override
   String toString() {
-    return 'CardEntity(id: $id, front: $front, back: $back)';
+    return 'CardEntity(id: $id, front: $front, back: $back, frontImages: $frontImages, backImages: $backImages)';
   }
 
   @override
@@ -143,12 +201,22 @@ class _$CardEntityImpl implements _CardEntity {
             other is _$CardEntityImpl &&
             (identical(other.id, id) || other.id == id) &&
             (identical(other.front, front) || other.front == front) &&
-            (identical(other.back, back) || other.back == back));
+            (identical(other.back, back) || other.back == back) &&
+            const DeepCollectionEquality()
+                .equals(other._frontImages, _frontImages) &&
+            const DeepCollectionEquality()
+                .equals(other._backImages, _backImages));
   }
 
   @JsonKey(ignore: true)
   @override
-  int get hashCode => Object.hash(runtimeType, id, front, back);
+  int get hashCode => Object.hash(
+      runtimeType,
+      id,
+      front,
+      back,
+      const DeepCollectionEquality().hash(_frontImages),
+      const DeepCollectionEquality().hash(_backImages));
 
   @JsonKey(ignore: true)
   @override
@@ -166,19 +234,25 @@ class _$CardEntityImpl implements _CardEntity {
 
 abstract class _CardEntity implements CardEntity {
   factory _CardEntity(
-      {final String? id,
+      {required final String id,
       required final String front,
-      required final String back}) = _$CardEntityImpl;
+      required final String back,
+      final List<String>? frontImages,
+      final List<String>? backImages}) = _$CardEntityImpl;
 
   factory _CardEntity.fromJson(Map<String, dynamic> json) =
       _$CardEntityImpl.fromJson;
 
   @override
-  String? get id;
+  String get id;
   @override
   String get front;
   @override
   String get back;
+  @override
+  List<String>? get frontImages;
+  @override
+  List<String>? get backImages;
   @override
   @JsonKey(ignore: true)
   _$$CardEntityImplCopyWith<_$CardEntityImpl> get copyWith =>

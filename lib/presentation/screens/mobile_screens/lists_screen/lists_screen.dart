@@ -1,13 +1,7 @@
-import 'package:flashcards/core/const/colors.dart';
-import 'package:flashcards/core/const/icons.dart';
 import 'package:flashcards/core/const/strings.dart';
-import 'package:flashcards/core/themes/theme.dart';
 import 'package:flashcards/presentation/blocs/lists/lists_bloc.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_svg/svg.dart';
-
-import '../../../blocs/auth/auth_bloc.dart';
 import 'cards/cards.dart';
 import 'collections.dart';
 
