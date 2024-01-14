@@ -9,6 +9,7 @@ class AppTheme {
         selectionColor: AppColors.mainAccent.withOpacity(0.25),
         cursorColor: AppColors.mainAccent),
     inputDecorationTheme: InputDecorationTheme(
+      fillColor: AppColors.mainAccent.withOpacity(0.1),
       hintStyle: const TextStyle(color: Color(0xFF474D4C)),
       prefixIconColor: const Color(0xFF474D4C),
       focusColor: const Color(0xFF474D4C),
@@ -18,7 +19,7 @@ class AppTheme {
       focusedBorder: OutlineInputBorder(
         borderRadius: BorderRadius.circular(14),
         borderSide: const BorderSide(
-          width: 2,
+          width: 1.5,
           color: AppColors.mainAccent,
         ),
       ),
@@ -49,12 +50,12 @@ class AppTheme {
       titleLarge:TextStyle(
         fontWeight: FontWeight.w600,
         fontSize: 28,
-        color: Color(0xFF3C39D1),
+        color: Color(0xFF00C9A8),
       ) ,
       titleMedium:TextStyle(
         fontWeight: FontWeight.w700,
         fontSize: 16,
-        color: Color(0xFF3C39D1),
+        color: Color(0xFF00C9A8),
       ) ,
       titleSmall:TextStyle(
         fontWeight: FontWeight.w600,

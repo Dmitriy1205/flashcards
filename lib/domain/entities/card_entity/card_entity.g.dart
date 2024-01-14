@@ -8,7 +8,9 @@ part of 'card_entity.dart';
 
 _$CardEntityImpl _$$CardEntityImplFromJson(Map<String, dynamic> json) =>
     _$CardEntityImpl(
+
       id: json['id'] as String,
+
       front: json['front'] as String,
       back: json['back'] as String,
       frontImages: (json['frontImages'] as List<dynamic>?)

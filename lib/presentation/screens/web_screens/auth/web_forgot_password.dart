@@ -68,123 +68,232 @@ class _WebForgotPasswordScreenState extends State<WebForgotPasswordScreen> {
           builder: (context, state) {
             return SelectionArea(
               child: Scaffold(
-                body: Row(
-                  children: [
-                    Container(
-                      width: MediaQuery.of(context).size.width / 3,
-                      decoration: const BoxDecoration(
-                        image: DecorationImage(
-                          image: AssetImage(AppImages.forgot),
-                          fit: BoxFit.fill,
+                body: LayoutBuilder(builder: (BuildContext context, BoxConstraints constraints) {
+                  if(constraints.maxWidth < 700){
+                    return SingleChildScrollView(
+                      child: Padding(
+                        padding: const EdgeInsets.only(
+                            top: 110.0, left: 24, right: 24,bottom: 150),
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            MouseRegion(
+                              cursor: SystemMouseCursors.click,
+                              child: InkWell(
+                                hoverColor: Colors.transparent,
+                                splashColor: Colors.transparent,
+                                highlightColor: Colors.transparent,
+                                onTap: () {
+                                  router.pop();
+                                },
+                                child: const SizedBox(
+                                    height: 20,
+                                    width: 20,
+                                    child: FaIcon(
+                                      FontAwesomeIcons.chevronLeft,
+                                      size: 18,
+                                    )),
+                              ),
+                            ),
+                            const SizedBox(
+                              height: 76,
+                            ),
+                            Text(
+                              AppStrings.forgotPass,
+                              style: AppTheme.themeData.textTheme.headlineLarge,
+                            ),
+                            Text(
+                              AppStrings.forgotPassHeader,
+                              style: AppTheme.themeData.textTheme.headlineSmall,
+                            ),
+                            const SizedBox(
+                              height: 30,
+                            ),
+                            Text(
+                              AppStrings.email,
+                              style: AppTheme.themeData.textTheme.titleMedium,
+                            ),
+                            const SizedBox(
+                              height: 7,
+                            ),
+                            Form(
+                              key: _formKey,
+                              child: AppTextField(
+                                focusNode: _emailNode,
+                                textController: _emailController,
+                                hintText: AppStrings.enterEmail,
+                                validator: Validator.validateEmail,
+                              ),
+                            ),
+                            const SizedBox(
+                              height: 27,
+                            ),
+                            MouseRegion(
+                              onEnter: (_) {
+                                setState(() {
+                                  isHoveredButton = !isHoveredButton;
+                                });
+                              },
+                              onExit: (_) {
+                                setState(() {
+                                  isHoveredButton = !isHoveredButton;
+                                });
+                              },
+                              child: AppElevatedButton(
+                                  color: isHoveredButton
+                                      ? AppColors.mainAccent
+                                      : AppColors.mainAccent.withOpacity(0.6),
+                                  widget: state.maybeMap(
+                                      loading: (_) => const SizedBox(
+                                          width: 20,
+                                          height: 20,
+                                          child: LoadingIndicator(
+                                            color: Colors.white,
+                                          )),
+                                      orElse: () => Text(
+                                        AppStrings.buttonSend,
+                                        style: AppTheme
+                                            .themeData.textTheme.titleSmall!
+                                            .copyWith(color: Colors.white),
+                                      )),
+                                  text: AppStrings.buttonSend,
+                                  onPressed: () {
+                                    if (!_formKey.currentState!.validate()) {
+                                      return;
+                                    }
+                                    _formKey.currentState!.save();
+                                    _bloc.add(ForgotPasswordEvent.resetPassword(
+                                        email: _emailController.text));
+                                  }),
+                            ),
+                            const SizedBox(
+                              height: 17,
+                            ),
+                          ],
                         ),
                       ),
-                    ),
-                    Expanded(
-                      child: SingleChildScrollView(
-                        child: Padding(
-                          padding: const EdgeInsets.only(
-                              top: 127.0, left: 80, right: 80, bottom: 260),
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              MouseRegion(
-                                cursor: SystemMouseCursors.click,
-                                child: InkWell(
-                                  hoverColor: Colors.transparent,
-                                  splashColor: Colors.transparent,
-                                  highlightColor: Colors.transparent,
-                                  onTap: () {
-                                    router.pop();
-                                  },
-                                  child: const SizedBox(
-                                      height: 20,
-                                      width: 20,
-                                      child: FaIcon(
-                                        FontAwesomeIcons.chevronLeft,
-                                        size: 18,
-                                      )),
-                                ),
-                              ),
-                              const SizedBox(
-                                height: 76,
-                              ),
-                              Text(
-                                AppStrings.forgotPass,
-                                style: AppTheme.themeData.textTheme.headlineLarge,
-                              ),
-                              Text(
-                                AppStrings.forgotPassHeader,
-                                style: AppTheme.themeData.textTheme.headlineSmall,
-                              ),
-                              const SizedBox(
-                                height: 30,
-                              ),
-                              Text(
-                                AppStrings.email,
-                                style: AppTheme.themeData.textTheme.titleMedium,
-                              ),
-                              const SizedBox(
-                                height: 7,
-                              ),
-                              Form(
-                                key: _formKey,
-                                child: AppTextField(
-                                  focusNode: _emailNode,
-                                  textController: _emailController,
-                                  hintText: AppStrings.enterEmail,
-                                  validator: Validator.validateEmail,
-                                ),
-                              ),
-                              const SizedBox(
-                                height: 27,
-                              ),
-                              MouseRegion(
-                                onEnter: (_) {
-                                  setState(() {
-                                    isHoveredButton = !isHoveredButton;
-                                  });
-                                },
-                                onExit: (_) {
-                                  setState(() {
-                                    isHoveredButton = !isHoveredButton;
-                                  });
-                                },
-                                child: AppElevatedButton(
-                                    color: isHoveredButton
-                                        ? AppColors.mainAccent
-                                        : AppColors.mainAccent.withOpacity(0.6),
-                                    widget: state.maybeMap(
-                                        loading: (_) => const SizedBox(
-                                            width: 20,
-                                            height: 20,
-                                            child: LoadingIndicator(
-                                              color: Colors.white,
-                                            )),
-                                        orElse: () => Text(
-                                              AppStrings.buttonSend,
-                                              style: AppTheme
-                                                  .themeData.textTheme.titleSmall!
-                                                  .copyWith(color: Colors.white),
-                                            )),
-                                    text: AppStrings.buttonSend,
-                                    onPressed: () {
-                                      if (!_formKey.currentState!.validate()) {
-                                        return;
-                                      }
-                                      _formKey.currentState!.save();
-                                      _bloc.add(ForgotPasswordEvent.resetPassword(
-                                          email: _emailController.text));
-                                    }),
-                              ),
-                              const SizedBox(
-                                height: 17,
-                              ),
-                            ],
+                    );
+                  }
+                  return Row(
+                    children: [
+                      Container(
+                        width: MediaQuery.of(context).size.width / 3,
+                        decoration: const BoxDecoration(
+                          image: DecorationImage(
+                            image: AssetImage(AppImages.forgot),
+                            fit: BoxFit.fill,
                           ),
                         ),
                       ),
-                    ),
-                  ],
+                      Expanded(
+                        child: SingleChildScrollView(
+                          child: Padding(
+                            padding: const EdgeInsets.only(
+                                top: 127.0, left: 80, right: 80, bottom: 260),
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                MouseRegion(
+                                  cursor: SystemMouseCursors.click,
+                                  child: InkWell(
+                                    hoverColor: Colors.transparent,
+                                    splashColor: Colors.transparent,
+                                    highlightColor: Colors.transparent,
+                                    onTap: () {
+                                      router.pop();
+                                    },
+                                    child: const SizedBox(
+                                        height: 20,
+                                        width: 20,
+                                        child: FaIcon(
+                                          FontAwesomeIcons.chevronLeft,
+                                          size: 18,
+                                        )),
+                                  ),
+                                ),
+                                const SizedBox(
+                                  height: 76,
+                                ),
+                                Text(
+                                  AppStrings.forgotPass,
+                                  style: AppTheme.themeData.textTheme.headlineLarge,
+                                ),
+                                Text(
+                                  AppStrings.forgotPassHeader,
+                                  style: AppTheme.themeData.textTheme.headlineSmall,
+                                ),
+                                const SizedBox(
+                                  height: 30,
+                                ),
+                                Text(
+                                  AppStrings.email,
+                                  style: AppTheme.themeData.textTheme.titleMedium,
+                                ),
+                                const SizedBox(
+                                  height: 7,
+                                ),
+                                Form(
+                                  key: _formKey,
+                                  child: AppTextField(
+                                    focusNode: _emailNode,
+                                    textController: _emailController,
+                                    hintText: AppStrings.enterEmail,
+                                    validator: Validator.validateEmail,
+                                  ),
+                                ),
+                                const SizedBox(
+                                  height: 27,
+                                ),
+                                MouseRegion(
+                                  onEnter: (_) {
+                                    setState(() {
+                                      isHoveredButton = !isHoveredButton;
+                                    });
+                                  },
+                                  onExit: (_) {
+                                    setState(() {
+                                      isHoveredButton = !isHoveredButton;
+                                    });
+                                  },
+                                  child: AppElevatedButton(
+                                      color: isHoveredButton
+                                          ? AppColors.mainAccent
+                                          : AppColors.mainAccent.withOpacity(0.6),
+                                      widget: state.maybeMap(
+                                          loading: (_) => const SizedBox(
+                                              width: 20,
+                                              height: 20,
+                                              child: LoadingIndicator(
+                                                color: Colors.white,
+                                              )),
+                                          orElse: () => Text(
+                                            AppStrings.buttonSend,
+                                            style: AppTheme
+                                                .themeData.textTheme.titleSmall!
+                                                .copyWith(color: Colors.white),
+                                          )),
+                                      text: AppStrings.buttonSend,
+                                      onPressed: () {
+                                        if (!_formKey.currentState!.validate()) {
+                                          return;
+                                        }
+                                        _formKey.currentState!.save();
+                                        _bloc.add(ForgotPasswordEvent.resetPassword(
+                                            email: _emailController.text));
+                                      }),
+                                ),
+                                const SizedBox(
+                                  height: 17,
+                                ),
+                              ],
+                            ),
+                          ),
+                        ),
+                      ),
+                    ],
+                  );
+                },
+
                 ),
               ),
             );

@@ -51,9 +51,11 @@ class CardsBloc extends Bloc<CardsEvent, CardsState> {
   Future<void> _createNewCard(
       _CreateNewCard event, Emitter<CardsState> emit) async {
     id++;
+
     cardsList.add({
       'name':
           CardEntity(id: id.toString(), front: event.front, back: event.back),
+
       'toDelete': false
     });
     emit(CardsState.loading());
@@ -61,8 +63,10 @@ class CardsBloc extends Bloc<CardsEvent, CardsState> {
   }
 
   Future<void> _editCard(_EditCard event, Emitter<CardsState> emit) async {
+
     cardsList.removeWhere(
         (element) => (element['name'] as CardEntity).id == event.card.id);
+
     cardsList.add({'name': event.card, 'toDelete': false});
     emit(CardsState.loading());
     emit(CardsState.initial(cardsList: cardsList));

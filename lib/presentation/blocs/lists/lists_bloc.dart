@@ -15,7 +15,9 @@ class ListsBloc extends Bloc<ListsEvent, ListsState> {
     on<ListsEvent>(_mapEventToState);
   }
 
+
   final MockData data;
+
 
   bool isEditMode = false;
 
