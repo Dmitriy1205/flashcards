@@ -24,7 +24,8 @@ class AppStrings {
   static const String edit = 'Edit';
   static const String newCollection = 'New Collection';
   static const String create = 'Create';
-  static const String giveName = 'Give a name to your collection';
+  static const String save = 'Save';
+  static const String giveName = 'Give a new name to your collection';
   static const String cancel = 'Cancel';
   static const String cards = 'Cards';
   static const String card = 'Card';
@@ -32,9 +33,17 @@ class AppStrings {
   static const String done = 'Done';
   static const String front = 'Front';
   static const String back = 'Back';
+
+  static const String filePdf = 'File Pdf';
+  static const String learnNow = 'Learn Now';
+  static const String learn = 'Learn';
+  static const String share = 'Share';
+  static const String logout = 'Logout';
   static const String profile = 'Profile';
+
   static const String language = 'Language';
   static const String english = 'English';
+
 
 
 }

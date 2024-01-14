@@ -1,5 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flashcards/data/remote/empty.dart';
 import 'package:flashcards/presentation/blocs/auth/auth_bloc.dart';
 import 'package:flashcards/presentation/blocs/cards/cards_bloc.dart';
 import 'package:flashcards/presentation/blocs/lists/lists_bloc.dart';
@@ -23,7 +24,8 @@ Future<void> init() async {
   ///Repositories
 
   sl.registerSingleton<AuthRepository>(authRepository);
-
+// to delete
+  MockData mockData = MockData();
   ///Blocs
   sl.registerLazySingleton(() => AuthBloc(authRepository: sl()));
   sl.registerFactory(() => SignupBloc(auth: sl()));
@@ -31,7 +33,7 @@ Future<void> init() async {
   sl.registerFactory(() => ForgotPasswordBloc(auth: sl()));
   sl.registerFactory(() => GoogleSigninBloc(auth: sl()));
 
-  sl.registerLazySingleton(() => ListsBloc());
+  sl.registerLazySingleton(() => ListsBloc(data: mockData));
   sl.registerLazySingleton(() => CardsBloc());
 
   sl.registerFactory(() => AppleSigninBloc(auth: sl()));

@@ -1,5 +1,9 @@
 import 'dart:async';
+import 'package:flashcards/presentation/screens/mobile_screens/home.dart';
+import 'package:flashcards/presentation/screens/mobile_screens/lists_screen/collections.dart';
+import 'package:flashcards/presentation/screens/mobile_screens/lists_screen/learn.dart';
 import 'package:flashcards/presentation/screens/mobile_screens/lists_screen/lists_screen.dart';
+import 'package:flashcards/presentation/screens/mobile_screens/profile/profile.dart';
 import 'package:flashcards/presentation/screens/web_screens/auth/web_forgot_password.dart';
 import 'package:flashcards/presentation/screens/web_screens/home/learn/web_learn.dart';
 import 'package:flashcards/presentation/screens/web_screens/home/lists/cards/web_cards.dart';
@@ -67,8 +71,10 @@ final GoRouter router = GoRouter(
           )
         : GoRoute(
             path: '/',
-            pageBuilder: (c, s) =>
-                const MaterialPage(child: MobileSignInScreen()),
+            pageBuilder: (c, s) =>  MaterialPage(child:
+            // HomeMobile()
+                MobileSignInScreen()
+                ),
             redirect: (contest, state) {
               final st = _bloc.state;
 
@@ -157,6 +163,10 @@ final GoRouter router = GoRouter(
         child: WebEditCard(),
       ),
     ),
+    GoRoute(path: '/learn', builder: (context, state) => const Learn()),
+    GoRoute(
+        path: '/lists', builder: (context, state) => const Lists()),
+    GoRoute(path: '/profile', builder: (context, state) => const Profile()),
   ],
   refreshListenable: GoRouterRefreshStream(_bloc.stream),
 );

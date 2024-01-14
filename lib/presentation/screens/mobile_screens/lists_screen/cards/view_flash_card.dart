@@ -1,11 +1,13 @@
 import 'dart:math';
 
 import 'package:flashcards/core/const/colors.dart';
+import 'package:flashcards/core/const/icons.dart';
 import 'package:flashcards/core/const/strings.dart';
 import 'package:flashcards/core/themes/theme.dart';
 import 'package:flashcards/domain/entities/card_entity/card_entity.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
+import 'create_edit_card.dart';
 
 class ViewFlashCard extends StatefulWidget {
   const ViewFlashCard({Key? key, required this.card}) : super(key: key);
@@ -17,6 +19,7 @@ class ViewFlashCard extends StatefulWidget {
 
 class _ViewFlashCardState extends State<ViewFlashCard> {
   bool isFlipped = false;
+  bool disableInitialAnimation = true;
 
   @override
   Widget build(BuildContext context) {
@@ -30,10 +33,10 @@ class _ViewFlashCardState extends State<ViewFlashCard> {
               Row(children: [
                 GestureDetector(
                   onTap: () {
-                    Navigator.of(context).pop();
+                    Navigator.pop(context);
                   },
                   child: SvgPicture.asset(
-                    'assets/icons/left_arrow.svg',
+                    AppIcons.leftArrow,
                     height: 21,
                     width: 19,
                   ),
@@ -48,10 +51,15 @@ class _ViewFlashCardState extends State<ViewFlashCard> {
               ]),
               TextButton(
                 onPressed: () {
-                  Navigator.pop(context);
+                  Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) => CreateEditCard(
+                                card: widget.card,
+                              )));
                 },
                 child: Text(
-                  AppStrings.done,
+                  AppStrings.edit,
                   style: AppTheme.themeData.textTheme.titleLarge!.copyWith(
                     fontSize: 20,
                   ),
@@ -68,11 +76,14 @@ class _ViewFlashCardState extends State<ViewFlashCard> {
                   child: GestureDetector(
                       onTap: () {
                         setState(() {
+                          disableInitialAnimation = false;
                           isFlipped = !isFlipped;
                         });
                       },
                       child: TweenAnimationBuilder(
-                        duration: const Duration(milliseconds: 700),
+                        duration: disableInitialAnimation
+                            ? const Duration(milliseconds: 0)
+                            : const Duration(milliseconds: 700),
                         curve: Curves.easeOut,
                         tween: Tween(
                             begin: isFlipped ? 180.0 : 0.0,
@@ -81,17 +92,46 @@ class _ViewFlashCardState extends State<ViewFlashCard> {
                           return RotationY(
                             rotationY: value,
                             child: Card(
-                                child: Container(
-                                    width: 380,
-                                    height: 470,
-                                    color: Colors.white,
-                                    child: Center(
-                                      child: value >= 90
-                                          ? RotationY(
-                                              rotationY: value >= 90 ? 180 : 0,
-                                              child: Text(widget.card.front))
-                                          : Text(widget.card.back),
-                                    ))),
+                              child: Container(
+                                decoration: BoxDecoration(
+                                  color: Colors.white,
+                                  borderRadius: const BorderRadius.all(
+                                      Radius.circular(15)),
+                                  boxShadow: [
+                                    BoxShadow(
+                                      color: Colors.grey.withOpacity(0.5),
+                                      spreadRadius: 2,
+                                      blurRadius: 3,
+                                      offset: const Offset(
+                                          0, 3), // changes position of shadow
+                                    ),
+                                  ],
+                                ),
+                                width: 380,
+                                height: 470,
+                                child: Center(
+                                  child: RotationY(
+                                    rotationY: value >= 90 ? 180 : 0,
+                                    child: Padding(
+                                      padding: const EdgeInsets.symmetric(
+                                          horizontal: 50),
+                                      child: Text(
+                                        value >= 90
+                                            ? widget.card.front
+                                            : widget.card.back,
+                                        textAlign: TextAlign.center,
+                                        style: AppTheme
+                                            .themeData.textTheme.headlineSmall!
+                                            .copyWith(
+                                          fontSize: 24,
+                                          color: const Color(0xFF3C39D1),
+                                        ),
+                                      ),
+                                    ),
+                                  ),
+                                ),
+                              ),
+                            ),
                           );
                         },
                       ))),

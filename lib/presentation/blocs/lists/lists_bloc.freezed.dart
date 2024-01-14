@@ -623,7 +623,8 @@ mixin _$ListsState {
     required TResult Function() initial,
     required TResult Function(String collectionsListName) viewCards,
     required TResult Function() loading,
-    required TResult Function() viewCollections,
+    required TResult Function(List<Map<String, dynamic>> collectionsList)
+        viewCollections,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
@@ -631,7 +632,8 @@ mixin _$ListsState {
     TResult? Function()? initial,
     TResult? Function(String collectionsListName)? viewCards,
     TResult? Function()? loading,
-    TResult? Function()? viewCollections,
+    TResult? Function(List<Map<String, dynamic>> collectionsList)?
+        viewCollections,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
@@ -639,7 +641,8 @@ mixin _$ListsState {
     TResult Function()? initial,
     TResult Function(String collectionsListName)? viewCards,
     TResult Function()? loading,
-    TResult Function()? viewCollections,
+    TResult Function(List<Map<String, dynamic>> collectionsList)?
+        viewCollections,
     required TResult orElse(),
   }) =>
       throw _privateConstructorUsedError;
@@ -729,7 +732,8 @@ class _$InitialImpl implements _Initial {
     required TResult Function() initial,
     required TResult Function(String collectionsListName) viewCards,
     required TResult Function() loading,
-    required TResult Function() viewCollections,
+    required TResult Function(List<Map<String, dynamic>> collectionsList)
+        viewCollections,
   }) {
     return initial();
   }
@@ -740,7 +744,8 @@ class _$InitialImpl implements _Initial {
     TResult? Function()? initial,
     TResult? Function(String collectionsListName)? viewCards,
     TResult? Function()? loading,
-    TResult? Function()? viewCollections,
+    TResult? Function(List<Map<String, dynamic>> collectionsList)?
+        viewCollections,
   }) {
     return initial?.call();
   }
@@ -751,7 +756,8 @@ class _$InitialImpl implements _Initial {
     TResult Function()? initial,
     TResult Function(String collectionsListName)? viewCards,
     TResult Function()? loading,
-    TResult Function()? viewCollections,
+    TResult Function(List<Map<String, dynamic>> collectionsList)?
+        viewCollections,
     required TResult orElse(),
   }) {
     if (initial != null) {
@@ -870,7 +876,8 @@ class _$ViewCardsImpl implements _ViewCards {
     required TResult Function() initial,
     required TResult Function(String collectionsListName) viewCards,
     required TResult Function() loading,
-    required TResult Function() viewCollections,
+    required TResult Function(List<Map<String, dynamic>> collectionsList)
+        viewCollections,
   }) {
     return viewCards(collectionsListName);
   }
@@ -881,7 +888,8 @@ class _$ViewCardsImpl implements _ViewCards {
     TResult? Function()? initial,
     TResult? Function(String collectionsListName)? viewCards,
     TResult? Function()? loading,
-    TResult? Function()? viewCollections,
+    TResult? Function(List<Map<String, dynamic>> collectionsList)?
+        viewCollections,
   }) {
     return viewCards?.call(collectionsListName);
   }
@@ -892,7 +900,8 @@ class _$ViewCardsImpl implements _ViewCards {
     TResult Function()? initial,
     TResult Function(String collectionsListName)? viewCards,
     TResult Function()? loading,
-    TResult Function()? viewCollections,
+    TResult Function(List<Map<String, dynamic>> collectionsList)?
+        viewCollections,
     required TResult orElse(),
   }) {
     if (viewCards != null) {
@@ -990,7 +999,8 @@ class _$LoadingImpl implements _Loading {
     required TResult Function() initial,
     required TResult Function(String collectionsListName) viewCards,
     required TResult Function() loading,
-    required TResult Function() viewCollections,
+    required TResult Function(List<Map<String, dynamic>> collectionsList)
+        viewCollections,
   }) {
     return loading();
   }
@@ -1001,7 +1011,8 @@ class _$LoadingImpl implements _Loading {
     TResult? Function()? initial,
     TResult? Function(String collectionsListName)? viewCards,
     TResult? Function()? loading,
-    TResult? Function()? viewCollections,
+    TResult? Function(List<Map<String, dynamic>> collectionsList)?
+        viewCollections,
   }) {
     return loading?.call();
   }
@@ -1012,7 +1023,8 @@ class _$LoadingImpl implements _Loading {
     TResult Function()? initial,
     TResult Function(String collectionsListName)? viewCards,
     TResult Function()? loading,
-    TResult Function()? viewCollections,
+    TResult Function(List<Map<String, dynamic>> collectionsList)?
+        viewCollections,
     required TResult orElse(),
   }) {
     if (loading != null) {
@@ -1068,6 +1080,8 @@ abstract class _$$ViewCollectionsImplCopyWith<$Res> {
   factory _$$ViewCollectionsImplCopyWith(_$ViewCollectionsImpl value,
           $Res Function(_$ViewCollectionsImpl) then) =
       __$$ViewCollectionsImplCopyWithImpl<$Res>;
+  @useResult
+  $Res call({List<Map<String, dynamic>> collectionsList});
 }
 
 /// @nodoc
@@ -1077,26 +1091,60 @@ class __$$ViewCollectionsImplCopyWithImpl<$Res>
   __$$ViewCollectionsImplCopyWithImpl(
       _$ViewCollectionsImpl _value, $Res Function(_$ViewCollectionsImpl) _then)
       : super(_value, _then);
+
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? collectionsList = null,
+  }) {
+    return _then(_$ViewCollectionsImpl(
+      collectionsList: null == collectionsList
+          ? _value._collectionsList
+          : collectionsList // ignore: cast_nullable_to_non_nullable
+              as List<Map<String, dynamic>>,
+    ));
+  }
 }
 
 /// @nodoc
 
 class _$ViewCollectionsImpl implements _ViewCollections {
-  const _$ViewCollectionsImpl();
+  const _$ViewCollectionsImpl(
+      {required final List<Map<String, dynamic>> collectionsList})
+      : _collectionsList = collectionsList;
+
+  final List<Map<String, dynamic>> _collectionsList;
+  @override
+  List<Map<String, dynamic>> get collectionsList {
+    if (_collectionsList is EqualUnmodifiableListView) return _collectionsList;
+    // ignore: implicit_dynamic_type
+    return EqualUnmodifiableListView(_collectionsList);
+  }
 
   @override
   String toString() {
-    return 'ListsState.viewCollections()';
+    return 'ListsState.viewCollections(collectionsList: $collectionsList)';
   }
 
   @override
   bool operator ==(Object other) {
     return identical(this, other) ||
-        (other.runtimeType == runtimeType && other is _$ViewCollectionsImpl);
+        (other.runtimeType == runtimeType &&
+            other is _$ViewCollectionsImpl &&
+            const DeepCollectionEquality()
+                .equals(other._collectionsList, _collectionsList));
   }
 
   @override
-  int get hashCode => runtimeType.hashCode;
+  int get hashCode => Object.hash(
+      runtimeType, const DeepCollectionEquality().hash(_collectionsList));
+
+  @JsonKey(ignore: true)
+  @override
+  @pragma('vm:prefer-inline')
+  _$$ViewCollectionsImplCopyWith<_$ViewCollectionsImpl> get copyWith =>
+      __$$ViewCollectionsImplCopyWithImpl<_$ViewCollectionsImpl>(
+          this, _$identity);
 
   @override
   @optionalTypeArgs
@@ -1104,9 +1152,10 @@ class _$ViewCollectionsImpl implements _ViewCollections {
     required TResult Function() initial,
     required TResult Function(String collectionsListName) viewCards,
     required TResult Function() loading,
-    required TResult Function() viewCollections,
+    required TResult Function(List<Map<String, dynamic>> collectionsList)
+        viewCollections,
   }) {
-    return viewCollections();
+    return viewCollections(collectionsList);
   }
 
   @override
@@ -1115,9 +1164,10 @@ class _$ViewCollectionsImpl implements _ViewCollections {
     TResult? Function()? initial,
     TResult? Function(String collectionsListName)? viewCards,
     TResult? Function()? loading,
-    TResult? Function()? viewCollections,
+    TResult? Function(List<Map<String, dynamic>> collectionsList)?
+        viewCollections,
   }) {
-    return viewCollections?.call();
+    return viewCollections?.call(collectionsList);
   }
 
   @override
@@ -1126,11 +1176,12 @@ class _$ViewCollectionsImpl implements _ViewCollections {
     TResult Function()? initial,
     TResult Function(String collectionsListName)? viewCards,
     TResult Function()? loading,
-    TResult Function()? viewCollections,
+    TResult Function(List<Map<String, dynamic>> collectionsList)?
+        viewCollections,
     required TResult orElse(),
   }) {
     if (viewCollections != null) {
-      return viewCollections();
+      return viewCollections(collectionsList);
     }
     return orElse();
   }
@@ -1174,5 +1225,12 @@ class _$ViewCollectionsImpl implements _ViewCollections {
 }
 
 abstract class _ViewCollections implements ListsState {
-  const factory _ViewCollections() = _$ViewCollectionsImpl;
+  const factory _ViewCollections(
+          {required final List<Map<String, dynamic>> collectionsList}) =
+      _$ViewCollectionsImpl;
+
+  List<Map<String, dynamic>> get collectionsList;
+  @JsonKey(ignore: true)
+  _$$ViewCollectionsImplCopyWith<_$ViewCollectionsImpl> get copyWith =>
+      throw _privateConstructorUsedError;
 }
