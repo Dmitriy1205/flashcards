@@ -23,6 +23,5 @@ Map<String, dynamic> _$$CollectionEntityImplToJson(
       'id': instance.id,
       'collectionName': instance.collectionName,
       'cards': instance.cards,
-      'createdAt':
-          FirebaseTimestampConverters.toTimestampString(instance.createdAt),
+      'createdAt': instance.createdAt.toIso8601String(),
     };

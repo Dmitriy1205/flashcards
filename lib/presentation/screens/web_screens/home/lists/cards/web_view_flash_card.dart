@@ -3,16 +3,13 @@ import 'dart:math';
 import 'package:flashcards/core/const/colors.dart';
 import 'package:flashcards/core/const/icons.dart';
 import 'package:flashcards/core/const/strings.dart';
+import 'package:flashcards/core/router/router.dart';
 import 'package:flashcards/core/themes/theme.dart';
 import 'package:flashcards/domain/entities/card_entity/card_entity.dart';
 import 'package:flashcards/presentation/widgets/app_round_button.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'package:go_router/go_router.dart';
 
-import '../../../../../../core/router/router.dart';
-import '../../../../../blocs/cards/cards_bloc.dart';
 
 class WebViewFlashCard extends StatefulWidget {
   const WebViewFlashCard({Key? key, required this.card}) : super(key: key);

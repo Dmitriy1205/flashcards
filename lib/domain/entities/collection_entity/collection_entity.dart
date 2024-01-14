@@ -13,8 +13,7 @@ class CollectionEntity with _$CollectionEntity {
     required String collectionName,
     List<CardEntity>? cards,
     @JsonKey(
-        fromJson: FirebaseTimestampConverters.fromTimestamp,
-        toJson: FirebaseTimestampConverters.toTimestampString)
+        fromJson: FirebaseTimestampConverters.fromTimestamp)
     required DateTime createdAt,
   }) = _CollectionEntity;
 

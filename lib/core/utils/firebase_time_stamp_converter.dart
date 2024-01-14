@@ -5,8 +5,10 @@ class FirebaseTimestampConverters{
   static DateTime fromTimestamp(dynamic timestamp){
     if(timestamp is int){
       return DateTime.fromMillisecondsSinceEpoch(timestamp);
-    }else{
+    }else if (timestamp is Timestamp) {
       return timestamp.toDate();
+    } else {
+      throw ArgumentError("Unsupported timestamp type");
     }
   }
   static String toTimestampString(DateTime date){

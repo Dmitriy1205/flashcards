@@ -23,9 +23,7 @@ mixin _$CollectionEntity {
   String get id => throw _privateConstructorUsedError;
   String get collectionName => throw _privateConstructorUsedError;
   List<CardEntity>? get cards => throw _privateConstructorUsedError;
-  @JsonKey(
-      fromJson: FirebaseTimestampConverters.fromTimestamp,
-      toJson: FirebaseTimestampConverters.toTimestampString)
+  @JsonKey(fromJson: FirebaseTimestampConverters.fromTimestamp)
   DateTime get createdAt => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
@@ -44,9 +42,7 @@ abstract class $CollectionEntityCopyWith<$Res> {
       {String id,
       String collectionName,
       List<CardEntity>? cards,
-      @JsonKey(
-          fromJson: FirebaseTimestampConverters.fromTimestamp,
-          toJson: FirebaseTimestampConverters.toTimestampString)
+      @JsonKey(fromJson: FirebaseTimestampConverters.fromTimestamp)
       DateTime createdAt});
 }
 
@@ -101,9 +97,7 @@ abstract class _$$CollectionEntityImplCopyWith<$Res>
       {String id,
       String collectionName,
       List<CardEntity>? cards,
-      @JsonKey(
-          fromJson: FirebaseTimestampConverters.fromTimestamp,
-          toJson: FirebaseTimestampConverters.toTimestampString)
+      @JsonKey(fromJson: FirebaseTimestampConverters.fromTimestamp)
       DateTime createdAt});
 }
 
@@ -151,9 +145,7 @@ class _$CollectionEntityImpl implements _CollectionEntity {
       {required this.id,
       required this.collectionName,
       final List<CardEntity>? cards,
-      @JsonKey(
-          fromJson: FirebaseTimestampConverters.fromTimestamp,
-          toJson: FirebaseTimestampConverters.toTimestampString)
+      @JsonKey(fromJson: FirebaseTimestampConverters.fromTimestamp)
       required this.createdAt})
       : _cards = cards;
 
@@ -175,9 +167,7 @@ class _$CollectionEntityImpl implements _CollectionEntity {
   }
 
   @override
-  @JsonKey(
-      fromJson: FirebaseTimestampConverters.fromTimestamp,
-      toJson: FirebaseTimestampConverters.toTimestampString)
+  @JsonKey(fromJson: FirebaseTimestampConverters.fromTimestamp)
   final DateTime createdAt;
 
   @override
@@ -223,9 +213,7 @@ abstract class _CollectionEntity implements CollectionEntity {
       {required final String id,
       required final String collectionName,
       final List<CardEntity>? cards,
-      @JsonKey(
-          fromJson: FirebaseTimestampConverters.fromTimestamp,
-          toJson: FirebaseTimestampConverters.toTimestampString)
+      @JsonKey(fromJson: FirebaseTimestampConverters.fromTimestamp)
       required final DateTime createdAt}) = _$CollectionEntityImpl;
 
   factory _CollectionEntity.fromJson(Map<String, dynamic> json) =
@@ -238,9 +226,7 @@ abstract class _CollectionEntity implements CollectionEntity {
   @override
   List<CardEntity>? get cards;
   @override
-  @JsonKey(
-      fromJson: FirebaseTimestampConverters.fromTimestamp,
-      toJson: FirebaseTimestampConverters.toTimestampString)
+  @JsonKey(fromJson: FirebaseTimestampConverters.fromTimestamp)
   DateTime get createdAt;
   @override
   @JsonKey(ignore: true)
