@@ -2,7 +2,6 @@ import 'package:flashcards/core/const/colors.dart';
 import 'package:flashcards/core/const/icons.dart';
 import 'package:flashcards/core/const/strings.dart';
 import 'package:flashcards/core/themes/theme.dart';
-import 'package:flashcards/data/remote/empty.dart';
 import 'package:flashcards/domain/entities/card_entity/card_entity.dart';
 import 'package:flashcards/presentation/blocs/cards/cards_bloc.dart';
 import 'package:flashcards/presentation/blocs/lists/lists_bloc.dart';
@@ -14,7 +13,10 @@ import 'package:flutter_svg/svg.dart';
 import 'create_edit_card.dart';
 
 class Cards extends StatefulWidget {
-  const Cards({Key? key, required this.collectionName}) : super(key: key);
+  const Cards(
+      {Key? key, required this.collectionId, required this.collectionName})
+      : super(key: key);
+  final String collectionId;
   final String collectionName;
 
   @override
@@ -23,6 +25,15 @@ class Cards extends StatefulWidget {
 
 class _CardsState extends State<Cards> {
   TextEditingController nameTextEditingController = TextEditingController();
+
+  @override
+  void initState() {
+    print('widget.collectionId ${widget.collectionId}');
+    super.initState();
+    context
+        .read<CardsBloc>()
+        .add(CardsEvent.initCard(collectionId: widget.collectionId));
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -37,7 +48,9 @@ class _CardsState extends State<Cards> {
               Row(children: [
                 GestureDetector(
                   onTap: () {
-                    context.read<ListsBloc>().add(const ListsEvent.started());
+                    context
+                        .read<ListsBloc>()
+                        .add(ListsEvent.started(isEditMode: false));
                     Navigator.of(context).pop();
                   },
                   child: SvgPicture.asset(
@@ -196,6 +209,7 @@ class _CardsState extends State<Cards> {
           state.maybeMap(orElse: () {});
         },
         builder: (context, state) {
+          print('stateCard $state');
           return state.maybeMap(initial: (data) {
             return Column(
               children: [
@@ -254,8 +268,8 @@ class _CardsState extends State<Cards> {
                                               child: context
                                                       .watch<CardsBloc>()
                                                       .cardsListToDelete
-                                                      .contains(MockData
-                                                          .cardsList[i].id)
+                                                      .contains(
+                                                          data.cardsList![i].id)
                                                   ? const Icon(
                                                       Icons.check_circle,
                                                       size: 23.0,
@@ -292,7 +306,11 @@ class _CardsState extends State<Cards> {
                                             context,
                                             MaterialPageRoute(
                                                 builder: (context) =>
-                                                    ViewFlashCard(card: card)));
+                                                    ViewFlashCard(
+                                                      card: card,
+                                                      collectionId:
+                                                          widget.collectionId,
+                                                    )));
                                       },
                                       child: ListTile(
                                         title: Text(
@@ -322,7 +340,7 @@ class _CardsState extends State<Cards> {
                             ),
                           );
                         },
-                        itemCount: MockData.cardsList.length),
+                        itemCount: data.cardsList!.length),
                   ),
                 ),
               ],
@@ -338,7 +356,9 @@ class _CardsState extends State<Cards> {
               child: GestureDetector(
                 onTap: () {
                   context.read<CardsBloc>().add(CardsEvent.deleteSelectedCards(
-                      context.read<CardsBloc>().cardsListToDelete));
+                      cardsIdToDelete:
+                          context.read<CardsBloc>().cardsListToDelete,
+                      collectionId: widget.collectionId));
                   context.read<CardsBloc>().isEditMode = false;
                 },
                 child: SizedBox(
@@ -359,7 +379,8 @@ class _CardsState extends State<Cards> {
                   Navigator.push(
                       context,
                       MaterialPageRoute(
-                          builder: (context) => CreateEditCard()));
+                          builder: (context) => CreateEditCard(
+                              collectionId: widget.collectionId)));
                 },
                 child: SizedBox(
                   height: 76,

@@ -1,6 +1,6 @@
 import 'package:bloc/bloc.dart';
 import 'package:flashcards/domain/entities/collection_entity/collection_entity.dart';
-import 'package:flashcards/domain/repositories/collection_repo/collection_repo_impl.dart';
+import 'package:flashcards/domain/repositories/collection_repo/collection_repo_contract.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 
 part 'lists_event.dart';
@@ -11,20 +11,18 @@ part 'lists_bloc.freezed.dart';
 
 class ListsBloc extends Bloc<ListsEvent, ListsState> {
   ListsBloc({required this.collectionRepo})
-      : super(ListsState.viewCollections(collectionsList: [])) {
+      : super(const ListsState.viewCollections(
+            collectionsList: [], isEditMode: false, listToDelete: [])) {
     on<ListsEvent>(_mapEventToState);
 
     collectionRepo
         .fetchCollections()
-        .then((value) =>
-        add(const ListsEvent.started()));
-        }
+        .then((value) => add(const ListsEvent.started(isEditMode: false)));
+  }
 
-  final CollectionRepoImpl collectionRepo;
-  List<CollectionEntity> listIdToDelete = [];
+  final CollectionRepoContract collectionRepo;
   bool isEditMode = false;
-  List<CollectionEntity> data = [];
-
+  List<String> listIdToDelete = [];
 
   Future<void> _mapEventToState(ListsEvent event, Emitter<ListsState> emit) {
     return event.map(
@@ -36,37 +34,38 @@ class ListsBloc extends Bloc<ListsEvent, ListsState> {
     );
   }
 
-  Future<void> _createNewList(_CreateNewList event,
-      Emitter<ListsState> emit) async {
-    // data = await collectionRepo.fetchCollections();
-    print('_createNewList in bloc');
-    collectionRepo.createCollection(collectionName: event.name);
-    data = await collectionRepo.fetchCollections();
+  Future<void> _createNewList(
+      _CreateNewList event, Emitter<ListsState> emit) async {
+    await collectionRepo.createCollection(collectionName: event.name);
+    final List<CollectionEntity> data = await collectionRepo.fetchCollections();
     emit(const ListsState.loading());
-    emit(ListsState.viewCollections(collectionsList: data));
+    emit(ListsState.viewCollections(
+        collectionsList: data, isEditMode: false, listToDelete: []));
   }
 
-  Future<void> _selectCollection(_SelectCollection event,
-      Emitter<ListsState> emit) async {
-    print('collectionsListName in bloc');
-    emit(ListsState.viewCards(collectionsListName: event.collectionsListName));
-    emit(ListsState.viewCollections(collectionsList: data));
+  Future<void> _selectCollection(
+      _SelectCollection event, Emitter<ListsState> emit) async {
+    emit(ListsState.viewCards(
+      collection: event.collection,
+    ));
   }
 
-  Future<void> _deleteSelectedCollection(_DeleteSelecteCollection event,
-      Emitter<ListsState> emit) async {
-    data = await collectionRepo.fetchCollections();
-    collectionRepo.deleteCollections(collections: listIdToDelete);
+  Future<void> _deleteSelectedCollection(
+      _DeleteSelecteCollection event, Emitter<ListsState> emit) async {
+    await collectionRepo.deleteCollections(collections: listIdToDelete);
+    final data = await collectionRepo.fetchCollections();
     emit(const ListsState.loading());
-    emit(ListsState.viewCollections(collectionsList: data));
+    emit(ListsState.viewCollections(
+        collectionsList: data, isEditMode: false, listToDelete: []));
   }
 
-  Future<void> _started(ListsEvent event, Emitter<ListsState> emit) async {
-    data = await collectionRepo.fetchCollections();
+  Future<void> _started(_Started event, Emitter<ListsState> emit) async {
+    final data = await collectionRepo.fetchCollections();
     emit(const ListsState.loading());
-    emit(ListsState.viewCollections(collectionsList: data));
+    isEditMode = event.isEditMode;
+    emit(ListsState.viewCollections(
+        collectionsList: data,
+        isEditMode: event.isEditMode,
+        listToDelete: listIdToDelete));
   }
-
-
-
 }

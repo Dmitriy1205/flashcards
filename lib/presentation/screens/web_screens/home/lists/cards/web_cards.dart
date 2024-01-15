@@ -3,6 +3,7 @@ import 'package:flashcards/core/const/strings.dart';
 import 'package:flashcards/core/themes/theme.dart';
 import 'package:flashcards/data/remote/empty.dart';
 import 'package:flashcards/domain/entities/card_entity/card_entity.dart';
+import 'package:flashcards/domain/entities/collection_entity/collection_entity.dart';
 import 'package:flashcards/presentation/blocs/cards/cards_bloc.dart';
 import 'package:flashcards/presentation/blocs/lists/lists_bloc.dart';
 import 'package:flashcards/presentation/screens/web_screens/home/lists/cards/web_view_flash_card.dart';
@@ -16,8 +17,11 @@ import '../../../../../../core/router/router.dart';
 import '../../../../../widgets/app_round_button.dart';
 
 class WebCards extends StatefulWidget {
-  const WebCards({Key? key, required this.collectionName}) : super(key: key);
+  const WebCards(
+      {Key? key, required this.collectionId, required this.collectionName})
+      : super(key: key);
   final String collectionName;
+  final String collectionId;
 
   @override
   State<WebCards> createState() => _WebCardsState();
@@ -43,7 +47,9 @@ class _WebCardsState extends State<WebCards> {
                   ),
                   InkWell(
                     onTap: () {
-                      context.read<ListsBloc>().add(const ListsEvent.started());
+                      context
+                          .read<ListsBloc>()
+                          .add(ListsEvent.started(isEditMode: false));
                       Navigator.of(context).pop();
                     },
                     child: const FaIcon(
@@ -264,8 +270,8 @@ class _WebCardsState extends State<WebCards> {
                                             child: context
                                                     .watch<CardsBloc>()
                                                     .cardsListToDelete
-                                                    .contains(MockData
-                                                        .cardsList[i].id)
+                                                    .contains(
+                                                        data.cardsList![i].id)
                                                 ? const Icon(
                                                     Icons.check_circle,
                                                     size: 23.0,
@@ -294,8 +300,9 @@ class _WebCardsState extends State<WebCards> {
                                           MaterialPageRoute(
                                               builder: (context) =>
                                                   WebViewFlashCard(
-                                                    card: card,
-                                                  )));
+                                                      card: card,
+                                                      collectionId: widget
+                                                          .collectionId)));
                                     },
                                     child: Container(
                                       height: 148,
@@ -358,7 +365,9 @@ class _WebCardsState extends State<WebCards> {
                     onTap: () {
                       context.read<CardsBloc>().add(
                           CardsEvent.deleteSelectedCards(
-                              context.read<CardsBloc>().cardsListToDelete));
+                              cardsIdToDelete:
+                                  context.read<CardsBloc>().cardsListToDelete,
+                              collectionId: widget.collectionId));
                       context.read<CardsBloc>().isEditMode = false;
                     },
                     svgIcon: AppIcons.trash,
@@ -372,7 +381,9 @@ class _WebCardsState extends State<WebCards> {
                     onTap: () {
                       context.read<CardsBloc>().add(
                           CardsEvent.deleteSelectedCards(
-                              context.read<CardsBloc>().cardsListToDelete));
+                              cardsIdToDelete:
+                                  context.read<CardsBloc>().cardsListToDelete,
+                              collectionId: widget.collectionId));
                       context.read<CardsBloc>().isEditMode = false;
                     },
                     svgIcon: AppIcons.close,

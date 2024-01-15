@@ -4,11 +4,13 @@ part of 'lists_bloc.dart';
 class ListsState with _$ListsState {
   const factory ListsState.initial() = _Initial;
 
-  const factory ListsState.viewCards({required String collectionsListName}) =
+  const factory ListsState.viewCards({required CollectionEntity collection}) =
       _ViewCards;
 
   const factory ListsState.loading() = _Loading;
 
   const factory ListsState.viewCollections(
-      {required List<CollectionEntity> collectionsList}) = _ViewCollections;
+      {required List<CollectionEntity> collectionsList,
+      required bool isEditMode,
+      required List<String> listToDelete}) = _ViewCollections;
 }

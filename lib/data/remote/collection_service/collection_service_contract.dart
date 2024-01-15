@@ -4,7 +4,7 @@ abstract class CollectionServiceContract {
   Future<void> createCollection({required String collectionName});
 
   Future<void> deleteCollections(
-      {required List<CollectionEntity> collectionsList});
+      {required List<String> collectionsListToDelete});
 
   Future<void> fetchCollections();
 }

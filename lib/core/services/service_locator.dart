@@ -1,9 +1,14 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flashcards/data/remote/card_service/card_service_impl.dart';
 import 'package:flashcards/data/remote/collection_service/collection_service_impl.dart';
 import 'package:flashcards/data/remote/empty.dart';
 import 'package:flashcards/data/remote/user_service/user_service_impl.dart';
+import 'package:flashcards/domain/repositories/cards_repo/card_repo_contract.dart';
+import 'package:flashcards/domain/repositories/cards_repo/card_repo_impl.dart';
+import 'package:flashcards/domain/repositories/collection_repo/collection_repo_contract.dart';
 import 'package:flashcards/domain/repositories/collection_repo/collection_repo_impl.dart';
+import 'package:flashcards/domain/repositories/user_repo/user_repo_contract.dart';
 import 'package:flashcards/domain/repositories/user_repo/user_repo_impl.dart';
 import 'package:flashcards/presentation/blocs/auth/auth_bloc.dart';
 import 'package:flashcards/presentation/blocs/cards/cards_bloc.dart';
@@ -34,19 +39,22 @@ Future<void> init() async {
       fireStore: fireStore,
       firebaseStorage: firebaseStorage,
       firebaseAuth: firebaseAuth);
+  final cardService = CardServiceImpl(
+      fireStore: fireStore,
+      firebaseStorage: firebaseStorage,
+      firebaseAuth: firebaseAuth);
 
   final userRepoImpl = UserRepoImpl(userServiceImpl: userService);
   final collectionRepoImpl =
       CollectionRepoImpl(collectionServiceImpl: collectionService);
+  final cardRepoImpl = CardRepoImpl(cardService: cardService);
 
   ///Repositories
 
   sl.registerSingleton<AuthRepository>(authRepository);
-  sl.registerSingleton<UserRepoImpl>(userRepoImpl);
-  sl.registerSingleton<CollectionRepoImpl>(collectionRepoImpl);
-
-// to delete
-  MockData mockData = MockData();
+  sl.registerSingleton<UserRepoContract>(userRepoImpl);
+  sl.registerSingleton<CollectionRepoContract>(collectionRepoImpl);
+  sl.registerSingleton<CardRepoContract>(cardRepoImpl);
 
   ///Blocs
   sl.registerLazySingleton(() => AuthBloc(authRepository: sl()));
@@ -56,7 +64,7 @@ Future<void> init() async {
   sl.registerFactory(() => GoogleSigninBloc(auth: sl()));
 
   sl.registerLazySingleton(() => ListsBloc(collectionRepo: sl()));
-  sl.registerLazySingleton(() => CardsBloc());
+  sl.registerLazySingleton(() => CardsBloc(cardRepo: cardRepoImpl));
 
   sl.registerFactory(() => AppleSigninBloc(auth: sl()));
 }

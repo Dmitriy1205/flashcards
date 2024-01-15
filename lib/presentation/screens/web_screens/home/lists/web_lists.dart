@@ -28,7 +28,7 @@ class _WebListsScreenState extends State<WebListsScreen> {
         viewCards: (selectedCollection) {
           router.push(
             '/web_cards',
-            extra: {"collectionName": selectedCollection.collectionsListName},
+            extra: {"collectionName": selectedCollection.collection.id},
           );
         },
         orElse: () {},
@@ -39,17 +39,17 @@ class _WebListsScreenState extends State<WebListsScreen> {
           automaticallyImplyLeading: false,
           title: Column(
             children: [
-
               Row(
                 mainAxisAlignment: MainAxisAlignment.start,
                 mainAxisSize: MainAxisSize.max,
                 children: [
-                  const SizedBox(width: 64,),
+                  const SizedBox(
+                    width: 64,
+                  ),
                   Text(
                     AppStrings.collections,
                     style: AppTheme.themeData.textTheme.headlineLarge,
                   ),
-
                 ],
               ),
             ],
@@ -57,8 +57,10 @@ class _WebListsScreenState extends State<WebListsScreen> {
         ),
         backgroundColor: AppColors.background,
         body: const Padding(
-          padding: EdgeInsets.only(left: 65.0,top: 40,right: 65.0,bottom: 200),
-          child: WebCollections(collectionsList: [],),
+          padding:
+              EdgeInsets.only(left: 65.0, top: 40, right: 65.0, bottom: 200),
+          child: WebCollections(
+              collectionsList: [], isEditMode: false, listIdToDelete: []),
         ),
         floatingActionButton: context.watch<ListsBloc>().isEditMode
             ? Padding(
@@ -68,12 +70,13 @@ class _WebListsScreenState extends State<WebListsScreen> {
                   children: [
                     AppRoundButton(
                       onTap: () {
-                        context
-                            .read<ListsBloc>()
-                            .add(const ListsEvent.deleteSelectedCollection());
+                        context.read<ListsBloc>().add(
+                            const ListsEvent.deleteSelectedCollection(
+                                collectionsList: []));
                         context.read<ListsBloc>().isEditMode = false;
                       },
-                     svgIcon: AppIcons.trash, showBorder: false,
+                      svgIcon: AppIcons.trash,
+                      showBorder: false,
                       color: AppColors.red,
                     ),
                     const SizedBox(
@@ -81,12 +84,13 @@ class _WebListsScreenState extends State<WebListsScreen> {
                     ),
                     AppRoundButton(
                       onTap: () {
-                        context
-                            .read<ListsBloc>()
-                            .add(const ListsEvent.deleteSelectedCollection());
+                        context.read<ListsBloc>().add(
+                            const ListsEvent.deleteSelectedCollection(
+                                collectionsList: []));
                         context.read<ListsBloc>().isEditMode = false;
                       },
-                      svgIcon: AppIcons.close, showBorder: false,
+                      svgIcon: AppIcons.close,
+                      showBorder: false,
                       color: AppColors.greyLight,
                     ),
                   ],
@@ -101,7 +105,8 @@ class _WebListsScreenState extends State<WebListsScreen> {
                       onTap: () {
                         buildShowDialog(context);
                       },
-                      svgIcon: AppIcons.add, showBorder: false,
+                      svgIcon: AppIcons.add,
+                      showBorder: false,
                     ),
                     const SizedBox(
                       width: 19,
@@ -110,10 +115,11 @@ class _WebListsScreenState extends State<WebListsScreen> {
                       color: Colors.white,
                       onTap: () {
                         context.read<ListsBloc>().isEditMode =
-                        !context.read<ListsBloc>().isEditMode;
+                            !context.read<ListsBloc>().isEditMode;
                         setState(() {});
                       },
-                      svgIcon: AppIcons.pen, showBorder: true,
+                      svgIcon: AppIcons.pen,
+                      showBorder: true,
                     ),
                   ],
                 ),
@@ -122,20 +128,21 @@ class _WebListsScreenState extends State<WebListsScreen> {
     });
   }
 
-
   Future<dynamic> buildShowDialog(BuildContext context) {
     return showDialog(
         context: context,
         builder: (_) {
-          return Dialog(shape: const RoundedRectangleBorder(
-              borderRadius: BorderRadius.all(Radius.circular(15.0))),
+          return Dialog(
+            shape: const RoundedRectangleBorder(
+                borderRadius: BorderRadius.all(Radius.circular(15.0))),
             surfaceTintColor: Colors.white,
-            backgroundColor:Colors.white ,
+            backgroundColor: Colors.white,
             child: SizedBox(
-              height: MediaQuery.of(context).size.height/3.7,
-              width: MediaQuery.of(context).size.width/3.6,
+              height: MediaQuery.of(context).size.height / 3.7,
+              width: MediaQuery.of(context).size.width / 3.6,
               child: Padding(
-                padding: const EdgeInsets.only(left: 12, top: 12, right: 12,bottom: 12),
+                padding: const EdgeInsets.only(
+                    left: 12, top: 12, right: 12, bottom: 12),
                 child: Column(
                   children: [
                     Row(
@@ -145,7 +152,11 @@ class _WebListsScreenState extends State<WebListsScreen> {
                           onTap: () {
                             router.pop(context);
                           },
-                          child: const FaIcon(FontAwesomeIcons.chevronLeft,size: 12,color: AppColors.mainAccent,),
+                          child: const FaIcon(
+                            FontAwesomeIcons.chevronLeft,
+                            size: 12,
+                            color: AppColors.mainAccent,
+                          ),
                         ),
                         Expanded(
                           child: Align(
@@ -165,20 +176,22 @@ class _WebListsScreenState extends State<WebListsScreen> {
                     const SizedBox(
                       height: 22,
                     ),
-                    SizedBox(height: 45,
+                    SizedBox(
+                      height: 45,
                       child: TextField(
                         textAlign: TextAlign.start,
                         textAlignVertical: TextAlignVertical.top,
-                        style: AppTheme.themeData.textTheme.labelMedium!.copyWith(
-                            color: AppColors.mainAccent,
-                            fontWeight: FontWeight.w700),
+                        style: AppTheme.themeData.textTheme.labelMedium!
+                            .copyWith(
+                                color: AppColors.mainAccent,
+                                fontWeight: FontWeight.w700),
                         controller: nameTextEditingController,
                         decoration: const InputDecoration(
                             filled: true,
                             focusColor: AppColors.mainAccent,
                             border: OutlineInputBorder(
                                 borderRadius:
-                                BorderRadius.all(Radius.circular(15)))),
+                                    BorderRadius.all(Radius.circular(15)))),
                       ),
                     ),
                     const SizedBox(
@@ -190,8 +203,9 @@ class _WebListsScreenState extends State<WebListsScreen> {
                               .copyWith(color: AppColors.mainAccent)),
                       onPressed: () {
                         if (nameTextEditingController.text.isNotEmpty) {
-                          context.read<ListsBloc>().add(ListsEvent.createNewList(
-                              name: nameTextEditingController.text));
+                          context.read<ListsBloc>().add(
+                              ListsEvent.createNewList(
+                                  name: nameTextEditingController.text));
                           nameTextEditingController.clear();
                           Navigator.of(context).pop();
                         }

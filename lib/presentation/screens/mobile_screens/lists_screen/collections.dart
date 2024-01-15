@@ -10,16 +10,13 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/svg.dart';
 
-class Collections extends StatefulWidget {
-  const Collections({Key? key, required this.collectionsList})
+class Collections extends StatelessWidget {
+  Collections(
+      {Key? key, required this.collectionsList, required this.isEditMode})
       : super(key: key);
   final List<CollectionEntity> collectionsList;
+  final bool isEditMode;
 
-  @override
-  State<Collections> createState() => _CollectionsState();
-}
-
-class _CollectionsState extends State<Collections> {
   @override
   Widget build(BuildContext context) {
     return Column(
@@ -33,19 +30,30 @@ class _CollectionsState extends State<Collections> {
                     padding: const EdgeInsets.only(
                         left: 24, right: 24, bottom: 11, top: 11),
                     child: Row(children: [
-                      context.watch<ListsBloc>().isEditMode
+                      isEditMode
                           ? Flexible(
                               flex: 1,
                               child: InkWell(
                                 onTap: () {
-                                  setState(() {
-                                    print('setstate');
-
+                                  if (context
+                                      .read<ListsBloc>()
+                                      .listIdToDelete
+                                      .contains(collectionsList[i].id)) {
                                     context
-                                        .watch<ListsBloc>()
+                                        .read<ListsBloc>()
                                         .listIdToDelete
-                                        .add(widget.collectionsList[i]);
-                                  });
+                                        .remove(collectionsList[i].id);
+                                  } else {
+                                    context
+                                        .read<ListsBloc>()
+                                        .listIdToDelete
+                                        .add(collectionsList[i].id);
+                                  }
+                                  context
+                                      .read<ListsBloc>()
+                                      .add(ListsEvent.started(
+                                        isEditMode: isEditMode,
+                                      ));
                                 },
                                 child: Container(
                                   decoration: const BoxDecoration(
@@ -54,10 +62,9 @@ class _CollectionsState extends State<Collections> {
                                   child: Padding(
                                     padding: const EdgeInsets.all(10.0),
                                     child: context
-                                            .watch<ListsBloc>()
+                                            .read<ListsBloc>()
                                             .listIdToDelete
-                                            .contains(
-                                                widget.collectionsList[i].id)
+                                            .contains(collectionsList[i].id)
                                         ? const Icon(
                                             Icons.check_circle,
                                             size: 23.0,
@@ -74,7 +81,7 @@ class _CollectionsState extends State<Collections> {
                             )
                           : const SizedBox(),
                       SizedBox(
-                        width: context.read<ListsBloc>().isEditMode ? 22 : 0,
+                        width: isEditMode ? 22 : 0,
                       ),
                       Flexible(
                         flex: 8,
@@ -88,17 +95,16 @@ class _CollectionsState extends State<Collections> {
                               context
                                   .read<ListsBloc>()
                                   .add(ListsEvent.selectCollection(
-                                    collectionsListName: widget
-                                        .collectionsList[i].collectionName,
+                                    collection: collectionsList[i],
                                   ));
                             },
                             title: Text(
-                              widget.collectionsList[i].collectionName,
+                              collectionsList[i].collectionName,
                               style: AppTheme.themeData.textTheme.titleMedium!
                                   .copyWith(fontSize: 18),
                             ),
                             subtitle: Text(
-                              '${MockData.cardsList.length.toString()} ${AppStrings.cards.toLowerCase()}',
+                              '${collectionsList[i].cards?.length.toString() ?? 0} ${AppStrings.cards.toLowerCase()}',
                               style: AppTheme.themeData.textTheme.labelSmall!
                                   .copyWith(
                                 color: AppColors.mainAccent,
@@ -115,7 +121,7 @@ class _CollectionsState extends State<Collections> {
                     ]),
                   );
                 },
-                itemCount: widget.collectionsList.length),
+                itemCount: collectionsList.length),
           ),
         ),
       ],

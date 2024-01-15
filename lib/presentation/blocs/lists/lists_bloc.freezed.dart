@@ -18,26 +18,29 @@ final _privateConstructorUsedError = UnsupportedError(
 mixin _$ListsEvent {
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
-    required TResult Function() started,
-    required TResult Function(String collectionsListName) selectCollection,
+    required TResult Function(bool isEditMode) started,
+    required TResult Function(CollectionEntity collection) selectCollection,
     required TResult Function(String name) createNewList,
-    required TResult Function() deleteSelectedCollection,
+    required TResult Function(List<CollectionEntity> collectionsList)
+        deleteSelectedCollection,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult? Function()? started,
-    TResult? Function(String collectionsListName)? selectCollection,
+    TResult? Function(bool isEditMode)? started,
+    TResult? Function(CollectionEntity collection)? selectCollection,
     TResult? Function(String name)? createNewList,
-    TResult? Function()? deleteSelectedCollection,
+    TResult? Function(List<CollectionEntity> collectionsList)?
+        deleteSelectedCollection,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
-    TResult Function()? started,
-    TResult Function(String collectionsListName)? selectCollection,
+    TResult Function(bool isEditMode)? started,
+    TResult Function(CollectionEntity collection)? selectCollection,
     TResult Function(String name)? createNewList,
-    TResult Function()? deleteSelectedCollection,
+    TResult Function(List<CollectionEntity> collectionsList)?
+        deleteSelectedCollection,
     required TResult orElse(),
   }) =>
       throw _privateConstructorUsedError;
@@ -92,6 +95,8 @@ abstract class _$$StartedImplCopyWith<$Res> {
   factory _$$StartedImplCopyWith(
           _$StartedImpl value, $Res Function(_$StartedImpl) then) =
       __$$StartedImplCopyWithImpl<$Res>;
+  @useResult
+  $Res call({bool isEditMode});
 }
 
 /// @nodoc
@@ -101,60 +106,88 @@ class __$$StartedImplCopyWithImpl<$Res>
   __$$StartedImplCopyWithImpl(
       _$StartedImpl _value, $Res Function(_$StartedImpl) _then)
       : super(_value, _then);
+
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? isEditMode = null,
+  }) {
+    return _then(_$StartedImpl(
+      isEditMode: null == isEditMode
+          ? _value.isEditMode
+          : isEditMode // ignore: cast_nullable_to_non_nullable
+              as bool,
+    ));
+  }
 }
 
 /// @nodoc
 
 class _$StartedImpl implements _Started {
-  const _$StartedImpl();
+  const _$StartedImpl({required this.isEditMode});
+
+  @override
+  final bool isEditMode;
 
   @override
   String toString() {
-    return 'ListsEvent.started()';
+    return 'ListsEvent.started(isEditMode: $isEditMode)';
   }
 
   @override
   bool operator ==(Object other) {
     return identical(this, other) ||
-        (other.runtimeType == runtimeType && other is _$StartedImpl);
+        (other.runtimeType == runtimeType &&
+            other is _$StartedImpl &&
+            (identical(other.isEditMode, isEditMode) ||
+                other.isEditMode == isEditMode));
   }
 
   @override
-  int get hashCode => runtimeType.hashCode;
+  int get hashCode => Object.hash(runtimeType, isEditMode);
+
+  @JsonKey(ignore: true)
+  @override
+  @pragma('vm:prefer-inline')
+  _$$StartedImplCopyWith<_$StartedImpl> get copyWith =>
+      __$$StartedImplCopyWithImpl<_$StartedImpl>(this, _$identity);
 
   @override
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
-    required TResult Function() started,
-    required TResult Function(String collectionsListName) selectCollection,
+    required TResult Function(bool isEditMode) started,
+    required TResult Function(CollectionEntity collection) selectCollection,
     required TResult Function(String name) createNewList,
-    required TResult Function() deleteSelectedCollection,
+    required TResult Function(List<CollectionEntity> collectionsList)
+        deleteSelectedCollection,
   }) {
-    return started();
+    return started(isEditMode);
   }
 
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult? Function()? started,
-    TResult? Function(String collectionsListName)? selectCollection,
+    TResult? Function(bool isEditMode)? started,
+    TResult? Function(CollectionEntity collection)? selectCollection,
     TResult? Function(String name)? createNewList,
-    TResult? Function()? deleteSelectedCollection,
+    TResult? Function(List<CollectionEntity> collectionsList)?
+        deleteSelectedCollection,
   }) {
-    return started?.call();
+    return started?.call(isEditMode);
   }
 
   @override
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
-    TResult Function()? started,
-    TResult Function(String collectionsListName)? selectCollection,
+    TResult Function(bool isEditMode)? started,
+    TResult Function(CollectionEntity collection)? selectCollection,
     TResult Function(String name)? createNewList,
-    TResult Function()? deleteSelectedCollection,
+    TResult Function(List<CollectionEntity> collectionsList)?
+        deleteSelectedCollection,
     required TResult orElse(),
   }) {
     if (started != null) {
-      return started();
+      return started(isEditMode);
     }
     return orElse();
   }
@@ -199,7 +232,12 @@ class _$StartedImpl implements _Started {
 }
 
 abstract class _Started implements ListsEvent {
-  const factory _Started() = _$StartedImpl;
+  const factory _Started({required final bool isEditMode}) = _$StartedImpl;
+
+  bool get isEditMode;
+  @JsonKey(ignore: true)
+  _$$StartedImplCopyWith<_$StartedImpl> get copyWith =>
+      throw _privateConstructorUsedError;
 }
 
 /// @nodoc
@@ -208,7 +246,9 @@ abstract class _$$SelectCollectionImplCopyWith<$Res> {
           $Res Function(_$SelectCollectionImpl) then) =
       __$$SelectCollectionImplCopyWithImpl<$Res>;
   @useResult
-  $Res call({String collectionsListName});
+  $Res call({CollectionEntity collection});
+
+  $CollectionEntityCopyWith<$Res> get collection;
 }
 
 /// @nodoc
@@ -222,28 +262,36 @@ class __$$SelectCollectionImplCopyWithImpl<$Res>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? collectionsListName = null,
+    Object? collection = null,
   }) {
     return _then(_$SelectCollectionImpl(
-      collectionsListName: null == collectionsListName
-          ? _value.collectionsListName
-          : collectionsListName // ignore: cast_nullable_to_non_nullable
-              as String,
+      collection: null == collection
+          ? _value.collection
+          : collection // ignore: cast_nullable_to_non_nullable
+              as CollectionEntity,
     ));
+  }
+
+  @override
+  @pragma('vm:prefer-inline')
+  $CollectionEntityCopyWith<$Res> get collection {
+    return $CollectionEntityCopyWith<$Res>(_value.collection, (value) {
+      return _then(_value.copyWith(collection: value));
+    });
   }
 }
 
 /// @nodoc
 
 class _$SelectCollectionImpl implements _SelectCollection {
-  const _$SelectCollectionImpl({required this.collectionsListName});
+  const _$SelectCollectionImpl({required this.collection});
 
   @override
-  final String collectionsListName;
+  final CollectionEntity collection;
 
   @override
   String toString() {
-    return 'ListsEvent.selectCollection(collectionsListName: $collectionsListName)';
+    return 'ListsEvent.selectCollection(collection: $collection)';
   }
 
   @override
@@ -251,12 +299,12 @@ class _$SelectCollectionImpl implements _SelectCollection {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$SelectCollectionImpl &&
-            (identical(other.collectionsListName, collectionsListName) ||
-                other.collectionsListName == collectionsListName));
+            (identical(other.collection, collection) ||
+                other.collection == collection));
   }
 
   @override
-  int get hashCode => Object.hash(runtimeType, collectionsListName);
+  int get hashCode => Object.hash(runtimeType, collection);
 
   @JsonKey(ignore: true)
   @override
@@ -268,36 +316,39 @@ class _$SelectCollectionImpl implements _SelectCollection {
   @override
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
-    required TResult Function() started,
-    required TResult Function(String collectionsListName) selectCollection,
+    required TResult Function(bool isEditMode) started,
+    required TResult Function(CollectionEntity collection) selectCollection,
     required TResult Function(String name) createNewList,
-    required TResult Function() deleteSelectedCollection,
+    required TResult Function(List<CollectionEntity> collectionsList)
+        deleteSelectedCollection,
   }) {
-    return selectCollection(collectionsListName);
+    return selectCollection(collection);
   }
 
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult? Function()? started,
-    TResult? Function(String collectionsListName)? selectCollection,
+    TResult? Function(bool isEditMode)? started,
+    TResult? Function(CollectionEntity collection)? selectCollection,
     TResult? Function(String name)? createNewList,
-    TResult? Function()? deleteSelectedCollection,
+    TResult? Function(List<CollectionEntity> collectionsList)?
+        deleteSelectedCollection,
   }) {
-    return selectCollection?.call(collectionsListName);
+    return selectCollection?.call(collection);
   }
 
   @override
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
-    TResult Function()? started,
-    TResult Function(String collectionsListName)? selectCollection,
+    TResult Function(bool isEditMode)? started,
+    TResult Function(CollectionEntity collection)? selectCollection,
     TResult Function(String name)? createNewList,
-    TResult Function()? deleteSelectedCollection,
+    TResult Function(List<CollectionEntity> collectionsList)?
+        deleteSelectedCollection,
     required TResult orElse(),
   }) {
     if (selectCollection != null) {
-      return selectCollection(collectionsListName);
+      return selectCollection(collection);
     }
     return orElse();
   }
@@ -342,10 +393,10 @@ class _$SelectCollectionImpl implements _SelectCollection {
 }
 
 abstract class _SelectCollection implements ListsEvent {
-  const factory _SelectCollection({required final String collectionsListName}) =
-      _$SelectCollectionImpl;
+  const factory _SelectCollection(
+      {required final CollectionEntity collection}) = _$SelectCollectionImpl;
 
-  String get collectionsListName;
+  CollectionEntity get collection;
   @JsonKey(ignore: true)
   _$$SelectCollectionImplCopyWith<_$SelectCollectionImpl> get copyWith =>
       throw _privateConstructorUsedError;
@@ -415,10 +466,11 @@ class _$CreateNewListImpl implements _CreateNewList {
   @override
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
-    required TResult Function() started,
-    required TResult Function(String collectionsListName) selectCollection,
+    required TResult Function(bool isEditMode) started,
+    required TResult Function(CollectionEntity collection) selectCollection,
     required TResult Function(String name) createNewList,
-    required TResult Function() deleteSelectedCollection,
+    required TResult Function(List<CollectionEntity> collectionsList)
+        deleteSelectedCollection,
   }) {
     return createNewList(name);
   }
@@ -426,10 +478,11 @@ class _$CreateNewListImpl implements _CreateNewList {
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult? Function()? started,
-    TResult? Function(String collectionsListName)? selectCollection,
+    TResult? Function(bool isEditMode)? started,
+    TResult? Function(CollectionEntity collection)? selectCollection,
     TResult? Function(String name)? createNewList,
-    TResult? Function()? deleteSelectedCollection,
+    TResult? Function(List<CollectionEntity> collectionsList)?
+        deleteSelectedCollection,
   }) {
     return createNewList?.call(name);
   }
@@ -437,10 +490,11 @@ class _$CreateNewListImpl implements _CreateNewList {
   @override
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
-    TResult Function()? started,
-    TResult Function(String collectionsListName)? selectCollection,
+    TResult Function(bool isEditMode)? started,
+    TResult Function(CollectionEntity collection)? selectCollection,
     TResult Function(String name)? createNewList,
-    TResult Function()? deleteSelectedCollection,
+    TResult Function(List<CollectionEntity> collectionsList)?
+        deleteSelectedCollection,
     required TResult orElse(),
   }) {
     if (createNewList != null) {
@@ -504,6 +558,8 @@ abstract class _$$DeleteSelecteCollectionImplCopyWith<$Res> {
           _$DeleteSelecteCollectionImpl value,
           $Res Function(_$DeleteSelecteCollectionImpl) then) =
       __$$DeleteSelecteCollectionImplCopyWithImpl<$Res>;
+  @useResult
+  $Res call({List<CollectionEntity> collectionsList});
 }
 
 /// @nodoc
@@ -514,61 +570,97 @@ class __$$DeleteSelecteCollectionImplCopyWithImpl<$Res>
       _$DeleteSelecteCollectionImpl _value,
       $Res Function(_$DeleteSelecteCollectionImpl) _then)
       : super(_value, _then);
+
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? collectionsList = null,
+  }) {
+    return _then(_$DeleteSelecteCollectionImpl(
+      collectionsList: null == collectionsList
+          ? _value._collectionsList
+          : collectionsList // ignore: cast_nullable_to_non_nullable
+              as List<CollectionEntity>,
+    ));
+  }
 }
 
 /// @nodoc
 
 class _$DeleteSelecteCollectionImpl implements _DeleteSelecteCollection {
-  const _$DeleteSelecteCollectionImpl();
+  const _$DeleteSelecteCollectionImpl(
+      {required final List<CollectionEntity> collectionsList})
+      : _collectionsList = collectionsList;
+
+  final List<CollectionEntity> _collectionsList;
+  @override
+  List<CollectionEntity> get collectionsList {
+    if (_collectionsList is EqualUnmodifiableListView) return _collectionsList;
+    // ignore: implicit_dynamic_type
+    return EqualUnmodifiableListView(_collectionsList);
+  }
 
   @override
   String toString() {
-    return 'ListsEvent.deleteSelectedCollection()';
+    return 'ListsEvent.deleteSelectedCollection(collectionsList: $collectionsList)';
   }
 
   @override
   bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$DeleteSelecteCollectionImpl);
+            other is _$DeleteSelecteCollectionImpl &&
+            const DeepCollectionEquality()
+                .equals(other._collectionsList, _collectionsList));
   }
 
   @override
-  int get hashCode => runtimeType.hashCode;
+  int get hashCode => Object.hash(
+      runtimeType, const DeepCollectionEquality().hash(_collectionsList));
+
+  @JsonKey(ignore: true)
+  @override
+  @pragma('vm:prefer-inline')
+  _$$DeleteSelecteCollectionImplCopyWith<_$DeleteSelecteCollectionImpl>
+      get copyWith => __$$DeleteSelecteCollectionImplCopyWithImpl<
+          _$DeleteSelecteCollectionImpl>(this, _$identity);
 
   @override
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
-    required TResult Function() started,
-    required TResult Function(String collectionsListName) selectCollection,
+    required TResult Function(bool isEditMode) started,
+    required TResult Function(CollectionEntity collection) selectCollection,
     required TResult Function(String name) createNewList,
-    required TResult Function() deleteSelectedCollection,
+    required TResult Function(List<CollectionEntity> collectionsList)
+        deleteSelectedCollection,
   }) {
-    return deleteSelectedCollection();
+    return deleteSelectedCollection(collectionsList);
   }
 
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult? Function()? started,
-    TResult? Function(String collectionsListName)? selectCollection,
+    TResult? Function(bool isEditMode)? started,
+    TResult? Function(CollectionEntity collection)? selectCollection,
     TResult? Function(String name)? createNewList,
-    TResult? Function()? deleteSelectedCollection,
+    TResult? Function(List<CollectionEntity> collectionsList)?
+        deleteSelectedCollection,
   }) {
-    return deleteSelectedCollection?.call();
+    return deleteSelectedCollection?.call(collectionsList);
   }
 
   @override
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
-    TResult Function()? started,
-    TResult Function(String collectionsListName)? selectCollection,
+    TResult Function(bool isEditMode)? started,
+    TResult Function(CollectionEntity collection)? selectCollection,
     TResult Function(String name)? createNewList,
-    TResult Function()? deleteSelectedCollection,
+    TResult Function(List<CollectionEntity> collectionsList)?
+        deleteSelectedCollection,
     required TResult orElse(),
   }) {
     if (deleteSelectedCollection != null) {
-      return deleteSelectedCollection();
+      return deleteSelectedCollection(collectionsList);
     }
     return orElse();
   }
@@ -613,7 +705,14 @@ class _$DeleteSelecteCollectionImpl implements _DeleteSelecteCollection {
 }
 
 abstract class _DeleteSelecteCollection implements ListsEvent {
-  const factory _DeleteSelecteCollection() = _$DeleteSelecteCollectionImpl;
+  const factory _DeleteSelecteCollection(
+          {required final List<CollectionEntity> collectionsList}) =
+      _$DeleteSelecteCollectionImpl;
+
+  List<CollectionEntity> get collectionsList;
+  @JsonKey(ignore: true)
+  _$$DeleteSelecteCollectionImplCopyWith<_$DeleteSelecteCollectionImpl>
+      get copyWith => throw _privateConstructorUsedError;
 }
 
 /// @nodoc
@@ -621,26 +720,31 @@ mixin _$ListsState {
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
     required TResult Function() initial,
-    required TResult Function(String collectionsListName) viewCards,
+    required TResult Function(CollectionEntity collection) viewCards,
     required TResult Function() loading,
-    required TResult Function(List<CollectionEntity> collectionsList)
+    required TResult Function(List<CollectionEntity> collectionsList,
+            bool isEditMode, List<String> listToDelete)
         viewCollections,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? initial,
-    TResult? Function(String collectionsListName)? viewCards,
+    TResult? Function(CollectionEntity collection)? viewCards,
     TResult? Function()? loading,
-    TResult? Function(List<CollectionEntity> collectionsList)? viewCollections,
+    TResult? Function(List<CollectionEntity> collectionsList, bool isEditMode,
+            List<String> listToDelete)?
+        viewCollections,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? initial,
-    TResult Function(String collectionsListName)? viewCards,
+    TResult Function(CollectionEntity collection)? viewCards,
     TResult Function()? loading,
-    TResult Function(List<CollectionEntity> collectionsList)? viewCollections,
+    TResult Function(List<CollectionEntity> collectionsList, bool isEditMode,
+            List<String> listToDelete)?
+        viewCollections,
     required TResult orElse(),
   }) =>
       throw _privateConstructorUsedError;
@@ -728,9 +832,10 @@ class _$InitialImpl implements _Initial {
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
     required TResult Function() initial,
-    required TResult Function(String collectionsListName) viewCards,
+    required TResult Function(CollectionEntity collection) viewCards,
     required TResult Function() loading,
-    required TResult Function(List<CollectionEntity> collectionsList)
+    required TResult Function(List<CollectionEntity> collectionsList,
+            bool isEditMode, List<String> listToDelete)
         viewCollections,
   }) {
     return initial();
@@ -740,9 +845,11 @@ class _$InitialImpl implements _Initial {
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? initial,
-    TResult? Function(String collectionsListName)? viewCards,
+    TResult? Function(CollectionEntity collection)? viewCards,
     TResult? Function()? loading,
-    TResult? Function(List<CollectionEntity> collectionsList)? viewCollections,
+    TResult? Function(List<CollectionEntity> collectionsList, bool isEditMode,
+            List<String> listToDelete)?
+        viewCollections,
   }) {
     return initial?.call();
   }
@@ -751,9 +858,11 @@ class _$InitialImpl implements _Initial {
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? initial,
-    TResult Function(String collectionsListName)? viewCards,
+    TResult Function(CollectionEntity collection)? viewCards,
     TResult Function()? loading,
-    TResult Function(List<CollectionEntity> collectionsList)? viewCollections,
+    TResult Function(List<CollectionEntity> collectionsList, bool isEditMode,
+            List<String> listToDelete)?
+        viewCollections,
     required TResult orElse(),
   }) {
     if (initial != null) {
@@ -810,7 +919,9 @@ abstract class _$$ViewCardsImplCopyWith<$Res> {
           _$ViewCardsImpl value, $Res Function(_$ViewCardsImpl) then) =
       __$$ViewCardsImplCopyWithImpl<$Res>;
   @useResult
-  $Res call({String collectionsListName});
+  $Res call({CollectionEntity collection});
+
+  $CollectionEntityCopyWith<$Res> get collection;
 }
 
 /// @nodoc
@@ -824,28 +935,36 @@ class __$$ViewCardsImplCopyWithImpl<$Res>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? collectionsListName = null,
+    Object? collection = null,
   }) {
     return _then(_$ViewCardsImpl(
-      collectionsListName: null == collectionsListName
-          ? _value.collectionsListName
-          : collectionsListName // ignore: cast_nullable_to_non_nullable
-              as String,
+      collection: null == collection
+          ? _value.collection
+          : collection // ignore: cast_nullable_to_non_nullable
+              as CollectionEntity,
     ));
+  }
+
+  @override
+  @pragma('vm:prefer-inline')
+  $CollectionEntityCopyWith<$Res> get collection {
+    return $CollectionEntityCopyWith<$Res>(_value.collection, (value) {
+      return _then(_value.copyWith(collection: value));
+    });
   }
 }
 
 /// @nodoc
 
 class _$ViewCardsImpl implements _ViewCards {
-  const _$ViewCardsImpl({required this.collectionsListName});
+  const _$ViewCardsImpl({required this.collection});
 
   @override
-  final String collectionsListName;
+  final CollectionEntity collection;
 
   @override
   String toString() {
-    return 'ListsState.viewCards(collectionsListName: $collectionsListName)';
+    return 'ListsState.viewCards(collection: $collection)';
   }
 
   @override
@@ -853,12 +972,12 @@ class _$ViewCardsImpl implements _ViewCards {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$ViewCardsImpl &&
-            (identical(other.collectionsListName, collectionsListName) ||
-                other.collectionsListName == collectionsListName));
+            (identical(other.collection, collection) ||
+                other.collection == collection));
   }
 
   @override
-  int get hashCode => Object.hash(runtimeType, collectionsListName);
+  int get hashCode => Object.hash(runtimeType, collection);
 
   @JsonKey(ignore: true)
   @override
@@ -870,36 +989,41 @@ class _$ViewCardsImpl implements _ViewCards {
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
     required TResult Function() initial,
-    required TResult Function(String collectionsListName) viewCards,
+    required TResult Function(CollectionEntity collection) viewCards,
     required TResult Function() loading,
-    required TResult Function(List<CollectionEntity> collectionsList)
+    required TResult Function(List<CollectionEntity> collectionsList,
+            bool isEditMode, List<String> listToDelete)
         viewCollections,
   }) {
-    return viewCards(collectionsListName);
+    return viewCards(collection);
   }
 
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? initial,
-    TResult? Function(String collectionsListName)? viewCards,
+    TResult? Function(CollectionEntity collection)? viewCards,
     TResult? Function()? loading,
-    TResult? Function(List<CollectionEntity> collectionsList)? viewCollections,
+    TResult? Function(List<CollectionEntity> collectionsList, bool isEditMode,
+            List<String> listToDelete)?
+        viewCollections,
   }) {
-    return viewCards?.call(collectionsListName);
+    return viewCards?.call(collection);
   }
 
   @override
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? initial,
-    TResult Function(String collectionsListName)? viewCards,
+    TResult Function(CollectionEntity collection)? viewCards,
     TResult Function()? loading,
-    TResult Function(List<CollectionEntity> collectionsList)? viewCollections,
+    TResult Function(List<CollectionEntity> collectionsList, bool isEditMode,
+            List<String> listToDelete)?
+        viewCollections,
     required TResult orElse(),
   }) {
     if (viewCards != null) {
-      return viewCards(collectionsListName);
+      return viewCards(collection);
     }
     return orElse();
   }
@@ -943,10 +1067,10 @@ class _$ViewCardsImpl implements _ViewCards {
 }
 
 abstract class _ViewCards implements ListsState {
-  const factory _ViewCards({required final String collectionsListName}) =
+  const factory _ViewCards({required final CollectionEntity collection}) =
       _$ViewCardsImpl;
 
-  String get collectionsListName;
+  CollectionEntity get collection;
   @JsonKey(ignore: true)
   _$$ViewCardsImplCopyWith<_$ViewCardsImpl> get copyWith =>
       throw _privateConstructorUsedError;
@@ -991,9 +1115,10 @@ class _$LoadingImpl implements _Loading {
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
     required TResult Function() initial,
-    required TResult Function(String collectionsListName) viewCards,
+    required TResult Function(CollectionEntity collection) viewCards,
     required TResult Function() loading,
-    required TResult Function(List<CollectionEntity> collectionsList)
+    required TResult Function(List<CollectionEntity> collectionsList,
+            bool isEditMode, List<String> listToDelete)
         viewCollections,
   }) {
     return loading();
@@ -1003,9 +1128,11 @@ class _$LoadingImpl implements _Loading {
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? initial,
-    TResult? Function(String collectionsListName)? viewCards,
+    TResult? Function(CollectionEntity collection)? viewCards,
     TResult? Function()? loading,
-    TResult? Function(List<CollectionEntity> collectionsList)? viewCollections,
+    TResult? Function(List<CollectionEntity> collectionsList, bool isEditMode,
+            List<String> listToDelete)?
+        viewCollections,
   }) {
     return loading?.call();
   }
@@ -1014,9 +1141,11 @@ class _$LoadingImpl implements _Loading {
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? initial,
-    TResult Function(String collectionsListName)? viewCards,
+    TResult Function(CollectionEntity collection)? viewCards,
     TResult Function()? loading,
-    TResult Function(List<CollectionEntity> collectionsList)? viewCollections,
+    TResult Function(List<CollectionEntity> collectionsList, bool isEditMode,
+            List<String> listToDelete)?
+        viewCollections,
     required TResult orElse(),
   }) {
     if (loading != null) {
@@ -1073,7 +1202,10 @@ abstract class _$$ViewCollectionsImplCopyWith<$Res> {
           $Res Function(_$ViewCollectionsImpl) then) =
       __$$ViewCollectionsImplCopyWithImpl<$Res>;
   @useResult
-  $Res call({List<CollectionEntity> collectionsList});
+  $Res call(
+      {List<CollectionEntity> collectionsList,
+      bool isEditMode,
+      List<String> listToDelete});
 }
 
 /// @nodoc
@@ -1088,12 +1220,22 @@ class __$$ViewCollectionsImplCopyWithImpl<$Res>
   @override
   $Res call({
     Object? collectionsList = null,
+    Object? isEditMode = null,
+    Object? listToDelete = null,
   }) {
     return _then(_$ViewCollectionsImpl(
       collectionsList: null == collectionsList
           ? _value._collectionsList
           : collectionsList // ignore: cast_nullable_to_non_nullable
               as List<CollectionEntity>,
+      isEditMode: null == isEditMode
+          ? _value.isEditMode
+          : isEditMode // ignore: cast_nullable_to_non_nullable
+              as bool,
+      listToDelete: null == listToDelete
+          ? _value._listToDelete
+          : listToDelete // ignore: cast_nullable_to_non_nullable
+              as List<String>,
     ));
   }
 }
@@ -1102,8 +1244,11 @@ class __$$ViewCollectionsImplCopyWithImpl<$Res>
 
 class _$ViewCollectionsImpl implements _ViewCollections {
   const _$ViewCollectionsImpl(
-      {required final List<CollectionEntity> collectionsList})
-      : _collectionsList = collectionsList;
+      {required final List<CollectionEntity> collectionsList,
+      required this.isEditMode,
+      required final List<String> listToDelete})
+      : _collectionsList = collectionsList,
+        _listToDelete = listToDelete;
 
   final List<CollectionEntity> _collectionsList;
   @override
@@ -1114,8 +1259,18 @@ class _$ViewCollectionsImpl implements _ViewCollections {
   }
 
   @override
+  final bool isEditMode;
+  final List<String> _listToDelete;
+  @override
+  List<String> get listToDelete {
+    if (_listToDelete is EqualUnmodifiableListView) return _listToDelete;
+    // ignore: implicit_dynamic_type
+    return EqualUnmodifiableListView(_listToDelete);
+  }
+
+  @override
   String toString() {
-    return 'ListsState.viewCollections(collectionsList: $collectionsList)';
+    return 'ListsState.viewCollections(collectionsList: $collectionsList, isEditMode: $isEditMode, listToDelete: $listToDelete)';
   }
 
   @override
@@ -1124,12 +1279,19 @@ class _$ViewCollectionsImpl implements _ViewCollections {
         (other.runtimeType == runtimeType &&
             other is _$ViewCollectionsImpl &&
             const DeepCollectionEquality()
-                .equals(other._collectionsList, _collectionsList));
+                .equals(other._collectionsList, _collectionsList) &&
+            (identical(other.isEditMode, isEditMode) ||
+                other.isEditMode == isEditMode) &&
+            const DeepCollectionEquality()
+                .equals(other._listToDelete, _listToDelete));
   }
 
   @override
   int get hashCode => Object.hash(
-      runtimeType, const DeepCollectionEquality().hash(_collectionsList));
+      runtimeType,
+      const DeepCollectionEquality().hash(_collectionsList),
+      isEditMode,
+      const DeepCollectionEquality().hash(_listToDelete));
 
   @JsonKey(ignore: true)
   @override
@@ -1142,36 +1304,41 @@ class _$ViewCollectionsImpl implements _ViewCollections {
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
     required TResult Function() initial,
-    required TResult Function(String collectionsListName) viewCards,
+    required TResult Function(CollectionEntity collection) viewCards,
     required TResult Function() loading,
-    required TResult Function(List<CollectionEntity> collectionsList)
+    required TResult Function(List<CollectionEntity> collectionsList,
+            bool isEditMode, List<String> listToDelete)
         viewCollections,
   }) {
-    return viewCollections(collectionsList);
+    return viewCollections(collectionsList, isEditMode, listToDelete);
   }
 
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? initial,
-    TResult? Function(String collectionsListName)? viewCards,
+    TResult? Function(CollectionEntity collection)? viewCards,
     TResult? Function()? loading,
-    TResult? Function(List<CollectionEntity> collectionsList)? viewCollections,
+    TResult? Function(List<CollectionEntity> collectionsList, bool isEditMode,
+            List<String> listToDelete)?
+        viewCollections,
   }) {
-    return viewCollections?.call(collectionsList);
+    return viewCollections?.call(collectionsList, isEditMode, listToDelete);
   }
 
   @override
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? initial,
-    TResult Function(String collectionsListName)? viewCards,
+    TResult Function(CollectionEntity collection)? viewCards,
     TResult Function()? loading,
-    TResult Function(List<CollectionEntity> collectionsList)? viewCollections,
+    TResult Function(List<CollectionEntity> collectionsList, bool isEditMode,
+            List<String> listToDelete)?
+        viewCollections,
     required TResult orElse(),
   }) {
     if (viewCollections != null) {
-      return viewCollections(collectionsList);
+      return viewCollections(collectionsList, isEditMode, listToDelete);
     }
     return orElse();
   }
@@ -1216,10 +1383,13 @@ class _$ViewCollectionsImpl implements _ViewCollections {
 
 abstract class _ViewCollections implements ListsState {
   const factory _ViewCollections(
-          {required final List<CollectionEntity> collectionsList}) =
-      _$ViewCollectionsImpl;
+      {required final List<CollectionEntity> collectionsList,
+      required final bool isEditMode,
+      required final List<String> listToDelete}) = _$ViewCollectionsImpl;
 
   List<CollectionEntity> get collectionsList;
+  bool get isEditMode;
+  List<String> get listToDelete;
   @JsonKey(ignore: true)
   _$$ViewCollectionsImplCopyWith<_$ViewCollectionsImpl> get copyWith =>
       throw _privateConstructorUsedError;

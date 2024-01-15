@@ -6,14 +6,17 @@ import 'package:flashcards/core/const/strings.dart';
 import 'package:flashcards/core/router/router.dart';
 import 'package:flashcards/core/themes/theme.dart';
 import 'package:flashcards/domain/entities/card_entity/card_entity.dart';
+import 'package:flashcards/domain/entities/collection_entity/collection_entity.dart';
 import 'package:flashcards/presentation/widgets/app_round_button.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
-
 class WebViewFlashCard extends StatefulWidget {
-  const WebViewFlashCard({Key? key, required this.card}) : super(key: key);
+  const WebViewFlashCard(
+      {Key? key, required this.card, required this.collectionId})
+      : super(key: key);
   final CardEntity card;
+  final String collectionId;
 
   @override
   State<WebViewFlashCard> createState() => _WebViewFlashCardState();
@@ -158,7 +161,8 @@ class _WebViewFlashCardState extends State<WebViewFlashCard> {
                                               ),
                                               const Spacer(),
                                               Text(
-                                               pickedCard?.front ?? widget.card.front,
+                                                pickedCard?.front ??
+                                                    widget.card.front,
                                                 style: AppTheme.themeData
                                                     .textTheme.labelMedium!
                                                     .copyWith(
@@ -171,7 +175,13 @@ class _WebViewFlashCardState extends State<WebViewFlashCard> {
                                                     Alignment.centerRight,
                                                 child: AppRoundButton(
                                                   onTap: () {
-                                                    router.push('/edit_card');
+                                                    String collection =
+                                                        widget.collectionId;
+                                                    router.goNamed('/edit_card',
+                                                        pathParameters: {
+                                                          'collection':
+                                                              collection
+                                                        });
                                                   },
                                                   color: Colors.white,
                                                   svgIcon: AppIcons.pen,
@@ -192,7 +202,8 @@ class _WebViewFlashCardState extends State<WebViewFlashCard> {
                                             ),
                                             const Spacer(),
                                             Text(
-                                              pickedCard?.back ?? widget.card.back,
+                                              pickedCard?.back ??
+                                                  widget.card.back,
                                               style: AppTheme.themeData
                                                   .textTheme.labelMedium!
                                                   .copyWith(

@@ -3,7 +3,7 @@ import 'package:flashcards/domain/entities/collection_entity/collection_entity.d
 abstract class CollectionRepoContract {
   Future<void> createCollection({required String collectionName});
 
-  Future<void> fetchCollections();
+  Future<List<CollectionEntity>> fetchCollections();
 
-  Future<void> deleteCollections({required List<CollectionEntity> collections});
+  Future<void> deleteCollections({required List<String> collections});
 }

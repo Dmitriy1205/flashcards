@@ -71,9 +71,8 @@ final GoRouter router = GoRouter(
           )
         : GoRoute(
             path: '/',
-            pageBuilder: (c, s) =>  const MaterialPage(child:
-                MobileSignInScreen()
-                ),
+            pageBuilder: (c, s) =>
+                const MaterialPage(child: MobileSignInScreen()),
             redirect: (contest, state) {
               final st = _bloc.state;
 
@@ -109,7 +108,6 @@ final GoRouter router = GoRouter(
             state: state,
             child: const WebListsScreen(),
           ),
-
         ),
         GoRoute(
           path: '/web_learn',
@@ -142,7 +140,11 @@ final GoRouter router = GoRouter(
       pageBuilder: (context, state) => slideAnimation<void>(
         context: context,
         state: state,
-        child: WebCards(collectionName:(state.extra as Map<String,dynamic>?)?["collectionName"] ),
+        child: WebCards(
+          collectionName:
+              (state.extra as Map<String, dynamic>?)?["collectionName"],
+          collectionId: state.pathParameters['collectionId']!,
+        ),
       ),
     ),
     GoRoute(
@@ -158,12 +160,13 @@ final GoRouter router = GoRouter(
       pageBuilder: (context, state) => slideBottomAnimation<void>(
         context: context,
         state: state,
-        child: WebEditCard(),
+        child: WebEditCard(
+          collectionId: state.pathParameters['collectionId']!,
+        ),
       ),
     ),
     GoRoute(path: '/learn', builder: (context, state) => const Learn()),
-    GoRoute(
-        path: '/lists', builder: (context, state) => const Lists()),
+    GoRoute(path: '/lists', builder: (context, state) => const Lists()),
     GoRoute(path: '/profile', builder: (context, state) => const Profile()),
   ],
   refreshListenable: GoRouterRefreshStream(_bloc.stream),
@@ -209,7 +212,7 @@ CustomTransitionPage slideAnimation<T>({
     child: child,
     transitionsBuilder: (context, animation, secondaryAnimation, child) {
       const curve = Curves.easeInOut;
-      final tween = Tween(begin: const Offset(1,0), end: Offset.zero);
+      final tween = Tween(begin: const Offset(1, 0), end: Offset.zero);
       final curvedAnimation = CurvedAnimation(
         parent: animation,
         curve: curve,
@@ -221,6 +224,7 @@ CustomTransitionPage slideAnimation<T>({
     },
   );
 }
+
 CustomTransitionPage slideBottomAnimation<T>({
   Key? key,
   String? restorationId,
@@ -234,7 +238,7 @@ CustomTransitionPage slideBottomAnimation<T>({
     child: child,
     transitionsBuilder: (context, animation, secondaryAnimation, child) {
       const curve = Curves.easeInOut;
-      final tween = Tween(begin: const Offset(0,1), end: Offset.zero);
+      final tween = Tween(begin: const Offset(0, 1), end: Offset.zero);
       final curvedAnimation = CurvedAnimation(
         parent: animation,
         curve: curve,
@@ -246,6 +250,7 @@ CustomTransitionPage slideBottomAnimation<T>({
     },
   );
 }
+
 class GoRouterRefreshStream extends ChangeNotifier {
   GoRouterRefreshStream(Stream<dynamic> stream) {
     notifyListeners();

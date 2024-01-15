@@ -30,7 +30,7 @@ class CollectionServiceImpl extends CollectionServiceContract {
         .doc(_firebaseAuth.currentUser!.uid)
         .collection(FirestoreCollections.collections)
         .doc();
-    doc.set({
+    await doc.set({
       "collectionName": collectionName,
       "id": doc.id,
       "createdAt": FieldValue.serverTimestamp()
@@ -39,9 +39,19 @@ class CollectionServiceImpl extends CollectionServiceContract {
 
   @override
   Future<void> deleteCollections(
-      {required List<CollectionEntity> collectionsList}) {
-    // TODO: implement deleteCollections
-    throw UnimplementedError();
+      {required List<String> collectionsListToDelete}) async {
+    print('collectionsListToDelete ${collectionsListToDelete.length}');
+    try {
+      final collections = _fireStore
+          .collection(FirestoreCollections.users)
+          .doc(_firebaseAuth.currentUser!.uid)
+          .collection(FirestoreCollections.collections);
+      for (int i = 0; i < collectionsListToDelete.length; i++) {
+        await collections.doc(collectionsListToDelete[i]).delete();
+      }
+    } catch (e) {
+      throw Exception("Exception deleteCollections $e");
+    }
   }
 
   @override
@@ -52,15 +62,11 @@ class CollectionServiceImpl extends CollectionServiceContract {
           .doc(_firebaseAuth.currentUser!.uid)
           .collection(FirestoreCollections.collections)
           .get();
-      print("data adsads ${collections.docs}");
       List<CollectionEntity> collectionList = collections.docs
           .map((collection) => CollectionEntity.fromJson(collection.data()))
           .toList();
-      print('collectionList $collectionList');
-
-
+      collectionList.sort((a, b) => b.createdAt.compareTo(a.createdAt));
       return collectionList;
-      // final CollectionEntity collections = CollectionEntity.fromJson(data);
     } catch (e) {
       throw Exception("Exception fetchCollections $e");
     }

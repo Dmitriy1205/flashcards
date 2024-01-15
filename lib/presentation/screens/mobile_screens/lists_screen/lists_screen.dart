@@ -13,38 +13,99 @@ class Lists extends StatefulWidget {
 }
 
 class _ListsState extends State<Lists> {
-
   @override
   Widget build(BuildContext context) {
-    return BlocConsumer<ListsBloc, ListsState>(listener: (context, state) {
-      state.maybeMap(viewCards: (selectedCollection) {
-        Navigator.push(
-            context,
-            MaterialPageRoute(
+    return BlocConsumer<ListsBloc, ListsState>(
+      listenWhen: (previousState, state) {
+        return state.maybeWhen(
+            orElse: () => false, viewCards: (selectedCollection) => true);
+      },
+      listener: (context, state) {
+        state.maybeMap(
+          viewCards: (selectedCollection) {
+            Navigator.push(
+              context,
+              MaterialPageRoute(
                 builder: (context) => Cards(
-                      collectionName: selectedCollection.collectionsListName,
-                    )));
-      }, orElse: () {
-        print('Error in bloclistener');
-      });
-    }, builder: (context, state) {
-      return
-        Container(
-       child:  state.maybeMap(
-           // viewCards: (collectionList) {
-          // return const Collections();
-        // },
-          viewCollections: (collections){
-         print('state changed');
-         return  Collections(collectionsList: collections.collectionsList,);
-       },orElse: () {
-          return const Center(
-            child: Text(AppStrings.noCollection),
-          );
-        }),
-      );
-    });
+                  collectionId: selectedCollection.collection.id,
+                  collectionName: selectedCollection.collection.collectionName,
+                ),
+              ),
+            );
+          },
+          orElse: () {
+            print('Error in bloclistener');
+          },
+        );
+      },
+      buildWhen: (previousState, state) {
+        return state.maybeWhen(
+          viewCollections: (collections, bolean, collectionList) => true,
+          orElse: () => false,
+        );
+      },
+      builder: (context, state) {
+        return Container(
+          child: state.maybeMap(
+            viewCollections: (collections) {
+              return Collections(
+                  collectionsList: collections.collectionsList,
+                  isEditMode: collections.isEditMode);
+            },
+            orElse: () {
+              return const Center(
+                child: Text(AppStrings.noCollection),
+              );
+            },
+          ),
+        );
+      },
+    );
   }
-
-
 }
+
+// class _ListsState extends State<Lists> {
+//   @override
+//   Widget build(BuildContext context) {
+//     return BlocConsumer<ListsBloc, ListsState>(
+//       listener: (context, state) {
+//         state.maybeMap(
+//           viewCards: (selectedCollection) {
+//             Navigator.push(
+//               context,
+//               MaterialPageRoute(
+//                 builder: (context) => Cards(
+//                   collectionName: selectedCollection.collectionsListName,
+//                 ),
+//               ),
+//             );
+//           },
+//           orElse: () {
+//             print('Error in bloclistener');
+//           },
+//         );
+//       },
+//       buildWhen: (previousState, state) {
+//         return state.maybeWhen(
+//           viewCollections: () => true,
+//           orElse: () => false,
+//         );
+//       },
+//       builder: (context, state) {
+//         return Container(
+//           child: state.maybeMap(
+//             viewCollections: (collections) {
+//               print('state changed');
+//               return Collections(collectionsList: collections.collectionsList);
+//             },
+//             orElse: () {
+//               return const Center(
+//                 child: Text(AppStrings.noCollection),
+//               );
+//             },
+//           ),
+//         );
+//       },
+//     );
+//   }
+// }

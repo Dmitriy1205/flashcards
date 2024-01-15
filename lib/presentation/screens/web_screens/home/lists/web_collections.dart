@@ -10,9 +10,15 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 class WebCollections extends StatefulWidget {
-  const WebCollections({Key? key, required this.collectionsList})
+  const WebCollections(
+      {Key? key,
+      required this.collectionsList,
+      required this.isEditMode,
+      required this.listIdToDelete})
       : super(key: key);
   final List<CollectionEntity> collectionsList;
+  final bool isEditMode;
+  final List<CollectionEntity> listIdToDelete;
 
   @override
   State<WebCollections> createState() => _WebCollectionsState();
@@ -34,9 +40,7 @@ class _WebCollectionsState extends State<WebCollections> {
                         flex: 1,
                         child: InkWell(
                           onTap: () {
-                            context
-                                .watch<ListsBloc>()
-                                .listIdToDelete
+                            widget.listIdToDelete
                                 .add(widget.collectionsList[i]);
                           },
                           child: Container(
@@ -45,9 +49,7 @@ class _WebCollectionsState extends State<WebCollections> {
                             ),
                             child: Padding(
                               padding: const EdgeInsets.all(10.0),
-                              child: context
-                                      .watch<ListsBloc>()
-                                      .listIdToDelete
+                              child: widget.listIdToDelete
                                       .contains(widget.collectionsList[i].id)
                                   ? const Icon(
                                       Icons.check_circle,
@@ -78,8 +80,7 @@ class _WebCollectionsState extends State<WebCollections> {
                         context
                             .read<ListsBloc>()
                             .add(ListsEvent.selectCollection(
-                              collectionsListName:
-                                  widget.collectionsList[i].collectionName,
+                              collection: widget.collectionsList[i],
                             ));
                       },
                       contentPadding:
@@ -90,7 +91,7 @@ class _WebCollectionsState extends State<WebCollections> {
                             .copyWith(fontSize: 18),
                       ),
                       subtitle: Text(
-                        '${MockData.cardsList.length.toString()} ${AppStrings.cards.toLowerCase()}',
+                        '${widget.collectionsList[i].cards?.length.toString() ?? 0} ${AppStrings.cards.toLowerCase()}',
                         style:
                             AppTheme.themeData.textTheme.labelSmall!.copyWith(
                           color: AppColors.mainAccent,

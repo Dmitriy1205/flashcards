@@ -3,6 +3,8 @@ import 'package:flashcards/core/const/icons.dart';
 import 'package:flashcards/core/const/strings.dart';
 import 'package:flashcards/core/themes/theme.dart';
 import 'package:flashcards/domain/entities/card_entity/card_entity.dart';
+import 'package:flashcards/domain/params/card_param/create_card_param.dart';
+import 'package:flashcards/domain/params/card_param/edit_card_param.dart';
 import 'package:flashcards/presentation/blocs/cards/cards_bloc.dart';
 import 'package:flashcards/presentation/screens/mobile_screens/lists_screen/cards/view_flash_card.dart';
 import 'package:flashcards/presentation/widgets/custom_text_input.dart';
@@ -10,10 +12,11 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/svg.dart';
 
-
 class CreateEditCard extends StatefulWidget {
-  const CreateEditCard({Key? key, this.card}) : super(key: key);
-  final CardEntity? card;
+  const CreateEditCard({Key? key, this.cardEntity, required this.collectionId})
+      : super(key: key);
+  final CardEntity? cardEntity;
+  final String collectionId;
 
   @override
   State<CreateEditCard> createState() => _CreateEditCardState();
@@ -29,9 +32,9 @@ class _CreateEditCardState extends State<CreateEditCard> {
   @override
   void initState() {
     super.initState();
-    if (widget.card != null) {
-      frontTextEditingController.text = widget.card!.front;
-      backTextEditingController.text = widget.card!.back;
+    if (widget.cardEntity != null) {
+      frontTextEditingController.text = widget.cardEntity!.front;
+      backTextEditingController.text = widget.cardEntity!.back;
     }
   }
 
@@ -60,7 +63,7 @@ class _CreateEditCardState extends State<CreateEditCard> {
                 width: 19,
               ),
               Text(
-                widget.card == null
+                widget.cardEntity == null
                     ? '${AppStrings.create} ${AppStrings.card.toLowerCase()}'
                     : '${AppStrings.edit} ${AppStrings.card.toLowerCase()}',
                 style: AppTheme.themeData.textTheme.titleLarge,
@@ -70,27 +73,31 @@ class _CreateEditCardState extends State<CreateEditCard> {
               onPressed: () {
                 if (frontTextEditingController.text.isNotEmpty &&
                     backTextEditingController.text.isNotEmpty) {
-                  if (widget.card == null) {
-                    Navigator.pop(context);
-                    context.read<CardsBloc>().add(CardsEvent.createNewCard(
+                  if (widget.cardEntity == null) {
+                    CreateCardParam card = CreateCardParam(
                         front: frontTextEditingController.text,
-                        back: backTextEditingController.text));
+                        back: backTextEditingController.text,
+                        collectionId: widget.collectionId);
+                    Navigator.pop(context);
+
+                    context.read<CardsBloc>().add(CardsEvent.createNewCard(
+                        cardParam: card, collectionId: widget.collectionId));
                   } else {
+                    EditCardParam card = EditCardParam(
+                        front: frontTextEditingController.text,
+                        back: backTextEditingController.text,
+                        collectionId: widget.collectionId,
+                        id: widget.cardEntity!.id);
                     Navigator.pop(context);
                     Navigator.pushReplacement(
                         context,
                         MaterialPageRoute(
                             builder: (context) => ViewFlashCard(
-                                  card: CardEntity(
-                                      id: widget.card!.id,
-                                      front: frontTextEditingController.text,
-                                      back: backTextEditingController.text),
+                                  card: widget.cardEntity!,
+                                  collectionId: widget.collectionId,
                                 )));
                     context.read<CardsBloc>().add(CardsEvent.editCard(
-                        card: CardEntity(
-                            id: widget.card!.id,
-                            front: frontTextEditingController.text,
-                            back: backTextEditingController.text)));
+                        cardParam: card, collectionId: widget.collectionId));
                   }
                 }
               },
@@ -151,5 +158,4 @@ class _CreateEditCardState extends State<CreateEditCard> {
       ),
     );
   }
-
 }

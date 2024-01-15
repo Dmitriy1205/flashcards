@@ -85,48 +85,50 @@ class _CustomNavigationBarState extends State<CustomNavigationBar> {
               ),
             ),
           ),
-          pageIndex !=2 ? Positioned(right: 28, bottom: 10,child: context
-              .watch<ListsBloc>()
-              .isEditMode
-              ? Padding(
-            padding: const EdgeInsets.only(bottom: 20.0),
-            child: GestureDetector(
-              onTap: () {
-                context
-                    .read<ListsBloc>()
-                    .add(const ListsEvent.deleteSelectedCollection());
-                context
-                    .read<ListsBloc>()
-                    .isEditMode = false;
-              },
-              child: SizedBox(
-                height: 76,
-                width: 76,
-                child: SvgPicture.asset(
-                  AppIcons.redBucket,
-                  height: 18,
-                  width: 9,
-                ),
-              ),
-            ),
-          )
-              : Padding(
-            padding: const EdgeInsets.only(bottom: 20.0),
-            child: GestureDetector(
-              onTap: () {
-                dialog();
-              },
-              child: SizedBox(
-                height: 76,
-                width: 76,
-                child: SvgPicture.asset(
-                  AppIcons.addCollection,
-                  height: 18,
-                  width: 9,
-                ),
-              ),
-            ),
-          ),) : const SizedBox()
+          pageIndex != 2
+              ? Positioned(
+                  right: 28,
+                  bottom: 10,
+                  child: context.watch<ListsBloc>().isEditMode
+                      ? Padding(
+                          padding: const EdgeInsets.only(bottom: 20.0),
+                          child: GestureDetector(
+                            onTap: () {
+                              context.read<ListsBloc>().add(
+                                  const ListsEvent.deleteSelectedCollection(
+                                      collectionsList: []));
+                              context.read<ListsBloc>().isEditMode = false;
+                            },
+                            child: SizedBox(
+                              height: 76,
+                              width: 76,
+                              child: SvgPicture.asset(
+                                AppIcons.redBucket,
+                                height: 18,
+                                width: 9,
+                              ),
+                            ),
+                          ),
+                        )
+                      : Padding(
+                          padding: const EdgeInsets.only(bottom: 20.0),
+                          child: GestureDetector(
+                            onTap: () {
+                              dialog();
+                            },
+                            child: SizedBox(
+                              height: 76,
+                              width: 76,
+                              child: SvgPicture.asset(
+                                AppIcons.addCollection,
+                                height: 18,
+                                width: 9,
+                              ),
+                            ),
+                          ),
+                        ),
+                )
+              : const SizedBox()
         ],
       ),
     );
@@ -185,14 +187,14 @@ class _CustomNavigationBarState extends State<CustomNavigationBar> {
                         textAlignVertical: TextAlignVertical.top,
                         style: AppTheme.themeData.textTheme.labelMedium!
                             .copyWith(
-                            color: AppColors.mainAccent,
-                            fontWeight: FontWeight.w700),
+                                color: AppColors.mainAccent,
+                                fontWeight: FontWeight.w700),
                         controller: nameTextEditingController,
                         decoration: const InputDecoration(
                             filled: true,
                             border: OutlineInputBorder(
                                 borderRadius:
-                                BorderRadius.all(Radius.circular(15)))),
+                                    BorderRadius.all(Radius.circular(15)))),
                       ),
                     ),
                     const SizedBox(

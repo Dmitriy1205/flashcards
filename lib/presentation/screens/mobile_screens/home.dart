@@ -1,16 +1,12 @@
 import 'package:flashcards/core/const/colors.dart';
-import 'package:flashcards/core/const/icons.dart';
 import 'package:flashcards/core/const/strings.dart';
 import 'package:flashcards/core/themes/theme.dart';
-import 'package:flashcards/presentation/blocs/auth/auth_bloc.dart';
 import 'package:flashcards/presentation/blocs/lists/lists_bloc.dart';
-import 'package:flashcards/presentation/screens/mobile_screens/lists_screen/collections.dart';
 import 'package:flashcards/presentation/screens/mobile_screens/lists_screen/learn.dart';
 import 'package:flashcards/presentation/screens/mobile_screens/profile/profile.dart';
 import 'package:flashcards/presentation/widgets/navigationBar.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_svg/svg.dart';
 
 import 'lists_screen/lists_screen.dart';
 
@@ -24,7 +20,7 @@ class HomeMobile extends StatefulWidget {
 class _HomeMobileState extends State<HomeMobile> {
   PageController pageController = PageController(initialPage: 0);
 
-   int _selectedPage = 0;
+  int _selectedPage = 0;
 
   List<String> pageNames = [
     AppStrings.collections,
@@ -48,27 +44,22 @@ class _HomeMobileState extends State<HomeMobile> {
                   pageNames[_selectedPage],
                   style: AppTheme.themeData.textTheme.headlineLarge,
                 ),
-                _selectedPage == 0 ?  GestureDetector(
-                  onTap: () {
-                    setState(() {
-                    context
-                        .read<ListsBloc>()
-                        .isEditMode =
-                    !context
-                        .read<ListsBloc>()
-                        .isEditMode;
-                   });
-                    print('isEditMode');
-                  },
-                  child: Text(
-                    context
-                        .watch<ListsBloc>()
-                        .isEditMode
-                        ? AppStrings.cancel
-                        : AppStrings.edit,
-                    style: AppTheme.themeData.textTheme.titleLarge,
-                  ),
-                ) : SizedBox(),
+                _selectedPage == 0
+                    ? GestureDetector(
+                        onTap: () {
+                          context.read<ListsBloc>().listIdToDelete.clear();
+                          context.read<ListsBloc>().add(ListsEvent.started(
+                              isEditMode:
+                                  !context.read<ListsBloc>().isEditMode));
+                        },
+                        child: Text(
+                          context.watch<ListsBloc>().isEditMode
+                              ? AppStrings.cancel
+                              : AppStrings.edit,
+                          style: AppTheme.themeData.textTheme.titleLarge,
+                        ),
+                      )
+                    : SizedBox(),
               ],
             ),
           ],
