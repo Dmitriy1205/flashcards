@@ -21,6 +21,9 @@ UserEntity _$UserEntityFromJson(Map<String, dynamic> json) {
 /// @nodoc
 mixin _$UserEntity {
   String get id => throw _privateConstructorUsedError;
+  @JsonKey(
+      fromJson: FirebaseTimestampConverters.fromTimestamp,
+      toJson: FirebaseTimestampConverters.toTimestampString)
   DateTime get createdAt => throw _privateConstructorUsedError;
   String get firstName => throw _privateConstructorUsedError;
   String get lastName => throw _privateConstructorUsedError;
@@ -42,6 +45,9 @@ abstract class $UserEntityCopyWith<$Res> {
   @useResult
   $Res call(
       {String id,
+      @JsonKey(
+          fromJson: FirebaseTimestampConverters.fromTimestamp,
+          toJson: FirebaseTimestampConverters.toTimestampString)
       DateTime createdAt,
       String firstName,
       String lastName,
@@ -114,6 +120,9 @@ abstract class _$$UserEntityImplCopyWith<$Res>
   @useResult
   $Res call(
       {String id,
+      @JsonKey(
+          fromJson: FirebaseTimestampConverters.fromTimestamp,
+          toJson: FirebaseTimestampConverters.toTimestampString)
       DateTime createdAt,
       String firstName,
       String lastName,
@@ -179,6 +188,9 @@ class __$$UserEntityImplCopyWithImpl<$Res>
 class _$UserEntityImpl implements _UserEntity {
   _$UserEntityImpl(
       {required this.id,
+      @JsonKey(
+          fromJson: FirebaseTimestampConverters.fromTimestamp,
+          toJson: FirebaseTimestampConverters.toTimestampString)
       required this.createdAt,
       required this.firstName,
       required this.lastName,
@@ -193,6 +205,9 @@ class _$UserEntityImpl implements _UserEntity {
   @override
   final String id;
   @override
+  @JsonKey(
+      fromJson: FirebaseTimestampConverters.fromTimestamp,
+      toJson: FirebaseTimestampConverters.toTimestampString)
   final DateTime createdAt;
   @override
   final String firstName;
@@ -263,6 +278,9 @@ class _$UserEntityImpl implements _UserEntity {
 abstract class _UserEntity implements UserEntity {
   factory _UserEntity(
       {required final String id,
+      @JsonKey(
+          fromJson: FirebaseTimestampConverters.fromTimestamp,
+          toJson: FirebaseTimestampConverters.toTimestampString)
       required final DateTime createdAt,
       required final String firstName,
       required final String lastName,
@@ -276,6 +294,9 @@ abstract class _UserEntity implements UserEntity {
   @override
   String get id;
   @override
+  @JsonKey(
+      fromJson: FirebaseTimestampConverters.fromTimestamp,
+      toJson: FirebaseTimestampConverters.toTimestampString)
   DateTime get createdAt;
   @override
   String get firstName;

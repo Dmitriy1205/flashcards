@@ -16,31 +16,43 @@ final _privateConstructorUsedError = UnsupportedError(
 
 /// @nodoc
 mixin _$CardsEvent {
+  String get collectionId => throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
-    required TResult Function(CardEntity card) editCard,
-    required TResult Function() deleteSelectedCards,
-    required TResult Function(String front, String back) createNewCard,
+    required TResult Function(EditCardParam cardParam, String collectionId)
+        editCard,
+    required TResult Function(String collectionId) initCard,
+    required TResult Function(List<String> cardsIdToDelete, String collectionId)
+        deleteSelectedCards,
+    required TResult Function(CreateCardParam cardParam, String collectionId)
+        createNewCard,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult? Function(CardEntity card)? editCard,
-    TResult? Function()? deleteSelectedCards,
-    TResult? Function(String front, String back)? createNewCard,
+    TResult? Function(EditCardParam cardParam, String collectionId)? editCard,
+    TResult? Function(String collectionId)? initCard,
+    TResult? Function(List<String> cardsIdToDelete, String collectionId)?
+        deleteSelectedCards,
+    TResult? Function(CreateCardParam cardParam, String collectionId)?
+        createNewCard,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
-    TResult Function(CardEntity card)? editCard,
-    TResult Function()? deleteSelectedCards,
-    TResult Function(String front, String back)? createNewCard,
+    TResult Function(EditCardParam cardParam, String collectionId)? editCard,
+    TResult Function(String collectionId)? initCard,
+    TResult Function(List<String> cardsIdToDelete, String collectionId)?
+        deleteSelectedCards,
+    TResult Function(CreateCardParam cardParam, String collectionId)?
+        createNewCard,
     required TResult orElse(),
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult map<TResult extends Object?>({
     required TResult Function(_EditCard value) editCard,
+    required TResult Function(_InitCard value) initCard,
     required TResult Function(_DeleteSelectedCards value) deleteSelectedCards,
     required TResult Function(_CreateNewCard value) createNewCard,
   }) =>
@@ -48,6 +60,7 @@ mixin _$CardsEvent {
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
     TResult? Function(_EditCard value)? editCard,
+    TResult? Function(_InitCard value)? initCard,
     TResult? Function(_DeleteSelectedCards value)? deleteSelectedCards,
     TResult? Function(_CreateNewCard value)? createNewCard,
   }) =>
@@ -55,10 +68,15 @@ mixin _$CardsEvent {
   @optionalTypeArgs
   TResult maybeMap<TResult extends Object?>({
     TResult Function(_EditCard value)? editCard,
+    TResult Function(_InitCard value)? initCard,
     TResult Function(_DeleteSelectedCards value)? deleteSelectedCards,
     TResult Function(_CreateNewCard value)? createNewCard,
     required TResult orElse(),
   }) =>
+      throw _privateConstructorUsedError;
+
+  @JsonKey(ignore: true)
+  $CardsEventCopyWith<CardsEvent> get copyWith =>
       throw _privateConstructorUsedError;
 }
 
@@ -67,6 +85,8 @@ abstract class $CardsEventCopyWith<$Res> {
   factory $CardsEventCopyWith(
           CardsEvent value, $Res Function(CardsEvent) then) =
       _$CardsEventCopyWithImpl<$Res, CardsEvent>;
+  @useResult
+  $Res call({String collectionId});
 }
 
 /// @nodoc
@@ -78,17 +98,30 @@ class _$CardsEventCopyWithImpl<$Res, $Val extends CardsEvent>
   final $Val _value;
   // ignore: unused_field
   final $Res Function($Val) _then;
+
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? collectionId = null,
+  }) {
+    return _then(_value.copyWith(
+      collectionId: null == collectionId
+          ? _value.collectionId
+          : collectionId // ignore: cast_nullable_to_non_nullable
+              as String,
+    ) as $Val);
+  }
 }
 
 /// @nodoc
-abstract class _$$EditCardImplCopyWith<$Res> {
+abstract class _$$EditCardImplCopyWith<$Res>
+    implements $CardsEventCopyWith<$Res> {
   factory _$$EditCardImplCopyWith(
           _$EditCardImpl value, $Res Function(_$EditCardImpl) then) =
       __$$EditCardImplCopyWithImpl<$Res>;
+  @override
   @useResult
-  $Res call({CardEntity card});
-
-  $CardEntityCopyWith<$Res> get card;
+  $Res call({EditCardParam cardParam, String collectionId});
 }
 
 /// @nodoc
@@ -102,36 +135,35 @@ class __$$EditCardImplCopyWithImpl<$Res>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? card = null,
+    Object? cardParam = null,
+    Object? collectionId = null,
   }) {
     return _then(_$EditCardImpl(
-      card: null == card
-          ? _value.card
-          : card // ignore: cast_nullable_to_non_nullable
-              as CardEntity,
+      cardParam: null == cardParam
+          ? _value.cardParam
+          : cardParam // ignore: cast_nullable_to_non_nullable
+              as EditCardParam,
+      collectionId: null == collectionId
+          ? _value.collectionId
+          : collectionId // ignore: cast_nullable_to_non_nullable
+              as String,
     ));
-  }
-
-  @override
-  @pragma('vm:prefer-inline')
-  $CardEntityCopyWith<$Res> get card {
-    return $CardEntityCopyWith<$Res>(_value.card, (value) {
-      return _then(_value.copyWith(card: value));
-    });
   }
 }
 
 /// @nodoc
 
 class _$EditCardImpl implements _EditCard {
-  const _$EditCardImpl({required this.card});
+  const _$EditCardImpl({required this.cardParam, required this.collectionId});
 
   @override
-  final CardEntity card;
+  final EditCardParam cardParam;
+  @override
+  final String collectionId;
 
   @override
   String toString() {
-    return 'CardsEvent.editCard(card: $card)';
+    return 'CardsEvent.editCard(cardParam: $cardParam, collectionId: $collectionId)';
   }
 
   @override
@@ -139,11 +171,14 @@ class _$EditCardImpl implements _EditCard {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$EditCardImpl &&
-            (identical(other.card, card) || other.card == card));
+            (identical(other.cardParam, cardParam) ||
+                other.cardParam == cardParam) &&
+            (identical(other.collectionId, collectionId) ||
+                other.collectionId == collectionId));
   }
 
   @override
-  int get hashCode => Object.hash(runtimeType, card);
+  int get hashCode => Object.hash(runtimeType, cardParam, collectionId);
 
   @JsonKey(ignore: true)
   @override
@@ -154,33 +189,43 @@ class _$EditCardImpl implements _EditCard {
   @override
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
-    required TResult Function(CardEntity card) editCard,
-    required TResult Function() deleteSelectedCards,
-    required TResult Function(String front, String back) createNewCard,
+    required TResult Function(EditCardParam cardParam, String collectionId)
+        editCard,
+    required TResult Function(String collectionId) initCard,
+    required TResult Function(List<String> cardsIdToDelete, String collectionId)
+        deleteSelectedCards,
+    required TResult Function(CreateCardParam cardParam, String collectionId)
+        createNewCard,
   }) {
-    return editCard(card);
+    return editCard(cardParam, collectionId);
   }
 
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult? Function(CardEntity card)? editCard,
-    TResult? Function()? deleteSelectedCards,
-    TResult? Function(String front, String back)? createNewCard,
+    TResult? Function(EditCardParam cardParam, String collectionId)? editCard,
+    TResult? Function(String collectionId)? initCard,
+    TResult? Function(List<String> cardsIdToDelete, String collectionId)?
+        deleteSelectedCards,
+    TResult? Function(CreateCardParam cardParam, String collectionId)?
+        createNewCard,
   }) {
-    return editCard?.call(card);
+    return editCard?.call(cardParam, collectionId);
   }
 
   @override
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
-    TResult Function(CardEntity card)? editCard,
-    TResult Function()? deleteSelectedCards,
-    TResult Function(String front, String back)? createNewCard,
+    TResult Function(EditCardParam cardParam, String collectionId)? editCard,
+    TResult Function(String collectionId)? initCard,
+    TResult Function(List<String> cardsIdToDelete, String collectionId)?
+        deleteSelectedCards,
+    TResult Function(CreateCardParam cardParam, String collectionId)?
+        createNewCard,
     required TResult orElse(),
   }) {
     if (editCard != null) {
-      return editCard(card);
+      return editCard(cardParam, collectionId);
     }
     return orElse();
   }
@@ -189,6 +234,7 @@ class _$EditCardImpl implements _EditCard {
   @optionalTypeArgs
   TResult map<TResult extends Object?>({
     required TResult Function(_EditCard value) editCard,
+    required TResult Function(_InitCard value) initCard,
     required TResult Function(_DeleteSelectedCards value) deleteSelectedCards,
     required TResult Function(_CreateNewCard value) createNewCard,
   }) {
@@ -199,6 +245,7 @@ class _$EditCardImpl implements _EditCard {
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
     TResult? Function(_EditCard value)? editCard,
+    TResult? Function(_InitCard value)? initCard,
     TResult? Function(_DeleteSelectedCards value)? deleteSelectedCards,
     TResult? Function(_CreateNewCard value)? createNewCard,
   }) {
@@ -209,6 +256,7 @@ class _$EditCardImpl implements _EditCard {
   @optionalTypeArgs
   TResult maybeMap<TResult extends Object?>({
     TResult Function(_EditCard value)? editCard,
+    TResult Function(_InitCard value)? initCard,
     TResult Function(_DeleteSelectedCards value)? deleteSelectedCards,
     TResult Function(_CreateNewCard value)? createNewCard,
     required TResult orElse(),
@@ -221,19 +269,186 @@ class _$EditCardImpl implements _EditCard {
 }
 
 abstract class _EditCard implements CardsEvent {
-  const factory _EditCard({required final CardEntity card}) = _$EditCardImpl;
+  const factory _EditCard(
+      {required final EditCardParam cardParam,
+      required final String collectionId}) = _$EditCardImpl;
 
-  CardEntity get card;
+  EditCardParam get cardParam;
+  @override
+  String get collectionId;
+  @override
   @JsonKey(ignore: true)
   _$$EditCardImplCopyWith<_$EditCardImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }
 
 /// @nodoc
-abstract class _$$DeleteSelectedCardsImplCopyWith<$Res> {
+abstract class _$$InitCardImplCopyWith<$Res>
+    implements $CardsEventCopyWith<$Res> {
+  factory _$$InitCardImplCopyWith(
+          _$InitCardImpl value, $Res Function(_$InitCardImpl) then) =
+      __$$InitCardImplCopyWithImpl<$Res>;
+  @override
+  @useResult
+  $Res call({String collectionId});
+}
+
+/// @nodoc
+class __$$InitCardImplCopyWithImpl<$Res>
+    extends _$CardsEventCopyWithImpl<$Res, _$InitCardImpl>
+    implements _$$InitCardImplCopyWith<$Res> {
+  __$$InitCardImplCopyWithImpl(
+      _$InitCardImpl _value, $Res Function(_$InitCardImpl) _then)
+      : super(_value, _then);
+
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? collectionId = null,
+  }) {
+    return _then(_$InitCardImpl(
+      collectionId: null == collectionId
+          ? _value.collectionId
+          : collectionId // ignore: cast_nullable_to_non_nullable
+              as String,
+    ));
+  }
+}
+
+/// @nodoc
+
+class _$InitCardImpl implements _InitCard {
+  const _$InitCardImpl({required this.collectionId});
+
+  @override
+  final String collectionId;
+
+  @override
+  String toString() {
+    return 'CardsEvent.initCard(collectionId: $collectionId)';
+  }
+
+  @override
+  bool operator ==(Object other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType &&
+            other is _$InitCardImpl &&
+            (identical(other.collectionId, collectionId) ||
+                other.collectionId == collectionId));
+  }
+
+  @override
+  int get hashCode => Object.hash(runtimeType, collectionId);
+
+  @JsonKey(ignore: true)
+  @override
+  @pragma('vm:prefer-inline')
+  _$$InitCardImplCopyWith<_$InitCardImpl> get copyWith =>
+      __$$InitCardImplCopyWithImpl<_$InitCardImpl>(this, _$identity);
+
+  @override
+  @optionalTypeArgs
+  TResult when<TResult extends Object?>({
+    required TResult Function(EditCardParam cardParam, String collectionId)
+        editCard,
+    required TResult Function(String collectionId) initCard,
+    required TResult Function(List<String> cardsIdToDelete, String collectionId)
+        deleteSelectedCards,
+    required TResult Function(CreateCardParam cardParam, String collectionId)
+        createNewCard,
+  }) {
+    return initCard(collectionId);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? whenOrNull<TResult extends Object?>({
+    TResult? Function(EditCardParam cardParam, String collectionId)? editCard,
+    TResult? Function(String collectionId)? initCard,
+    TResult? Function(List<String> cardsIdToDelete, String collectionId)?
+        deleteSelectedCards,
+    TResult? Function(CreateCardParam cardParam, String collectionId)?
+        createNewCard,
+  }) {
+    return initCard?.call(collectionId);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeWhen<TResult extends Object?>({
+    TResult Function(EditCardParam cardParam, String collectionId)? editCard,
+    TResult Function(String collectionId)? initCard,
+    TResult Function(List<String> cardsIdToDelete, String collectionId)?
+        deleteSelectedCards,
+    TResult Function(CreateCardParam cardParam, String collectionId)?
+        createNewCard,
+    required TResult orElse(),
+  }) {
+    if (initCard != null) {
+      return initCard(collectionId);
+    }
+    return orElse();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult map<TResult extends Object?>({
+    required TResult Function(_EditCard value) editCard,
+    required TResult Function(_InitCard value) initCard,
+    required TResult Function(_DeleteSelectedCards value) deleteSelectedCards,
+    required TResult Function(_CreateNewCard value) createNewCard,
+  }) {
+    return initCard(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? mapOrNull<TResult extends Object?>({
+    TResult? Function(_EditCard value)? editCard,
+    TResult? Function(_InitCard value)? initCard,
+    TResult? Function(_DeleteSelectedCards value)? deleteSelectedCards,
+    TResult? Function(_CreateNewCard value)? createNewCard,
+  }) {
+    return initCard?.call(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeMap<TResult extends Object?>({
+    TResult Function(_EditCard value)? editCard,
+    TResult Function(_InitCard value)? initCard,
+    TResult Function(_DeleteSelectedCards value)? deleteSelectedCards,
+    TResult Function(_CreateNewCard value)? createNewCard,
+    required TResult orElse(),
+  }) {
+    if (initCard != null) {
+      return initCard(this);
+    }
+    return orElse();
+  }
+}
+
+abstract class _InitCard implements CardsEvent {
+  const factory _InitCard({required final String collectionId}) =
+      _$InitCardImpl;
+
+  @override
+  String get collectionId;
+  @override
+  @JsonKey(ignore: true)
+  _$$InitCardImplCopyWith<_$InitCardImpl> get copyWith =>
+      throw _privateConstructorUsedError;
+}
+
+/// @nodoc
+abstract class _$$DeleteSelectedCardsImplCopyWith<$Res>
+    implements $CardsEventCopyWith<$Res> {
   factory _$$DeleteSelectedCardsImplCopyWith(_$DeleteSelectedCardsImpl value,
           $Res Function(_$DeleteSelectedCardsImpl) then) =
       __$$DeleteSelectedCardsImplCopyWithImpl<$Res>;
+  @override
+  @useResult
+  $Res call({List<String> cardsIdToDelete, String collectionId});
 }
 
 /// @nodoc
@@ -243,58 +458,111 @@ class __$$DeleteSelectedCardsImplCopyWithImpl<$Res>
   __$$DeleteSelectedCardsImplCopyWithImpl(_$DeleteSelectedCardsImpl _value,
       $Res Function(_$DeleteSelectedCardsImpl) _then)
       : super(_value, _then);
+
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? cardsIdToDelete = null,
+    Object? collectionId = null,
+  }) {
+    return _then(_$DeleteSelectedCardsImpl(
+      cardsIdToDelete: null == cardsIdToDelete
+          ? _value._cardsIdToDelete
+          : cardsIdToDelete // ignore: cast_nullable_to_non_nullable
+              as List<String>,
+      collectionId: null == collectionId
+          ? _value.collectionId
+          : collectionId // ignore: cast_nullable_to_non_nullable
+              as String,
+    ));
+  }
 }
 
 /// @nodoc
 
 class _$DeleteSelectedCardsImpl implements _DeleteSelectedCards {
-  const _$DeleteSelectedCardsImpl();
+  const _$DeleteSelectedCardsImpl(
+      {required final List<String> cardsIdToDelete, required this.collectionId})
+      : _cardsIdToDelete = cardsIdToDelete;
+
+  final List<String> _cardsIdToDelete;
+  @override
+  List<String> get cardsIdToDelete {
+    if (_cardsIdToDelete is EqualUnmodifiableListView) return _cardsIdToDelete;
+    // ignore: implicit_dynamic_type
+    return EqualUnmodifiableListView(_cardsIdToDelete);
+  }
+
+  @override
+  final String collectionId;
 
   @override
   String toString() {
-    return 'CardsEvent.deleteSelectedCards()';
+    return 'CardsEvent.deleteSelectedCards(cardsIdToDelete: $cardsIdToDelete, collectionId: $collectionId)';
   }
 
   @override
   bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$DeleteSelectedCardsImpl);
+            other is _$DeleteSelectedCardsImpl &&
+            const DeepCollectionEquality()
+                .equals(other._cardsIdToDelete, _cardsIdToDelete) &&
+            (identical(other.collectionId, collectionId) ||
+                other.collectionId == collectionId));
   }
 
   @override
-  int get hashCode => runtimeType.hashCode;
+  int get hashCode => Object.hash(runtimeType,
+      const DeepCollectionEquality().hash(_cardsIdToDelete), collectionId);
+
+  @JsonKey(ignore: true)
+  @override
+  @pragma('vm:prefer-inline')
+  _$$DeleteSelectedCardsImplCopyWith<_$DeleteSelectedCardsImpl> get copyWith =>
+      __$$DeleteSelectedCardsImplCopyWithImpl<_$DeleteSelectedCardsImpl>(
+          this, _$identity);
 
   @override
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
-    required TResult Function(CardEntity card) editCard,
-    required TResult Function() deleteSelectedCards,
-    required TResult Function(String front, String back) createNewCard,
+    required TResult Function(EditCardParam cardParam, String collectionId)
+        editCard,
+    required TResult Function(String collectionId) initCard,
+    required TResult Function(List<String> cardsIdToDelete, String collectionId)
+        deleteSelectedCards,
+    required TResult Function(CreateCardParam cardParam, String collectionId)
+        createNewCard,
   }) {
-    return deleteSelectedCards();
+    return deleteSelectedCards(cardsIdToDelete, collectionId);
   }
 
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult? Function(CardEntity card)? editCard,
-    TResult? Function()? deleteSelectedCards,
-    TResult? Function(String front, String back)? createNewCard,
+    TResult? Function(EditCardParam cardParam, String collectionId)? editCard,
+    TResult? Function(String collectionId)? initCard,
+    TResult? Function(List<String> cardsIdToDelete, String collectionId)?
+        deleteSelectedCards,
+    TResult? Function(CreateCardParam cardParam, String collectionId)?
+        createNewCard,
   }) {
-    return deleteSelectedCards?.call();
+    return deleteSelectedCards?.call(cardsIdToDelete, collectionId);
   }
 
   @override
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
-    TResult Function(CardEntity card)? editCard,
-    TResult Function()? deleteSelectedCards,
-    TResult Function(String front, String back)? createNewCard,
+    TResult Function(EditCardParam cardParam, String collectionId)? editCard,
+    TResult Function(String collectionId)? initCard,
+    TResult Function(List<String> cardsIdToDelete, String collectionId)?
+        deleteSelectedCards,
+    TResult Function(CreateCardParam cardParam, String collectionId)?
+        createNewCard,
     required TResult orElse(),
   }) {
     if (deleteSelectedCards != null) {
-      return deleteSelectedCards();
+      return deleteSelectedCards(cardsIdToDelete, collectionId);
     }
     return orElse();
   }
@@ -303,6 +571,7 @@ class _$DeleteSelectedCardsImpl implements _DeleteSelectedCards {
   @optionalTypeArgs
   TResult map<TResult extends Object?>({
     required TResult Function(_EditCard value) editCard,
+    required TResult Function(_InitCard value) initCard,
     required TResult Function(_DeleteSelectedCards value) deleteSelectedCards,
     required TResult Function(_CreateNewCard value) createNewCard,
   }) {
@@ -313,6 +582,7 @@ class _$DeleteSelectedCardsImpl implements _DeleteSelectedCards {
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
     TResult? Function(_EditCard value)? editCard,
+    TResult? Function(_InitCard value)? initCard,
     TResult? Function(_DeleteSelectedCards value)? deleteSelectedCards,
     TResult? Function(_CreateNewCard value)? createNewCard,
   }) {
@@ -323,6 +593,7 @@ class _$DeleteSelectedCardsImpl implements _DeleteSelectedCards {
   @optionalTypeArgs
   TResult maybeMap<TResult extends Object?>({
     TResult Function(_EditCard value)? editCard,
+    TResult Function(_InitCard value)? initCard,
     TResult Function(_DeleteSelectedCards value)? deleteSelectedCards,
     TResult Function(_CreateNewCard value)? createNewCard,
     required TResult orElse(),
@@ -335,16 +606,28 @@ class _$DeleteSelectedCardsImpl implements _DeleteSelectedCards {
 }
 
 abstract class _DeleteSelectedCards implements CardsEvent {
-  const factory _DeleteSelectedCards() = _$DeleteSelectedCardsImpl;
+  const factory _DeleteSelectedCards(
+      {required final List<String> cardsIdToDelete,
+      required final String collectionId}) = _$DeleteSelectedCardsImpl;
+
+  List<String> get cardsIdToDelete;
+  @override
+  String get collectionId;
+  @override
+  @JsonKey(ignore: true)
+  _$$DeleteSelectedCardsImplCopyWith<_$DeleteSelectedCardsImpl> get copyWith =>
+      throw _privateConstructorUsedError;
 }
 
 /// @nodoc
-abstract class _$$CreateNewCardImplCopyWith<$Res> {
+abstract class _$$CreateNewCardImplCopyWith<$Res>
+    implements $CardsEventCopyWith<$Res> {
   factory _$$CreateNewCardImplCopyWith(
           _$CreateNewCardImpl value, $Res Function(_$CreateNewCardImpl) then) =
       __$$CreateNewCardImplCopyWithImpl<$Res>;
+  @override
   @useResult
-  $Res call({String front, String back});
+  $Res call({CreateCardParam cardParam, String collectionId});
 }
 
 /// @nodoc
@@ -358,17 +641,17 @@ class __$$CreateNewCardImplCopyWithImpl<$Res>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? front = null,
-    Object? back = null,
+    Object? cardParam = null,
+    Object? collectionId = null,
   }) {
     return _then(_$CreateNewCardImpl(
-      front: null == front
-          ? _value.front
-          : front // ignore: cast_nullable_to_non_nullable
-              as String,
-      back: null == back
-          ? _value.back
-          : back // ignore: cast_nullable_to_non_nullable
+      cardParam: null == cardParam
+          ? _value.cardParam
+          : cardParam // ignore: cast_nullable_to_non_nullable
+              as CreateCardParam,
+      collectionId: null == collectionId
+          ? _value.collectionId
+          : collectionId // ignore: cast_nullable_to_non_nullable
               as String,
     ));
   }
@@ -377,16 +660,17 @@ class __$$CreateNewCardImplCopyWithImpl<$Res>
 /// @nodoc
 
 class _$CreateNewCardImpl implements _CreateNewCard {
-  const _$CreateNewCardImpl({required this.front, required this.back});
+  const _$CreateNewCardImpl(
+      {required this.cardParam, required this.collectionId});
 
   @override
-  final String front;
+  final CreateCardParam cardParam;
   @override
-  final String back;
+  final String collectionId;
 
   @override
   String toString() {
-    return 'CardsEvent.createNewCard(front: $front, back: $back)';
+    return 'CardsEvent.createNewCard(cardParam: $cardParam, collectionId: $collectionId)';
   }
 
   @override
@@ -394,12 +678,14 @@ class _$CreateNewCardImpl implements _CreateNewCard {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$CreateNewCardImpl &&
-            (identical(other.front, front) || other.front == front) &&
-            (identical(other.back, back) || other.back == back));
+            (identical(other.cardParam, cardParam) ||
+                other.cardParam == cardParam) &&
+            (identical(other.collectionId, collectionId) ||
+                other.collectionId == collectionId));
   }
 
   @override
-  int get hashCode => Object.hash(runtimeType, front, back);
+  int get hashCode => Object.hash(runtimeType, cardParam, collectionId);
 
   @JsonKey(ignore: true)
   @override
@@ -410,33 +696,43 @@ class _$CreateNewCardImpl implements _CreateNewCard {
   @override
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
-    required TResult Function(CardEntity card) editCard,
-    required TResult Function() deleteSelectedCards,
-    required TResult Function(String front, String back) createNewCard,
+    required TResult Function(EditCardParam cardParam, String collectionId)
+        editCard,
+    required TResult Function(String collectionId) initCard,
+    required TResult Function(List<String> cardsIdToDelete, String collectionId)
+        deleteSelectedCards,
+    required TResult Function(CreateCardParam cardParam, String collectionId)
+        createNewCard,
   }) {
-    return createNewCard(front, back);
+    return createNewCard(cardParam, collectionId);
   }
 
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult? Function(CardEntity card)? editCard,
-    TResult? Function()? deleteSelectedCards,
-    TResult? Function(String front, String back)? createNewCard,
+    TResult? Function(EditCardParam cardParam, String collectionId)? editCard,
+    TResult? Function(String collectionId)? initCard,
+    TResult? Function(List<String> cardsIdToDelete, String collectionId)?
+        deleteSelectedCards,
+    TResult? Function(CreateCardParam cardParam, String collectionId)?
+        createNewCard,
   }) {
-    return createNewCard?.call(front, back);
+    return createNewCard?.call(cardParam, collectionId);
   }
 
   @override
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
-    TResult Function(CardEntity card)? editCard,
-    TResult Function()? deleteSelectedCards,
-    TResult Function(String front, String back)? createNewCard,
+    TResult Function(EditCardParam cardParam, String collectionId)? editCard,
+    TResult Function(String collectionId)? initCard,
+    TResult Function(List<String> cardsIdToDelete, String collectionId)?
+        deleteSelectedCards,
+    TResult Function(CreateCardParam cardParam, String collectionId)?
+        createNewCard,
     required TResult orElse(),
   }) {
     if (createNewCard != null) {
-      return createNewCard(front, back);
+      return createNewCard(cardParam, collectionId);
     }
     return orElse();
   }
@@ -445,6 +741,7 @@ class _$CreateNewCardImpl implements _CreateNewCard {
   @optionalTypeArgs
   TResult map<TResult extends Object?>({
     required TResult Function(_EditCard value) editCard,
+    required TResult Function(_InitCard value) initCard,
     required TResult Function(_DeleteSelectedCards value) deleteSelectedCards,
     required TResult Function(_CreateNewCard value) createNewCard,
   }) {
@@ -455,6 +752,7 @@ class _$CreateNewCardImpl implements _CreateNewCard {
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
     TResult? Function(_EditCard value)? editCard,
+    TResult? Function(_InitCard value)? initCard,
     TResult? Function(_DeleteSelectedCards value)? deleteSelectedCards,
     TResult? Function(_CreateNewCard value)? createNewCard,
   }) {
@@ -465,6 +763,7 @@ class _$CreateNewCardImpl implements _CreateNewCard {
   @optionalTypeArgs
   TResult maybeMap<TResult extends Object?>({
     TResult Function(_EditCard value)? editCard,
+    TResult Function(_InitCard value)? initCard,
     TResult Function(_DeleteSelectedCards value)? deleteSelectedCards,
     TResult Function(_CreateNewCard value)? createNewCard,
     required TResult orElse(),
@@ -478,11 +777,13 @@ class _$CreateNewCardImpl implements _CreateNewCard {
 
 abstract class _CreateNewCard implements CardsEvent {
   const factory _CreateNewCard(
-      {required final String front,
-      required final String back}) = _$CreateNewCardImpl;
+      {required final CreateCardParam cardParam,
+      required final String collectionId}) = _$CreateNewCardImpl;
 
-  String get front;
-  String get back;
+  CreateCardParam get cardParam;
+  @override
+  String get collectionId;
+  @override
   @JsonKey(ignore: true)
   _$$CreateNewCardImplCopyWith<_$CreateNewCardImpl> get copyWith =>
       throw _privateConstructorUsedError;
@@ -492,21 +793,21 @@ abstract class _CreateNewCard implements CardsEvent {
 mixin _$CardsState {
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
-    required TResult Function(List<Map<String, dynamic>>? cardsList) initial,
+    required TResult Function(List<CardEntity>? cardsList) initial,
     required TResult Function() viewIndividualCard,
     required TResult Function() loading,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult? Function(List<Map<String, dynamic>>? cardsList)? initial,
+    TResult? Function(List<CardEntity>? cardsList)? initial,
     TResult? Function()? viewIndividualCard,
     TResult? Function()? loading,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
-    TResult Function(List<Map<String, dynamic>>? cardsList)? initial,
+    TResult Function(List<CardEntity>? cardsList)? initial,
     TResult Function()? viewIndividualCard,
     TResult Function()? loading,
     required TResult orElse(),
@@ -560,7 +861,7 @@ abstract class _$$InitialImplCopyWith<$Res> {
           _$InitialImpl value, $Res Function(_$InitialImpl) then) =
       __$$InitialImplCopyWithImpl<$Res>;
   @useResult
-  $Res call({List<Map<String, dynamic>>? cardsList});
+  $Res call({List<CardEntity>? cardsList});
 }
 
 /// @nodoc
@@ -580,7 +881,7 @@ class __$$InitialImplCopyWithImpl<$Res>
       cardsList: freezed == cardsList
           ? _value._cardsList
           : cardsList // ignore: cast_nullable_to_non_nullable
-              as List<Map<String, dynamic>>?,
+              as List<CardEntity>?,
     ));
   }
 }
@@ -588,12 +889,12 @@ class __$$InitialImplCopyWithImpl<$Res>
 /// @nodoc
 
 class _$InitialImpl implements _Initial {
-  const _$InitialImpl({required final List<Map<String, dynamic>>? cardsList})
+  const _$InitialImpl({required final List<CardEntity>? cardsList})
       : _cardsList = cardsList;
 
-  final List<Map<String, dynamic>>? _cardsList;
+  final List<CardEntity>? _cardsList;
   @override
-  List<Map<String, dynamic>>? get cardsList {
+  List<CardEntity>? get cardsList {
     final value = _cardsList;
     if (value == null) return null;
     if (_cardsList is EqualUnmodifiableListView) return _cardsList;
@@ -628,7 +929,7 @@ class _$InitialImpl implements _Initial {
   @override
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
-    required TResult Function(List<Map<String, dynamic>>? cardsList) initial,
+    required TResult Function(List<CardEntity>? cardsList) initial,
     required TResult Function() viewIndividualCard,
     required TResult Function() loading,
   }) {
@@ -638,7 +939,7 @@ class _$InitialImpl implements _Initial {
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult? Function(List<Map<String, dynamic>>? cardsList)? initial,
+    TResult? Function(List<CardEntity>? cardsList)? initial,
     TResult? Function()? viewIndividualCard,
     TResult? Function()? loading,
   }) {
@@ -648,7 +949,7 @@ class _$InitialImpl implements _Initial {
   @override
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
-    TResult Function(List<Map<String, dynamic>>? cardsList)? initial,
+    TResult Function(List<CardEntity>? cardsList)? initial,
     TResult Function()? viewIndividualCard,
     TResult Function()? loading,
     required TResult orElse(),
@@ -695,10 +996,10 @@ class _$InitialImpl implements _Initial {
 }
 
 abstract class _Initial implements CardsState {
-  const factory _Initial(
-      {required final List<Map<String, dynamic>>? cardsList}) = _$InitialImpl;
+  const factory _Initial({required final List<CardEntity>? cardsList}) =
+      _$InitialImpl;
 
-  List<Map<String, dynamic>>? get cardsList;
+  List<CardEntity>? get cardsList;
   @JsonKey(ignore: true)
   _$$InitialImplCopyWith<_$InitialImpl> get copyWith =>
       throw _privateConstructorUsedError;
@@ -742,7 +1043,7 @@ class _$ViewIndividualCardImpl implements _ViewIndividualCard {
   @override
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
-    required TResult Function(List<Map<String, dynamic>>? cardsList) initial,
+    required TResult Function(List<CardEntity>? cardsList) initial,
     required TResult Function() viewIndividualCard,
     required TResult Function() loading,
   }) {
@@ -752,7 +1053,7 @@ class _$ViewIndividualCardImpl implements _ViewIndividualCard {
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult? Function(List<Map<String, dynamic>>? cardsList)? initial,
+    TResult? Function(List<CardEntity>? cardsList)? initial,
     TResult? Function()? viewIndividualCard,
     TResult? Function()? loading,
   }) {
@@ -762,7 +1063,7 @@ class _$ViewIndividualCardImpl implements _ViewIndividualCard {
   @override
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
-    TResult Function(List<Map<String, dynamic>>? cardsList)? initial,
+    TResult Function(List<CardEntity>? cardsList)? initial,
     TResult Function()? viewIndividualCard,
     TResult Function()? loading,
     required TResult orElse(),
@@ -850,7 +1151,7 @@ class _$LoadingImpl implements _Loading {
   @override
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
-    required TResult Function(List<Map<String, dynamic>>? cardsList) initial,
+    required TResult Function(List<CardEntity>? cardsList) initial,
     required TResult Function() viewIndividualCard,
     required TResult Function() loading,
   }) {
@@ -860,7 +1161,7 @@ class _$LoadingImpl implements _Loading {
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult? Function(List<Map<String, dynamic>>? cardsList)? initial,
+    TResult? Function(List<CardEntity>? cardsList)? initial,
     TResult? Function()? viewIndividualCard,
     TResult? Function()? loading,
   }) {
@@ -870,7 +1171,7 @@ class _$LoadingImpl implements _Loading {
   @override
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
-    TResult Function(List<Map<String, dynamic>>? cardsList)? initial,
+    TResult Function(List<CardEntity>? cardsList)? initial,
     TResult Function()? viewIndividualCard,
     TResult Function()? loading,
     required TResult orElse(),

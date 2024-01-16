@@ -1,7 +1,9 @@
 import 'package:flashcards/core/const/colors.dart';
 import 'package:flashcards/core/const/strings.dart';
 import 'package:flashcards/core/themes/theme.dart';
+import 'package:flashcards/data/remote/empty.dart';
 import 'package:flashcards/domain/entities/card_entity/card_entity.dart';
+import 'package:flashcards/domain/entities/collection_entity/collection_entity.dart';
 import 'package:flashcards/presentation/blocs/cards/cards_bloc.dart';
 import 'package:flashcards/presentation/blocs/lists/lists_bloc.dart';
 import 'package:flashcards/presentation/screens/web_screens/home/lists/cards/web_view_flash_card.dart';
@@ -15,8 +17,11 @@ import '../../../../../../core/router/router.dart';
 import '../../../../../widgets/app_round_button.dart';
 
 class WebCards extends StatefulWidget {
-  const WebCards({Key? key, required this.collectionName}) : super(key: key);
+  const WebCards(
+      {Key? key, required this.collectionId, required this.collectionName})
+      : super(key: key);
   final String collectionName;
+  final String collectionId;
 
   @override
   State<WebCards> createState() => _WebCardsState();
@@ -37,10 +42,14 @@ class _WebCardsState extends State<WebCards> {
             children: [
               Row(
                 children: [
-                  const SizedBox(width: 64,),
+                  const SizedBox(
+                    width: 64,
+                  ),
                   InkWell(
                     onTap: () {
-                      context.read<ListsBloc>().add(const ListsEvent.started());
+                      context
+                          .read<ListsBloc>()
+                          .add(ListsEvent.started(isEditMode: false));
                       Navigator.of(context).pop();
                     },
                     child: const FaIcon(
@@ -189,7 +198,7 @@ class _WebCardsState extends State<WebCards> {
           state.maybeMap(orElse: () {});
         },
         builder: (context, state) {
-          return state.maybeMap(initial: (_) {
+          return state.maybeMap(initial: (data) {
             return Container(
               color: AppColors.background,
               child: Column(
@@ -210,7 +219,7 @@ class _WebCardsState extends State<WebCards> {
                                 .copyWith(fontSize: 18),
                           ),
                           Text(
-                            '${context.read<CardsBloc>().cardsList.length} cards',
+                            '${data.cardsList!.length} cards',
                             style: AppTheme.themeData.textTheme.labelSmall!
                                 .copyWith(
                               color: AppColors.mainAccent,
@@ -237,10 +246,9 @@ class _WebCardsState extends State<WebCards> {
                             // Horizontal spacing between items
                             mainAxisSpacing: 30.0,
                             mainAxisExtent: 140),
-                        itemCount: context.read<CardsBloc>().cardsList.length,
+                        itemCount: data.cardsList!.length,
                         itemBuilder: (context, i) {
-                          CardEntity card =
-                              context.read<CardsBloc>().cardsList[i]['name'];
+                          CardEntity card = data.cardsList![i];
                           return Container(
                             padding: EdgeInsets.zero,
                             child: Row(
@@ -249,12 +257,8 @@ class _WebCardsState extends State<WebCards> {
                                     ? InkWell(
                                         onTap: () {
                                           setState(() {
-                                            context
-                                                    .read<CardsBloc>()
-                                                    .cardsList[i]['toDelete'] =
-                                                !context
-                                                    .read<CardsBloc>()
-                                                    .cardsList[i]['toDelete'];
+                                            data.cardsList![i] =
+                                                data.cardsList![i];
                                           });
                                         },
                                         child: Container(
@@ -265,7 +269,9 @@ class _WebCardsState extends State<WebCards> {
                                             padding: const EdgeInsets.all(10.0),
                                             child: context
                                                     .watch<CardsBloc>()
-                                                    .cardsList[i]['toDelete']
+                                                    .cardsListToDelete
+                                                    .contains(
+                                                        data.cardsList![i].id)
                                                 ? const Icon(
                                                     Icons.check_circle,
                                                     size: 23.0,
@@ -294,10 +300,9 @@ class _WebCardsState extends State<WebCards> {
                                           MaterialPageRoute(
                                               builder: (context) =>
                                                   WebViewFlashCard(
-                                                    card: CardEntity(
-                                                        front: card.front,
-                                                        back: card.back),
-                                                  )));
+                                                      card: card,
+                                                      collectionId: widget
+                                                          .collectionId)));
                                     },
                                     child: Container(
                                       height: 148,
@@ -358,9 +363,11 @@ class _WebCardsState extends State<WebCards> {
                 children: [
                   AppRoundButton(
                     onTap: () {
-                      context
-                          .read<CardsBloc>()
-                          .add(const CardsEvent.deleteSelectedCards());
+                      context.read<CardsBloc>().add(
+                          CardsEvent.deleteSelectedCards(
+                              cardsIdToDelete:
+                                  context.read<CardsBloc>().cardsListToDelete,
+                              collectionId: widget.collectionId));
                       context.read<CardsBloc>().isEditMode = false;
                     },
                     svgIcon: AppIcons.trash,
@@ -372,9 +379,11 @@ class _WebCardsState extends State<WebCards> {
                   ),
                   AppRoundButton(
                     onTap: () {
-                      context
-                          .read<CardsBloc>()
-                          .add(const CardsEvent.deleteSelectedCards());
+                      context.read<CardsBloc>().add(
+                          CardsEvent.deleteSelectedCards(
+                              cardsIdToDelete:
+                                  context.read<CardsBloc>().cardsListToDelete,
+                              collectionId: widget.collectionId));
                       context.read<CardsBloc>().isEditMode = false;
                     },
                     svgIcon: AppIcons.close,

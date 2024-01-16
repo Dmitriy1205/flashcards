@@ -5,13 +5,16 @@ import 'package:flashcards/core/const/icons.dart';
 import 'package:flashcards/core/const/strings.dart';
 import 'package:flashcards/core/themes/theme.dart';
 import 'package:flashcards/domain/entities/card_entity/card_entity.dart';
+import 'package:flashcards/domain/entities/collection_entity/collection_entity.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'create_edit_card.dart';
 
 class ViewFlashCard extends StatefulWidget {
-  const ViewFlashCard({Key? key, required this.card}) : super(key: key);
+  const ViewFlashCard({Key? key, required this.card, required this.collectionId})
+      : super(key: key);
   final CardEntity card;
+  final String collectionId;
 
   @override
   State<ViewFlashCard> createState() => _ViewFlashCardState();
@@ -55,7 +58,8 @@ class _ViewFlashCardState extends State<ViewFlashCard> {
                       context,
                       MaterialPageRoute(
                           builder: (context) => CreateEditCard(
-                                card: widget.card,
+                                cardEntity: widget.card,
+                                collectionId: widget.collectionId,
                               )));
                 },
                 child: Text(

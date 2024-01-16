@@ -21,9 +21,10 @@ CollectionEntity _$CollectionEntityFromJson(Map<String, dynamic> json) {
 /// @nodoc
 mixin _$CollectionEntity {
   String get id => throw _privateConstructorUsedError;
-  DateTime get createdAt => throw _privateConstructorUsedError;
   String get collectionName => throw _privateConstructorUsedError;
-  List<CardEntity> get cards => throw _privateConstructorUsedError;
+  List<CardEntity>? get cards => throw _privateConstructorUsedError;
+  @JsonKey(fromJson: FirebaseTimestampConverters.fromTimestamp)
+  DateTime get createdAt => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
@@ -39,9 +40,10 @@ abstract class $CollectionEntityCopyWith<$Res> {
   @useResult
   $Res call(
       {String id,
-      DateTime createdAt,
       String collectionName,
-      List<CardEntity> cards});
+      List<CardEntity>? cards,
+      @JsonKey(fromJson: FirebaseTimestampConverters.fromTimestamp)
+      DateTime createdAt});
 }
 
 /// @nodoc
@@ -58,27 +60,27 @@ class _$CollectionEntityCopyWithImpl<$Res, $Val extends CollectionEntity>
   @override
   $Res call({
     Object? id = null,
-    Object? createdAt = null,
     Object? collectionName = null,
-    Object? cards = null,
+    Object? cards = freezed,
+    Object? createdAt = null,
   }) {
     return _then(_value.copyWith(
       id: null == id
           ? _value.id
           : id // ignore: cast_nullable_to_non_nullable
               as String,
-      createdAt: null == createdAt
-          ? _value.createdAt
-          : createdAt // ignore: cast_nullable_to_non_nullable
-              as DateTime,
       collectionName: null == collectionName
           ? _value.collectionName
           : collectionName // ignore: cast_nullable_to_non_nullable
               as String,
-      cards: null == cards
+      cards: freezed == cards
           ? _value.cards
           : cards // ignore: cast_nullable_to_non_nullable
-              as List<CardEntity>,
+              as List<CardEntity>?,
+      createdAt: null == createdAt
+          ? _value.createdAt
+          : createdAt // ignore: cast_nullable_to_non_nullable
+              as DateTime,
     ) as $Val);
   }
 }
@@ -93,9 +95,10 @@ abstract class _$$CollectionEntityImplCopyWith<$Res>
   @useResult
   $Res call(
       {String id,
-      DateTime createdAt,
       String collectionName,
-      List<CardEntity> cards});
+      List<CardEntity>? cards,
+      @JsonKey(fromJson: FirebaseTimestampConverters.fromTimestamp)
+      DateTime createdAt});
 }
 
 /// @nodoc
@@ -110,27 +113,27 @@ class __$$CollectionEntityImplCopyWithImpl<$Res>
   @override
   $Res call({
     Object? id = null,
-    Object? createdAt = null,
     Object? collectionName = null,
-    Object? cards = null,
+    Object? cards = freezed,
+    Object? createdAt = null,
   }) {
     return _then(_$CollectionEntityImpl(
       id: null == id
           ? _value.id
           : id // ignore: cast_nullable_to_non_nullable
               as String,
-      createdAt: null == createdAt
-          ? _value.createdAt
-          : createdAt // ignore: cast_nullable_to_non_nullable
-              as DateTime,
       collectionName: null == collectionName
           ? _value.collectionName
           : collectionName // ignore: cast_nullable_to_non_nullable
               as String,
-      cards: null == cards
+      cards: freezed == cards
           ? _value._cards
           : cards // ignore: cast_nullable_to_non_nullable
-              as List<CardEntity>,
+              as List<CardEntity>?,
+      createdAt: null == createdAt
+          ? _value.createdAt
+          : createdAt // ignore: cast_nullable_to_non_nullable
+              as DateTime,
     ));
   }
 }
@@ -140,9 +143,10 @@ class __$$CollectionEntityImplCopyWithImpl<$Res>
 class _$CollectionEntityImpl implements _CollectionEntity {
   _$CollectionEntityImpl(
       {required this.id,
-      required this.createdAt,
       required this.collectionName,
-      required final List<CardEntity> cards})
+      final List<CardEntity>? cards,
+      @JsonKey(fromJson: FirebaseTimestampConverters.fromTimestamp)
+      required this.createdAt})
       : _cards = cards;
 
   factory _$CollectionEntityImpl.fromJson(Map<String, dynamic> json) =>
@@ -151,20 +155,24 @@ class _$CollectionEntityImpl implements _CollectionEntity {
   @override
   final String id;
   @override
-  final DateTime createdAt;
-  @override
   final String collectionName;
-  final List<CardEntity> _cards;
+  final List<CardEntity>? _cards;
   @override
-  List<CardEntity> get cards {
+  List<CardEntity>? get cards {
+    final value = _cards;
+    if (value == null) return null;
     if (_cards is EqualUnmodifiableListView) return _cards;
     // ignore: implicit_dynamic_type
-    return EqualUnmodifiableListView(_cards);
+    return EqualUnmodifiableListView(value);
   }
 
   @override
+  @JsonKey(fromJson: FirebaseTimestampConverters.fromTimestamp)
+  final DateTime createdAt;
+
+  @override
   String toString() {
-    return 'CollectionEntity(id: $id, createdAt: $createdAt, collectionName: $collectionName, cards: $cards)';
+    return 'CollectionEntity(id: $id, collectionName: $collectionName, cards: $cards, createdAt: $createdAt)';
   }
 
   @override
@@ -173,17 +181,17 @@ class _$CollectionEntityImpl implements _CollectionEntity {
         (other.runtimeType == runtimeType &&
             other is _$CollectionEntityImpl &&
             (identical(other.id, id) || other.id == id) &&
-            (identical(other.createdAt, createdAt) ||
-                other.createdAt == createdAt) &&
             (identical(other.collectionName, collectionName) ||
                 other.collectionName == collectionName) &&
-            const DeepCollectionEquality().equals(other._cards, _cards));
+            const DeepCollectionEquality().equals(other._cards, _cards) &&
+            (identical(other.createdAt, createdAt) ||
+                other.createdAt == createdAt));
   }
 
   @JsonKey(ignore: true)
   @override
-  int get hashCode => Object.hash(runtimeType, id, createdAt, collectionName,
-      const DeepCollectionEquality().hash(_cards));
+  int get hashCode => Object.hash(runtimeType, id, collectionName,
+      const DeepCollectionEquality().hash(_cards), createdAt);
 
   @JsonKey(ignore: true)
   @override
@@ -203,9 +211,10 @@ class _$CollectionEntityImpl implements _CollectionEntity {
 abstract class _CollectionEntity implements CollectionEntity {
   factory _CollectionEntity(
       {required final String id,
-      required final DateTime createdAt,
       required final String collectionName,
-      required final List<CardEntity> cards}) = _$CollectionEntityImpl;
+      final List<CardEntity>? cards,
+      @JsonKey(fromJson: FirebaseTimestampConverters.fromTimestamp)
+      required final DateTime createdAt}) = _$CollectionEntityImpl;
 
   factory _CollectionEntity.fromJson(Map<String, dynamic> json) =
       _$CollectionEntityImpl.fromJson;
@@ -213,11 +222,12 @@ abstract class _CollectionEntity implements CollectionEntity {
   @override
   String get id;
   @override
-  DateTime get createdAt;
-  @override
   String get collectionName;
   @override
-  List<CardEntity> get cards;
+  List<CardEntity>? get cards;
+  @override
+  @JsonKey(fromJson: FirebaseTimestampConverters.fromTimestamp)
+  DateTime get createdAt;
   @override
   @JsonKey(ignore: true)
   _$$CollectionEntityImplCopyWith<_$CollectionEntityImpl> get copyWith =>

@@ -2,22 +2,21 @@ import 'package:flashcards/core/const/colors.dart';
 import 'package:flashcards/core/const/icons.dart';
 import 'package:flashcards/core/const/strings.dart';
 import 'package:flashcards/core/themes/theme.dart';
+import 'package:flashcards/data/remote/empty.dart';
+import 'package:flashcards/domain/entities/collection_entity/collection_entity.dart';
 import 'package:flashcards/presentation/blocs/cards/cards_bloc.dart';
 import 'package:flashcards/presentation/blocs/lists/lists_bloc.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/svg.dart';
 
-class Collections extends StatefulWidget {
-  const Collections({Key? key, required this.collectionsList})
+class Collections extends StatelessWidget {
+  Collections(
+      {Key? key, required this.collectionsList, required this.isEditMode})
       : super(key: key);
-  final List<Map<String, dynamic>> collectionsList;
+  final List<CollectionEntity> collectionsList;
+  final bool isEditMode;
 
-  @override
-  State<Collections> createState() => _CollectionsState();
-}
-
-class _CollectionsState extends State<Collections> {
   @override
   Widget build(BuildContext context) {
     return Column(
@@ -31,18 +30,30 @@ class _CollectionsState extends State<Collections> {
                     padding: const EdgeInsets.only(
                         left: 24, right: 24, bottom: 11, top: 11),
                     child: Row(children: [
-                      context.watch<ListsBloc>().isEditMode
+                      isEditMode
                           ? Flexible(
                               flex: 1,
                               child: InkWell(
                                 onTap: () {
-                                  widget.collectionsList[i]
-                                          ['toDelete'] =
-                                      !widget
-                                          .collectionsList[i]['toDelete'];
-                                  setState(() {
-                                    print('setstate');
-                                  });
+                                  if (context
+                                      .read<ListsBloc>()
+                                      .listIdToDelete
+                                      .contains(collectionsList[i].id)) {
+                                    context
+                                        .read<ListsBloc>()
+                                        .listIdToDelete
+                                        .remove(collectionsList[i].id);
+                                  } else {
+                                    context
+                                        .read<ListsBloc>()
+                                        .listIdToDelete
+                                        .add(collectionsList[i].id);
+                                  }
+                                  context
+                                      .read<ListsBloc>()
+                                      .add(ListsEvent.started(
+                                        isEditMode: isEditMode,
+                                      ));
                                 },
                                 child: Container(
                                   decoration: const BoxDecoration(
@@ -50,8 +61,10 @@ class _CollectionsState extends State<Collections> {
                                   ),
                                   child: Padding(
                                     padding: const EdgeInsets.all(10.0),
-                                    child: widget
-                                            .collectionsList[i]['toDelete']
+                                    child: context
+                                            .read<ListsBloc>()
+                                            .listIdToDelete
+                                            .contains(collectionsList[i].id)
                                         ? const Icon(
                                             Icons.check_circle,
                                             size: 23.0,
@@ -68,7 +81,7 @@ class _CollectionsState extends State<Collections> {
                             )
                           : const SizedBox(),
                       SizedBox(
-                        width: context.read<ListsBloc>().isEditMode ? 22 : 0,
+                        width: isEditMode ? 22 : 0,
                       ),
                       Flexible(
                         flex: 8,
@@ -78,22 +91,20 @@ class _CollectionsState extends State<Collections> {
                               borderRadius:
                                   BorderRadius.all(Radius.circular(10))),
                           child: ListTile(
-                            onTap: (){
+                            onTap: () {
                               context
                                   .read<ListsBloc>()
                                   .add(ListsEvent.selectCollection(
-                                collectionsListName: widget
-                                    .collectionsList[i]['name'],
-                              ));
+                                    collection: collectionsList[i],
+                                  ));
                             },
                             title: Text(
-                              widget.collectionsList[i]
-                                  ['name'],
+                              collectionsList[i].collectionName,
                               style: AppTheme.themeData.textTheme.titleMedium!
                                   .copyWith(fontSize: 18),
                             ),
                             subtitle: Text(
-                              '${context.read<CardsBloc>().cardsList.length.toString()} ${AppStrings.cards.toLowerCase()}',
+                              '${collectionsList[i].cards?.length.toString() ?? 0} ${AppStrings.cards.toLowerCase()}',
                               style: AppTheme.themeData.textTheme.labelSmall!
                                   .copyWith(
                                 color: AppColors.mainAccent,
@@ -110,7 +121,7 @@ class _CollectionsState extends State<Collections> {
                     ]),
                   );
                 },
-                itemCount: widget.collectionsList.length),
+                itemCount: collectionsList.length),
           ),
         ),
       ],
