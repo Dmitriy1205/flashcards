@@ -9,7 +9,6 @@ import 'package:flashcards/presentation/screens/mobile_screens/lists_screen/card
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/svg.dart';
-
 import 'create_edit_card.dart';
 
 class Cards extends StatefulWidget {
@@ -28,7 +27,6 @@ class _CardsState extends State<Cards> {
 
   @override
   void initState() {
-    print('widget.collectionId ${widget.collectionId}');
     super.initState();
     context
         .read<CardsBloc>()
@@ -50,7 +48,7 @@ class _CardsState extends State<Cards> {
                   onTap: () {
                     context
                         .read<ListsBloc>()
-                        .add(ListsEvent.started(isEditMode: false));
+                        .add(const ListsEvent.started(isEditMode: false));
                     Navigator.of(context).pop();
                   },
                   child: SvgPicture.asset(
@@ -122,8 +120,7 @@ class _CardsState extends State<Cards> {
                           DropdownMenuItem<String>(
                             value: 'false',
                             onTap: () {
-                              context.read<CardsBloc>().isEditMode =
-                                  !context.read<CardsBloc>().isEditMode;
+                              context.read<CardsBloc>().isEditMode = true;
                               setState(() {});
                             },
                             child: Row(
@@ -254,8 +251,22 @@ class _CardsState extends State<Cards> {
                                           onTap: () {
                                             setState(() {
                                               /// TODO ======
-                                              data.cardsList![i] =
-                                                  data.cardsList![i];
+                                              if (context
+                                                  .read<CardsBloc>()
+                                                  .cardsListToDelete
+                                                  .contains(
+                                                      data.cardsList![i].id)) {
+                                                context
+                                                    .read<CardsBloc>()
+                                                    .cardsListToDelete
+                                                    .remove(
+                                                        data.cardsList![i].id);
+                                              } else {
+                                                context
+                                                    .read<CardsBloc>()
+                                                    .cardsListToDelete
+                                                    .add(data.cardsList![i].id);
+                                              }
                                             });
                                           },
                                           child: Container(

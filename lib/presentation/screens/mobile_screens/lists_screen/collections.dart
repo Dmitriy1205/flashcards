@@ -11,7 +11,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/svg.dart';
 
 class Collections extends StatelessWidget {
-  Collections(
+  const Collections(
       {Key? key, required this.collectionsList, required this.isEditMode})
       : super(key: key);
   final List<CollectionEntity> collectionsList;
@@ -104,7 +104,7 @@ class Collections extends StatelessWidget {
                                   .copyWith(fontSize: 18),
                             ),
                             subtitle: Text(
-                              '${collectionsList[i].cards?.length.toString() ?? 0} ${AppStrings.cards.toLowerCase()}',
+                              '${collectionsList[i].cards.toString() ?? 0} ${AppStrings.cards.toLowerCase()}',
                               style: AppTheme.themeData.textTheme.labelSmall!
                                   .copyWith(
                                 color: AppColors.mainAccent,

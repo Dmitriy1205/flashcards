@@ -5,7 +5,6 @@ import 'package:flashcards/core/const/icons.dart';
 import 'package:flashcards/core/const/strings.dart';
 import 'package:flashcards/core/themes/theme.dart';
 import 'package:flashcards/domain/entities/card_entity/card_entity.dart';
-import 'package:flashcards/domain/entities/collection_entity/collection_entity.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'create_edit_card.dart';

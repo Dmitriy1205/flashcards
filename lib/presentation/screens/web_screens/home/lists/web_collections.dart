@@ -91,7 +91,7 @@ class _WebCollectionsState extends State<WebCollections> {
                             .copyWith(fontSize: 18),
                       ),
                       subtitle: Text(
-                        '${widget.collectionsList[i].cards?.length.toString() ?? 0} ${AppStrings.cards.toLowerCase()}',
+                        '${widget.collectionsList[i].cards.toString() ?? 0} ${AppStrings.cards.toLowerCase()}',
                         style:
                             AppTheme.themeData.textTheme.labelSmall!.copyWith(
                           color: AppColors.mainAccent,

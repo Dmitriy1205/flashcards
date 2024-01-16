@@ -9,5 +9,6 @@ abstract class CardRepoContract {
 
   Future<List<CardEntity>> fetchCards({required String collectionId});
 
-  Future<void> deleteCards({required List<String> cardsToDelete});
+  Future<void> deleteCards(
+      {required List<String> cardsToDelete, required String collectionId});
 }

@@ -1,11 +1,8 @@
-import 'dart:convert';
-
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flashcards/core/const/firebase_collections.dart';
 import 'package:flashcards/data/remote/collection_service/collection_service_contract.dart';
-import 'package:flashcards/data/remote/empty.dart';
 import 'package:flashcards/domain/entities/collection_entity/collection_entity.dart';
 
 class CollectionServiceImpl extends CollectionServiceContract {
@@ -23,8 +20,6 @@ class CollectionServiceImpl extends CollectionServiceContract {
 
   @override
   Future<void> createCollection({required String collectionName}) async {
-    print("createCollection $collectionName");
-
     final doc = _fireStore
         .collection(FirestoreCollections.users)
         .doc(_firebaseAuth.currentUser!.uid)
@@ -40,7 +35,6 @@ class CollectionServiceImpl extends CollectionServiceContract {
   @override
   Future<void> deleteCollections(
       {required List<String> collectionsListToDelete}) async {
-    print('collectionsListToDelete ${collectionsListToDelete.length}');
     try {
       final collections = _fireStore
           .collection(FirestoreCollections.users)
@@ -66,9 +60,25 @@ class CollectionServiceImpl extends CollectionServiceContract {
           .map((collection) => CollectionEntity.fromJson(collection.data()))
           .toList();
       collectionList.sort((a, b) => b.createdAt.compareTo(a.createdAt));
+      for (int i = 0; i < collectionList.length; i++) {
+        final int count = await getCardsCount(collectionList[i].id);
+        collectionList[i] = collectionList[i].copyWith(cards: count);
+      }
       return collectionList;
     } catch (e) {
       throw Exception("Exception fetchCollections $e");
     }
+  }
+
+  Future<int> getCardsCount(String collectionId) async {
+    final cards = await _fireStore
+        .collection(FirestoreCollections.users)
+        .doc(_firebaseAuth.currentUser!.uid)
+        .collection(FirestoreCollections.collections)
+        .doc(collectionId)
+        .collection(FirestoreCollections.cards)
+        .get();
+    final int count = cards.size;
+    return count;
   }
 }

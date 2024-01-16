@@ -73,7 +73,7 @@ class _HomeMobileState extends State<HomeMobile> {
         },
         controller: pageController,
         physics: const NeverScrollableScrollPhysics(),
-        children: [Lists(), Learn(), Profile()],
+        children: const [Lists(), Learn(), Profile()],
       ),
       bottomNavigationBar: CustomNavigationBar(pageController: pageController),
     );

@@ -58,7 +58,7 @@ Future<void> init() async {
 
   ///Blocs
   sl.registerLazySingleton(() => AuthBloc(authRepository: sl()));
-  sl.registerFactory(() => SignupBloc(auth: sl(), userRepoImpl: sl()));
+  sl.registerFactory(() => SignupBloc(auth: sl(), userRepoImpl: userRepoImpl));
   sl.registerFactory(() => SigninBloc(auth: sl()));
   sl.registerFactory(() => ForgotPasswordBloc(auth: sl()));
   sl.registerFactory(() => GoogleSigninBloc(auth: sl()));

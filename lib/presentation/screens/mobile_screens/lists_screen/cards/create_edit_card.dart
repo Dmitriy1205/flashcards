@@ -6,11 +6,14 @@ import 'package:flashcards/domain/entities/card_entity/card_entity.dart';
 import 'package:flashcards/domain/params/card_param/create_card_param.dart';
 import 'package:flashcards/domain/params/card_param/edit_card_param.dart';
 import 'package:flashcards/presentation/blocs/cards/cards_bloc.dart';
+import 'package:flashcards/presentation/blocs/lists/lists_bloc.dart';
 import 'package:flashcards/presentation/screens/mobile_screens/lists_screen/cards/view_flash_card.dart';
 import 'package:flashcards/presentation/widgets/custom_text_input.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/svg.dart';
+
+import 'cards.dart';
 
 class CreateEditCard extends StatefulWidget {
   const CreateEditCard({Key? key, this.cardEntity, required this.collectionId})
@@ -82,20 +85,21 @@ class _CreateEditCardState extends State<CreateEditCard> {
 
                     context.read<CardsBloc>().add(CardsEvent.createNewCard(
                         cardParam: card, collectionId: widget.collectionId));
+                    context.read<ListsBloc>().add(const ListsEvent.started(isEditMode: false));
                   } else {
                     EditCardParam card = EditCardParam(
                         front: frontTextEditingController.text,
                         back: backTextEditingController.text,
                         collectionId: widget.collectionId,
                         id: widget.cardEntity!.id);
-                    Navigator.pop(context);
-                    Navigator.pushReplacement(
-                        context,
-                        MaterialPageRoute(
-                            builder: (context) => ViewFlashCard(
-                                  card: widget.cardEntity!,
-                                  collectionId: widget.collectionId,
-                                )));
+                    Navigator.of(context)..pop()..pop();
+                    // Navigator.pushReplacement(
+                    //     context,
+                    //     MaterialPageRoute(
+                    //         builder: (context) => ViewFlashCard(
+                    //               card: widget.cardEntity!,
+                    //               collectionId: widget.collectionId,
+                    //             )));
                     context.read<CardsBloc>().add(CardsEvent.editCard(
                         cardParam: card, collectionId: widget.collectionId));
                   }
@@ -112,48 +116,45 @@ class _CreateEditCardState extends State<CreateEditCard> {
         ),
       ),
       body: SingleChildScrollView(
-        child: Container(
-          // color: AppColors.background,
-          child: Column(
-            children: [
-              Padding(
-                padding: const EdgeInsets.only(
-                    bottom: 12, top: 12, left: 24, right: 24),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Padding(
-                      padding: const EdgeInsets.only(bottom: 12, left: 12),
-                      child: Text(
-                        AppStrings.front,
-                        style: AppTheme.themeData.textTheme.titleMedium,
-                      ),
+        child: Column(
+          children: [
+            Padding(
+              padding: const EdgeInsets.only(
+                  bottom: 12, top: 12, left: 24, right: 24),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Padding(
+                    padding: const EdgeInsets.only(bottom: 12, left: 12),
+                    child: Text(
+                      AppStrings.front,
+                      style: AppTheme.themeData.textTheme.titleMedium,
                     ),
-                    CustomTextInput(
-                        textEditingController: frontTextEditingController)
-                  ],
-                ),
+                  ),
+                  CustomTextInput(
+                      textEditingController: frontTextEditingController)
+                ],
               ),
-              Padding(
-                padding: const EdgeInsets.only(
-                    bottom: 12, top: 12, left: 24, right: 24),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Padding(
-                      padding: const EdgeInsets.only(bottom: 12, left: 12),
-                      child: Text(
-                        AppStrings.back,
-                        style: AppTheme.themeData.textTheme.titleMedium,
-                      ),
+            ),
+            Padding(
+              padding: const EdgeInsets.only(
+                  bottom: 12, top: 12, left: 24, right: 24),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Padding(
+                    padding: const EdgeInsets.only(bottom: 12, left: 12),
+                    child: Text(
+                      AppStrings.back,
+                      style: AppTheme.themeData.textTheme.titleMedium,
                     ),
-                    CustomTextInput(
-                        textEditingController: backTextEditingController)
-                  ],
-                ),
+                  ),
+                  CustomTextInput(
+                      textEditingController: backTextEditingController)
+                ],
               ),
-            ],
-          ),
+            ),
+          ],
         ),
       ),
     );

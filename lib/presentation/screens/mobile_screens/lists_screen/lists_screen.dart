@@ -40,7 +40,7 @@ class _ListsState extends State<Lists> {
       },
       buildWhen: (previousState, state) {
         return state.maybeWhen(
-          viewCollections: (collections, bolean, collectionList) => true,
+          viewCollections: (collections, boolean, collectionList) => true,
           orElse: () => false,
         );
       },
