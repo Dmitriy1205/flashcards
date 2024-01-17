@@ -207,7 +207,9 @@ class _CardsState extends State<Cards> {
         },
         builder: (context, state) {
           print('stateCard $state');
-          return state.maybeMap(initial: (data) {
+          return state.maybeMap(loading: (_) {
+            return const Center(child: CircularProgressIndicator());
+          }, initial: (data) {
             return Column(
               children: [
                 Container(
