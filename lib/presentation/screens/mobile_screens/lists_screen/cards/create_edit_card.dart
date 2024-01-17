@@ -13,8 +13,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/svg.dart';
 
-import 'cards.dart';
-
 class CreateEditCard extends StatefulWidget {
   const CreateEditCard({Key? key, this.cardEntity, required this.collectionId})
       : super(key: key);
@@ -85,14 +83,26 @@ class _CreateEditCardState extends State<CreateEditCard> {
 
                     context.read<CardsBloc>().add(CardsEvent.createNewCard(
                         cardParam: card, collectionId: widget.collectionId));
-                    context.read<ListsBloc>().add(const ListsEvent.started(isEditMode: false));
+                    context
+                        .read<ListsBloc>()
+                        .add(const ListsEvent.started(isEditMode: false));
                   } else {
                     EditCardParam card = EditCardParam(
                         front: frontTextEditingController.text,
                         back: backTextEditingController.text,
                         collectionId: widget.collectionId,
                         id: widget.cardEntity!.id);
-                    Navigator.of(context)..pop()..pop();
+                    Navigator.pushReplacement(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => ViewFlashCard(
+                                  card: widget.cardEntity!.copyWith(
+                                    front: frontTextEditingController.text,
+                                    back: backTextEditingController.text,
+                                  ),
+                                  collectionId: widget.collectionId,
+                                )));
+
                     // Navigator.pushReplacement(
                     //     context,
                     //     MaterialPageRoute(

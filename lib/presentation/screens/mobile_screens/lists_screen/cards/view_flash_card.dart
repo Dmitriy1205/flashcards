@@ -53,7 +53,7 @@ class _ViewFlashCardState extends State<ViewFlashCard> {
               ]),
               TextButton(
                 onPressed: () {
-                  Navigator.push(
+                  Navigator.pushReplacement(
                       context,
                       MaterialPageRoute(
                           builder: (context) => CreateEditCard(
