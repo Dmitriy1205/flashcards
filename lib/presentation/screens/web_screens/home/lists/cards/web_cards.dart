@@ -1,9 +1,7 @@
 import 'package:flashcards/core/const/colors.dart';
 import 'package:flashcards/core/const/strings.dart';
 import 'package:flashcards/core/themes/theme.dart';
-import 'package:flashcards/data/remote/empty.dart';
 import 'package:flashcards/domain/entities/card_entity/card_entity.dart';
-import 'package:flashcards/domain/entities/collection_entity/collection_entity.dart';
 import 'package:flashcards/presentation/blocs/cards/cards_bloc.dart';
 import 'package:flashcards/presentation/blocs/lists/lists_bloc.dart';
 import 'package:flashcards/presentation/screens/web_screens/home/lists/cards/web_view_flash_card.dart';
@@ -29,7 +27,13 @@ class WebCards extends StatefulWidget {
 
 class _WebCardsState extends State<WebCards> {
   TextEditingController nameTextEditingController = TextEditingController();
-
+@override
+  void initState() {
+  context
+      .read<CardsBloc>()
+      .add(CardsEvent.initCard(collectionId: widget.collectionId));
+    super.initState();
+  }
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -198,7 +202,8 @@ class _WebCardsState extends State<WebCards> {
           state.maybeMap(orElse: () {});
         },
         builder: (context, state) {
-          return state.maybeMap(initial: (data) {
+          return state.maybeMap(
+              orElse: () {
             return Container(
               color: AppColors.background,
               child: Column(
@@ -219,7 +224,7 @@ class _WebCardsState extends State<WebCards> {
                                 .copyWith(fontSize: 18),
                           ),
                           Text(
-                            '${data.cardsList!.length} cards',
+                            '${state.cardsList!.length} cards',
                             style: AppTheme.themeData.textTheme.labelSmall!
                                 .copyWith(
                               color: AppColors.mainAccent,
@@ -246,9 +251,9 @@ class _WebCardsState extends State<WebCards> {
                             // Horizontal spacing between items
                             mainAxisSpacing: 30.0,
                             mainAxisExtent: 140),
-                        itemCount: data.cardsList!.length,
+                        itemCount: state.cardsList!.length,
                         itemBuilder: (context, i) {
-                          CardEntity card = data.cardsList![i];
+                          CardEntity card = state.cardsList![i];
                           return Container(
                             padding: EdgeInsets.zero,
                             child: Row(
@@ -257,8 +262,8 @@ class _WebCardsState extends State<WebCards> {
                                     ? InkWell(
                                         onTap: () {
                                           setState(() {
-                                            data.cardsList![i] =
-                                                data.cardsList![i];
+                                            state.cardsList![i] =
+                                                state.cardsList![i];
                                           });
                                         },
                                         child: Container(
@@ -271,7 +276,7 @@ class _WebCardsState extends State<WebCards> {
                                                     .watch<CardsBloc>()
                                                     .cardsListToDelete
                                                     .contains(
-                                                        data.cardsList![i].id)
+                                                        state.cardsList![i].id)
                                                 ? const Icon(
                                                     Icons.check_circle,
                                                     size: 23.0,
@@ -350,8 +355,6 @@ class _WebCardsState extends State<WebCards> {
                 ],
               ),
             );
-          }, orElse: () {
-            return const Center(child: Text('No cards found'));
           });
         },
       ),

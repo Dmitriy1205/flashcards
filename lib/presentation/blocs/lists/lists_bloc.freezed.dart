@@ -811,8 +811,8 @@ class __$$InitialImplCopyWithImpl<$Res>
 
 /// @nodoc
 
-class _$InitialImpl implements _Initial {
-  const _$InitialImpl();
+class _$InitialImpl extends _Initial {
+  const _$InitialImpl() : super._();
 
   @override
   String toString() {
@@ -909,8 +909,9 @@ class _$InitialImpl implements _Initial {
   }
 }
 
-abstract class _Initial implements ListsState {
+abstract class _Initial extends ListsState {
   const factory _Initial() = _$InitialImpl;
+  const _Initial._() : super._();
 }
 
 /// @nodoc
@@ -956,8 +957,8 @@ class __$$ViewCardsImplCopyWithImpl<$Res>
 
 /// @nodoc
 
-class _$ViewCardsImpl implements _ViewCards {
-  const _$ViewCardsImpl({required this.collection});
+class _$ViewCardsImpl extends _ViewCards {
+  const _$ViewCardsImpl({required this.collection}) : super._();
 
   @override
   final CollectionEntity collection;
@@ -1066,9 +1067,10 @@ class _$ViewCardsImpl implements _ViewCards {
   }
 }
 
-abstract class _ViewCards implements ListsState {
+abstract class _ViewCards extends ListsState {
   const factory _ViewCards({required final CollectionEntity collection}) =
       _$ViewCardsImpl;
+  const _ViewCards._() : super._();
 
   CollectionEntity get collection;
   @JsonKey(ignore: true)
@@ -1094,8 +1096,8 @@ class __$$LoadingImplCopyWithImpl<$Res>
 
 /// @nodoc
 
-class _$LoadingImpl implements _Loading {
-  const _$LoadingImpl();
+class _$LoadingImpl extends _Loading {
+  const _$LoadingImpl() : super._();
 
   @override
   String toString() {
@@ -1192,8 +1194,9 @@ class _$LoadingImpl implements _Loading {
   }
 }
 
-abstract class _Loading implements ListsState {
+abstract class _Loading extends ListsState {
   const factory _Loading() = _$LoadingImpl;
+  const _Loading._() : super._();
 }
 
 /// @nodoc
@@ -1242,13 +1245,14 @@ class __$$ViewCollectionsImplCopyWithImpl<$Res>
 
 /// @nodoc
 
-class _$ViewCollectionsImpl implements _ViewCollections {
+class _$ViewCollectionsImpl extends _ViewCollections {
   const _$ViewCollectionsImpl(
       {required final List<CollectionEntity> collectionsList,
       required this.isEditMode,
       required final List<String> listToDelete})
       : _collectionsList = collectionsList,
-        _listToDelete = listToDelete;
+        _listToDelete = listToDelete,
+        super._();
 
   final List<CollectionEntity> _collectionsList;
   @override
@@ -1381,11 +1385,12 @@ class _$ViewCollectionsImpl implements _ViewCollections {
   }
 }
 
-abstract class _ViewCollections implements ListsState {
+abstract class _ViewCollections extends ListsState {
   const factory _ViewCollections(
       {required final List<CollectionEntity> collectionsList,
       required final bool isEditMode,
       required final List<String> listToDelete}) = _$ViewCollectionsImpl;
+  const _ViewCollections._() : super._();
 
   List<CollectionEntity> get collectionsList;
   bool get isEditMode;

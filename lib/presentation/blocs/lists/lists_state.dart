@@ -2,6 +2,26 @@ part of 'lists_bloc.dart';
 
 @freezed
 class ListsState with _$ListsState {
+  const ListsState._();
+
+  List<CollectionEntity>? get collectionsList => maybeMap(
+      viewCollections: (state) => state.collectionsList,
+      orElse: () {
+        return null;
+      });
+
+  bool? get isEditMode => maybeMap(
+      viewCollections: (state) => state.isEditMode,
+      orElse: () {
+        return null;
+      });
+
+  List<String>? get listToDelete => maybeMap(
+      viewCollections: (state) => state.listToDelete,
+      orElse: () {
+        return null;
+      });
+
   const factory ListsState.initial() = _Initial;
 
   const factory ListsState.viewCards({required CollectionEntity collection}) =

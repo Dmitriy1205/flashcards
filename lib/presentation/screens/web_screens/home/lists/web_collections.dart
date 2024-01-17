@@ -1,9 +1,7 @@
 import 'package:flashcards/core/const/colors.dart';
 import 'package:flashcards/core/const/strings.dart';
 import 'package:flashcards/core/themes/theme.dart';
-import 'package:flashcards/data/remote/empty.dart';
 import 'package:flashcards/domain/entities/collection_entity/collection_entity.dart';
-import 'package:flashcards/presentation/blocs/cards/cards_bloc.dart';
 import 'package:flashcards/presentation/blocs/lists/lists_bloc.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -12,12 +10,8 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 class WebCollections extends StatefulWidget {
   const WebCollections(
       {Key? key,
-      required this.collectionsList,
-      required this.isEditMode,
       required this.listIdToDelete})
       : super(key: key);
-  final List<CollectionEntity> collectionsList;
-  final bool isEditMode;
   final List<CollectionEntity> listIdToDelete;
 
   @override
@@ -35,13 +29,13 @@ class _WebCollectionsState extends State<WebCollections> {
               padding: const EdgeInsets.only(
                   left: 24, right: 24, bottom: 11, top: 11),
               child: Row(children: [
-                context.read<ListsBloc>().isEditMode
+                context.watch<ListsBloc>().isEditMode
                     ? Flexible(
                         flex: 1,
                         child: InkWell(
                           onTap: () {
                             widget.listIdToDelete
-                                .add(widget.collectionsList[i]);
+                                .add(context.read<ListsBloc>().state.collectionsList![i]);
                           },
                           child: Container(
                             decoration: const BoxDecoration(
@@ -50,7 +44,7 @@ class _WebCollectionsState extends State<WebCollections> {
                             child: Padding(
                               padding: const EdgeInsets.all(10.0),
                               child: widget.listIdToDelete
-                                      .contains(widget.collectionsList[i].id)
+                                      .contains(context.read<ListsBloc>().state.collectionsList![i].id)
                                   ? const Icon(
                                       Icons.check_circle,
                                       size: 23.0,
@@ -80,18 +74,18 @@ class _WebCollectionsState extends State<WebCollections> {
                         context
                             .read<ListsBloc>()
                             .add(ListsEvent.selectCollection(
-                              collection: widget.collectionsList[i],
+                              collection: context.read<ListsBloc>().state.collectionsList![i],
                             ));
                       },
                       contentPadding:
                           const EdgeInsets.only(left: 28, right: 33),
                       title: Text(
-                        widget.collectionsList[i].collectionName,
+                        context.read<ListsBloc>().state.collectionsList![i].collectionName,
                         style: AppTheme.themeData.textTheme.titleMedium!
                             .copyWith(fontSize: 18),
                       ),
                       subtitle: Text(
-                        '${widget.collectionsList[i].cards?.length.toString() ?? 0} ${AppStrings.cards.toLowerCase()}',
+                        '${context.read<ListsBloc>().state.collectionsList![i].cards?.length.toString() ?? 0} ${AppStrings.cards.toLowerCase()}',
                         style:
                             AppTheme.themeData.textTheme.labelSmall!.copyWith(
                           color: AppColors.mainAccent,
@@ -108,7 +102,7 @@ class _WebCollectionsState extends State<WebCollections> {
               ]),
             );
           },
-          itemCount: widget.collectionsList.length),
+          itemCount: context.read<ListsBloc>().state.collectionsList!.length),
     );
   }
 }

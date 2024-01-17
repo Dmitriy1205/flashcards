@@ -9,7 +9,10 @@ import 'package:flashcards/domain/entities/card_entity/card_entity.dart';
 import 'package:flashcards/domain/entities/collection_entity/collection_entity.dart';
 import 'package:flashcards/presentation/widgets/app_round_button.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+
+import '../../../../../blocs/cards/cards_bloc.dart';
 
 class WebViewFlashCard extends StatefulWidget {
   const WebViewFlashCard(
@@ -62,64 +65,64 @@ class _WebViewFlashCardState extends State<WebViewFlashCard> {
           color: AppColors.background,
           child: Row(
             children: [
-              // Padding(
-              //   padding: const EdgeInsets.only(top: 35.0),
-              //   child: Container(
-              //     width: MediaQuery.of(context).size.width/3.5,
-              //     color: AppColors.background,
-              //     child: ListView.builder(
-              //         shrinkWrap: true,
-              //         itemCount: context.read<CardsBloc>().cardsList.length,
-              //         itemBuilder: (context, index) {
-              //           CardEntity card =
-              //               context.read<CardsBloc>().cardsList[index]['name'];
-              //           return Padding(
-              //             padding: const EdgeInsets.only(bottom: 36, left: 43),
-              //             child: InkWell(
-              //               onTap: () {
-              //                 setState(() {
-              //                   pickedCard = CardEntity(front: card.front, back: card.back);
-              //                 });
-              //
-              //               },
-              //               child: Container(
-              //                 width: 380,
-              //                 height: 148,
-              //                 decoration: BoxDecoration(
-              //                     color: Colors.white,
-              //                     borderRadius: BorderRadius.circular(10)),
-              //                 child: Padding(
-              //                   padding: const EdgeInsets.symmetric(
-              //                       horizontal: 13.0),
-              //                   child: Column(
-              //                     mainAxisAlignment: MainAxisAlignment.center,
-              //                     crossAxisAlignment: CrossAxisAlignment.center,
-              //                     children: [
-              //                       Text(
-              //                         card.front,
-              //                         textAlign: TextAlign.center,
-              //                         style: AppTheme
-              //                             .themeData.textTheme.labelMedium!
-              //                             .copyWith(
-              //                                 color: AppColors.mainAccent),
-              //                       ),
-              //                       Text(
-              //                         card.back,
-              //                         style: AppTheme
-              //                             .themeData.textTheme.labelSmall!
-              //                             .copyWith(
-              //                           color: AppColors.greenBlack,
-              //                         ),
-              //                       ),
-              //                     ],
-              //                   ),
-              //                 ),
-              //               ),
-              //             ),
-              //           );
-              //         }),
-              //   ),
-              // ),
+              Padding(
+                padding: const EdgeInsets.only(top: 35.0),
+                child: Container(
+                  width: MediaQuery.of(context).size.width/3.5,
+                  color: AppColors.background,
+                  child: ListView.builder(
+                      shrinkWrap: true,
+                      itemCount: context.read<CardsBloc>().state.cardsList!.length,
+                      itemBuilder: (context, index) {
+                        CardEntity card =
+                            context.read<CardsBloc>().state.cardsList![index];
+                        return Padding(
+                          padding: const EdgeInsets.only(bottom: 36, left: 43),
+                          child: InkWell(
+                            onTap: () {
+                              setState(() {
+                                pickedCard = card;
+                              });
+
+                            },
+                            child: Container(
+                              width: 380,
+                              height: 148,
+                              decoration: BoxDecoration(
+                                  color: Colors.white,
+                                  borderRadius: BorderRadius.circular(10)),
+                              child: Padding(
+                                padding: const EdgeInsets.symmetric(
+                                    horizontal: 13.0),
+                                child: Column(
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  crossAxisAlignment: CrossAxisAlignment.center,
+                                  children: [
+                                    Text(
+                                      card.front,
+                                      textAlign: TextAlign.center,
+                                      style: AppTheme
+                                          .themeData.textTheme.labelMedium!
+                                          .copyWith(
+                                              color: AppColors.mainAccent),
+                                    ),
+                                    Text(
+                                      card.back,
+                                      style: AppTheme
+                                          .themeData.textTheme.labelSmall!
+                                          .copyWith(
+                                        color: AppColors.greenBlack,
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                              ),
+                            ),
+                          ),
+                        );
+                      }),
+                ),
+              ),
               Expanded(
                 child: Padding(
                   padding: const EdgeInsets.only(
