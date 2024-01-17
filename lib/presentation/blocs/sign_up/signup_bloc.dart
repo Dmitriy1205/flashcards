@@ -36,9 +36,9 @@ class SignupBloc extends Bloc<SignupEvent, SignupState> {
         email: event.email.toString(),
         password: event.password.toString(),
       );
-      await _userRepoImpl.createUser(
-        email: event.email.toString(),
-      );
+      // _userRepoImpl.createUser(
+      //   email: event.email.toString(),
+      // );
       emit(const SignupState.success());
     } on BadRequestException catch (e) {
       emit(SignupState.error(error: e.message));
