@@ -33,6 +33,8 @@ class _CardsState extends State<Cards> {
         .add(CardsEvent.initCard(collectionId: widget.collectionId));
   }
 
+
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -50,6 +52,8 @@ class _CardsState extends State<Cards> {
                         .read<ListsBloc>()
                         .add(const ListsEvent.started(isEditMode: false));
                     Navigator.of(context).pop();
+                    context
+                        .read<CardsBloc>().add(const CardsEvent.emptyCardsList());
                   },
                   child: SvgPicture.asset(
                     AppIcons.leftArrow,
