@@ -206,7 +206,6 @@ class _CardsState extends State<Cards> {
           state.maybeMap(orElse: () {});
         },
         builder: (context, state) {
-          print('stateCard $state');
           return state.maybeMap(loading: (_) {
             return const Center(child: CircularProgressIndicator());
           }, initial: (data) {
@@ -252,7 +251,6 @@ class _CardsState extends State<Cards> {
                                         child: InkWell(
                                           onTap: () {
                                             setState(() {
-                                              /// TODO ======
                                               if (context
                                                   .read<CardsBloc>()
                                                   .cardsListToDelete
