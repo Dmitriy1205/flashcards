@@ -1009,9 +1009,10 @@ class __$$InitialImplCopyWithImpl<$Res>
 
 /// @nodoc
 
-class _$InitialImpl implements _Initial {
+class _$InitialImpl extends _Initial {
   const _$InitialImpl({required final List<CardEntity>? cardsList})
-      : _cardsList = cardsList;
+      : _cardsList = cardsList,
+        super._();
 
   final List<CardEntity>? _cardsList;
   @override
@@ -1116,9 +1117,10 @@ class _$InitialImpl implements _Initial {
   }
 }
 
-abstract class _Initial implements CardsState {
+abstract class _Initial extends CardsState {
   const factory _Initial({required final List<CardEntity>? cardsList}) =
       _$InitialImpl;
+  const _Initial._() : super._();
 
   List<CardEntity>? get cardsList;
   @JsonKey(ignore: true)
@@ -1144,8 +1146,8 @@ class __$$ViewIndividualCardImplCopyWithImpl<$Res>
 
 /// @nodoc
 
-class _$ViewIndividualCardImpl implements _ViewIndividualCard {
-  const _$ViewIndividualCardImpl();
+class _$ViewIndividualCardImpl extends _ViewIndividualCard {
+  const _$ViewIndividualCardImpl() : super._();
 
   @override
   String toString() {
@@ -1230,8 +1232,9 @@ class _$ViewIndividualCardImpl implements _ViewIndividualCard {
   }
 }
 
-abstract class _ViewIndividualCard implements CardsState {
+abstract class _ViewIndividualCard extends CardsState {
   const factory _ViewIndividualCard() = _$ViewIndividualCardImpl;
+  const _ViewIndividualCard._() : super._();
 }
 
 /// @nodoc
@@ -1252,8 +1255,8 @@ class __$$LoadingImplCopyWithImpl<$Res>
 
 /// @nodoc
 
-class _$LoadingImpl implements _Loading {
-  const _$LoadingImpl();
+class _$LoadingImpl extends _Loading {
+  const _$LoadingImpl() : super._();
 
   @override
   String toString() {
@@ -1338,6 +1341,7 @@ class _$LoadingImpl implements _Loading {
   }
 }
 
-abstract class _Loading implements CardsState {
+abstract class _Loading extends CardsState {
   const factory _Loading() = _$LoadingImpl;
+  const _Loading._() : super._();
 }

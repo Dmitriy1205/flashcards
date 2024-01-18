@@ -2,6 +2,7 @@ import 'package:flashcards/core/const/icons.dart';
 import 'package:flashcards/core/router/router.dart';
 import 'package:flashcards/presentation/screens/web_screens/home/lists/web_collections.dart';
 import 'package:flashcards/presentation/widgets/app_round_button.dart';
+import 'package:flashcards/presentation/widgets/loading_indicator.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
@@ -23,107 +24,118 @@ class _WebListsScreenState extends State<WebListsScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return BlocConsumer<ListsBloc, ListsState>(listener: (context, state) {
+    return BlocConsumer<ListsBloc, ListsState>(
+        listener: (context, state) {
       state.maybeMap(
         viewCards: (selectedCollection) {
           router.push(
             '/web_cards',
-            extra: {"collectionName": selectedCollection.collection.id},
+            extra: {
+              "collectionName": selectedCollection.collection.collectionName,
+              "collectionId": selectedCollection.collection.id,
+            },
           );
         },
         orElse: () {},
       );
+    }, buildWhen: (previousState, state) {
+      return state.maybeWhen(
+        viewCollections: (c, b, coll) => true,
+        orElse: () => false,
+      );
     }, builder: (context, state) {
-      return Scaffold(
-        appBar: AppBar(
-          automaticallyImplyLeading: false,
-          title: Column(
-            children: [
-              Row(
-                mainAxisAlignment: MainAxisAlignment.start,
-                mainAxisSize: MainAxisSize.max,
-                children: [
-                  const SizedBox(
-                    width: 64,
-                  ),
-                  Text(
-                    AppStrings.collections,
-                    style: AppTheme.themeData.textTheme.headlineLarge,
-                  ),
-                ],
-              ),
-            ],
+      return state.maybeMap(
+        loading: (_) => LoadingIndicator(),
+        orElse: () => Scaffold(
+          appBar: AppBar(
+            automaticallyImplyLeading: false,
+            title: Column(
+              children: [
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  mainAxisSize: MainAxisSize.max,
+                  children: [
+                    const SizedBox(
+                      width: 64,
+                    ),
+                    Text(
+                      AppStrings.collections,
+                      style: AppTheme.themeData.textTheme.headlineLarge,
+                    ),
+                  ],
+                ),
+              ],
+            ),
           ),
-        ),
-        backgroundColor: AppColors.background,
-        body: const Padding(
-          padding:
-              EdgeInsets.only(left: 65.0, top: 40, right: 65.0, bottom: 200),
-          child: WebCollections(
-              collectionsList: [], isEditMode: false, listIdToDelete: []),
-        ),
-        floatingActionButton: context.watch<ListsBloc>().isEditMode
-            ? Padding(
-                padding: const EdgeInsets.only(right: 80.0, bottom: 30),
-                child: Row(
-                  mainAxisSize: MainAxisSize.min,
-                  children: [
-                    AppRoundButton(
-                      onTap: () {
-                        context.read<ListsBloc>().add(
-                            const ListsEvent.deleteSelectedCollection(
-                                collectionsList: []));
-                        context.read<ListsBloc>().isEditMode = false;
-                      },
-                      svgIcon: AppIcons.trash,
-                      showBorder: false,
-                      color: AppColors.red,
-                    ),
-                    const SizedBox(
-                      width: 19,
-                    ),
-                    AppRoundButton(
-                      onTap: () {
-                        context.read<ListsBloc>().add(
-                            const ListsEvent.deleteSelectedCollection(
-                                collectionsList: []));
-                        context.read<ListsBloc>().isEditMode = false;
-                      },
-                      svgIcon: AppIcons.close,
-                      showBorder: false,
-                      color: AppColors.greyLight,
-                    ),
-                  ],
+          backgroundColor: AppColors.background,
+          body: const Padding(
+            padding:
+                EdgeInsets.only(left: 65.0, top: 40, right: 65.0, bottom: 200),
+            child: WebCollections(listIdToDelete: []),
+          ),
+          floatingActionButton: context.watch<ListsBloc>().isEditMode
+              ? Padding(
+                  padding: const EdgeInsets.only(right: 80.0, bottom: 30),
+                  child: Row(
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      AppRoundButton(
+                        onTap: () {
+                          context.read<ListsBloc>().add(
+                              const ListsEvent.deleteSelectedCollection(
+                                  collectionsList: []));
+                          context.read<ListsBloc>().isEditMode = false;
+                        },
+                        svgIcon: AppIcons.trash,
+                        showBorder: false,
+                        color: AppColors.red,
+                      ),
+                      const SizedBox(
+                        width: 19,
+                      ),
+                      AppRoundButton(
+                        onTap: () {
+                          context.read<ListsBloc>().add(
+                              const ListsEvent.deleteSelectedCollection(
+                                  collectionsList: []));
+                          context.read<ListsBloc>().isEditMode = false;
+                        },
+                        svgIcon: AppIcons.close,
+                        showBorder: false,
+                        color: AppColors.greyLight,
+                      ),
+                    ],
+                  ),
+                )
+              : Padding(
+                  padding: const EdgeInsets.only(right: 80.0, bottom: 30),
+                  child: Row(
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      AppRoundButton(
+                        onTap: () {
+                          buildShowDialog(context);
+                        },
+                        svgIcon: AppIcons.stackPlus,
+                        showBorder: false,
+                      ),
+                      const SizedBox(
+                        width: 19,
+                      ),
+                      AppRoundButton(
+                        color: Colors.white,
+                        onTap: () {
+                          context.read<ListsBloc>().add(ListsEvent.started(
+                              isEditMode:
+                                  !context.read<ListsBloc>().isEditMode));
+                        },
+                        svgIcon: AppIcons.pen,
+                        showBorder: true,
+                      ),
+                    ],
+                  ),
                 ),
-              )
-            : Padding(
-                padding: const EdgeInsets.only(right: 80.0, bottom: 30),
-                child: Row(
-                  mainAxisSize: MainAxisSize.min,
-                  children: [
-                    AppRoundButton(
-                      onTap: () {
-                        buildShowDialog(context);
-                      },
-                      svgIcon: AppIcons.add,
-                      showBorder: false,
-                    ),
-                    const SizedBox(
-                      width: 19,
-                    ),
-                    AppRoundButton(
-                      color: Colors.white,
-                      onTap: () {
-                        context.read<ListsBloc>().isEditMode =
-                            !context.read<ListsBloc>().isEditMode;
-                        setState(() {});
-                      },
-                      svgIcon: AppIcons.pen,
-                      showBorder: true,
-                    ),
-                  ],
-                ),
-              ),
+        ),
       );
     });
   }
@@ -207,7 +219,7 @@ class _WebListsScreenState extends State<WebListsScreen> {
                               ListsEvent.createNewList(
                                   name: nameTextEditingController.text));
                           nameTextEditingController.clear();
-                          Navigator.of(context).pop();
+                          router.pop();
                         }
                       },
                     )

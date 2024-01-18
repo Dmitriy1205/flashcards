@@ -33,4 +33,13 @@ class AppIcons {
   static const String trash = 'assets/icons/trash.svg';
   static const String close = 'assets/icons/close.svg';
   static const String plus = 'assets/icons/plus.svg';
+  static const String stackPlus = 'assets/icons/stack.svg';
+  static const String solidHat = 'assets/icons/solid_hat.svg';
+  static const String solidProfile = 'assets/icons/solid_profile.svg';
+
+  static const String big = 'assets/icons/big.svg';
+  static const String italic = 'assets/icons/itallic.svg';
+  static const String numerated = 'assets/icons/numareted.svg';
+  static const String sorted = 'assets/icons/sorted.svg';
+  static const String underscore = 'assets/icons/underscore.svg';
 }

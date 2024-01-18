@@ -5,8 +5,18 @@ import 'package:flutter_svg/svg.dart';
 class AppIconButton extends StatelessWidget {
   final String svgIcon;
   final VoidCallback? onTap;
+  final Color? color;
+  final double? height;
+  final double? width;
 
-  const AppIconButton({super.key, required this.svgIcon, this.onTap});
+  const AppIconButton({
+    super.key,
+    required this.svgIcon,
+    this.onTap,
+    this.color,
+    this.height,
+    this.width,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -18,11 +28,11 @@ class AppIconButton extends StatelessWidget {
           child: Padding(
             padding: const EdgeInsets.all(8.0),
             child: SizedBox(
-              width: 30,
-              height: 30,
+              width: width ?? 30,
+              height: height ?? 30,
               child: SvgPicture.asset(
                 svgIcon,
-                color: AppColors.neutralGrey,
+                color: color ?? AppColors.neutralGrey,
               ),
             ),
           )),

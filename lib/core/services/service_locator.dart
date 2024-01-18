@@ -2,7 +2,6 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flashcards/data/remote/card_service/card_service_impl.dart';
 import 'package:flashcards/data/remote/collection_service/collection_service_impl.dart';
-import 'package:flashcards/data/remote/empty.dart';
 import 'package:flashcards/data/remote/user_service/user_service_impl.dart';
 import 'package:flashcards/domain/repositories/cards_repo/card_repo_contract.dart';
 import 'package:flashcards/domain/repositories/cards_repo/card_repo_impl.dart';

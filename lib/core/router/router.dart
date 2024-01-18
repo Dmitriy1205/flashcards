@@ -143,7 +143,7 @@ final GoRouter router = GoRouter(
         child: WebCards(
           collectionName:
               (state.extra as Map<String, dynamic>?)?["collectionName"],
-          collectionId: state.pathParameters['collectionId']!,
+          collectionId: (state.extra as Map<String, dynamic>?)?['collectionId'],
         ),
       ),
     ),

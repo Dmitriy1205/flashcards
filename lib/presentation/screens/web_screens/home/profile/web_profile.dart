@@ -1,7 +1,10 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flashcards/presentation/widgets/app_elevated_button.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import '../../../../../core/const/colors.dart';
+import '../../../../../core/const/icons.dart';
 import '../../../../../core/const/strings.dart';
 import '../../../../../core/themes/theme.dart';
 import '../../../../blocs/auth/auth_bloc.dart';
@@ -59,6 +62,7 @@ class _WebProfileScreenState extends State<WebProfileScreen> {
                     children: [
                        Row(
                         children: [
+                          // context.read<AuthBloc>().state.user?.photoURL == null ?
                           Container(
                             width: 78,
                             height: 78,
@@ -66,8 +70,19 @@ class _WebProfileScreenState extends State<WebProfileScreen> {
                               color: Colors.grey,
                               borderRadius: BorderRadius.circular(50),
                             ),
+                            child: Center(child: SvgPicture.asset(AppIcons.profileThin),),
 
                           ),
+                          //     :
+                          // ClipRRect(
+                          //   borderRadius: BorderRadius.circular(70),
+                          //   child: CachedNetworkImage(
+                          //     imageUrl: context.read<AuthBloc>().state.user!.photoURL!,
+                          //     progressIndicatorBuilder: (context, url, downloadProgress) =>
+                          //         CircularProgressIndicator(value: downloadProgress.progress),
+                          //     errorWidget: (context, url, error) => Icon(Icons.error),
+                          //   ),
+                          // ),
                           const SizedBox(width: 33,),
                           Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
@@ -78,7 +93,7 @@ class _WebProfileScreenState extends State<WebProfileScreen> {
                                 style: AppTheme.themeData.textTheme.titleLarge!.copyWith(fontSize: 18),
                               ),
                               Text(
-                                'johndoe@gmail.com',
+                                context.read<AuthBloc>().state.user!.email!,
                                 style: AppTheme.themeData.textTheme.titleSmall!.copyWith(color: AppColors.mainAccent),
                               ),
                             ],
