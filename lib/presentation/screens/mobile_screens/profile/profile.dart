@@ -1,6 +1,3 @@
-import 'package:flashcards/core/const/colors.dart';
-import 'package:flashcards/core/const/strings.dart';
-import 'package:flashcards/core/themes/theme.dart';
 import 'package:flashcards/presentation/blocs/auth/auth_bloc.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -12,17 +9,15 @@ class Profile extends StatelessWidget {
   Widget build(BuildContext context) {
     return  Center(child: Column(
       children: [
-        Container(
-          child: GestureDetector(
-              onTap: () {
-                context.read<AuthBloc>().add(const AuthEvent.logout());
-              },
-              child: Text(
-                'logout',
-                style: TextStyle(color: Colors.black),
-              )),
-        ),
-        Text('PROFILE SCREEN'),
+        GestureDetector(
+            onTap: () {
+              context.read<AuthBloc>().add(const AuthEvent.logout());
+            },
+            child: const Text(
+              'logout',
+              style: TextStyle(color: Colors.black),
+            )),
+        const Text('PROFILE SCREEN'),
       ],
     ));
     //   Scaffold(

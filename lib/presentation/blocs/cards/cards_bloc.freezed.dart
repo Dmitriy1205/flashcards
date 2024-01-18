@@ -16,7 +16,6 @@ final _privateConstructorUsedError = UnsupportedError(
 
 /// @nodoc
 mixin _$CardsEvent {
-  String get collectionId => throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
     required TResult Function(EditCardParam cardParam, String collectionId)
@@ -26,6 +25,7 @@ mixin _$CardsEvent {
         deleteSelectedCards,
     required TResult Function(CreateCardParam cardParam, String collectionId)
         createNewCard,
+    required TResult Function() emptyCardsList,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
@@ -36,6 +36,7 @@ mixin _$CardsEvent {
         deleteSelectedCards,
     TResult? Function(CreateCardParam cardParam, String collectionId)?
         createNewCard,
+    TResult? Function()? emptyCardsList,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
@@ -46,6 +47,7 @@ mixin _$CardsEvent {
         deleteSelectedCards,
     TResult Function(CreateCardParam cardParam, String collectionId)?
         createNewCard,
+    TResult Function()? emptyCardsList,
     required TResult orElse(),
   }) =>
       throw _privateConstructorUsedError;
@@ -55,6 +57,7 @@ mixin _$CardsEvent {
     required TResult Function(_InitCard value) initCard,
     required TResult Function(_DeleteSelectedCards value) deleteSelectedCards,
     required TResult Function(_CreateNewCard value) createNewCard,
+    required TResult Function(_EmptyCardsList value) emptyCardsList,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
@@ -63,6 +66,7 @@ mixin _$CardsEvent {
     TResult? Function(_InitCard value)? initCard,
     TResult? Function(_DeleteSelectedCards value)? deleteSelectedCards,
     TResult? Function(_CreateNewCard value)? createNewCard,
+    TResult? Function(_EmptyCardsList value)? emptyCardsList,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
@@ -71,12 +75,9 @@ mixin _$CardsEvent {
     TResult Function(_InitCard value)? initCard,
     TResult Function(_DeleteSelectedCards value)? deleteSelectedCards,
     TResult Function(_CreateNewCard value)? createNewCard,
+    TResult Function(_EmptyCardsList value)? emptyCardsList,
     required TResult orElse(),
   }) =>
-      throw _privateConstructorUsedError;
-
-  @JsonKey(ignore: true)
-  $CardsEventCopyWith<CardsEvent> get copyWith =>
       throw _privateConstructorUsedError;
 }
 
@@ -85,8 +86,6 @@ abstract class $CardsEventCopyWith<$Res> {
   factory $CardsEventCopyWith(
           CardsEvent value, $Res Function(CardsEvent) then) =
       _$CardsEventCopyWithImpl<$Res, CardsEvent>;
-  @useResult
-  $Res call({String collectionId});
 }
 
 /// @nodoc
@@ -98,28 +97,13 @@ class _$CardsEventCopyWithImpl<$Res, $Val extends CardsEvent>
   final $Val _value;
   // ignore: unused_field
   final $Res Function($Val) _then;
-
-  @pragma('vm:prefer-inline')
-  @override
-  $Res call({
-    Object? collectionId = null,
-  }) {
-    return _then(_value.copyWith(
-      collectionId: null == collectionId
-          ? _value.collectionId
-          : collectionId // ignore: cast_nullable_to_non_nullable
-              as String,
-    ) as $Val);
-  }
 }
 
 /// @nodoc
-abstract class _$$EditCardImplCopyWith<$Res>
-    implements $CardsEventCopyWith<$Res> {
+abstract class _$$EditCardImplCopyWith<$Res> {
   factory _$$EditCardImplCopyWith(
           _$EditCardImpl value, $Res Function(_$EditCardImpl) then) =
       __$$EditCardImplCopyWithImpl<$Res>;
-  @override
   @useResult
   $Res call({EditCardParam cardParam, String collectionId});
 }
@@ -196,6 +180,7 @@ class _$EditCardImpl implements _EditCard {
         deleteSelectedCards,
     required TResult Function(CreateCardParam cardParam, String collectionId)
         createNewCard,
+    required TResult Function() emptyCardsList,
   }) {
     return editCard(cardParam, collectionId);
   }
@@ -209,6 +194,7 @@ class _$EditCardImpl implements _EditCard {
         deleteSelectedCards,
     TResult? Function(CreateCardParam cardParam, String collectionId)?
         createNewCard,
+    TResult? Function()? emptyCardsList,
   }) {
     return editCard?.call(cardParam, collectionId);
   }
@@ -222,6 +208,7 @@ class _$EditCardImpl implements _EditCard {
         deleteSelectedCards,
     TResult Function(CreateCardParam cardParam, String collectionId)?
         createNewCard,
+    TResult Function()? emptyCardsList,
     required TResult orElse(),
   }) {
     if (editCard != null) {
@@ -237,6 +224,7 @@ class _$EditCardImpl implements _EditCard {
     required TResult Function(_InitCard value) initCard,
     required TResult Function(_DeleteSelectedCards value) deleteSelectedCards,
     required TResult Function(_CreateNewCard value) createNewCard,
+    required TResult Function(_EmptyCardsList value) emptyCardsList,
   }) {
     return editCard(this);
   }
@@ -248,6 +236,7 @@ class _$EditCardImpl implements _EditCard {
     TResult? Function(_InitCard value)? initCard,
     TResult? Function(_DeleteSelectedCards value)? deleteSelectedCards,
     TResult? Function(_CreateNewCard value)? createNewCard,
+    TResult? Function(_EmptyCardsList value)? emptyCardsList,
   }) {
     return editCard?.call(this);
   }
@@ -259,6 +248,7 @@ class _$EditCardImpl implements _EditCard {
     TResult Function(_InitCard value)? initCard,
     TResult Function(_DeleteSelectedCards value)? deleteSelectedCards,
     TResult Function(_CreateNewCard value)? createNewCard,
+    TResult Function(_EmptyCardsList value)? emptyCardsList,
     required TResult orElse(),
   }) {
     if (editCard != null) {
@@ -274,21 +264,17 @@ abstract class _EditCard implements CardsEvent {
       required final String collectionId}) = _$EditCardImpl;
 
   EditCardParam get cardParam;
-  @override
   String get collectionId;
-  @override
   @JsonKey(ignore: true)
   _$$EditCardImplCopyWith<_$EditCardImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }
 
 /// @nodoc
-abstract class _$$InitCardImplCopyWith<$Res>
-    implements $CardsEventCopyWith<$Res> {
+abstract class _$$InitCardImplCopyWith<$Res> {
   factory _$$InitCardImplCopyWith(
           _$InitCardImpl value, $Res Function(_$InitCardImpl) then) =
       __$$InitCardImplCopyWithImpl<$Res>;
-  @override
   @useResult
   $Res call({String collectionId});
 }
@@ -356,6 +342,7 @@ class _$InitCardImpl implements _InitCard {
         deleteSelectedCards,
     required TResult Function(CreateCardParam cardParam, String collectionId)
         createNewCard,
+    required TResult Function() emptyCardsList,
   }) {
     return initCard(collectionId);
   }
@@ -369,6 +356,7 @@ class _$InitCardImpl implements _InitCard {
         deleteSelectedCards,
     TResult? Function(CreateCardParam cardParam, String collectionId)?
         createNewCard,
+    TResult? Function()? emptyCardsList,
   }) {
     return initCard?.call(collectionId);
   }
@@ -382,6 +370,7 @@ class _$InitCardImpl implements _InitCard {
         deleteSelectedCards,
     TResult Function(CreateCardParam cardParam, String collectionId)?
         createNewCard,
+    TResult Function()? emptyCardsList,
     required TResult orElse(),
   }) {
     if (initCard != null) {
@@ -397,6 +386,7 @@ class _$InitCardImpl implements _InitCard {
     required TResult Function(_InitCard value) initCard,
     required TResult Function(_DeleteSelectedCards value) deleteSelectedCards,
     required TResult Function(_CreateNewCard value) createNewCard,
+    required TResult Function(_EmptyCardsList value) emptyCardsList,
   }) {
     return initCard(this);
   }
@@ -408,6 +398,7 @@ class _$InitCardImpl implements _InitCard {
     TResult? Function(_InitCard value)? initCard,
     TResult? Function(_DeleteSelectedCards value)? deleteSelectedCards,
     TResult? Function(_CreateNewCard value)? createNewCard,
+    TResult? Function(_EmptyCardsList value)? emptyCardsList,
   }) {
     return initCard?.call(this);
   }
@@ -419,6 +410,7 @@ class _$InitCardImpl implements _InitCard {
     TResult Function(_InitCard value)? initCard,
     TResult Function(_DeleteSelectedCards value)? deleteSelectedCards,
     TResult Function(_CreateNewCard value)? createNewCard,
+    TResult Function(_EmptyCardsList value)? emptyCardsList,
     required TResult orElse(),
   }) {
     if (initCard != null) {
@@ -432,21 +424,17 @@ abstract class _InitCard implements CardsEvent {
   const factory _InitCard({required final String collectionId}) =
       _$InitCardImpl;
 
-  @override
   String get collectionId;
-  @override
   @JsonKey(ignore: true)
   _$$InitCardImplCopyWith<_$InitCardImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }
 
 /// @nodoc
-abstract class _$$DeleteSelectedCardsImplCopyWith<$Res>
-    implements $CardsEventCopyWith<$Res> {
+abstract class _$$DeleteSelectedCardsImplCopyWith<$Res> {
   factory _$$DeleteSelectedCardsImplCopyWith(_$DeleteSelectedCardsImpl value,
           $Res Function(_$DeleteSelectedCardsImpl) then) =
       __$$DeleteSelectedCardsImplCopyWithImpl<$Res>;
-  @override
   @useResult
   $Res call({List<String> cardsIdToDelete, String collectionId});
 }
@@ -533,6 +521,7 @@ class _$DeleteSelectedCardsImpl implements _DeleteSelectedCards {
         deleteSelectedCards,
     required TResult Function(CreateCardParam cardParam, String collectionId)
         createNewCard,
+    required TResult Function() emptyCardsList,
   }) {
     return deleteSelectedCards(cardsIdToDelete, collectionId);
   }
@@ -546,6 +535,7 @@ class _$DeleteSelectedCardsImpl implements _DeleteSelectedCards {
         deleteSelectedCards,
     TResult? Function(CreateCardParam cardParam, String collectionId)?
         createNewCard,
+    TResult? Function()? emptyCardsList,
   }) {
     return deleteSelectedCards?.call(cardsIdToDelete, collectionId);
   }
@@ -559,6 +549,7 @@ class _$DeleteSelectedCardsImpl implements _DeleteSelectedCards {
         deleteSelectedCards,
     TResult Function(CreateCardParam cardParam, String collectionId)?
         createNewCard,
+    TResult Function()? emptyCardsList,
     required TResult orElse(),
   }) {
     if (deleteSelectedCards != null) {
@@ -574,6 +565,7 @@ class _$DeleteSelectedCardsImpl implements _DeleteSelectedCards {
     required TResult Function(_InitCard value) initCard,
     required TResult Function(_DeleteSelectedCards value) deleteSelectedCards,
     required TResult Function(_CreateNewCard value) createNewCard,
+    required TResult Function(_EmptyCardsList value) emptyCardsList,
   }) {
     return deleteSelectedCards(this);
   }
@@ -585,6 +577,7 @@ class _$DeleteSelectedCardsImpl implements _DeleteSelectedCards {
     TResult? Function(_InitCard value)? initCard,
     TResult? Function(_DeleteSelectedCards value)? deleteSelectedCards,
     TResult? Function(_CreateNewCard value)? createNewCard,
+    TResult? Function(_EmptyCardsList value)? emptyCardsList,
   }) {
     return deleteSelectedCards?.call(this);
   }
@@ -596,6 +589,7 @@ class _$DeleteSelectedCardsImpl implements _DeleteSelectedCards {
     TResult Function(_InitCard value)? initCard,
     TResult Function(_DeleteSelectedCards value)? deleteSelectedCards,
     TResult Function(_CreateNewCard value)? createNewCard,
+    TResult Function(_EmptyCardsList value)? emptyCardsList,
     required TResult orElse(),
   }) {
     if (deleteSelectedCards != null) {
@@ -611,21 +605,17 @@ abstract class _DeleteSelectedCards implements CardsEvent {
       required final String collectionId}) = _$DeleteSelectedCardsImpl;
 
   List<String> get cardsIdToDelete;
-  @override
   String get collectionId;
-  @override
   @JsonKey(ignore: true)
   _$$DeleteSelectedCardsImplCopyWith<_$DeleteSelectedCardsImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }
 
 /// @nodoc
-abstract class _$$CreateNewCardImplCopyWith<$Res>
-    implements $CardsEventCopyWith<$Res> {
+abstract class _$$CreateNewCardImplCopyWith<$Res> {
   factory _$$CreateNewCardImplCopyWith(
           _$CreateNewCardImpl value, $Res Function(_$CreateNewCardImpl) then) =
       __$$CreateNewCardImplCopyWithImpl<$Res>;
-  @override
   @useResult
   $Res call({CreateCardParam cardParam, String collectionId});
 }
@@ -703,6 +693,7 @@ class _$CreateNewCardImpl implements _CreateNewCard {
         deleteSelectedCards,
     required TResult Function(CreateCardParam cardParam, String collectionId)
         createNewCard,
+    required TResult Function() emptyCardsList,
   }) {
     return createNewCard(cardParam, collectionId);
   }
@@ -716,6 +707,7 @@ class _$CreateNewCardImpl implements _CreateNewCard {
         deleteSelectedCards,
     TResult? Function(CreateCardParam cardParam, String collectionId)?
         createNewCard,
+    TResult? Function()? emptyCardsList,
   }) {
     return createNewCard?.call(cardParam, collectionId);
   }
@@ -729,6 +721,7 @@ class _$CreateNewCardImpl implements _CreateNewCard {
         deleteSelectedCards,
     TResult Function(CreateCardParam cardParam, String collectionId)?
         createNewCard,
+    TResult Function()? emptyCardsList,
     required TResult orElse(),
   }) {
     if (createNewCard != null) {
@@ -744,6 +737,7 @@ class _$CreateNewCardImpl implements _CreateNewCard {
     required TResult Function(_InitCard value) initCard,
     required TResult Function(_DeleteSelectedCards value) deleteSelectedCards,
     required TResult Function(_CreateNewCard value) createNewCard,
+    required TResult Function(_EmptyCardsList value) emptyCardsList,
   }) {
     return createNewCard(this);
   }
@@ -755,6 +749,7 @@ class _$CreateNewCardImpl implements _CreateNewCard {
     TResult? Function(_InitCard value)? initCard,
     TResult? Function(_DeleteSelectedCards value)? deleteSelectedCards,
     TResult? Function(_CreateNewCard value)? createNewCard,
+    TResult? Function(_EmptyCardsList value)? emptyCardsList,
   }) {
     return createNewCard?.call(this);
   }
@@ -766,6 +761,7 @@ class _$CreateNewCardImpl implements _CreateNewCard {
     TResult Function(_InitCard value)? initCard,
     TResult Function(_DeleteSelectedCards value)? deleteSelectedCards,
     TResult Function(_CreateNewCard value)? createNewCard,
+    TResult Function(_EmptyCardsList value)? emptyCardsList,
     required TResult orElse(),
   }) {
     if (createNewCard != null) {
@@ -781,12 +777,137 @@ abstract class _CreateNewCard implements CardsEvent {
       required final String collectionId}) = _$CreateNewCardImpl;
 
   CreateCardParam get cardParam;
-  @override
   String get collectionId;
-  @override
   @JsonKey(ignore: true)
   _$$CreateNewCardImplCopyWith<_$CreateNewCardImpl> get copyWith =>
       throw _privateConstructorUsedError;
+}
+
+/// @nodoc
+abstract class _$$EmptyCardsListImplCopyWith<$Res> {
+  factory _$$EmptyCardsListImplCopyWith(_$EmptyCardsListImpl value,
+          $Res Function(_$EmptyCardsListImpl) then) =
+      __$$EmptyCardsListImplCopyWithImpl<$Res>;
+}
+
+/// @nodoc
+class __$$EmptyCardsListImplCopyWithImpl<$Res>
+    extends _$CardsEventCopyWithImpl<$Res, _$EmptyCardsListImpl>
+    implements _$$EmptyCardsListImplCopyWith<$Res> {
+  __$$EmptyCardsListImplCopyWithImpl(
+      _$EmptyCardsListImpl _value, $Res Function(_$EmptyCardsListImpl) _then)
+      : super(_value, _then);
+}
+
+/// @nodoc
+
+class _$EmptyCardsListImpl implements _EmptyCardsList {
+  const _$EmptyCardsListImpl();
+
+  @override
+  String toString() {
+    return 'CardsEvent.emptyCardsList()';
+  }
+
+  @override
+  bool operator ==(Object other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType && other is _$EmptyCardsListImpl);
+  }
+
+  @override
+  int get hashCode => runtimeType.hashCode;
+
+  @override
+  @optionalTypeArgs
+  TResult when<TResult extends Object?>({
+    required TResult Function(EditCardParam cardParam, String collectionId)
+        editCard,
+    required TResult Function(String collectionId) initCard,
+    required TResult Function(List<String> cardsIdToDelete, String collectionId)
+        deleteSelectedCards,
+    required TResult Function(CreateCardParam cardParam, String collectionId)
+        createNewCard,
+    required TResult Function() emptyCardsList,
+  }) {
+    return emptyCardsList();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? whenOrNull<TResult extends Object?>({
+    TResult? Function(EditCardParam cardParam, String collectionId)? editCard,
+    TResult? Function(String collectionId)? initCard,
+    TResult? Function(List<String> cardsIdToDelete, String collectionId)?
+        deleteSelectedCards,
+    TResult? Function(CreateCardParam cardParam, String collectionId)?
+        createNewCard,
+    TResult? Function()? emptyCardsList,
+  }) {
+    return emptyCardsList?.call();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeWhen<TResult extends Object?>({
+    TResult Function(EditCardParam cardParam, String collectionId)? editCard,
+    TResult Function(String collectionId)? initCard,
+    TResult Function(List<String> cardsIdToDelete, String collectionId)?
+        deleteSelectedCards,
+    TResult Function(CreateCardParam cardParam, String collectionId)?
+        createNewCard,
+    TResult Function()? emptyCardsList,
+    required TResult orElse(),
+  }) {
+    if (emptyCardsList != null) {
+      return emptyCardsList();
+    }
+    return orElse();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult map<TResult extends Object?>({
+    required TResult Function(_EditCard value) editCard,
+    required TResult Function(_InitCard value) initCard,
+    required TResult Function(_DeleteSelectedCards value) deleteSelectedCards,
+    required TResult Function(_CreateNewCard value) createNewCard,
+    required TResult Function(_EmptyCardsList value) emptyCardsList,
+  }) {
+    return emptyCardsList(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? mapOrNull<TResult extends Object?>({
+    TResult? Function(_EditCard value)? editCard,
+    TResult? Function(_InitCard value)? initCard,
+    TResult? Function(_DeleteSelectedCards value)? deleteSelectedCards,
+    TResult? Function(_CreateNewCard value)? createNewCard,
+    TResult? Function(_EmptyCardsList value)? emptyCardsList,
+  }) {
+    return emptyCardsList?.call(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeMap<TResult extends Object?>({
+    TResult Function(_EditCard value)? editCard,
+    TResult Function(_InitCard value)? initCard,
+    TResult Function(_DeleteSelectedCards value)? deleteSelectedCards,
+    TResult Function(_CreateNewCard value)? createNewCard,
+    TResult Function(_EmptyCardsList value)? emptyCardsList,
+    required TResult orElse(),
+  }) {
+    if (emptyCardsList != null) {
+      return emptyCardsList(this);
+    }
+    return orElse();
+  }
+}
+
+abstract class _EmptyCardsList implements CardsEvent {
+  const factory _EmptyCardsList() = _$EmptyCardsListImpl;
 }
 
 /// @nodoc

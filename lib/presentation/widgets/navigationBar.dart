@@ -1,17 +1,17 @@
 import 'package:flashcards/core/const/colors.dart';
 import 'package:flashcards/core/const/icons.dart';
 import 'package:flashcards/core/const/strings.dart';
-import 'package:flashcards/core/router/router.dart';
 import 'package:flashcards/core/themes/theme.dart';
 import 'package:flashcards/presentation/blocs/lists/lists_bloc.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/svg.dart';
 
+
 class CustomNavigationBar extends StatefulWidget {
-  CustomNavigationBar({Key? key, required this.pageController})
+  const CustomNavigationBar({Key? key, required this.pageController})
       : super(key: key);
-  PageController pageController;
+  final PageController pageController;
 
   @override
   State<CustomNavigationBar> createState() => _CustomNavigationBarState();

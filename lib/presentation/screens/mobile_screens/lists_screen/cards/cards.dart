@@ -9,7 +9,6 @@ import 'package:flashcards/presentation/screens/mobile_screens/lists_screen/card
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/svg.dart';
-
 import 'create_edit_card.dart';
 
 class Cards extends StatefulWidget {
@@ -28,12 +27,13 @@ class _CardsState extends State<Cards> {
 
   @override
   void initState() {
-    print('widget.collectionId ${widget.collectionId}');
     super.initState();
     context
         .read<CardsBloc>()
         .add(CardsEvent.initCard(collectionId: widget.collectionId));
   }
+
+
 
   @override
   Widget build(BuildContext context) {
@@ -50,8 +50,10 @@ class _CardsState extends State<Cards> {
                   onTap: () {
                     context
                         .read<ListsBloc>()
-                        .add(ListsEvent.started(isEditMode: false));
+                        .add(const ListsEvent.started(isEditMode: false));
                     Navigator.of(context).pop();
+                    context
+                        .read<CardsBloc>().add(const CardsEvent.emptyCardsList());
                   },
                   child: SvgPicture.asset(
                     AppIcons.leftArrow,
@@ -122,8 +124,7 @@ class _CardsState extends State<Cards> {
                           DropdownMenuItem<String>(
                             value: 'false',
                             onTap: () {
-                              context.read<CardsBloc>().isEditMode =
-                                  !context.read<CardsBloc>().isEditMode;
+                              context.read<CardsBloc>().isEditMode = true;
                               setState(() {});
                             },
                             child: Row(
@@ -209,8 +210,9 @@ class _CardsState extends State<Cards> {
           state.maybeMap(orElse: () {});
         },
         builder: (context, state) {
-          print('stateCard $state');
-          return state.maybeMap(initial: (data) {
+          return state.maybeMap(loading: (_) {
+            return const Center(child: CircularProgressIndicator());
+          }, initial: (data) {
             return Column(
               children: [
                 Container(
@@ -253,9 +255,22 @@ class _CardsState extends State<Cards> {
                                         child: InkWell(
                                           onTap: () {
                                             setState(() {
-                                              /// TODO ======
-                                              data.cardsList![i] =
-                                                  data.cardsList![i];
+                                              if (context
+                                                  .read<CardsBloc>()
+                                                  .cardsListToDelete
+                                                  .contains(
+                                                      data.cardsList![i].id)) {
+                                                context
+                                                    .read<CardsBloc>()
+                                                    .cardsListToDelete
+                                                    .remove(
+                                                        data.cardsList![i].id);
+                                              } else {
+                                                context
+                                                    .read<CardsBloc>()
+                                                    .cardsListToDelete
+                                                    .add(data.cardsList![i].id);
+                                              }
                                             });
                                           },
                                           child: Container(
