@@ -10,7 +10,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/svg.dart';
 import 'create_edit_card.dart';
-import 'package:share_plus/share_plus.dart';
 
 class Cards extends StatefulWidget {
   const Cards(

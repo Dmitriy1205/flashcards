@@ -3,7 +3,6 @@ import 'package:flashcards/presentation/screens/mobile_screens/home.dart';
 import 'package:flashcards/presentation/screens/mobile_screens/lists_screen/cards/cards.dart';
 import 'package:flashcards/presentation/screens/mobile_screens/lists_screen/cards/create_edit_card.dart';
 import 'package:flashcards/presentation/screens/mobile_screens/lists_screen/cards/view_flash_card.dart';
-import 'package:flashcards/presentation/screens/mobile_screens/lists_screen/collections.dart';
 import 'package:flashcards/presentation/screens/mobile_screens/lists_screen/learn.dart';
 import 'package:flashcards/presentation/screens/mobile_screens/lists_screen/lists_screen.dart';
 import 'package:flashcards/presentation/screens/mobile_screens/profile/profile.dart';
@@ -184,11 +183,23 @@ final GoRouter router = GoRouter(
       ),
     ),
     GoRoute(
+      path: '/collection_share',
+      pageBuilder: (context, state) => slideAnimation<void>(
+        context: context,
+        state: state,
+        child: Cards(
+          collectionName: 'shared collection',
+          collectionId: (state.extra as Map<String, dynamic>?)?['collectionId'],
+        ),
+      ),
+    ),
+
+    GoRoute(
         path: '/view_card_mobile',
         builder: (context, state) {
           return ViewFlashCard(
               collectionId:
-                  (state.extra as Map<String, dynamic>?)?['collectionId']!,
+              (state.extra as Map<String, dynamic>?)?['collectionId']!,
               card: (state.extra as Map<String, dynamic>?)?['card']);
         }),
     GoRoute(
