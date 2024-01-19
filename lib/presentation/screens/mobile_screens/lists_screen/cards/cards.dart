@@ -344,7 +344,7 @@ class _CardsState extends State<Cards> {
                                           style: AppTheme
                                               .themeData.textTheme.labelSmall!
                                               .copyWith(
-                                            color: AppColors.mainAccent,
+                                            color: Colors.black,
                                           ),
                                         ),
                                         trailing: SvgPicture.asset(
