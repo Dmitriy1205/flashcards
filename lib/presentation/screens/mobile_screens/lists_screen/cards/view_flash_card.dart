@@ -3,14 +3,15 @@ import 'dart:math';
 import 'package:flashcards/core/const/colors.dart';
 import 'package:flashcards/core/const/icons.dart';
 import 'package:flashcards/core/const/strings.dart';
+import 'package:flashcards/core/router/router.dart';
 import 'package:flashcards/core/themes/theme.dart';
 import 'package:flashcards/domain/entities/card_entity/card_entity.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
-import 'create_edit_card.dart';
 
 class ViewFlashCard extends StatefulWidget {
-  const ViewFlashCard({Key? key, required this.card, required this.collectionId})
+  const ViewFlashCard(
+      {Key? key, required this.card, required this.collectionId})
       : super(key: key);
   final CardEntity card;
   final String collectionId;
@@ -35,7 +36,14 @@ class _ViewFlashCardState extends State<ViewFlashCard> {
               Row(children: [
                 GestureDetector(
                   onTap: () {
-                    Navigator.pop(context);
+                    router.go('/cards',
+                      extra: {
+                        "collectionName": widget.card.collectionName,
+                        "collectionId": widget.collectionId,
+                      },
+                    );
+
+                    // Navigator.pop(context);
                   },
                   child: SvgPicture.asset(
                     AppIcons.leftArrow,
@@ -53,13 +61,17 @@ class _ViewFlashCardState extends State<ViewFlashCard> {
               ]),
               TextButton(
                 onPressed: () {
-                  Navigator.pushReplacement(
-                      context,
-                      MaterialPageRoute(
-                          builder: (context) => CreateEditCard(
-                                cardEntity: widget.card,
-                                collectionId: widget.collectionId,
-                              )));
+                  router.push('/create_edit_card_mobile',
+                      extra: {'collectionId': widget.collectionId,
+                      "card": widget.card,
+                      });
+                  // Navigator.pushReplacement(
+                  //     context,
+                  //     MaterialPageRoute(
+                  //         builder: (context) => CreateEditCard(
+                  //               cardEntity: widget.card,
+                  //               collectionId: widget.collectionId,
+                  //             )));
                 },
                 child: Text(
                   AppStrings.edit,

@@ -86,7 +86,7 @@ class _WebCollectionsState extends State<WebCollections> {
                       ),
                       subtitle: Text(
 
-                        '${context.read<ListsBloc>().state.collectionsList![i].cards?.length.toString() ?? 0} ${AppStrings.cards.toLowerCase()}',
+                        '${context.read<ListsBloc>().state.collectionsList![i].cards?.toString() ?? 0} ${AppStrings.cards.toLowerCase()}',
 
                         style:
                             AppTheme.themeData.textTheme.labelSmall!.copyWith(

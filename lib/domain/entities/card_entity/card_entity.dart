@@ -10,6 +10,7 @@ class CardEntity with _$CardEntity {
   factory CardEntity({
     required String id,
     required String collectionId,
+    required String collectionName,
     required String front,
     required String back,
     @JsonKey(fromJson: FirebaseTimestampConverters.fromTimestamp)

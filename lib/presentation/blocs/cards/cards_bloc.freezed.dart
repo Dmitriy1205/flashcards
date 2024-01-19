@@ -25,6 +25,7 @@ mixin _$CardsEvent {
         deleteSelectedCards,
     required TResult Function(CreateCardParam cardParam, String collectionId)
         createNewCard,
+    required TResult Function(String collectionId) shareCollection,
     required TResult Function() emptyCardsList,
   }) =>
       throw _privateConstructorUsedError;
@@ -36,6 +37,7 @@ mixin _$CardsEvent {
         deleteSelectedCards,
     TResult? Function(CreateCardParam cardParam, String collectionId)?
         createNewCard,
+    TResult? Function(String collectionId)? shareCollection,
     TResult? Function()? emptyCardsList,
   }) =>
       throw _privateConstructorUsedError;
@@ -47,6 +49,7 @@ mixin _$CardsEvent {
         deleteSelectedCards,
     TResult Function(CreateCardParam cardParam, String collectionId)?
         createNewCard,
+    TResult Function(String collectionId)? shareCollection,
     TResult Function()? emptyCardsList,
     required TResult orElse(),
   }) =>
@@ -57,6 +60,7 @@ mixin _$CardsEvent {
     required TResult Function(_InitCard value) initCard,
     required TResult Function(_DeleteSelectedCards value) deleteSelectedCards,
     required TResult Function(_CreateNewCard value) createNewCard,
+    required TResult Function(_ShareCard value) shareCollection,
     required TResult Function(_EmptyCardsList value) emptyCardsList,
   }) =>
       throw _privateConstructorUsedError;
@@ -66,6 +70,7 @@ mixin _$CardsEvent {
     TResult? Function(_InitCard value)? initCard,
     TResult? Function(_DeleteSelectedCards value)? deleteSelectedCards,
     TResult? Function(_CreateNewCard value)? createNewCard,
+    TResult? Function(_ShareCard value)? shareCollection,
     TResult? Function(_EmptyCardsList value)? emptyCardsList,
   }) =>
       throw _privateConstructorUsedError;
@@ -75,6 +80,7 @@ mixin _$CardsEvent {
     TResult Function(_InitCard value)? initCard,
     TResult Function(_DeleteSelectedCards value)? deleteSelectedCards,
     TResult Function(_CreateNewCard value)? createNewCard,
+    TResult Function(_ShareCard value)? shareCollection,
     TResult Function(_EmptyCardsList value)? emptyCardsList,
     required TResult orElse(),
   }) =>
@@ -180,6 +186,7 @@ class _$EditCardImpl implements _EditCard {
         deleteSelectedCards,
     required TResult Function(CreateCardParam cardParam, String collectionId)
         createNewCard,
+    required TResult Function(String collectionId) shareCollection,
     required TResult Function() emptyCardsList,
   }) {
     return editCard(cardParam, collectionId);
@@ -194,6 +201,7 @@ class _$EditCardImpl implements _EditCard {
         deleteSelectedCards,
     TResult? Function(CreateCardParam cardParam, String collectionId)?
         createNewCard,
+    TResult? Function(String collectionId)? shareCollection,
     TResult? Function()? emptyCardsList,
   }) {
     return editCard?.call(cardParam, collectionId);
@@ -208,6 +216,7 @@ class _$EditCardImpl implements _EditCard {
         deleteSelectedCards,
     TResult Function(CreateCardParam cardParam, String collectionId)?
         createNewCard,
+    TResult Function(String collectionId)? shareCollection,
     TResult Function()? emptyCardsList,
     required TResult orElse(),
   }) {
@@ -224,6 +233,7 @@ class _$EditCardImpl implements _EditCard {
     required TResult Function(_InitCard value) initCard,
     required TResult Function(_DeleteSelectedCards value) deleteSelectedCards,
     required TResult Function(_CreateNewCard value) createNewCard,
+    required TResult Function(_ShareCard value) shareCollection,
     required TResult Function(_EmptyCardsList value) emptyCardsList,
   }) {
     return editCard(this);
@@ -236,6 +246,7 @@ class _$EditCardImpl implements _EditCard {
     TResult? Function(_InitCard value)? initCard,
     TResult? Function(_DeleteSelectedCards value)? deleteSelectedCards,
     TResult? Function(_CreateNewCard value)? createNewCard,
+    TResult? Function(_ShareCard value)? shareCollection,
     TResult? Function(_EmptyCardsList value)? emptyCardsList,
   }) {
     return editCard?.call(this);
@@ -248,6 +259,7 @@ class _$EditCardImpl implements _EditCard {
     TResult Function(_InitCard value)? initCard,
     TResult Function(_DeleteSelectedCards value)? deleteSelectedCards,
     TResult Function(_CreateNewCard value)? createNewCard,
+    TResult Function(_ShareCard value)? shareCollection,
     TResult Function(_EmptyCardsList value)? emptyCardsList,
     required TResult orElse(),
   }) {
@@ -342,6 +354,7 @@ class _$InitCardImpl implements _InitCard {
         deleteSelectedCards,
     required TResult Function(CreateCardParam cardParam, String collectionId)
         createNewCard,
+    required TResult Function(String collectionId) shareCollection,
     required TResult Function() emptyCardsList,
   }) {
     return initCard(collectionId);
@@ -356,6 +369,7 @@ class _$InitCardImpl implements _InitCard {
         deleteSelectedCards,
     TResult? Function(CreateCardParam cardParam, String collectionId)?
         createNewCard,
+    TResult? Function(String collectionId)? shareCollection,
     TResult? Function()? emptyCardsList,
   }) {
     return initCard?.call(collectionId);
@@ -370,6 +384,7 @@ class _$InitCardImpl implements _InitCard {
         deleteSelectedCards,
     TResult Function(CreateCardParam cardParam, String collectionId)?
         createNewCard,
+    TResult Function(String collectionId)? shareCollection,
     TResult Function()? emptyCardsList,
     required TResult orElse(),
   }) {
@@ -386,6 +401,7 @@ class _$InitCardImpl implements _InitCard {
     required TResult Function(_InitCard value) initCard,
     required TResult Function(_DeleteSelectedCards value) deleteSelectedCards,
     required TResult Function(_CreateNewCard value) createNewCard,
+    required TResult Function(_ShareCard value) shareCollection,
     required TResult Function(_EmptyCardsList value) emptyCardsList,
   }) {
     return initCard(this);
@@ -398,6 +414,7 @@ class _$InitCardImpl implements _InitCard {
     TResult? Function(_InitCard value)? initCard,
     TResult? Function(_DeleteSelectedCards value)? deleteSelectedCards,
     TResult? Function(_CreateNewCard value)? createNewCard,
+    TResult? Function(_ShareCard value)? shareCollection,
     TResult? Function(_EmptyCardsList value)? emptyCardsList,
   }) {
     return initCard?.call(this);
@@ -410,6 +427,7 @@ class _$InitCardImpl implements _InitCard {
     TResult Function(_InitCard value)? initCard,
     TResult Function(_DeleteSelectedCards value)? deleteSelectedCards,
     TResult Function(_CreateNewCard value)? createNewCard,
+    TResult Function(_ShareCard value)? shareCollection,
     TResult Function(_EmptyCardsList value)? emptyCardsList,
     required TResult orElse(),
   }) {
@@ -521,6 +539,7 @@ class _$DeleteSelectedCardsImpl implements _DeleteSelectedCards {
         deleteSelectedCards,
     required TResult Function(CreateCardParam cardParam, String collectionId)
         createNewCard,
+    required TResult Function(String collectionId) shareCollection,
     required TResult Function() emptyCardsList,
   }) {
     return deleteSelectedCards(cardsIdToDelete, collectionId);
@@ -535,6 +554,7 @@ class _$DeleteSelectedCardsImpl implements _DeleteSelectedCards {
         deleteSelectedCards,
     TResult? Function(CreateCardParam cardParam, String collectionId)?
         createNewCard,
+    TResult? Function(String collectionId)? shareCollection,
     TResult? Function()? emptyCardsList,
   }) {
     return deleteSelectedCards?.call(cardsIdToDelete, collectionId);
@@ -549,6 +569,7 @@ class _$DeleteSelectedCardsImpl implements _DeleteSelectedCards {
         deleteSelectedCards,
     TResult Function(CreateCardParam cardParam, String collectionId)?
         createNewCard,
+    TResult Function(String collectionId)? shareCollection,
     TResult Function()? emptyCardsList,
     required TResult orElse(),
   }) {
@@ -565,6 +586,7 @@ class _$DeleteSelectedCardsImpl implements _DeleteSelectedCards {
     required TResult Function(_InitCard value) initCard,
     required TResult Function(_DeleteSelectedCards value) deleteSelectedCards,
     required TResult Function(_CreateNewCard value) createNewCard,
+    required TResult Function(_ShareCard value) shareCollection,
     required TResult Function(_EmptyCardsList value) emptyCardsList,
   }) {
     return deleteSelectedCards(this);
@@ -577,6 +599,7 @@ class _$DeleteSelectedCardsImpl implements _DeleteSelectedCards {
     TResult? Function(_InitCard value)? initCard,
     TResult? Function(_DeleteSelectedCards value)? deleteSelectedCards,
     TResult? Function(_CreateNewCard value)? createNewCard,
+    TResult? Function(_ShareCard value)? shareCollection,
     TResult? Function(_EmptyCardsList value)? emptyCardsList,
   }) {
     return deleteSelectedCards?.call(this);
@@ -589,6 +612,7 @@ class _$DeleteSelectedCardsImpl implements _DeleteSelectedCards {
     TResult Function(_InitCard value)? initCard,
     TResult Function(_DeleteSelectedCards value)? deleteSelectedCards,
     TResult Function(_CreateNewCard value)? createNewCard,
+    TResult Function(_ShareCard value)? shareCollection,
     TResult Function(_EmptyCardsList value)? emptyCardsList,
     required TResult orElse(),
   }) {
@@ -693,6 +717,7 @@ class _$CreateNewCardImpl implements _CreateNewCard {
         deleteSelectedCards,
     required TResult Function(CreateCardParam cardParam, String collectionId)
         createNewCard,
+    required TResult Function(String collectionId) shareCollection,
     required TResult Function() emptyCardsList,
   }) {
     return createNewCard(cardParam, collectionId);
@@ -707,6 +732,7 @@ class _$CreateNewCardImpl implements _CreateNewCard {
         deleteSelectedCards,
     TResult? Function(CreateCardParam cardParam, String collectionId)?
         createNewCard,
+    TResult? Function(String collectionId)? shareCollection,
     TResult? Function()? emptyCardsList,
   }) {
     return createNewCard?.call(cardParam, collectionId);
@@ -721,6 +747,7 @@ class _$CreateNewCardImpl implements _CreateNewCard {
         deleteSelectedCards,
     TResult Function(CreateCardParam cardParam, String collectionId)?
         createNewCard,
+    TResult Function(String collectionId)? shareCollection,
     TResult Function()? emptyCardsList,
     required TResult orElse(),
   }) {
@@ -737,6 +764,7 @@ class _$CreateNewCardImpl implements _CreateNewCard {
     required TResult Function(_InitCard value) initCard,
     required TResult Function(_DeleteSelectedCards value) deleteSelectedCards,
     required TResult Function(_CreateNewCard value) createNewCard,
+    required TResult Function(_ShareCard value) shareCollection,
     required TResult Function(_EmptyCardsList value) emptyCardsList,
   }) {
     return createNewCard(this);
@@ -749,6 +777,7 @@ class _$CreateNewCardImpl implements _CreateNewCard {
     TResult? Function(_InitCard value)? initCard,
     TResult? Function(_DeleteSelectedCards value)? deleteSelectedCards,
     TResult? Function(_CreateNewCard value)? createNewCard,
+    TResult? Function(_ShareCard value)? shareCollection,
     TResult? Function(_EmptyCardsList value)? emptyCardsList,
   }) {
     return createNewCard?.call(this);
@@ -761,6 +790,7 @@ class _$CreateNewCardImpl implements _CreateNewCard {
     TResult Function(_InitCard value)? initCard,
     TResult Function(_DeleteSelectedCards value)? deleteSelectedCards,
     TResult Function(_CreateNewCard value)? createNewCard,
+    TResult Function(_ShareCard value)? shareCollection,
     TResult Function(_EmptyCardsList value)? emptyCardsList,
     required TResult orElse(),
   }) {
@@ -780,6 +810,172 @@ abstract class _CreateNewCard implements CardsEvent {
   String get collectionId;
   @JsonKey(ignore: true)
   _$$CreateNewCardImplCopyWith<_$CreateNewCardImpl> get copyWith =>
+      throw _privateConstructorUsedError;
+}
+
+/// @nodoc
+abstract class _$$ShareCardImplCopyWith<$Res> {
+  factory _$$ShareCardImplCopyWith(
+          _$ShareCardImpl value, $Res Function(_$ShareCardImpl) then) =
+      __$$ShareCardImplCopyWithImpl<$Res>;
+  @useResult
+  $Res call({String collectionId});
+}
+
+/// @nodoc
+class __$$ShareCardImplCopyWithImpl<$Res>
+    extends _$CardsEventCopyWithImpl<$Res, _$ShareCardImpl>
+    implements _$$ShareCardImplCopyWith<$Res> {
+  __$$ShareCardImplCopyWithImpl(
+      _$ShareCardImpl _value, $Res Function(_$ShareCardImpl) _then)
+      : super(_value, _then);
+
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? collectionId = null,
+  }) {
+    return _then(_$ShareCardImpl(
+      collectionId: null == collectionId
+          ? _value.collectionId
+          : collectionId // ignore: cast_nullable_to_non_nullable
+              as String,
+    ));
+  }
+}
+
+/// @nodoc
+
+class _$ShareCardImpl implements _ShareCard {
+  const _$ShareCardImpl({required this.collectionId});
+
+  @override
+  final String collectionId;
+
+  @override
+  String toString() {
+    return 'CardsEvent.shareCollection(collectionId: $collectionId)';
+  }
+
+  @override
+  bool operator ==(Object other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType &&
+            other is _$ShareCardImpl &&
+            (identical(other.collectionId, collectionId) ||
+                other.collectionId == collectionId));
+  }
+
+  @override
+  int get hashCode => Object.hash(runtimeType, collectionId);
+
+  @JsonKey(ignore: true)
+  @override
+  @pragma('vm:prefer-inline')
+  _$$ShareCardImplCopyWith<_$ShareCardImpl> get copyWith =>
+      __$$ShareCardImplCopyWithImpl<_$ShareCardImpl>(this, _$identity);
+
+  @override
+  @optionalTypeArgs
+  TResult when<TResult extends Object?>({
+    required TResult Function(EditCardParam cardParam, String collectionId)
+        editCard,
+    required TResult Function(String collectionId) initCard,
+    required TResult Function(List<String> cardsIdToDelete, String collectionId)
+        deleteSelectedCards,
+    required TResult Function(CreateCardParam cardParam, String collectionId)
+        createNewCard,
+    required TResult Function(String collectionId) shareCollection,
+    required TResult Function() emptyCardsList,
+  }) {
+    return shareCollection(collectionId);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? whenOrNull<TResult extends Object?>({
+    TResult? Function(EditCardParam cardParam, String collectionId)? editCard,
+    TResult? Function(String collectionId)? initCard,
+    TResult? Function(List<String> cardsIdToDelete, String collectionId)?
+        deleteSelectedCards,
+    TResult? Function(CreateCardParam cardParam, String collectionId)?
+        createNewCard,
+    TResult? Function(String collectionId)? shareCollection,
+    TResult? Function()? emptyCardsList,
+  }) {
+    return shareCollection?.call(collectionId);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeWhen<TResult extends Object?>({
+    TResult Function(EditCardParam cardParam, String collectionId)? editCard,
+    TResult Function(String collectionId)? initCard,
+    TResult Function(List<String> cardsIdToDelete, String collectionId)?
+        deleteSelectedCards,
+    TResult Function(CreateCardParam cardParam, String collectionId)?
+        createNewCard,
+    TResult Function(String collectionId)? shareCollection,
+    TResult Function()? emptyCardsList,
+    required TResult orElse(),
+  }) {
+    if (shareCollection != null) {
+      return shareCollection(collectionId);
+    }
+    return orElse();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult map<TResult extends Object?>({
+    required TResult Function(_EditCard value) editCard,
+    required TResult Function(_InitCard value) initCard,
+    required TResult Function(_DeleteSelectedCards value) deleteSelectedCards,
+    required TResult Function(_CreateNewCard value) createNewCard,
+    required TResult Function(_ShareCard value) shareCollection,
+    required TResult Function(_EmptyCardsList value) emptyCardsList,
+  }) {
+    return shareCollection(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? mapOrNull<TResult extends Object?>({
+    TResult? Function(_EditCard value)? editCard,
+    TResult? Function(_InitCard value)? initCard,
+    TResult? Function(_DeleteSelectedCards value)? deleteSelectedCards,
+    TResult? Function(_CreateNewCard value)? createNewCard,
+    TResult? Function(_ShareCard value)? shareCollection,
+    TResult? Function(_EmptyCardsList value)? emptyCardsList,
+  }) {
+    return shareCollection?.call(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeMap<TResult extends Object?>({
+    TResult Function(_EditCard value)? editCard,
+    TResult Function(_InitCard value)? initCard,
+    TResult Function(_DeleteSelectedCards value)? deleteSelectedCards,
+    TResult Function(_CreateNewCard value)? createNewCard,
+    TResult Function(_ShareCard value)? shareCollection,
+    TResult Function(_EmptyCardsList value)? emptyCardsList,
+    required TResult orElse(),
+  }) {
+    if (shareCollection != null) {
+      return shareCollection(this);
+    }
+    return orElse();
+  }
+}
+
+abstract class _ShareCard implements CardsEvent {
+  const factory _ShareCard({required final String collectionId}) =
+      _$ShareCardImpl;
+
+  String get collectionId;
+  @JsonKey(ignore: true)
+  _$$ShareCardImplCopyWith<_$ShareCardImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }
 
@@ -828,6 +1024,7 @@ class _$EmptyCardsListImpl implements _EmptyCardsList {
         deleteSelectedCards,
     required TResult Function(CreateCardParam cardParam, String collectionId)
         createNewCard,
+    required TResult Function(String collectionId) shareCollection,
     required TResult Function() emptyCardsList,
   }) {
     return emptyCardsList();
@@ -842,6 +1039,7 @@ class _$EmptyCardsListImpl implements _EmptyCardsList {
         deleteSelectedCards,
     TResult? Function(CreateCardParam cardParam, String collectionId)?
         createNewCard,
+    TResult? Function(String collectionId)? shareCollection,
     TResult? Function()? emptyCardsList,
   }) {
     return emptyCardsList?.call();
@@ -856,6 +1054,7 @@ class _$EmptyCardsListImpl implements _EmptyCardsList {
         deleteSelectedCards,
     TResult Function(CreateCardParam cardParam, String collectionId)?
         createNewCard,
+    TResult Function(String collectionId)? shareCollection,
     TResult Function()? emptyCardsList,
     required TResult orElse(),
   }) {
@@ -872,6 +1071,7 @@ class _$EmptyCardsListImpl implements _EmptyCardsList {
     required TResult Function(_InitCard value) initCard,
     required TResult Function(_DeleteSelectedCards value) deleteSelectedCards,
     required TResult Function(_CreateNewCard value) createNewCard,
+    required TResult Function(_ShareCard value) shareCollection,
     required TResult Function(_EmptyCardsList value) emptyCardsList,
   }) {
     return emptyCardsList(this);
@@ -884,6 +1084,7 @@ class _$EmptyCardsListImpl implements _EmptyCardsList {
     TResult? Function(_InitCard value)? initCard,
     TResult? Function(_DeleteSelectedCards value)? deleteSelectedCards,
     TResult? Function(_CreateNewCard value)? createNewCard,
+    TResult? Function(_ShareCard value)? shareCollection,
     TResult? Function(_EmptyCardsList value)? emptyCardsList,
   }) {
     return emptyCardsList?.call(this);
@@ -896,6 +1097,7 @@ class _$EmptyCardsListImpl implements _EmptyCardsList {
     TResult Function(_InitCard value)? initCard,
     TResult Function(_DeleteSelectedCards value)? deleteSelectedCards,
     TResult Function(_CreateNewCard value)? createNewCard,
+    TResult Function(_ShareCard value)? shareCollection,
     TResult Function(_EmptyCardsList value)? emptyCardsList,
     required TResult orElse(),
   }) {

@@ -1,15 +1,16 @@
 import 'package:flashcards/core/const/colors.dart';
 import 'package:flashcards/core/const/icons.dart';
 import 'package:flashcards/core/const/strings.dart';
+import 'package:flashcards/core/router/router.dart';
 import 'package:flashcards/core/themes/theme.dart';
 import 'package:flashcards/domain/entities/card_entity/card_entity.dart';
 import 'package:flashcards/presentation/blocs/cards/cards_bloc.dart';
 import 'package:flashcards/presentation/blocs/lists/lists_bloc.dart';
-import 'package:flashcards/presentation/screens/mobile_screens/lists_screen/cards/view_flash_card.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/svg.dart';
 import 'create_edit_card.dart';
+import 'package:share_plus/share_plus.dart';
 
 class Cards extends StatefulWidget {
   const Cards(
@@ -33,8 +34,6 @@ class _CardsState extends State<Cards> {
         .add(CardsEvent.initCard(collectionId: widget.collectionId));
   }
 
-
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -51,9 +50,10 @@ class _CardsState extends State<Cards> {
                     context
                         .read<ListsBloc>()
                         .add(const ListsEvent.started(isEditMode: false));
-                    Navigator.of(context).pop();
                     context
-                        .read<CardsBloc>().add(const CardsEvent.emptyCardsList());
+                        .read<CardsBloc>()
+                        .add(const CardsEvent.emptyCardsList());
+                    router.go('/mobile_home');
                   },
                   child: SvgPicture.asset(
                     AppIcons.leftArrow,
@@ -105,20 +105,28 @@ class _CardsState extends State<Cards> {
                         items: [
                           DropdownMenuItem<String>(
                             value: 'false',
-                            child: Row(
-                              children: [
-                                SvgPicture.asset(
-                                  AppIcons.shareBlack,
-                                  height: 23,
-                                  width: 23,
-                                ),
-                                const SizedBox(width: 23),
-                                Text(
-                                  AppStrings.share,
-                                  style:
-                                      AppTheme.themeData.textTheme.labelMedium,
-                                ),
-                              ],
+                            child: InkWell(
+                              onTap: () {
+                                print('widget.collectionId ${widget.collectionId}');
+                                context.read<CardsBloc>().add(
+                                    CardsEvent.shareCollection(
+                                        collectionId: widget.collectionId));
+                              },
+                              child: Row(
+                                children: [
+                                  SvgPicture.asset(
+                                    AppIcons.shareBlack,
+                                    height: 23,
+                                    width: 23,
+                                  ),
+                                  const SizedBox(width: 23),
+                                  Text(
+                                    AppStrings.share,
+                                    style: AppTheme
+                                        .themeData.textTheme.labelMedium,
+                                  ),
+                                ],
+                              ),
                             ),
                           ),
                           DropdownMenuItem<String>(
@@ -317,15 +325,13 @@ class _CardsState extends State<Cards> {
                                             Radius.circular(10))),
                                     child: GestureDetector(
                                       onTap: () {
-                                        Navigator.push(
-                                            context,
-                                            MaterialPageRoute(
-                                                builder: (context) =>
-                                                    ViewFlashCard(
-                                                      card: card,
-                                                      collectionId:
-                                                          widget.collectionId,
-                                                    )));
+                                        router.push(
+                                          '/view_card_mobile',
+                                          extra: {
+                                            "card": card,
+                                            "collectionId": widget.collectionId,
+                                          },
+                                        );
                                       },
                                       child: ListTile(
                                         title: Text(

@@ -1,6 +1,7 @@
 import 'package:flashcards/core/const/colors.dart';
 import 'package:flashcards/core/const/icons.dart';
 import 'package:flashcards/core/const/strings.dart';
+import 'package:flashcards/core/router/router.dart';
 import 'package:flashcards/core/themes/theme.dart';
 import 'package:flashcards/domain/entities/card_entity/card_entity.dart';
 import 'package:flashcards/domain/params/card_param/create_card_param.dart';
@@ -25,10 +26,10 @@ class CreateEditCard extends StatefulWidget {
 
 class _CreateEditCardState extends State<CreateEditCard> {
   final TextEditingController frontTextEditingController =
-      TextEditingController();
+  TextEditingController();
 
   final TextEditingController backTextEditingController =
-      TextEditingController();
+  TextEditingController();
 
   @override
   void initState() {
@@ -52,6 +53,8 @@ class _CreateEditCardState extends State<CreateEditCard> {
             Row(children: [
               GestureDetector(
                 onTap: () {
+
+                  // router.pushReplacement('view_card_mobile',);
                   Navigator.of(context).pop();
                 },
                 child: SvgPicture.asset(
@@ -92,25 +95,39 @@ class _CreateEditCardState extends State<CreateEditCard> {
                         back: backTextEditingController.text,
                         collectionId: widget.collectionId,
                         id: widget.cardEntity!.id);
-                    Navigator.pushReplacement(
-                        context,
-                        MaterialPageRoute(
-                            builder: (context) => ViewFlashCard(
-                                  card: widget.cardEntity!.copyWith(
-                                    front: frontTextEditingController.text,
-                                    back: backTextEditingController.text,
-                                  ),
-                                  collectionId: widget.collectionId,
-                                )));
+
+                    router.push(
+                      '/view_card_mobile',
+                      extra: {
+                        "card": widget.cardEntity!.copyWith(
+                          front: frontTextEditingController.text,
+                          back: backTextEditingController.text,
+                        ),
+                        "collectionId": widget.collectionId,
+                      },
+                    );
+
 
                     // Navigator.pushReplacement(
                     //     context,
                     //     MaterialPageRoute(
                     //         builder: (context) => ViewFlashCard(
-                    //               card: widget.cardEntity!,
-                    //               collectionId: widget.collectionId,
-                    //             )));
-                    context.read<CardsBloc>().add(CardsEvent.editCard(
+                    card:
+                    // widget.cardEntity!.copyWith(
+                    //     front: frontTextEditingController.text,
+                    //     back: backTextEditingController.text,
+                    //                   ),
+                        //               collectionId: widget.collectionId,
+                        //             )));
+
+                        // Navigator.pushReplacement(
+                        //     context,
+                        //     MaterialPageRoute(
+                        //         builder: (context) => ViewFlashCard(
+                        //               card: widget.cardEntity!,
+                        //               collectionId: widget.collectionId,
+                        //             )));
+                        context.read<CardsBloc>().add(CardsEvent.editCard(
                         cardParam: card, collectionId: widget.collectionId));
                   }
                 }

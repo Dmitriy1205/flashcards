@@ -1,5 +1,8 @@
 import 'dart:async';
 import 'package:flashcards/presentation/screens/mobile_screens/home.dart';
+import 'package:flashcards/presentation/screens/mobile_screens/lists_screen/cards/cards.dart';
+import 'package:flashcards/presentation/screens/mobile_screens/lists_screen/cards/create_edit_card.dart';
+import 'package:flashcards/presentation/screens/mobile_screens/lists_screen/cards/view_flash_card.dart';
 import 'package:flashcards/presentation/screens/mobile_screens/lists_screen/collections.dart';
 import 'package:flashcards/presentation/screens/mobile_screens/lists_screen/learn.dart';
 import 'package:flashcards/presentation/screens/mobile_screens/lists_screen/lists_screen.dart';
@@ -77,13 +80,13 @@ final GoRouter router = GoRouter(
               final st = _bloc.state;
 
               return st.maybeMap(
-                  authenticated: (_) => '/mobile_list',
+                  authenticated: (_) => '/mobile_home',
                   unauthenticated: (_) => '/',
                   orElse: () => null);
             },
           ),
     GoRoute(
-        path: '/mobile_list',
+        path: '/mobile_home',
         pageBuilder: (context, state) => fadeAnimation<void>(
               context: context,
               state: state,
@@ -92,7 +95,7 @@ final GoRouter router = GoRouter(
         redirect: (contest, state) {
           final st = _bloc.state;
           return st.maybeMap(
-              authenticated: (_) => '/mobile_list',
+              authenticated: (_) => '/mobile_home',
               unauthenticated: (_) => '/',
               orElse: () => null);
         }),
@@ -168,6 +171,37 @@ final GoRouter router = GoRouter(
     GoRoute(path: '/learn', builder: (context, state) => const Learn()),
     GoRoute(path: '/lists', builder: (context, state) => const Lists()),
     GoRoute(path: '/profile', builder: (context, state) => const Profile()),
+    GoRoute(
+      path: '/cards',
+      pageBuilder: (context, state) => slideAnimation<void>(
+        context: context,
+        state: state,
+        child: Cards(
+          collectionName:
+              (state.extra as Map<String, dynamic>?)?["collectionName"],
+          collectionId: (state.extra as Map<String, dynamic>?)?['collectionId'],
+        ),
+      ),
+    ),
+    GoRoute(
+        path: '/view_card_mobile',
+        builder: (context, state) {
+          return ViewFlashCard(
+              collectionId:
+                  (state.extra as Map<String, dynamic>?)?['collectionId']!,
+              card: (state.extra as Map<String, dynamic>?)?['card']);
+        }),
+    GoRoute(
+      path: '/create_edit_card_mobile',
+      pageBuilder: (context, state) => slideBottomAnimation<void>(
+        context: context,
+        state: state,
+        child: CreateEditCard(
+            collectionId:
+                (state.extra as Map<String, dynamic>?)?['collectionId'],
+            cardEntity: (state.extra as Map<String, dynamic>?)?['card']),
+      ),
+    ),
   ],
   refreshListenable: GoRouterRefreshStream(_bloc.stream),
 );

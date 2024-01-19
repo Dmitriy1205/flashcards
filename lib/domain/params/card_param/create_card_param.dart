@@ -6,7 +6,7 @@ class CreateCardParam {
       required this.back,
       this.frontImages,
       this.backImages,
-      required this.collectionId});
+      required this.collectionId,});
 
   final String front;
   final String back;

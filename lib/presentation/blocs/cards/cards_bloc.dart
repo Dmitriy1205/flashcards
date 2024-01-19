@@ -4,6 +4,7 @@ import 'package:flashcards/domain/params/card_param/create_card_param.dart';
 import 'package:flashcards/domain/params/card_param/edit_card_param.dart';
 import 'package:flashcards/domain/repositories/cards_repo/card_repo_contract.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
+import 'package:share_plus/share_plus.dart';
 
 part 'cards_event.dart';
 
@@ -19,7 +20,7 @@ class CardsBloc extends Bloc<CardsEvent, CardsState> {
     on<CardsEvent>(_mapEventToState);
   }
 
-  final CardRepoContract cardRepo;
+  final CardRepo cardRepo;
   bool isEditMode = false;
   List<String> cardsListToDelete = [];
 
@@ -34,6 +35,7 @@ class CardsBloc extends Bloc<CardsEvent, CardsState> {
         deleteSelectedCards: (event) => _deleteSelectedCards(event, emit),
         editCard: (event) => _editCard(event, emit),
         emptyCardsList: (event) => _emptyCardsList(event, emit),
+        shareCollection: (event) => _shareCard(event, emit),
       );
 
   Future<void> _initCard(_InitCard event, Emitter<CardsState> emit) async {
@@ -41,6 +43,11 @@ class CardsBloc extends Bloc<CardsEvent, CardsState> {
         await cardRepo.fetchCards(collectionId: event.collectionId);
     emit(const CardsState.loading());
     emit(CardsState.initial(cardsList: cardsList));
+  }
+
+  Future<void> _shareCard(_ShareCard event, Emitter<CardsState> emit) async {
+
+    cardRepo.shareCollection(collectionId: event.collectionId);
   }
 
   Future<void> _createNewCard(
