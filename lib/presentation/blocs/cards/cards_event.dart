@@ -16,7 +16,9 @@ class CardsEvent with _$CardsEvent {
       {required CreateCardParam cardParam,
       required String collectionId}) = _CreateNewCard;
 
-  const factory CardsEvent.shareCollection({required String collectionId}) = _ShareCard;
+  const factory CardsEvent.shareCollection(
+      {required String collectionId,
+      required String collectionName}) = _ShareCard;
 
   const factory CardsEvent.emptyCardsList() = _EmptyCardsList;
 }

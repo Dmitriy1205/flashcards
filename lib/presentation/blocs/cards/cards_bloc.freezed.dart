@@ -25,7 +25,8 @@ mixin _$CardsEvent {
         deleteSelectedCards,
     required TResult Function(CreateCardParam cardParam, String collectionId)
         createNewCard,
-    required TResult Function(String collectionId) shareCollection,
+    required TResult Function(String collectionId, String collectionName)
+        shareCollection,
     required TResult Function() emptyCardsList,
   }) =>
       throw _privateConstructorUsedError;
@@ -37,7 +38,8 @@ mixin _$CardsEvent {
         deleteSelectedCards,
     TResult? Function(CreateCardParam cardParam, String collectionId)?
         createNewCard,
-    TResult? Function(String collectionId)? shareCollection,
+    TResult? Function(String collectionId, String collectionName)?
+        shareCollection,
     TResult? Function()? emptyCardsList,
   }) =>
       throw _privateConstructorUsedError;
@@ -49,7 +51,8 @@ mixin _$CardsEvent {
         deleteSelectedCards,
     TResult Function(CreateCardParam cardParam, String collectionId)?
         createNewCard,
-    TResult Function(String collectionId)? shareCollection,
+    TResult Function(String collectionId, String collectionName)?
+        shareCollection,
     TResult Function()? emptyCardsList,
     required TResult orElse(),
   }) =>
@@ -186,7 +189,8 @@ class _$EditCardImpl implements _EditCard {
         deleteSelectedCards,
     required TResult Function(CreateCardParam cardParam, String collectionId)
         createNewCard,
-    required TResult Function(String collectionId) shareCollection,
+    required TResult Function(String collectionId, String collectionName)
+        shareCollection,
     required TResult Function() emptyCardsList,
   }) {
     return editCard(cardParam, collectionId);
@@ -201,7 +205,8 @@ class _$EditCardImpl implements _EditCard {
         deleteSelectedCards,
     TResult? Function(CreateCardParam cardParam, String collectionId)?
         createNewCard,
-    TResult? Function(String collectionId)? shareCollection,
+    TResult? Function(String collectionId, String collectionName)?
+        shareCollection,
     TResult? Function()? emptyCardsList,
   }) {
     return editCard?.call(cardParam, collectionId);
@@ -216,7 +221,8 @@ class _$EditCardImpl implements _EditCard {
         deleteSelectedCards,
     TResult Function(CreateCardParam cardParam, String collectionId)?
         createNewCard,
-    TResult Function(String collectionId)? shareCollection,
+    TResult Function(String collectionId, String collectionName)?
+        shareCollection,
     TResult Function()? emptyCardsList,
     required TResult orElse(),
   }) {
@@ -354,7 +360,8 @@ class _$InitCardImpl implements _InitCard {
         deleteSelectedCards,
     required TResult Function(CreateCardParam cardParam, String collectionId)
         createNewCard,
-    required TResult Function(String collectionId) shareCollection,
+    required TResult Function(String collectionId, String collectionName)
+        shareCollection,
     required TResult Function() emptyCardsList,
   }) {
     return initCard(collectionId);
@@ -369,7 +376,8 @@ class _$InitCardImpl implements _InitCard {
         deleteSelectedCards,
     TResult? Function(CreateCardParam cardParam, String collectionId)?
         createNewCard,
-    TResult? Function(String collectionId)? shareCollection,
+    TResult? Function(String collectionId, String collectionName)?
+        shareCollection,
     TResult? Function()? emptyCardsList,
   }) {
     return initCard?.call(collectionId);
@@ -384,7 +392,8 @@ class _$InitCardImpl implements _InitCard {
         deleteSelectedCards,
     TResult Function(CreateCardParam cardParam, String collectionId)?
         createNewCard,
-    TResult Function(String collectionId)? shareCollection,
+    TResult Function(String collectionId, String collectionName)?
+        shareCollection,
     TResult Function()? emptyCardsList,
     required TResult orElse(),
   }) {
@@ -539,7 +548,8 @@ class _$DeleteSelectedCardsImpl implements _DeleteSelectedCards {
         deleteSelectedCards,
     required TResult Function(CreateCardParam cardParam, String collectionId)
         createNewCard,
-    required TResult Function(String collectionId) shareCollection,
+    required TResult Function(String collectionId, String collectionName)
+        shareCollection,
     required TResult Function() emptyCardsList,
   }) {
     return deleteSelectedCards(cardsIdToDelete, collectionId);
@@ -554,7 +564,8 @@ class _$DeleteSelectedCardsImpl implements _DeleteSelectedCards {
         deleteSelectedCards,
     TResult? Function(CreateCardParam cardParam, String collectionId)?
         createNewCard,
-    TResult? Function(String collectionId)? shareCollection,
+    TResult? Function(String collectionId, String collectionName)?
+        shareCollection,
     TResult? Function()? emptyCardsList,
   }) {
     return deleteSelectedCards?.call(cardsIdToDelete, collectionId);
@@ -569,7 +580,8 @@ class _$DeleteSelectedCardsImpl implements _DeleteSelectedCards {
         deleteSelectedCards,
     TResult Function(CreateCardParam cardParam, String collectionId)?
         createNewCard,
-    TResult Function(String collectionId)? shareCollection,
+    TResult Function(String collectionId, String collectionName)?
+        shareCollection,
     TResult Function()? emptyCardsList,
     required TResult orElse(),
   }) {
@@ -717,7 +729,8 @@ class _$CreateNewCardImpl implements _CreateNewCard {
         deleteSelectedCards,
     required TResult Function(CreateCardParam cardParam, String collectionId)
         createNewCard,
-    required TResult Function(String collectionId) shareCollection,
+    required TResult Function(String collectionId, String collectionName)
+        shareCollection,
     required TResult Function() emptyCardsList,
   }) {
     return createNewCard(cardParam, collectionId);
@@ -732,7 +745,8 @@ class _$CreateNewCardImpl implements _CreateNewCard {
         deleteSelectedCards,
     TResult? Function(CreateCardParam cardParam, String collectionId)?
         createNewCard,
-    TResult? Function(String collectionId)? shareCollection,
+    TResult? Function(String collectionId, String collectionName)?
+        shareCollection,
     TResult? Function()? emptyCardsList,
   }) {
     return createNewCard?.call(cardParam, collectionId);
@@ -747,7 +761,8 @@ class _$CreateNewCardImpl implements _CreateNewCard {
         deleteSelectedCards,
     TResult Function(CreateCardParam cardParam, String collectionId)?
         createNewCard,
-    TResult Function(String collectionId)? shareCollection,
+    TResult Function(String collectionId, String collectionName)?
+        shareCollection,
     TResult Function()? emptyCardsList,
     required TResult orElse(),
   }) {
@@ -819,7 +834,7 @@ abstract class _$$ShareCardImplCopyWith<$Res> {
           _$ShareCardImpl value, $Res Function(_$ShareCardImpl) then) =
       __$$ShareCardImplCopyWithImpl<$Res>;
   @useResult
-  $Res call({String collectionId});
+  $Res call({String collectionId, String collectionName});
 }
 
 /// @nodoc
@@ -834,11 +849,16 @@ class __$$ShareCardImplCopyWithImpl<$Res>
   @override
   $Res call({
     Object? collectionId = null,
+    Object? collectionName = null,
   }) {
     return _then(_$ShareCardImpl(
       collectionId: null == collectionId
           ? _value.collectionId
           : collectionId // ignore: cast_nullable_to_non_nullable
+              as String,
+      collectionName: null == collectionName
+          ? _value.collectionName
+          : collectionName // ignore: cast_nullable_to_non_nullable
               as String,
     ));
   }
@@ -847,14 +867,17 @@ class __$$ShareCardImplCopyWithImpl<$Res>
 /// @nodoc
 
 class _$ShareCardImpl implements _ShareCard {
-  const _$ShareCardImpl({required this.collectionId});
+  const _$ShareCardImpl(
+      {required this.collectionId, required this.collectionName});
 
   @override
   final String collectionId;
+  @override
+  final String collectionName;
 
   @override
   String toString() {
-    return 'CardsEvent.shareCollection(collectionId: $collectionId)';
+    return 'CardsEvent.shareCollection(collectionId: $collectionId, collectionName: $collectionName)';
   }
 
   @override
@@ -863,11 +886,13 @@ class _$ShareCardImpl implements _ShareCard {
         (other.runtimeType == runtimeType &&
             other is _$ShareCardImpl &&
             (identical(other.collectionId, collectionId) ||
-                other.collectionId == collectionId));
+                other.collectionId == collectionId) &&
+            (identical(other.collectionName, collectionName) ||
+                other.collectionName == collectionName));
   }
 
   @override
-  int get hashCode => Object.hash(runtimeType, collectionId);
+  int get hashCode => Object.hash(runtimeType, collectionId, collectionName);
 
   @JsonKey(ignore: true)
   @override
@@ -885,10 +910,11 @@ class _$ShareCardImpl implements _ShareCard {
         deleteSelectedCards,
     required TResult Function(CreateCardParam cardParam, String collectionId)
         createNewCard,
-    required TResult Function(String collectionId) shareCollection,
+    required TResult Function(String collectionId, String collectionName)
+        shareCollection,
     required TResult Function() emptyCardsList,
   }) {
-    return shareCollection(collectionId);
+    return shareCollection(collectionId, collectionName);
   }
 
   @override
@@ -900,10 +926,11 @@ class _$ShareCardImpl implements _ShareCard {
         deleteSelectedCards,
     TResult? Function(CreateCardParam cardParam, String collectionId)?
         createNewCard,
-    TResult? Function(String collectionId)? shareCollection,
+    TResult? Function(String collectionId, String collectionName)?
+        shareCollection,
     TResult? Function()? emptyCardsList,
   }) {
-    return shareCollection?.call(collectionId);
+    return shareCollection?.call(collectionId, collectionName);
   }
 
   @override
@@ -915,12 +942,13 @@ class _$ShareCardImpl implements _ShareCard {
         deleteSelectedCards,
     TResult Function(CreateCardParam cardParam, String collectionId)?
         createNewCard,
-    TResult Function(String collectionId)? shareCollection,
+    TResult Function(String collectionId, String collectionName)?
+        shareCollection,
     TResult Function()? emptyCardsList,
     required TResult orElse(),
   }) {
     if (shareCollection != null) {
-      return shareCollection(collectionId);
+      return shareCollection(collectionId, collectionName);
     }
     return orElse();
   }
@@ -970,10 +998,12 @@ class _$ShareCardImpl implements _ShareCard {
 }
 
 abstract class _ShareCard implements CardsEvent {
-  const factory _ShareCard({required final String collectionId}) =
-      _$ShareCardImpl;
+  const factory _ShareCard(
+      {required final String collectionId,
+      required final String collectionName}) = _$ShareCardImpl;
 
   String get collectionId;
+  String get collectionName;
   @JsonKey(ignore: true)
   _$$ShareCardImplCopyWith<_$ShareCardImpl> get copyWith =>
       throw _privateConstructorUsedError;
@@ -1024,7 +1054,8 @@ class _$EmptyCardsListImpl implements _EmptyCardsList {
         deleteSelectedCards,
     required TResult Function(CreateCardParam cardParam, String collectionId)
         createNewCard,
-    required TResult Function(String collectionId) shareCollection,
+    required TResult Function(String collectionId, String collectionName)
+        shareCollection,
     required TResult Function() emptyCardsList,
   }) {
     return emptyCardsList();
@@ -1039,7 +1070,8 @@ class _$EmptyCardsListImpl implements _EmptyCardsList {
         deleteSelectedCards,
     TResult? Function(CreateCardParam cardParam, String collectionId)?
         createNewCard,
-    TResult? Function(String collectionId)? shareCollection,
+    TResult? Function(String collectionId, String collectionName)?
+        shareCollection,
     TResult? Function()? emptyCardsList,
   }) {
     return emptyCardsList?.call();
@@ -1054,7 +1086,8 @@ class _$EmptyCardsListImpl implements _EmptyCardsList {
         deleteSelectedCards,
     TResult Function(CreateCardParam cardParam, String collectionId)?
         createNewCard,
-    TResult Function(String collectionId)? shareCollection,
+    TResult Function(String collectionId, String collectionName)?
+        shareCollection,
     TResult Function()? emptyCardsList,
     required TResult orElse(),
   }) {
@@ -1116,45 +1149,51 @@ abstract class _EmptyCardsList implements CardsEvent {
 mixin _$CardsState {
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
-    required TResult Function(List<CardEntity>? cardsList) initial,
+    required TResult Function(List<CardEntity>? cardsList) loaded,
     required TResult Function() viewIndividualCard,
     required TResult Function() loading,
+    required TResult Function() error,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult? Function(List<CardEntity>? cardsList)? initial,
+    TResult? Function(List<CardEntity>? cardsList)? loaded,
     TResult? Function()? viewIndividualCard,
     TResult? Function()? loading,
+    TResult? Function()? error,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
-    TResult Function(List<CardEntity>? cardsList)? initial,
+    TResult Function(List<CardEntity>? cardsList)? loaded,
     TResult Function()? viewIndividualCard,
     TResult Function()? loading,
+    TResult Function()? error,
     required TResult orElse(),
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult map<TResult extends Object?>({
-    required TResult Function(_Initial value) initial,
+    required TResult Function(_Loaded value) loaded,
     required TResult Function(_ViewIndividualCard value) viewIndividualCard,
     required TResult Function(_Loading value) loading,
+    required TResult Function(_Error value) error,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
-    TResult? Function(_Initial value)? initial,
+    TResult? Function(_Loaded value)? loaded,
     TResult? Function(_ViewIndividualCard value)? viewIndividualCard,
     TResult? Function(_Loading value)? loading,
+    TResult? Function(_Error value)? error,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult maybeMap<TResult extends Object?>({
-    TResult Function(_Initial value)? initial,
+    TResult Function(_Loaded value)? loaded,
     TResult Function(_ViewIndividualCard value)? viewIndividualCard,
     TResult Function(_Loading value)? loading,
+    TResult Function(_Error value)? error,
     required TResult orElse(),
   }) =>
       throw _privateConstructorUsedError;
@@ -1179,20 +1218,20 @@ class _$CardsStateCopyWithImpl<$Res, $Val extends CardsState>
 }
 
 /// @nodoc
-abstract class _$$InitialImplCopyWith<$Res> {
-  factory _$$InitialImplCopyWith(
-          _$InitialImpl value, $Res Function(_$InitialImpl) then) =
-      __$$InitialImplCopyWithImpl<$Res>;
+abstract class _$$LoadedImplCopyWith<$Res> {
+  factory _$$LoadedImplCopyWith(
+          _$LoadedImpl value, $Res Function(_$LoadedImpl) then) =
+      __$$LoadedImplCopyWithImpl<$Res>;
   @useResult
   $Res call({List<CardEntity>? cardsList});
 }
 
 /// @nodoc
-class __$$InitialImplCopyWithImpl<$Res>
-    extends _$CardsStateCopyWithImpl<$Res, _$InitialImpl>
-    implements _$$InitialImplCopyWith<$Res> {
-  __$$InitialImplCopyWithImpl(
-      _$InitialImpl _value, $Res Function(_$InitialImpl) _then)
+class __$$LoadedImplCopyWithImpl<$Res>
+    extends _$CardsStateCopyWithImpl<$Res, _$LoadedImpl>
+    implements _$$LoadedImplCopyWith<$Res> {
+  __$$LoadedImplCopyWithImpl(
+      _$LoadedImpl _value, $Res Function(_$LoadedImpl) _then)
       : super(_value, _then);
 
   @pragma('vm:prefer-inline')
@@ -1200,7 +1239,7 @@ class __$$InitialImplCopyWithImpl<$Res>
   $Res call({
     Object? cardsList = freezed,
   }) {
-    return _then(_$InitialImpl(
+    return _then(_$LoadedImpl(
       cardsList: freezed == cardsList
           ? _value._cardsList
           : cardsList // ignore: cast_nullable_to_non_nullable
@@ -1211,8 +1250,8 @@ class __$$InitialImplCopyWithImpl<$Res>
 
 /// @nodoc
 
-class _$InitialImpl extends _Initial {
-  const _$InitialImpl({required final List<CardEntity>? cardsList})
+class _$LoadedImpl extends _Loaded {
+  const _$LoadedImpl({required final List<CardEntity>? cardsList})
       : _cardsList = cardsList,
         super._();
 
@@ -1228,14 +1267,14 @@ class _$InitialImpl extends _Initial {
 
   @override
   String toString() {
-    return 'CardsState.initial(cardsList: $cardsList)';
+    return 'CardsState.loaded(cardsList: $cardsList)';
   }
 
   @override
   bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$InitialImpl &&
+            other is _$LoadedImpl &&
             const DeepCollectionEquality()
                 .equals(other._cardsList, _cardsList));
   }
@@ -1247,39 +1286,42 @@ class _$InitialImpl extends _Initial {
   @JsonKey(ignore: true)
   @override
   @pragma('vm:prefer-inline')
-  _$$InitialImplCopyWith<_$InitialImpl> get copyWith =>
-      __$$InitialImplCopyWithImpl<_$InitialImpl>(this, _$identity);
+  _$$LoadedImplCopyWith<_$LoadedImpl> get copyWith =>
+      __$$LoadedImplCopyWithImpl<_$LoadedImpl>(this, _$identity);
 
   @override
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
-    required TResult Function(List<CardEntity>? cardsList) initial,
+    required TResult Function(List<CardEntity>? cardsList) loaded,
     required TResult Function() viewIndividualCard,
     required TResult Function() loading,
+    required TResult Function() error,
   }) {
-    return initial(cardsList);
+    return loaded(cardsList);
   }
 
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult? Function(List<CardEntity>? cardsList)? initial,
+    TResult? Function(List<CardEntity>? cardsList)? loaded,
     TResult? Function()? viewIndividualCard,
     TResult? Function()? loading,
+    TResult? Function()? error,
   }) {
-    return initial?.call(cardsList);
+    return loaded?.call(cardsList);
   }
 
   @override
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
-    TResult Function(List<CardEntity>? cardsList)? initial,
+    TResult Function(List<CardEntity>? cardsList)? loaded,
     TResult Function()? viewIndividualCard,
     TResult Function()? loading,
+    TResult Function()? error,
     required TResult orElse(),
   }) {
-    if (initial != null) {
-      return initial(cardsList);
+    if (loaded != null) {
+      return loaded(cardsList);
     }
     return orElse();
   }
@@ -1287,46 +1329,49 @@ class _$InitialImpl extends _Initial {
   @override
   @optionalTypeArgs
   TResult map<TResult extends Object?>({
-    required TResult Function(_Initial value) initial,
+    required TResult Function(_Loaded value) loaded,
     required TResult Function(_ViewIndividualCard value) viewIndividualCard,
     required TResult Function(_Loading value) loading,
+    required TResult Function(_Error value) error,
   }) {
-    return initial(this);
+    return loaded(this);
   }
 
   @override
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
-    TResult? Function(_Initial value)? initial,
+    TResult? Function(_Loaded value)? loaded,
     TResult? Function(_ViewIndividualCard value)? viewIndividualCard,
     TResult? Function(_Loading value)? loading,
+    TResult? Function(_Error value)? error,
   }) {
-    return initial?.call(this);
+    return loaded?.call(this);
   }
 
   @override
   @optionalTypeArgs
   TResult maybeMap<TResult extends Object?>({
-    TResult Function(_Initial value)? initial,
+    TResult Function(_Loaded value)? loaded,
     TResult Function(_ViewIndividualCard value)? viewIndividualCard,
     TResult Function(_Loading value)? loading,
+    TResult Function(_Error value)? error,
     required TResult orElse(),
   }) {
-    if (initial != null) {
-      return initial(this);
+    if (loaded != null) {
+      return loaded(this);
     }
     return orElse();
   }
 }
 
-abstract class _Initial extends CardsState {
-  const factory _Initial({required final List<CardEntity>? cardsList}) =
-      _$InitialImpl;
-  const _Initial._() : super._();
+abstract class _Loaded extends CardsState {
+  const factory _Loaded({required final List<CardEntity>? cardsList}) =
+      _$LoadedImpl;
+  const _Loaded._() : super._();
 
   List<CardEntity>? get cardsList;
   @JsonKey(ignore: true)
-  _$$InitialImplCopyWith<_$InitialImpl> get copyWith =>
+  _$$LoadedImplCopyWith<_$LoadedImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }
 
@@ -1368,9 +1413,10 @@ class _$ViewIndividualCardImpl extends _ViewIndividualCard {
   @override
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
-    required TResult Function(List<CardEntity>? cardsList) initial,
+    required TResult Function(List<CardEntity>? cardsList) loaded,
     required TResult Function() viewIndividualCard,
     required TResult Function() loading,
+    required TResult Function() error,
   }) {
     return viewIndividualCard();
   }
@@ -1378,9 +1424,10 @@ class _$ViewIndividualCardImpl extends _ViewIndividualCard {
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult? Function(List<CardEntity>? cardsList)? initial,
+    TResult? Function(List<CardEntity>? cardsList)? loaded,
     TResult? Function()? viewIndividualCard,
     TResult? Function()? loading,
+    TResult? Function()? error,
   }) {
     return viewIndividualCard?.call();
   }
@@ -1388,9 +1435,10 @@ class _$ViewIndividualCardImpl extends _ViewIndividualCard {
   @override
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
-    TResult Function(List<CardEntity>? cardsList)? initial,
+    TResult Function(List<CardEntity>? cardsList)? loaded,
     TResult Function()? viewIndividualCard,
     TResult Function()? loading,
+    TResult Function()? error,
     required TResult orElse(),
   }) {
     if (viewIndividualCard != null) {
@@ -1402,9 +1450,10 @@ class _$ViewIndividualCardImpl extends _ViewIndividualCard {
   @override
   @optionalTypeArgs
   TResult map<TResult extends Object?>({
-    required TResult Function(_Initial value) initial,
+    required TResult Function(_Loaded value) loaded,
     required TResult Function(_ViewIndividualCard value) viewIndividualCard,
     required TResult Function(_Loading value) loading,
+    required TResult Function(_Error value) error,
   }) {
     return viewIndividualCard(this);
   }
@@ -1412,9 +1461,10 @@ class _$ViewIndividualCardImpl extends _ViewIndividualCard {
   @override
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
-    TResult? Function(_Initial value)? initial,
+    TResult? Function(_Loaded value)? loaded,
     TResult? Function(_ViewIndividualCard value)? viewIndividualCard,
     TResult? Function(_Loading value)? loading,
+    TResult? Function(_Error value)? error,
   }) {
     return viewIndividualCard?.call(this);
   }
@@ -1422,9 +1472,10 @@ class _$ViewIndividualCardImpl extends _ViewIndividualCard {
   @override
   @optionalTypeArgs
   TResult maybeMap<TResult extends Object?>({
-    TResult Function(_Initial value)? initial,
+    TResult Function(_Loaded value)? loaded,
     TResult Function(_ViewIndividualCard value)? viewIndividualCard,
     TResult Function(_Loading value)? loading,
+    TResult Function(_Error value)? error,
     required TResult orElse(),
   }) {
     if (viewIndividualCard != null) {
@@ -1477,9 +1528,10 @@ class _$LoadingImpl extends _Loading {
   @override
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
-    required TResult Function(List<CardEntity>? cardsList) initial,
+    required TResult Function(List<CardEntity>? cardsList) loaded,
     required TResult Function() viewIndividualCard,
     required TResult Function() loading,
+    required TResult Function() error,
   }) {
     return loading();
   }
@@ -1487,9 +1539,10 @@ class _$LoadingImpl extends _Loading {
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult? Function(List<CardEntity>? cardsList)? initial,
+    TResult? Function(List<CardEntity>? cardsList)? loaded,
     TResult? Function()? viewIndividualCard,
     TResult? Function()? loading,
+    TResult? Function()? error,
   }) {
     return loading?.call();
   }
@@ -1497,9 +1550,10 @@ class _$LoadingImpl extends _Loading {
   @override
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
-    TResult Function(List<CardEntity>? cardsList)? initial,
+    TResult Function(List<CardEntity>? cardsList)? loaded,
     TResult Function()? viewIndividualCard,
     TResult Function()? loading,
+    TResult Function()? error,
     required TResult orElse(),
   }) {
     if (loading != null) {
@@ -1511,9 +1565,10 @@ class _$LoadingImpl extends _Loading {
   @override
   @optionalTypeArgs
   TResult map<TResult extends Object?>({
-    required TResult Function(_Initial value) initial,
+    required TResult Function(_Loaded value) loaded,
     required TResult Function(_ViewIndividualCard value) viewIndividualCard,
     required TResult Function(_Loading value) loading,
+    required TResult Function(_Error value) error,
   }) {
     return loading(this);
   }
@@ -1521,9 +1576,10 @@ class _$LoadingImpl extends _Loading {
   @override
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
-    TResult? Function(_Initial value)? initial,
+    TResult? Function(_Loaded value)? loaded,
     TResult? Function(_ViewIndividualCard value)? viewIndividualCard,
     TResult? Function(_Loading value)? loading,
+    TResult? Function(_Error value)? error,
   }) {
     return loading?.call(this);
   }
@@ -1531,9 +1587,10 @@ class _$LoadingImpl extends _Loading {
   @override
   @optionalTypeArgs
   TResult maybeMap<TResult extends Object?>({
-    TResult Function(_Initial value)? initial,
+    TResult Function(_Loaded value)? loaded,
     TResult Function(_ViewIndividualCard value)? viewIndividualCard,
     TResult Function(_Loading value)? loading,
+    TResult Function(_Error value)? error,
     required TResult orElse(),
   }) {
     if (loading != null) {
@@ -1546,4 +1603,119 @@ class _$LoadingImpl extends _Loading {
 abstract class _Loading extends CardsState {
   const factory _Loading() = _$LoadingImpl;
   const _Loading._() : super._();
+}
+
+/// @nodoc
+abstract class _$$ErrorImplCopyWith<$Res> {
+  factory _$$ErrorImplCopyWith(
+          _$ErrorImpl value, $Res Function(_$ErrorImpl) then) =
+      __$$ErrorImplCopyWithImpl<$Res>;
+}
+
+/// @nodoc
+class __$$ErrorImplCopyWithImpl<$Res>
+    extends _$CardsStateCopyWithImpl<$Res, _$ErrorImpl>
+    implements _$$ErrorImplCopyWith<$Res> {
+  __$$ErrorImplCopyWithImpl(
+      _$ErrorImpl _value, $Res Function(_$ErrorImpl) _then)
+      : super(_value, _then);
+}
+
+/// @nodoc
+
+class _$ErrorImpl extends _Error {
+  const _$ErrorImpl() : super._();
+
+  @override
+  String toString() {
+    return 'CardsState.error()';
+  }
+
+  @override
+  bool operator ==(Object other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType && other is _$ErrorImpl);
+  }
+
+  @override
+  int get hashCode => runtimeType.hashCode;
+
+  @override
+  @optionalTypeArgs
+  TResult when<TResult extends Object?>({
+    required TResult Function(List<CardEntity>? cardsList) loaded,
+    required TResult Function() viewIndividualCard,
+    required TResult Function() loading,
+    required TResult Function() error,
+  }) {
+    return error();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? whenOrNull<TResult extends Object?>({
+    TResult? Function(List<CardEntity>? cardsList)? loaded,
+    TResult? Function()? viewIndividualCard,
+    TResult? Function()? loading,
+    TResult? Function()? error,
+  }) {
+    return error?.call();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeWhen<TResult extends Object?>({
+    TResult Function(List<CardEntity>? cardsList)? loaded,
+    TResult Function()? viewIndividualCard,
+    TResult Function()? loading,
+    TResult Function()? error,
+    required TResult orElse(),
+  }) {
+    if (error != null) {
+      return error();
+    }
+    return orElse();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult map<TResult extends Object?>({
+    required TResult Function(_Loaded value) loaded,
+    required TResult Function(_ViewIndividualCard value) viewIndividualCard,
+    required TResult Function(_Loading value) loading,
+    required TResult Function(_Error value) error,
+  }) {
+    return error(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? mapOrNull<TResult extends Object?>({
+    TResult? Function(_Loaded value)? loaded,
+    TResult? Function(_ViewIndividualCard value)? viewIndividualCard,
+    TResult? Function(_Loading value)? loading,
+    TResult? Function(_Error value)? error,
+  }) {
+    return error?.call(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeMap<TResult extends Object?>({
+    TResult Function(_Loaded value)? loaded,
+    TResult Function(_ViewIndividualCard value)? viewIndividualCard,
+    TResult Function(_Loading value)? loading,
+    TResult Function(_Error value)? error,
+    required TResult orElse(),
+  }) {
+    if (error != null) {
+      return error(this);
+    }
+    return orElse();
+  }
+}
+
+abstract class _Error extends CardsState {
+  const factory _Error() = _$ErrorImpl;
+  const _Error._() : super._();
 }

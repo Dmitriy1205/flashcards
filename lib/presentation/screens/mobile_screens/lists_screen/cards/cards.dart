@@ -106,10 +106,10 @@ class _CardsState extends State<Cards> {
                             value: 'false',
                             child: InkWell(
                               onTap: () {
-                                print('widget.collectionId ${widget.collectionId}');
                                 context.read<CardsBloc>().add(
                                     CardsEvent.shareCollection(
-                                        collectionId: widget.collectionId));
+                                        collectionId: widget.collectionId,
+                                        collectionName: widget.collectionName));
                               },
                               child: Row(
                                 children: [
@@ -219,7 +219,7 @@ class _CardsState extends State<Cards> {
         builder: (context, state) {
           return state.maybeMap(loading: (_) {
             return const Center(child: CircularProgressIndicator());
-          }, initial: (data) {
+          }, loaded: (data) {
             return Column(
               children: [
                 Container(
@@ -365,6 +365,8 @@ class _CardsState extends State<Cards> {
                 ),
               ],
             );
+          }, error: (_) {
+            return const Center(child: Text('Error'));
           }, orElse: () {
             return const Center(child: Text('No cards found'));
           });

@@ -44,7 +44,7 @@ class CardServiceImpl extends CardService {
         "createdAt": FieldValue.serverTimestamp(),
         "collectionId": cardParam.collectionId
       });
-    } catch (e) {
+    } on FirebaseException  catch (e) {
       throw Exception("Exception createCard $e");
     }
   }
@@ -64,7 +64,7 @@ class CardServiceImpl extends CardService {
       for (int i = 0; i < cardsToDelete.length; i++) {
         await cards.doc(cardsToDelete[i]).delete();
       }
-    } catch (e) {
+    }  on FirebaseException catch (e) {
       throw Exception("Exception deleteCards $e");
     }
   }
@@ -83,18 +83,19 @@ class CardServiceImpl extends CardService {
         'back': cardParam.back,
         'front': cardParam.front,
       });
-    } catch (e) {
+    }  on FirebaseException  catch (e) {
       throw Exception("Exception deleteCards $e");
     }
   }
 
   @override
-  Future<void> shareCollection({required String collectionId}) async {
+  Future<void> shareCollection(
+      {required String collectionId, required String collectionName}) async {
     print(
-      'https://flashcards-5984c.web.app/collection_share/sender=${_firebaseAuth.currentUser!.uid}&collection=$collectionId',
+      'https://flashcards-5984c.web.app/collection_share?sender=${_firebaseAuth.currentUser!.uid}&collectionId=${collectionId}&collectionName=${collectionName}',
     );
     final result = await Share.shareWithResult(
-        'https://flashcards-5984c.web.app/collection_share/sender=${_firebaseAuth.currentUser!.uid}&collection=$collectionId',
+        'https://flashcards-5984c.web.app/collection_share?sender=${_firebaseAuth.currentUser!.uid}&collectionId=$collectionId&collectionName=$collectionName',
         subject: 'Look what I made!');
 
     if (result.status == ShareResultStatus.success) {
@@ -120,7 +121,7 @@ class CardServiceImpl extends CardService {
                 .toJson());
           }
         }
-      } catch (e) {
+      }  on FirebaseException catch (e) {
         throw Exception("Exception createCard $e");
       }
     }

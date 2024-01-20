@@ -10,7 +10,8 @@ abstract class CardService {
   Future<void> deleteCards(
       {required String collectionId, required List<String> cardsToDelete});
 
-  Future<void> shareCollection({required  String collectionId});
+  Future<void> shareCollection({required  String collectionId,
+    required String collectionName});
 
   Future<List<CardEntity>> fetchCards({required String collectionId});
 }

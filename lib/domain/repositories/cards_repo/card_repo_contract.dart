@@ -9,7 +9,8 @@ abstract class CardRepo {
 
   Future<List<CardEntity>> fetchCards({required String collectionId});
 
-  Future<void> shareCollection({required  String collectionId});
+  Future<void> shareCollection(
+      {required String collectionId, required String collectionName});
 
   Future<void> deleteCards(
       {required List<String> cardsToDelete, required String collectionId});

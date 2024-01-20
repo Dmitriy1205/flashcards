@@ -4,7 +4,6 @@ import 'package:flashcards/domain/params/card_param/create_card_param.dart';
 import 'package:flashcards/domain/params/card_param/edit_card_param.dart';
 import 'package:flashcards/domain/repositories/cards_repo/card_repo_contract.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
-import 'package:share_plus/share_plus.dart';
 
 part 'cards_event.dart';
 
@@ -14,7 +13,7 @@ part 'cards_bloc.freezed.dart';
 
 class CardsBloc extends Bloc<CardsEvent, CardsState> {
   CardsBloc({required this.cardRepo})
-      : super(const CardsState.initial(
+      : super(const CardsState.loaded(
           cardsList: [],
         )) {
     on<CardsEvent>(_mapEventToState);
@@ -39,46 +38,68 @@ class CardsBloc extends Bloc<CardsEvent, CardsState> {
       );
 
   Future<void> _initCard(_InitCard event, Emitter<CardsState> emit) async {
-    final cardsList =
-        await cardRepo.fetchCards(collectionId: event.collectionId);
-    emit(const CardsState.loading());
-    emit(CardsState.initial(cardsList: cardsList));
+    try {
+      emit(const CardsState.loading());
+      final cardsList =
+          await cardRepo.fetchCards(collectionId: event.collectionId);
+      emit(CardsState.loaded(cardsList: cardsList));
+    } catch (e) {
+      emit(const CardsState.error());
+    }
   }
 
   Future<void> _shareCard(_ShareCard event, Emitter<CardsState> emit) async {
-
-    cardRepo.shareCollection(collectionId: event.collectionId);
+    try {
+      cardRepo.shareCollection(
+          collectionId: event.collectionId,
+          collectionName: event.collectionName);
+    } catch (e) {
+      emit(const CardsState.error());
+    }
   }
 
   Future<void> _createNewCard(
       _CreateNewCard event, Emitter<CardsState> emit) async {
-    emit(const CardsState.loading());
-    await cardRepo.createCard(cardParam: event.cardParam);
-    final cardsList =
-        await cardRepo.fetchCards(collectionId: event.collectionId);
-    emit(CardsState.initial(cardsList: cardsList));
+    try {
+      emit(const CardsState.loading());
+      await cardRepo.createCard(cardParam: event.cardParam);
+      final cardsList =
+          await cardRepo.fetchCards(collectionId: event.collectionId);
+      emit(CardsState.loaded(cardsList: cardsList));
+    } catch (e) {
+      emit(const CardsState.error());
+    }
   }
 
   Future<void> _editCard(_EditCard event, Emitter<CardsState> emit) async {
-    cardRepo.editCard(cardParam: event.cardParam);
-    final cardsList =
-        await cardRepo.fetchCards(collectionId: event.collectionId);
-    emit(const CardsState.loading());
-    emit(CardsState.initial(cardsList: cardsList));
+    try {
+      emit(const CardsState.loading());
+      cardRepo.editCard(cardParam: event.cardParam);
+      final cardsList =
+          await cardRepo.fetchCards(collectionId: event.collectionId);
+      emit(CardsState.loaded(cardsList: cardsList));
+    } catch (e) {
+      emit(const CardsState.error());
+    }
   }
 
   Future<void> _deleteSelectedCards(
       _DeleteSelectedCards event, Emitter<CardsState> emit) async {
-    emit(const CardsState.loading());
-    await cardRepo.deleteCards(
-        cardsToDelete: event.cardsIdToDelete, collectionId: event.collectionId);
-    final cardsList =
-        await cardRepo.fetchCards(collectionId: event.collectionId);
-    emit(CardsState.initial(cardsList: cardsList));
+    try {
+      emit(const CardsState.loading());
+      await cardRepo.deleteCards(
+          cardsToDelete: event.cardsIdToDelete,
+          collectionId: event.collectionId);
+      final cardsList =
+          await cardRepo.fetchCards(collectionId: event.collectionId);
+      emit(CardsState.loaded(cardsList: cardsList));
+    } catch (e) {
+      emit(const CardsState.error());
+    }
   }
 
   Future<void> _emptyCardsList(
       _EmptyCardsList event, Emitter<CardsState> emit) async {
-    emit(const CardsState.initial(cardsList: []));
+    emit(const CardsState.loaded(cardsList: []));
   }
 }
