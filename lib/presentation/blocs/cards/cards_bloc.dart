@@ -24,12 +24,17 @@ class CardsBloc extends Bloc<CardsEvent, CardsState> {
 
   List<String> cardsListToDelete = [];
 
+  getCards(collectionId) async {
+    await cardRepo.fetchCards(collectionId: collectionId);
+  }
+
   Future<void> _mapEventToState(CardsEvent event, Emitter<CardsState> emit) =>
       event.map(
         initCard: (event) => _initCard(event, emit),
         createNewCard: (event) => _createNewCard(event, emit),
         deleteSelectedCards: (event) => _deleteSelectedCards(event, emit),
         editCard: (event) => _editCard(event, emit),
+        emptyCardsList: (event) => _emptyCardsList(event, emit),
       );
 
   Future<void> _initCard(_InitCard event, Emitter<CardsState> emit) async {
@@ -69,5 +74,10 @@ class CardsBloc extends Bloc<CardsEvent, CardsState> {
     final cardsList =
     await cardRepo.fetchCards(collectionId: event.collectionId);
     emit(CardsState.initial(cardsList: cardsList));
+  }
+
+  Future<void> _emptyCardsList(
+      _EmptyCardsList event, Emitter<CardsState> emit) async {
+    emit(const CardsState.initial(cardsList: []));
   }
 }

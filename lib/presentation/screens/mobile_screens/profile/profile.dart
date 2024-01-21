@@ -10,17 +10,15 @@ class Profile extends StatelessWidget {
     return Center(
         child: Column(
       children: [
-        Container(
-          child: GestureDetector(
-              onTap: () {
-                context.read<AuthBloc>().add(const AuthEvent.logout());
-              },
-              child: Text(
-                'logout',
-                style: TextStyle(color: Colors.black),
-              )),
-        ),
-        Text('PROFILE SCREEN'),
+        GestureDetector(
+            onTap: () {
+              context.read<AuthBloc>().add(const AuthEvent.logout());
+            },
+            child: const Text(
+              'logout',
+              style: TextStyle(color: Colors.black),
+            )),
+        const Text('PROFILE SCREEN'),
       ],
     ));
     //   Scaffold(
