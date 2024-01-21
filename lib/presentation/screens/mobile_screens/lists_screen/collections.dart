@@ -102,7 +102,7 @@ class Collections extends StatelessWidget {
                                   .copyWith(fontSize: 18),
                             ),
                             subtitle: Text(
-                              '${collectionsList[i].cards.toString()} ${AppStrings.cards.toLowerCase()}',
+                              '${collectionsList[i].cards?.length ?? 0} ${AppStrings.cards.toLowerCase()}',
                               style: AppTheme.themeData.textTheme.labelSmall!
                                   .copyWith(
                                 color: AppColors.mainAccent,
