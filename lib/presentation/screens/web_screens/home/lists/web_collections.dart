@@ -2,23 +2,27 @@ import 'package:flashcards/core/const/colors.dart';
 import 'package:flashcards/core/const/strings.dart';
 import 'package:flashcards/core/themes/theme.dart';
 import 'package:flashcards/domain/entities/collection_entity/collection_entity.dart';
-import 'package:flashcards/presentation/blocs/lists/lists_bloc.dart';
+import 'package:flashcards/presentation/blocs/web_list/web_list_bloc.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
+import '../../../../../core/const/icons.dart';
+import '../../../../../core/router/router.dart';
+import '../../../../widgets/app_icon_button.dart';
+
 class WebCollections extends StatefulWidget {
-  const WebCollections(
-      {Key? key,
-      required this.listIdToDelete})
-      : super(key: key);
-  final List<CollectionEntity> listIdToDelete;
+  const WebCollections({
+    Key? key,
+  }) : super(key: key);
 
   @override
   State<WebCollections> createState() => _WebCollectionsState();
 }
 
 class _WebCollectionsState extends State<WebCollections> {
+  TextEditingController nameTextEditingController = TextEditingController();
+
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -29,13 +33,37 @@ class _WebCollectionsState extends State<WebCollections> {
               padding: const EdgeInsets.only(
                   left: 24, right: 24, bottom: 11, top: 11),
               child: Row(children: [
-                context.watch<ListsBloc>().isEditMode
+                context.watch<WebListBloc>().state.isEdit
                     ? Flexible(
                         flex: 1,
                         child: InkWell(
                           onTap: () {
-                            widget.listIdToDelete
-                                .add(context.read<ListsBloc>().state.collectionsList![i]);
+                            setState(() {
+                              if (context
+                                  .read<WebListBloc>()
+                                  .listIdToDelete
+                                  .contains(context
+                                      .read<WebListBloc>()
+                                      .state
+                                      .collectionsList![i]
+                                      .id)) {
+                                context
+                                    .read<WebListBloc>()
+                                    .listIdToDelete
+                                    .remove(context
+                                        .read<WebListBloc>()
+                                        .state
+                                        .collectionsList![i]
+                                        .id);
+                              } else {
+                                context.read<WebListBloc>().listIdToDelete.add(
+                                    context
+                                        .read<WebListBloc>()
+                                        .state
+                                        .collectionsList![i]
+                                        .id);
+                              }
+                            });
                           },
                           child: Container(
                             decoration: const BoxDecoration(
@@ -43,8 +71,14 @@ class _WebCollectionsState extends State<WebCollections> {
                             ),
                             child: Padding(
                               padding: const EdgeInsets.all(10.0),
-                              child: widget.listIdToDelete
-                                      .contains(context.read<ListsBloc>().state.collectionsList![i].id)
+                              child: context
+                                      .read<WebListBloc>()
+                                      .listIdToDelete
+                                      .contains(context
+                                          .read<WebListBloc>()
+                                          .state
+                                          .collectionsList![i]
+                                          .id)
                                   ? const Icon(
                                       Icons.check_circle,
                                       size: 23.0,
@@ -61,50 +95,181 @@ class _WebCollectionsState extends State<WebCollections> {
                       )
                     : const SizedBox(),
                 SizedBox(
-                  width: context.read<ListsBloc>().isEditMode ? 22 : 0,
+                  width: context.watch<WebListBloc>().state.isEdit ? 22 : 0,
                 ),
                 Flexible(
-                  flex: 8,
+                  flex: 15,
                   child: Container(
                     decoration: const BoxDecoration(
                         color: Colors.white,
                         borderRadius: BorderRadius.all(Radius.circular(10))),
                     child: ListTile(
-                      onTap: () {
-                        context
-                            .read<ListsBloc>()
-                            .add(ListsEvent.selectCollection(
-                              collection: context.read<ListsBloc>().state.collectionsList![i],
-                            ));
-                      },
+                      onTap: context.watch<WebListBloc>().state.isEdit
+                          ? null
+                          : () {
+                              router.push(
+                                '/web_cards',
+                                extra: {
+                                  "collectionName": context
+                                      .read<WebListBloc>()
+                                      .state
+                                      .collectionsList![i]
+                                      .collectionName,
+                                  "collectionId": context
+                                      .read<WebListBloc>()
+                                      .state
+                                      .collectionsList![i]
+                                      .id,
+                                },
+                              );
+                            },
                       contentPadding:
                           const EdgeInsets.only(left: 28, right: 33),
                       title: Text(
-                        context.read<ListsBloc>().state.collectionsList![i].collectionName,
+                        context
+                            .read<WebListBloc>()
+                            .state
+                            .collectionsList![i]
+                            .collectionName,
                         style: AppTheme.themeData.textTheme.titleMedium!
                             .copyWith(fontSize: 18),
                       ),
                       subtitle: Text(
 
-                        '${context.read<ListsBloc>().state.collectionsList![i].cards?.toString() ?? 0} ${AppStrings.cards.toLowerCase()}',
+                        '${context.read<WebListBloc>().state.collectionsList![i].cards ?? 0} ${AppStrings.cards.toLowerCase()}',
 
                         style:
                             AppTheme.themeData.textTheme.labelSmall!.copyWith(
-                          color: AppColors.mainAccent,
+                          color: Colors.black,
                         ),
                       ),
-                      trailing: const FaIcon(
-                        FontAwesomeIcons.chevronRight,
-                        color: AppColors.mainAccent,
-                        size: 18,
-                      ),
+                      trailing: context.watch<WebListBloc>().state.isEdit
+                          ? AppIconButton(
+                              onTap: () {
+                                buildShowDialog(context,
+                                    collectionId: context
+                                        .read<WebListBloc>()
+                                        .state
+                                        .collectionsList![i]
+                                        .id, collectionName: context
+                                      .read<WebListBloc>()
+                                      .state
+                                      .collectionsList![i]
+                                      .collectionName,);
+                              },
+                              svgIcon: AppIcons.pen,
+                              color: AppColors.mainAccent,
+                              height: 24,
+                              width: 24,
+                            )
+                          : const FaIcon(
+                              FontAwesomeIcons.chevronRight,
+                              color: AppColors.mainAccent,
+                              size: 18,
+                            ),
                     ),
                   ),
                 ),
               ]),
             );
           },
-          itemCount: context.read<ListsBloc>().state.collectionsList!.length),
+          itemCount: context.read<WebListBloc>().state.collectionsList!.length),
     );
+  }
+
+  buildShowDialog(
+    BuildContext context, {
+    required String collectionId,
+    required String collectionName,
+  }) {
+    return showDialog(
+        context: context,
+        builder: (_) {
+          return Dialog(
+            shape: const RoundedRectangleBorder(
+                borderRadius: BorderRadius.all(Radius.circular(15.0))),
+            surfaceTintColor: Colors.white,
+            backgroundColor: Colors.white,
+            child: SizedBox(
+              height: MediaQuery.of(context).size.height / 3.7,
+              width: MediaQuery.of(context).size.width / 3.6,
+              child: Padding(
+                padding: const EdgeInsets.only(
+                    left: 12, top: 12, right: 12, bottom: 12),
+                child: Column(
+                  children: [
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        InkWell(
+                          onTap: () {
+                            router.pop(context);
+                          },
+                          child: const FaIcon(
+                            FontAwesomeIcons.chevronLeft,
+                            size: 12,
+                            color: AppColors.mainAccent,
+                          ),
+                        ),
+                        Expanded(
+                          child: Align(
+                            alignment: Alignment.center,
+                            child: Text(
+                              'Edit Collection',
+                              style: AppTheme.themeData.textTheme.titleMedium!
+                                  .copyWith(fontSize: 18),
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
+                    Text(AppStrings.giveName,
+                        style: AppTheme.themeData.textTheme.labelSmall!
+                            .copyWith(color: AppColors.mainAccent)),
+                    const SizedBox(
+                      height: 22,
+                    ),
+                    SizedBox(
+                      height: 45,
+                      child: TextField(
+                        textAlign: TextAlign.start,
+                        textAlignVertical: TextAlignVertical.top,
+                        style: AppTheme.themeData.textTheme.labelMedium!
+                            .copyWith(
+                                color: AppColors.mainAccent,
+                                fontWeight: FontWeight.w700),
+                        controller: nameTextEditingController..text = collectionName,
+                        decoration: const InputDecoration(
+                            filled: true,
+                            focusColor: AppColors.mainAccent,
+                            border: OutlineInputBorder(
+                                borderRadius:
+                                    BorderRadius.all(Radius.circular(15)))),
+                      ),
+                    ),
+                    const SizedBox(
+                      height: 16,
+                    ),
+                    TextButton(
+                      child: Text(AppStrings.done,
+                          style: AppTheme.themeData.textTheme.labelMedium!
+                              .copyWith(color: AppColors.mainAccent)),
+                      onPressed: () {
+                        if (nameTextEditingController.text.isNotEmpty) {
+                          context.read<WebListBloc>().add(
+                              WebListEvent.updateCollection(
+                                  name: nameTextEditingController.text,
+                                  collectionId: collectionId));
+                          nameTextEditingController.clear();
+                          router.pop();
+                        }
+                      },
+                    )
+                  ],
+                ),
+              ),
+            ),
+          );
+        });
   }
 }

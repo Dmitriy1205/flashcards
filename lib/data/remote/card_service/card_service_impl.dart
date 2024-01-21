@@ -52,7 +52,7 @@ class CardServiceImpl extends CardService {
   @override
   Future<void> deleteCards(
       {required String collectionId,
-      required List<String> cardsToDelete}) async {
+        required List<String> cardsToDelete}) async {
     try {
       final cards = _fireStore
           .collection(FirestoreCollections.users)
@@ -130,17 +130,20 @@ class CardServiceImpl extends CardService {
   @override
   Future<List<CardEntity>> fetchCards({required String collectionId}) async {
     try {
-      final cards = await _fireStore
+      print('collectionId $collectionId');
+      final collections = await _fireStore
           .collection(FirestoreCollections.users)
           .doc(_firebaseAuth.currentUser!.uid)
           .collection(FirestoreCollections.collections)
           .doc(collectionId)
           .collection(FirestoreCollections.cards)
           .get();
+
       List<CardEntity> cardsList =
           cards.docs.map((card) => CardEntity.fromJson(card.data())).toList();
       cardsList.sort((a, b) => b.createdAt.compareTo(a.createdAt));
       return cardsList;
+
     } catch (e) {
       throw Exception("Exception fetchCards $e");
     }

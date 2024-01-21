@@ -1,9 +1,14 @@
+import 'dart:convert';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flashcards/core/const/firebase_collections.dart';
 import 'package:flashcards/data/remote/collection_service/collection_service_contract.dart';
+import 'package:flashcards/data/remote/empty.dart';
 import 'package:flashcards/domain/entities/collection_entity/collection_entity.dart';
+
+import '../../../domain/entities/card_entity/card_entity.dart';
 
 class CollectionServiceImpl extends CollectionServiceContract {
   CollectionServiceImpl(
@@ -20,6 +25,8 @@ class CollectionServiceImpl extends CollectionServiceContract {
 
   @override
   Future<void> createCollection({required String collectionName}) async {
+    print("createCollection $collectionName");
+
     final doc = _fireStore
         .collection(FirestoreCollections.users)
         .doc(_firebaseAuth.currentUser!.uid)
@@ -35,6 +42,7 @@ class CollectionServiceImpl extends CollectionServiceContract {
   @override
   Future<void> deleteCollections(
       {required List<String> collectionsListToDelete}) async {
+    print('collectionsListToDelete ${collectionsListToDelete.length}');
     try {
       final collections = _fireStore
           .collection(FirestoreCollections.users)
@@ -51,34 +59,41 @@ class CollectionServiceImpl extends CollectionServiceContract {
   @override
   Future<List<CollectionEntity>> fetchCollections() async {
     try {
-      final collections = await _fireStore
-          .collection(FirestoreCollections.users)
-          .doc(_firebaseAuth.currentUser!.uid)
-          .collection(FirestoreCollections.collections)
+      final collectionDocs = await _fireStore
+          .collection("${FirestoreCollections.users}/${_firebaseAuth.currentUser!.uid}/${FirestoreCollections.collections}")
           .get();
-      List<CollectionEntity> collectionList = collections.docs
-          .map((collection) => CollectionEntity.fromJson(collection.data()))
-          .toList();
+
+      List<CollectionEntity> collectionList = await Future.wait(collectionDocs.docs.map((collectionDoc) async {
+        final collectionData = collectionDoc.data();
+        var collectionEntity = CollectionEntity.fromJson(collectionData);
+
+        final cardsSnapshot = await collectionDoc.reference.collection('cards').get();
+        final cardList = cardsSnapshot.docs.map((card) => CardEntity.fromJson(card.data())).toList();
+
+        return collectionEntity.copyWith(cards: cardList.length);
+      }));
+
       collectionList.sort((a, b) => b.createdAt.compareTo(a.createdAt));
-      for (int i = 0; i < collectionList.length; i++) {
-        final int count = await getCardsCount(collectionList[i].id);
-        collectionList[i] = collectionList[i].copyWith(cards: count);
-      }
       return collectionList;
     } catch (e) {
       throw Exception("Exception fetchCollections $e");
     }
   }
 
-  Future<int> getCardsCount(String collectionId) async {
-    final cards = await _fireStore
-        .collection(FirestoreCollections.users)
-        .doc(_firebaseAuth.currentUser!.uid)
-        .collection(FirestoreCollections.collections)
-        .doc(collectionId)
-        .collection(FirestoreCollections.cards)
-        .get();
-    final int count = cards.size;
-    return count;
+
+
+  @override
+  Future<void> updateCollectionName(
+      {required String id, required String name}) async {
+    try {
+      await _fireStore
+          .collection(FirestoreCollections.users)
+          .doc(_firebaseAuth.currentUser!.uid)
+          .collection(FirestoreCollections.collections)
+          .doc(id)
+          .update({"collectionName": name});
+    } on FirebaseException catch (e) {
+      throw Exception(e.message);
+    }
   }
 }

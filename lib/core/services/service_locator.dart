@@ -12,6 +12,7 @@ import 'package:flashcards/domain/repositories/user_repo/user_repo_impl.dart';
 import 'package:flashcards/presentation/blocs/auth/auth_bloc.dart';
 import 'package:flashcards/presentation/blocs/cards/cards_bloc.dart';
 import 'package:flashcards/presentation/blocs/lists/lists_bloc.dart';
+import 'package:flashcards/presentation/blocs/web_list/web_list_bloc.dart';
 import 'package:get_it/get_it.dart';
 import '../../domain/repositories/auth/auth_repository_contract.dart';
 import '../../domain/repositories/auth/auth_repository_impl.dart';
@@ -66,4 +67,5 @@ Future<void> init() async {
   sl.registerLazySingleton(() => CardsBloc(cardRepo: cardRepoImpl));
 
   sl.registerFactory(() => AppleSigninBloc(auth: sl()));
+  sl.registerLazySingleton(() => WebListBloc(collectionRepo: sl()));
 }

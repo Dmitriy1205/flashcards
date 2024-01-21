@@ -38,6 +38,7 @@ class AppTextField extends StatelessWidget {
       width: width,
       height: height,
       child: TextFormField(
+        obscuringCharacter: '*',
         autovalidateMode:AutovalidateMode.onUserInteraction,
         validator: validator,
         obscureText: obscureText ?? false,
@@ -50,7 +51,7 @@ class AppTextField extends StatelessWidget {
         // },
         maxLines: maxLines ?? 1,
         style:
-        AppTheme.themeData.textTheme.labelSmall!.copyWith(color: AppColors.mainAccent),
+        AppTheme.themeData.textTheme.labelSmall!.copyWith(color: Colors.black),
         decoration: InputDecoration(
           hintStyle: AppTheme.themeData.textTheme.labelSmall,
           hintText: hintText ?? '' ,

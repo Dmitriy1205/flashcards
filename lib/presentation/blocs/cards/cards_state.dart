@@ -17,5 +17,6 @@ class CardsState with _$CardsState {
 
   const factory CardsState.loading() = _Loading;
 
-  const factory CardsState.error() = _Error;
+  const factory CardsState.error({required String error}) = _Error;
+
 }

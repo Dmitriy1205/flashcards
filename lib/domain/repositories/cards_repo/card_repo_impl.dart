@@ -28,7 +28,7 @@ class CardRepoImpl extends CardRepo {
   @override
   Future<void> deleteCards(
       {required String collectionId,
-      required List<String> cardsToDelete}) async {
+        required List<String> cardsToDelete}) async {
     await cardService.deleteCards(
         collectionId: collectionId, cardsToDelete: cardsToDelete);
   }

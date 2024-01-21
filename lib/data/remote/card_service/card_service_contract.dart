@@ -8,7 +8,7 @@ abstract class CardService {
   Future<void> editCard({required EditCardParam cardParam});
 
   Future<void> deleteCards(
-      {required String collectionId, required List<String> cardsToDelete});
+      {required List<String> cardsToDelete, required String collectionId});
 
   Future<void> shareCollection({required  String collectionId,
     required String collectionName});

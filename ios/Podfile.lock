@@ -124,7 +124,10 @@ DEPENDENCIES:
   - google_sign_in_ios (from `.symlinks/plugins/google_sign_in_ios/darwin`)
   - image_picker_ios (from `.symlinks/plugins/image_picker_ios/ios`)
   - path_provider_foundation (from `.symlinks/plugins/path_provider_foundation/darwin`)
+
   - share_plus (from `.symlinks/plugins/share_plus/ios`)
+
+
   - sign_in_with_apple (from `.symlinks/plugins/sign_in_with_apple/ios`)
   - sqflite (from `.symlinks/plugins/sqflite/ios`)
 
@@ -168,8 +171,10 @@ EXTERNAL SOURCES:
     :path: ".symlinks/plugins/image_picker_ios/ios"
   path_provider_foundation:
     :path: ".symlinks/plugins/path_provider_foundation/darwin"
+
   share_plus:
     :path: ".symlinks/plugins/share_plus/ios"
+
   sign_in_with_apple:
     :path: ".symlinks/plugins/sign_in_with_apple/ios"
   sqflite:
@@ -193,12 +198,14 @@ SPEC CHECKSUMS:
   FirebaseCore: 2322423314d92f946219c8791674d2f3345b598f
   FirebaseCoreExtension: 62b201498aa10535801cdf3448c7f4db5e24ed80
   FirebaseCoreInternal: 8eb002e564b533bdcf1ba011f33f2b5c10e2ed4a
-  FirebaseFirestore: 584e3f563142f63d20e9ec9c505370d674d44eba
+  FirebaseFirestore: 4e32f3bf7ed59f574416e46ddfdfac418f42eab6
   FirebaseStorage: 8333c4b183764cdd170d9539a61322b71c23adff
   Flutter: f04841e97a9d0b0a8025694d0796dd46242b2854
   FMDB: 2ce00b547f966261cd18927a3ddb07cb6f3db82a
-  google_sign_in_ios: 1bfaf6607b44cd1b24c4d4bc39719870440f9ce1
-  GoogleSignIn: b232380cf495a429b8095d3178a8d5855b42e842
+
+  google_sign_in_ios: 1256ff9d941db546373826966720b0c24804bcdd
+  GoogleSignIn: 5651ce3a61e56ca864160e79b484cd9ed3f49b7a
+
   GoogleUtilities: 0759d1a57ebb953965c2dfe0ba4c82e95ccc2e34
   GTMAppAuth: 99fb010047ba3973b7026e45393f51f27ab965ae
   GTMSessionFetcher: 3a63d75eecd6aa32c2fc79f578064e1214dfdec2
@@ -213,4 +220,4 @@ SPEC CHECKSUMS:
 
 PODFILE CHECKSUM: 1983eda8900d33713c78d52646dddac2ab80e510
 
-COCOAPODS: 1.14.3
+COCOAPODS: 1.12.1

@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'package:flashcards/domain/entities/card_entity/card_entity.dart';
 import 'package:flashcards/presentation/screens/mobile_screens/home.dart';
 import 'package:flashcards/presentation/screens/mobile_screens/lists_screen/cards/cards.dart';
 import 'package:flashcards/presentation/screens/mobile_screens/lists_screen/cards/create_edit_card.dart';
@@ -31,47 +32,52 @@ final GoRouter router = GoRouter(
   routes: [
     kIsWeb
         ? ShellRoute(
-            builder: (context, state, child) => Scaffold(
-              body: WebMainScreen(
-                child: child,
-              ),
+      builder: (context, state, child) =>
+          Scaffold(
+            body: WebMainScreen(
+              child: child,
             ),
-            routes: [
-              GoRoute(
-                path: '/',
-                pageBuilder: (context, state) => fadeAnimation<void>(
-                  context: context,
-                  state: state,
-                  child: const WebSignInScreen(),
-                ),
-                redirect: (contest, state) {
-                  final st = _bloc.state;
+          ),
+      routes: [
+        GoRoute(
+          path: '/',
+          pageBuilder: (context, state) =>
+              fadeAnimation<void>(
+                context: context,
+                state: state,
+                child: const WebSignInScreen(),
+              ),
+          redirect: (contest, state) {
+            final st = _bloc.state;
 
-                  return st.maybeMap(
-                      authenticated: (_) => '/web_lists',
-                      unauthenticated: (_) => '/',
-                      orElse: () => null);
-                },
+            return st.maybeMap(
+                authenticated: (_) => '/web_lists',
+                unauthenticated: (_) => '/',
+                orElse: () => null);
+          },
+        ),
+        GoRoute(
+          path: '/sign_up',
+          pageBuilder: (context, state) =>
+              fadeAnimation<void>(
+                context: context,
+                state: state,
+                child: const WebSignUpScreen(),
               ),
-              GoRoute(
-                path: '/sign_up',
-                pageBuilder: (context, state) => fadeAnimation<void>(
-                  context: context,
-                  state: state,
-                  child: const WebSignUpScreen(),
-                ),
+        ),
+        GoRoute(
+          path: '/forgot_pass',
+          pageBuilder: (context, state) =>
+              fadeAnimation<void>(
+                context: context,
+                state: state,
+                child: const WebForgotPasswordScreen(),
               ),
-              GoRoute(
-                path: '/forgot_pass',
-                pageBuilder: (context, state) => fadeAnimation<void>(
-                  context: context,
-                  state: state,
-                  child: const WebForgotPasswordScreen(),
-                ),
-              ),
-            ],
-          )
+        ),
+      ],
+    )
         : GoRoute(
+
             path: '/',
             pageBuilder: (c, s) =>
                 const MaterialPage(child: MobileSignInScreen()),
@@ -86,6 +92,7 @@ final GoRouter router = GoRouter(
     GoRoute(
         path: '/mobile_home',
         pageBuilder: (context, state) => fadeAnimation<void>(
+
               context: context,
               state: state,
               child: const HomeMobile(),
@@ -104,27 +111,30 @@ final GoRouter router = GoRouter(
       routes: [
         GoRoute(
           path: '/web_lists',
-          pageBuilder: (context, state) => fadeAnimation<void>(
-            context: context,
-            state: state,
-            child: const WebListsScreen(),
-          ),
+          pageBuilder: (context, state) =>
+              fadeAnimation<void>(
+                context: context,
+                state: state,
+                child: const WebListsScreen(),
+              ),
         ),
         GoRoute(
           path: '/web_learn',
-          pageBuilder: (context, state) => fadeAnimation<void>(
-            context: context,
-            state: state,
-            child: const WebLearnScreen(),
-          ),
+          pageBuilder: (context, state) =>
+              fadeAnimation<void>(
+                context: context,
+                state: state,
+                child: const WebLearnScreen(),
+              ),
         ),
         GoRoute(
           path: '/web_profile',
-          pageBuilder: (context, state) => fadeAnimation<void>(
-            context: context,
-            state: state,
-            child: const WebProfileScreen(),
-          ),
+          pageBuilder: (context, state) =>
+              fadeAnimation<void>(
+                context: context,
+                state: state,
+                child: const WebProfileScreen(),
+              ),
           redirect: (contest, state) {
             final st = _bloc.state;
 
@@ -138,33 +148,41 @@ final GoRouter router = GoRouter(
     ),
     GoRoute(
       path: '/web_cards',
-      pageBuilder: (context, state) => slideAnimation<void>(
-        context: context,
-        state: state,
-        child: WebCards(
-          collectionName:
+      pageBuilder: (context, state) =>
+          slideAnimation<void>(
+            context: context,
+            state: state,
+            child: WebCards(
+              collectionName:
               (state.extra as Map<String, dynamic>?)?["collectionName"],
-          collectionId: (state.extra as Map<String, dynamic>?)?['collectionId'],
-        ),
-      ),
+              collectionId: (state.extra as Map<String,
+                  dynamic>?)?['collectionId'],
+            ),
+          ),
     ),
     GoRoute(
       path: '/create_card',
-      pageBuilder: (context, state) => slideBottomAnimation<void>(
-        context: context,
-        state: state,
-        child: WebCreateCard(),
-      ),
+      pageBuilder: (context, state) =>
+          slideBottomAnimation<void>(
+            context: context,
+            state: state,
+            child: WebCreateCard(collectionId: (state.extra as Map<String,
+                dynamic>?)?['collectionId'],),
+          ),
     ),
     GoRoute(
       path: '/edit_card',
-      pageBuilder: (context, state) => slideBottomAnimation<void>(
-        context: context,
-        state: state,
-        child: WebEditCard(
-          collectionId: state.pathParameters['collectionId']!,
-        ),
-      ),
+      pageBuilder: (context, state) {
+
+        return slideBottomAnimation<void>(
+          context: context,
+          state: state,
+          child: WebEditCard(
+            card: state.extra as CardEntity,
+
+          ),
+        );
+      },
     ),
     GoRoute(path: '/learn', builder: (context, state) => const Learn()),
     GoRoute(path: '/lists', builder: (context, state) => const Lists()),
@@ -302,7 +320,7 @@ class GoRouterRefreshStream extends ChangeNotifier {
     notifyListeners();
     _subscription = stream.asBroadcastStream().listen(
           (event) => notifyListeners(),
-        );
+    );
   }
 
   late final StreamSubscription _subscription;

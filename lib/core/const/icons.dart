@@ -29,7 +29,7 @@ class AppIcons {
   static const String learnThin = 'assets/icons/hat.svg';
   static const String profileThin = 'assets/icons/profile_thin.svg';
   static const String add = 'assets/icons/add.svg';
-  static const String pen = 'assets/icons/pen.svg';
+  static const String pen = 'assets/icons/spen.svg';
   static const String trash = 'assets/icons/trash.svg';
   static const String close = 'assets/icons/close.svg';
   static const String plus = 'assets/icons/plus.svg';
@@ -42,4 +42,7 @@ class AppIcons {
   static const String numerated = 'assets/icons/numareted.svg';
   static const String sorted = 'assets/icons/sorted.svg';
   static const String underscore = 'assets/icons/underscore.svg';
+  static const String miniPlus = 'assets/icons/mini_plus.svg';
+  static const String imageIcon = 'assets/icons/image_icon.svg';
+  static const String editIcon = 'assets/icons/edit_icon.svg';
 }

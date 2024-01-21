@@ -1152,7 +1152,9 @@ mixin _$CardsState {
     required TResult Function(List<CardEntity>? cardsList) loaded,
     required TResult Function() viewIndividualCard,
     required TResult Function() loading,
-    required TResult Function() error,
+
+    required TResult Function(String error) error,
+
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
@@ -1160,7 +1162,9 @@ mixin _$CardsState {
     TResult? Function(List<CardEntity>? cardsList)? loaded,
     TResult? Function()? viewIndividualCard,
     TResult? Function()? loading,
-    TResult? Function()? error,
+
+    TResult? Function(String error)? error,
+
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
@@ -1168,7 +1172,9 @@ mixin _$CardsState {
     TResult Function(List<CardEntity>? cardsList)? loaded,
     TResult Function()? viewIndividualCard,
     TResult Function()? loading,
-    TResult Function()? error,
+
+    TResult Function(String error)? error,
+
     required TResult orElse(),
   }) =>
       throw _privateConstructorUsedError;
@@ -1295,7 +1301,9 @@ class _$LoadedImpl extends _Loaded {
     required TResult Function(List<CardEntity>? cardsList) loaded,
     required TResult Function() viewIndividualCard,
     required TResult Function() loading,
-    required TResult Function() error,
+
+    required TResult Function(String error) error,
+
   }) {
     return loaded(cardsList);
   }
@@ -1306,7 +1314,9 @@ class _$LoadedImpl extends _Loaded {
     TResult? Function(List<CardEntity>? cardsList)? loaded,
     TResult? Function()? viewIndividualCard,
     TResult? Function()? loading,
-    TResult? Function()? error,
+
+    TResult? Function(String error)? error,
+
   }) {
     return loaded?.call(cardsList);
   }
@@ -1317,7 +1327,9 @@ class _$LoadedImpl extends _Loaded {
     TResult Function(List<CardEntity>? cardsList)? loaded,
     TResult Function()? viewIndividualCard,
     TResult Function()? loading,
-    TResult Function()? error,
+
+    TResult Function(String error)? error,
+
     required TResult orElse(),
   }) {
     if (loaded != null) {
@@ -1416,7 +1428,9 @@ class _$ViewIndividualCardImpl extends _ViewIndividualCard {
     required TResult Function(List<CardEntity>? cardsList) loaded,
     required TResult Function() viewIndividualCard,
     required TResult Function() loading,
-    required TResult Function() error,
+
+    required TResult Function(String error) error,
+
   }) {
     return viewIndividualCard();
   }
@@ -1427,7 +1441,9 @@ class _$ViewIndividualCardImpl extends _ViewIndividualCard {
     TResult? Function(List<CardEntity>? cardsList)? loaded,
     TResult? Function()? viewIndividualCard,
     TResult? Function()? loading,
-    TResult? Function()? error,
+
+    TResult? Function(String error)? error,
+
   }) {
     return viewIndividualCard?.call();
   }
@@ -1438,7 +1454,9 @@ class _$ViewIndividualCardImpl extends _ViewIndividualCard {
     TResult Function(List<CardEntity>? cardsList)? loaded,
     TResult Function()? viewIndividualCard,
     TResult Function()? loading,
-    TResult Function()? error,
+
+    TResult Function(String error)? error,
+
     required TResult orElse(),
   }) {
     if (viewIndividualCard != null) {
@@ -1531,7 +1549,9 @@ class _$LoadingImpl extends _Loading {
     required TResult Function(List<CardEntity>? cardsList) loaded,
     required TResult Function() viewIndividualCard,
     required TResult Function() loading,
-    required TResult Function() error,
+
+    required TResult Function(String error) error,
+
   }) {
     return loading();
   }
@@ -1542,7 +1562,9 @@ class _$LoadingImpl extends _Loading {
     TResult? Function(List<CardEntity>? cardsList)? loaded,
     TResult? Function()? viewIndividualCard,
     TResult? Function()? loading,
-    TResult? Function()? error,
+
+    TResult? Function(String error)? error,
+
   }) {
     return loading?.call();
   }
@@ -1553,7 +1575,9 @@ class _$LoadingImpl extends _Loading {
     TResult Function(List<CardEntity>? cardsList)? loaded,
     TResult Function()? viewIndividualCard,
     TResult Function()? loading,
-    TResult Function()? error,
+
+    TResult Function(String error)? error,
+
     required TResult orElse(),
   }) {
     if (loading != null) {
@@ -1610,6 +1634,10 @@ abstract class _$$ErrorImplCopyWith<$Res> {
   factory _$$ErrorImplCopyWith(
           _$ErrorImpl value, $Res Function(_$ErrorImpl) then) =
       __$$ErrorImplCopyWithImpl<$Res>;
+
+  @useResult
+  $Res call({String error});
+
 }
 
 /// @nodoc
@@ -1619,60 +1647,99 @@ class __$$ErrorImplCopyWithImpl<$Res>
   __$$ErrorImplCopyWithImpl(
       _$ErrorImpl _value, $Res Function(_$ErrorImpl) _then)
       : super(_value, _then);
+
+
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? error = null,
+  }) {
+    return _then(_$ErrorImpl(
+      error: null == error
+          ? _value.error
+          : error // ignore: cast_nullable_to_non_nullable
+              as String,
+    ));
+  }
+
 }
 
 /// @nodoc
 
 class _$ErrorImpl extends _Error {
-  const _$ErrorImpl() : super._();
+
+  const _$ErrorImpl({required this.error}) : super._();
+
+  @override
+  final String error;
 
   @override
   String toString() {
-    return 'CardsState.error()';
+    return 'CardsState.error(error: $error)';
+
   }
 
   @override
   bool operator ==(Object other) {
     return identical(this, other) ||
-        (other.runtimeType == runtimeType && other is _$ErrorImpl);
+
+        (other.runtimeType == runtimeType &&
+            other is _$ErrorImpl &&
+            (identical(other.error, error) || other.error == error));
   }
 
   @override
-  int get hashCode => runtimeType.hashCode;
+  int get hashCode => Object.hash(runtimeType, error);
+
+  @JsonKey(ignore: true)
+  @override
+  @pragma('vm:prefer-inline')
+  _$$ErrorImplCopyWith<_$ErrorImpl> get copyWith =>
+      __$$ErrorImplCopyWithImpl<_$ErrorImpl>(this, _$identity);
+
 
   @override
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
+
     required TResult Function(List<CardEntity>? cardsList) loaded,
+
     required TResult Function() viewIndividualCard,
     required TResult Function() loading,
-    required TResult Function() error,
+    required TResult Function(String error) error,
   }) {
-    return error();
+    return error(this.error);
+
   }
 
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
+
     TResult? Function(List<CardEntity>? cardsList)? loaded,
+    
     TResult? Function()? viewIndividualCard,
     TResult? Function()? loading,
-    TResult? Function()? error,
+    TResult? Function(String error)? error,
   }) {
-    return error?.call();
+    return error?.call(this.error);
+
   }
 
   @override
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
+
     TResult Function(List<CardEntity>? cardsList)? loaded,
+
     TResult Function()? viewIndividualCard,
     TResult Function()? loading,
-    TResult Function()? error,
+    TResult Function(String error)? error,
     required TResult orElse(),
   }) {
     if (error != null) {
-      return error();
+      return error(this.error);
+
     }
     return orElse();
   }
@@ -1680,7 +1747,9 @@ class _$ErrorImpl extends _Error {
   @override
   @optionalTypeArgs
   TResult map<TResult extends Object?>({
+
     required TResult Function(_Loaded value) loaded,
+
     required TResult Function(_ViewIndividualCard value) viewIndividualCard,
     required TResult Function(_Loading value) loading,
     required TResult Function(_Error value) error,
@@ -1691,7 +1760,9 @@ class _$ErrorImpl extends _Error {
   @override
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
+
     TResult? Function(_Loaded value)? loaded,
+
     TResult? Function(_ViewIndividualCard value)? viewIndividualCard,
     TResult? Function(_Loading value)? loading,
     TResult? Function(_Error value)? error,
@@ -1702,7 +1773,9 @@ class _$ErrorImpl extends _Error {
   @override
   @optionalTypeArgs
   TResult maybeMap<TResult extends Object?>({
+
     TResult Function(_Loaded value)? loaded,
+
     TResult Function(_ViewIndividualCard value)? viewIndividualCard,
     TResult Function(_Loading value)? loading,
     TResult Function(_Error value)? error,
@@ -1716,6 +1789,13 @@ class _$ErrorImpl extends _Error {
 }
 
 abstract class _Error extends CardsState {
-  const factory _Error() = _$ErrorImpl;
+
+  const factory _Error({required final String error}) = _$ErrorImpl;
   const _Error._() : super._();
+
+  String get error;
+  @JsonKey(ignore: true)
+  _$$ErrorImplCopyWith<_$ErrorImpl> get copyWith =>
+      throw _privateConstructorUsedError;
+
 }

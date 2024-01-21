@@ -13,6 +13,7 @@ class Profile extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+
     return Padding(
       padding: const EdgeInsets.only(top: 20.0),
       child: Column(
@@ -105,6 +106,7 @@ class Profile extends StatelessWidget {
         ],
       ),
     );
+
 
   }
 }
