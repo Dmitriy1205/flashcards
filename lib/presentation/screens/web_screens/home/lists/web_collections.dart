@@ -135,7 +135,7 @@ class _WebCollectionsState extends State<WebCollections> {
                             .copyWith(fontSize: 18),
                       ),
                       subtitle: Text(
-                        '${context.read<WebListBloc>().state.collectionsList![i].cards?.length ?? 0} ${AppStrings.cards.toLowerCase()}',
+                        '${context.read<WebListBloc>().state.collectionsList![i].cards ?? 0} ${AppStrings.cards.toLowerCase()}',
                         style:
                             AppTheme.themeData.textTheme.labelSmall!.copyWith(
                           color: Colors.black,

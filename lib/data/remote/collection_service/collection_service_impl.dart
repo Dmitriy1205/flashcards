@@ -70,7 +70,7 @@ class CollectionServiceImpl extends CollectionServiceContract {
         final cardsSnapshot = await collectionDoc.reference.collection('cards').get();
         final cardList = cardsSnapshot.docs.map((card) => CardEntity.fromJson(card.data())).toList();
 
-        return collectionEntity.copyWith(cards: cardList);
+        return collectionEntity.copyWith(cards: cardList.length);
       }));
 
       collectionList.sort((a, b) => b.createdAt.compareTo(a.createdAt));
