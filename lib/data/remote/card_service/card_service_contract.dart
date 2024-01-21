@@ -7,7 +7,8 @@ abstract class CardServiceContract {
 
   Future<void> editCard({required EditCardParam cardParam});
 
-  Future<void> deleteCards({required List<String> cardsToDelete});
+  Future<void> deleteCards(
+      {required List<String> cardsToDelete, required String collectionId});
 
   Future<List<CardEntity>> fetchCards({required String collectionId});
 }

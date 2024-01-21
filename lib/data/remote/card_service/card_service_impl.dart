@@ -39,15 +39,42 @@ class CardServiceImpl extends CardServiceContract {
   }
 
   @override
-  Future<void> deleteCards({required List<String> cardsToDelete}) {
-    // TODO: implement deleteCards
-    throw UnimplementedError();
+  Future<void> deleteCards(
+      {required String collectionId,
+        required List<String> cardsToDelete}) async {
+    try {
+      final cards = _fireStore
+          .collection(FirestoreCollections.users)
+          .doc(_firebaseAuth.currentUser!.uid)
+          .collection(FirestoreCollections.collections)
+          .doc(collectionId)
+          .collection(FirestoreCollections.cards);
+
+      for (int i = 0; i < cardsToDelete.length; i++) {
+        await cards.doc(cardsToDelete[i]).delete();
+      }
+    } catch (e) {
+      throw Exception("Exception deleteCards $e");
+    }
   }
 
   @override
-  Future<void> editCard({required EditCardParam cardParam}) {
-    // TODO: implement editCard
-    throw UnimplementedError();
+  Future<void> editCard({required EditCardParam cardParam}) async {
+    try {
+      final cards = _fireStore
+          .collection(FirestoreCollections.users)
+          .doc(_firebaseAuth.currentUser!.uid)
+          .collection(FirestoreCollections.collections)
+          .doc(cardParam.collectionId)
+          .collection(FirestoreCollections.cards);
+
+      await cards.doc(cardParam.id).update({
+        'back': cardParam.back,
+        'front': cardParam.front,
+      });
+    } catch (e) {
+      throw Exception("Exception deleteCards $e");
+    }
   }
 
   @override

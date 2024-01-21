@@ -8,6 +8,8 @@ import 'package:flashcards/data/remote/collection_service/collection_service_con
 import 'package:flashcards/data/remote/empty.dart';
 import 'package:flashcards/domain/entities/collection_entity/collection_entity.dart';
 
+import '../../../domain/entities/card_entity/card_entity.dart';
+
 class CollectionServiceImpl extends CollectionServiceContract {
   CollectionServiceImpl(
       {required FirebaseFirestore fireStore,
@@ -57,18 +59,41 @@ class CollectionServiceImpl extends CollectionServiceContract {
   @override
   Future<List<CollectionEntity>> fetchCollections() async {
     try {
-      final collections = await _fireStore
-          .collection(FirestoreCollections.users)
-          .doc(_firebaseAuth.currentUser!.uid)
-          .collection(FirestoreCollections.collections)
+      final collectionDocs = await _fireStore
+          .collection("${FirestoreCollections.users}/${_firebaseAuth.currentUser!.uid}/${FirestoreCollections.collections}")
           .get();
-      List<CollectionEntity> collectionList = collections.docs
-          .map((collection) => CollectionEntity.fromJson(collection.data()))
-          .toList();
+
+      List<CollectionEntity> collectionList = await Future.wait(collectionDocs.docs.map((collectionDoc) async {
+        final collectionData = collectionDoc.data();
+        var collectionEntity = CollectionEntity.fromJson(collectionData);
+
+        final cardsSnapshot = await collectionDoc.reference.collection('cards').get();
+        final cardList = cardsSnapshot.docs.map((card) => CardEntity.fromJson(card.data())).toList();
+
+        return collectionEntity.copyWith(cards: cardList);
+      }));
+
       collectionList.sort((a, b) => b.createdAt.compareTo(a.createdAt));
       return collectionList;
     } catch (e) {
       throw Exception("Exception fetchCollections $e");
+    }
+  }
+
+
+
+  @override
+  Future<void> updateCollectionName(
+      {required String id, required String name}) async {
+    try {
+      await _fireStore
+          .collection(FirestoreCollections.users)
+          .doc(_firebaseAuth.currentUser!.uid)
+          .collection(FirestoreCollections.collections)
+          .doc(id)
+          .update({"collectionName": name});
+    } on FirebaseException catch (e) {
+      throw Exception(e.message);
     }
   }
 }

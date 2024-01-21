@@ -7,4 +7,5 @@ abstract class CollectionServiceContract {
       {required List<String> collectionsListToDelete});
 
   Future<void> fetchCollections();
+  Future<void> updateCollectionName({required String id,required String name});
 }

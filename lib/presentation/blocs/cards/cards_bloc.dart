@@ -33,10 +33,14 @@ class CardsBloc extends Bloc<CardsEvent, CardsState> {
       );
 
   Future<void> _initCard(_InitCard event, Emitter<CardsState> emit) async {
-    final cardsList =
-        await cardRepo.fetchCards(collectionId: event.collectionId);
-    emit(const CardsState.loading());
-    emit(CardsState.initial(cardsList: cardsList));
+    try {
+      final cardsList =
+          await cardRepo.fetchCards(collectionId: event.collectionId);
+
+      emit(CardsState.initial(cardsList: cardsList));
+    } on Exception catch (e) {
+      emit(CardsState.error(error: e.toString()));
+    }
   }
 
   Future<void> _createNewCard(
@@ -49,19 +53,21 @@ class CardsBloc extends Bloc<CardsEvent, CardsState> {
   }
 
   Future<void> _editCard(_EditCard event, Emitter<CardsState> emit) async {
-    cardRepo.deleteCards(cardsToDelete: []);
-    final cardsList =
-        await cardRepo.fetchCards(collectionId: event.collectionId);
     emit(const CardsState.loading());
+    cardRepo.editCard(cardParam: event.cardParam);
+    final cardsList =
+    await cardRepo.fetchCards(collectionId: event.collectionId);
+
     emit(CardsState.initial(cardsList: cardsList));
   }
 
   Future<void> _deleteSelectedCards(
       _DeleteSelectedCards event, Emitter<CardsState> emit) async {
     emit(const CardsState.loading());
-    await cardRepo.deleteCards(cardsToDelete: event.cardsIdToDelete);
+    await cardRepo.deleteCards(
+        cardsToDelete: event.cardsIdToDelete, collectionId: event.collectionId);
     final cardsList =
-        await cardRepo.fetchCards(collectionId: event.collectionId);
+    await cardRepo.fetchCards(collectionId: event.collectionId);
     emit(CardsState.initial(cardsList: cardsList));
   }
 }

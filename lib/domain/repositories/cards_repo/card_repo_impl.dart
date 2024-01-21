@@ -15,15 +15,16 @@ class CardRepoImpl extends CardRepoContract {
   }
 
   @override
-  Future<void> editCard({required EditCardParam cardParam}) {
-    // TODO: implement editCard
-    throw UnimplementedError();
+  Future<void> editCard({required EditCardParam cardParam}) async {
+    await cardService.editCard(cardParam: cardParam);
   }
 
   @override
-  Future<void> deleteCards({required List<String> cardsToDelete}) {
-    // TODO: implement deleteCards
-    throw UnimplementedError();
+  Future<void> deleteCards(
+      {required String collectionId,
+        required List<String> cardsToDelete}) async {
+    await cardService.deleteCards(
+        collectionId: collectionId, cardsToDelete: cardsToDelete);
   }
 
   @override

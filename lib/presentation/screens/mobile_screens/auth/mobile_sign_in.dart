@@ -1,5 +1,6 @@
 import 'dart:io';
 
+import 'package:flashcards/core/const/images.dart';
 import 'package:flashcards/core/validator/field_validator.dart';
 import 'package:flashcards/presentation/screens/mobile_screens/auth/mobile_forgot_password.dart';
 import 'package:flashcards/presentation/widgets/app_text_field.dart';
@@ -18,7 +19,6 @@ import '../../../../core/services/service_locator.dart';
 import '../../../../core/themes/theme.dart';
 import '../../../blocs/sign_in/signin_bloc.dart';
 import '../../../widgets/app_elevated_button.dart';
-import '../lists_screen/lists_screen.dart';
 import 'mobile_sign_up.dart';
 
 class MobileSignInScreen extends StatefulWidget {
@@ -66,12 +66,16 @@ class _MobileSignInScreenState extends State<MobileSignInScreen> {
               body: SingleChildScrollView(
                 child: Padding(
                   padding: const EdgeInsets.only(
-                      top: 110.0, left: 24, right: 24),
+                      left: 24, right: 24),
                   child: Form(
                     key: _formKey,
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
+                        Padding(
+                          padding: const EdgeInsets.symmetric(vertical: 52.0),
+                          child: Image.asset(AppImages.logo,scale: 1.5,),
+                        ),
                         Text(
                           AppStrings.login,
                           style: AppTheme.themeData.textTheme.headlineLarge,

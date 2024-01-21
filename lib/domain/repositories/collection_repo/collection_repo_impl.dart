@@ -14,13 +14,20 @@ class CollectionRepoImpl extends CollectionRepoContract {
   }
 
   @override
-  Future<void> deleteCollections(
-      {required List<String> collections}) async {
-    await collectionServiceImpl.deleteCollections(collectionsListToDelete: collections);
+  Future<void> deleteCollections({required List<String> collections}) async {
+    await collectionServiceImpl.deleteCollections(
+        collectionsListToDelete: collections);
   }
 
   @override
   Future<List<CollectionEntity>> fetchCollections() async {
     return await collectionServiceImpl.fetchCollections();
+  }
+
+  @override
+  Future<void> updateExistingCollection(
+      {required String collectionId, required String name}) async {
+    await collectionServiceImpl.updateCollectionName(
+        id: collectionId, name: name);
   }
 }

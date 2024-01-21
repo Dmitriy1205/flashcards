@@ -12,4 +12,5 @@ class CardsState with _$CardsState {
   const factory CardsState.initial({required List<CardEntity>? cardsList}) = _Initial;
   const factory CardsState.viewIndividualCard() = _ViewIndividualCard;
   const factory CardsState.loading() = _Loading;
+  const factory CardsState.error({required String error}) = _Error;
 }

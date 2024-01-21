@@ -23,9 +23,14 @@ class AuthRepositoryImpl implements AuthRepository {
     try {
       await _auth.signInWithEmailAndPassword(email: email, password: password);
     } on FirebaseAuthException catch (e) {
+      print(e);
+      if(e.code == 'invalid-credential'){
+        throw BadRequestException(
+            message: 'email or password is wrong', attribute: 'password');
+      }
       if (e.message!.contains('INVALID_LOGIN_CREDENTIALS')) {
         throw BadRequestException(
-            message: 'EMAIL OR PASSWORD IS WRONG', attribute: 'password');
+            message: 'email or password is wrong', attribute: 'password');
       }
     }
   }
@@ -93,11 +98,11 @@ class AuthRepositoryImpl implements AuthRepository {
       if (e.code == 'weak-password') {
         throw BadRequestException(
             message:
-                'The password provided is too weak.\nmust be more than 8 digits',
+                'The password provided is too weak.\nmust be more than 6 digits',
             attribute: 'password');
       } else if (e.code == 'email-already-in-use') {
         throw BadRequestException(
-            message: 'THE ACCOUNT ALREADY EXISTS FOR THAT EMAIL',
+            message: 'The account already exists for that email',
             attribute: 'email');
       }
     } catch (e) {

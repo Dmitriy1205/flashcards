@@ -6,4 +6,6 @@ abstract class CollectionRepoContract {
   Future<List<CollectionEntity>> fetchCollections();
 
   Future<void> deleteCollections({required List<String> collections});
+
+  Future<void> updateExistingCollection({required String collectionId,required String name});
 }
