@@ -22,6 +22,7 @@ CardEntity _$CardEntityFromJson(Map<String, dynamic> json) {
 mixin _$CardEntity {
   String get id => throw _privateConstructorUsedError;
   String get collectionId => throw _privateConstructorUsedError;
+  String get collectionName => throw _privateConstructorUsedError;
   String get front => throw _privateConstructorUsedError;
   String get back => throw _privateConstructorUsedError;
   @JsonKey(fromJson: FirebaseTimestampConverters.fromTimestamp)
@@ -46,6 +47,7 @@ abstract class $CardEntityCopyWith<$Res> {
   $Res call(
       {String id,
       String collectionId,
+      String collectionName,
       String front,
       String back,
       @JsonKey(fromJson: FirebaseTimestampConverters.fromTimestamp)
@@ -71,6 +73,7 @@ class _$CardEntityCopyWithImpl<$Res, $Val extends CardEntity>
   $Res call({
     Object? id = null,
     Object? collectionId = null,
+    Object? collectionName = null,
     Object? front = null,
     Object? back = null,
     Object? createdAt = null,
@@ -87,6 +90,10 @@ class _$CardEntityCopyWithImpl<$Res, $Val extends CardEntity>
       collectionId: null == collectionId
           ? _value.collectionId
           : collectionId // ignore: cast_nullable_to_non_nullable
+              as String,
+      collectionName: null == collectionName
+          ? _value.collectionName
+          : collectionName // ignore: cast_nullable_to_non_nullable
               as String,
       front: null == front
           ? _value.front
@@ -131,6 +138,7 @@ abstract class _$$CardEntityImplCopyWith<$Res>
   $Res call(
       {String id,
       String collectionId,
+      String collectionName,
       String front,
       String back,
       @JsonKey(fromJson: FirebaseTimestampConverters.fromTimestamp)
@@ -154,6 +162,7 @@ class __$$CardEntityImplCopyWithImpl<$Res>
   $Res call({
     Object? id = null,
     Object? collectionId = null,
+    Object? collectionName = null,
     Object? front = null,
     Object? back = null,
     Object? createdAt = null,
@@ -170,6 +179,10 @@ class __$$CardEntityImplCopyWithImpl<$Res>
       collectionId: null == collectionId
           ? _value.collectionId
           : collectionId // ignore: cast_nullable_to_non_nullable
+              as String,
+      collectionName: null == collectionName
+          ? _value.collectionName
+          : collectionName // ignore: cast_nullable_to_non_nullable
               as String,
       front: null == front
           ? _value.front
@@ -209,6 +222,7 @@ class _$CardEntityImpl implements _CardEntity {
   _$CardEntityImpl(
       {required this.id,
       required this.collectionId,
+      required this.collectionName,
       required this.front,
       required this.back,
       @JsonKey(fromJson: FirebaseTimestampConverters.fromTimestamp)
@@ -228,6 +242,8 @@ class _$CardEntityImpl implements _CardEntity {
   final String id;
   @override
   final String collectionId;
+  @override
+  final String collectionName;
   @override
   final String front;
   @override
@@ -269,7 +285,7 @@ class _$CardEntityImpl implements _CardEntity {
 
   @override
   String toString() {
-    return 'CardEntity(id: $id, collectionId: $collectionId, front: $front, back: $back, createdAt: $createdAt, sharedFrom: $sharedFrom, shareWithId: $shareWithId, frontImages: $frontImages, backImages: $backImages)';
+    return 'CardEntity(id: $id, collectionId: $collectionId, collectionName: $collectionName, front: $front, back: $back, createdAt: $createdAt, sharedFrom: $sharedFrom, shareWithId: $shareWithId, frontImages: $frontImages, backImages: $backImages)';
   }
 
   @override
@@ -280,6 +296,8 @@ class _$CardEntityImpl implements _CardEntity {
             (identical(other.id, id) || other.id == id) &&
             (identical(other.collectionId, collectionId) ||
                 other.collectionId == collectionId) &&
+            (identical(other.collectionName, collectionName) ||
+                other.collectionName == collectionName) &&
             (identical(other.front, front) || other.front == front) &&
             (identical(other.back, back) || other.back == back) &&
             (identical(other.createdAt, createdAt) ||
@@ -300,6 +318,7 @@ class _$CardEntityImpl implements _CardEntity {
       runtimeType,
       id,
       collectionId,
+      collectionName,
       front,
       back,
       createdAt,
@@ -326,6 +345,7 @@ abstract class _CardEntity implements CardEntity {
   factory _CardEntity(
       {required final String id,
       required final String collectionId,
+      required final String collectionName,
       required final String front,
       required final String back,
       @JsonKey(fromJson: FirebaseTimestampConverters.fromTimestamp)
@@ -342,6 +362,8 @@ abstract class _CardEntity implements CardEntity {
   String get id;
   @override
   String get collectionId;
+  @override
+  String get collectionName;
   @override
   String get front;
   @override

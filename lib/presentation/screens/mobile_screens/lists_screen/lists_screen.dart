@@ -1,8 +1,8 @@
 import 'package:flashcards/core/const/strings.dart';
+import 'package:flashcards/core/router/router.dart';
 import 'package:flashcards/presentation/blocs/lists/lists_bloc.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'cards/cards.dart';
 import 'collections.dart';
 
 class Lists extends StatefulWidget {
@@ -23,15 +23,23 @@ class _ListsState extends State<Lists> {
       listener: (context, state) {
         state.maybeMap(
           viewCards: (selectedCollection) {
-            Navigator.push(
-              context,
-              MaterialPageRoute(
-                builder: (context) => Cards(
-                  collectionId: selectedCollection.collection.id,
-                  collectionName: selectedCollection.collection.collectionName,
-                ),
-              ),
+            router.push(
+              '/cards',
+              extra: {
+                "collectionName": selectedCollection.collection.collectionName,
+                "collectionId": selectedCollection.collection.id,
+              },
             );
+
+            // Navigator.push(
+            //   context,
+            //   MaterialPageRoute(
+            //     builder: (context) => Cards(
+            //       collectionId: selectedCollection.collection.id,
+            //       collectionName: selectedCollection.collection.collectionName,
+            //     ),
+            //   ),
+            // );
           },
           orElse: () {
             print('Error in lists bloclistener');

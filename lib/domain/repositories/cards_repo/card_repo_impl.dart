@@ -4,10 +4,10 @@ import 'package:flashcards/domain/params/card_param/create_card_param.dart';
 import 'package:flashcards/domain/params/card_param/edit_card_param.dart';
 import 'package:flashcards/domain/repositories/cards_repo/card_repo_contract.dart';
 
-class CardRepoImpl extends CardRepoContract {
+class CardRepoImpl extends CardRepo {
   CardRepoImpl({required this.cardService});
 
-  CardServiceContract cardService;
+  CardService cardService;
 
   @override
   Future<void> createCard({required CreateCardParam cardParam}) async {
@@ -17,6 +17,12 @@ class CardRepoImpl extends CardRepoContract {
   @override
   Future<void> editCard({required EditCardParam cardParam}) async {
     await cardService.editCard(cardParam: cardParam);
+  }
+
+  @override
+  Future<void> shareCollection({required  String collectionId,
+    required String collectionName}) async {
+    await cardService.shareCollection(collectionId: collectionId, collectionName: collectionName);
   }
 
   @override

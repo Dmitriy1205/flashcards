@@ -54,7 +54,7 @@ Future<void> init() async {
   sl.registerSingleton<AuthRepository>(authRepository);
   sl.registerSingleton<UserRepoContract>(userRepoImpl);
   sl.registerSingleton<CollectionRepoContract>(collectionRepoImpl);
-  sl.registerSingleton<CardRepoContract>(cardRepoImpl);
+  sl.registerSingleton<CardRepo>(cardRepoImpl);
 
   ///Blocs
   sl.registerLazySingleton(() => AuthBloc(authRepository: sl()));

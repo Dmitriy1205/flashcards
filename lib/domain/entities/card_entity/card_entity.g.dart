@@ -10,6 +10,7 @@ _$CardEntityImpl _$$CardEntityImplFromJson(Map<String, dynamic> json) =>
     _$CardEntityImpl(
       id: json['id'] as String,
       collectionId: json['collectionId'] as String,
+      collectionName: json['collectionName'] as String,
       front: json['front'] as String,
       back: json['back'] as String,
       createdAt: FirebaseTimestampConverters.fromTimestamp(json['createdAt']),
@@ -29,6 +30,7 @@ Map<String, dynamic> _$$CardEntityImplToJson(_$CardEntityImpl instance) =>
     <String, dynamic>{
       'id': instance.id,
       'collectionId': instance.collectionId,
+      'collectionName': instance.collectionName,
       'front': instance.front,
       'back': instance.back,
       'createdAt': instance.createdAt.toIso8601String(),

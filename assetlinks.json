@@ -1,0 +1,10 @@
+
+[{
+  "relation": ["delegate_permission/common.handle_all_urls"],
+  "target": {
+    "namespace": "flashcards",
+    "package_name": "com.pandascode.flashcards",
+    "sha256_cert_fingerprints":
+    ["D7:8D:01:4A:74:76:70:41:09:AF:67:BB:2C:99:1A:8A:B8:0A:58:34:70:CE:B8:13:F6:CB:B7:2D:80:A5:81:05"]
+  }
+}]
