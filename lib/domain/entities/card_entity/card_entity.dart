@@ -21,6 +21,21 @@ class CardEntity with _$CardEntity {
     final List<String>? backImages,
   }) = _CardEntity;
 
-  factory CardEntity.fromJson(Map<String, dynamic> json) =>
-      _$CardEntityFromJson(json);
+  factory CardEntity.fromJson(Map<String, dynamic> json) {
+    return CardEntity(
+      id: json['id'] as String? ?? '',
+      collectionId: json['collectionId'] as String? ?? '',
+      collectionName: json['collectionName'] as String? ?? '',
+      front: json['front'] as String? ?? '',
+      back: json['back'] as String? ?? '',
+      createdAt: json['createdAt'] != null
+          ? FirebaseTimestampConverters.fromTimestamp(json['createdAt'])
+          : DateTime.now(),
+      sharedFrom: json['sharedFrom'] as String?,  // Allow null value
+      shareWithId: (json['shareWithId'] as List<dynamic>?)?.cast<String>(),  // Allow null value
+      frontImages: (json['frontImages'] as List<dynamic>?)?.cast<String>(),  // Allow null value
+      backImages: (json['backImages'] as List<dynamic>?)?.cast<String>(),  // Allow null value
+    );
+  }
+
 }

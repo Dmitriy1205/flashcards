@@ -11,7 +11,7 @@ class CollectionEntity with _$CollectionEntity {
   factory CollectionEntity({
     required String id,
     required String collectionName,
-    int? cards,
+    List<CardEntity>? cards,
     @JsonKey(
         fromJson: FirebaseTimestampConverters.fromTimestamp)
     required DateTime createdAt,

@@ -1,7 +1,6 @@
 import 'package:flashcards/core/const/colors.dart';
 import 'package:flashcards/core/const/strings.dart';
 import 'package:flashcards/core/themes/theme.dart';
-import 'package:flashcards/domain/entities/collection_entity/collection_entity.dart';
 import 'package:flashcards/presentation/blocs/web_list/web_list_bloc.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -136,7 +135,7 @@ class _WebCollectionsState extends State<WebCollections> {
                       ),
                       subtitle: Text(
 
-                        '${context.read<WebListBloc>().state.collectionsList![i].cards ?? 0} ${AppStrings.cards.toLowerCase()}',
+                        '${context.read<WebListBloc>().state.collectionsList![i].cards?.length ?? 0} ${AppStrings.cards.toLowerCase()}',
 
                         style:
                             AppTheme.themeData.textTheme.labelSmall!.copyWith(

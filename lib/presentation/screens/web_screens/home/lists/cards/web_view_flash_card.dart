@@ -37,7 +37,7 @@ class _WebViewFlashCardState extends State<WebViewFlashCard> {
         collectionId: widget.card.collectionId,
         front: widget.card.front,
         back: widget.card.back,
-        createdAt: widget.card.createdAt);
+        createdAt: widget.card.createdAt, collectionName: widget.card.collectionName);
     super.initState();
   }
 

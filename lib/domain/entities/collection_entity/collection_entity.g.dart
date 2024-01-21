@@ -11,7 +11,9 @@ _$CollectionEntityImpl _$$CollectionEntityImplFromJson(
     _$CollectionEntityImpl(
       id: json['id'] as String,
       collectionName: json['collectionName'] as String,
-      cards: json['cards'] as int?,
+      cards: (json['cards'] as List<dynamic>?)
+          ?.map((e) => CardEntity.fromJson(e as Map<String, dynamic>))
+          .toList(),
       createdAt: FirebaseTimestampConverters.fromTimestamp(json['createdAt']),
     );
 

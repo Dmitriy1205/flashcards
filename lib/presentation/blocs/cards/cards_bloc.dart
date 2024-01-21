@@ -46,7 +46,7 @@ class CardsBloc extends Bloc<CardsEvent, CardsState> {
           await cardRepo.fetchCards(collectionId: event.collectionId);
       emit(CardsState.loaded(cardsList: cardsList));
     } catch (e) {
-      emit(const CardsState.error());
+      emit(CardsState.error(error: e.toString()));
     }
   }
 
@@ -56,7 +56,7 @@ class CardsBloc extends Bloc<CardsEvent, CardsState> {
           collectionId: event.collectionId,
           collectionName: event.collectionName);
     } catch (e) {
-      emit(const CardsState.error());
+      emit( CardsState.error(error: e.toString()));
 
     }
   }
@@ -70,7 +70,7 @@ class CardsBloc extends Bloc<CardsEvent, CardsState> {
           await cardRepo.fetchCards(collectionId: event.collectionId);
       emit(CardsState.loaded(cardsList: cardsList));
     } catch (e) {
-      emit(const CardsState.error());
+      emit( CardsState.error(error: e.toString()));
     }
   }
 
@@ -83,7 +83,7 @@ class CardsBloc extends Bloc<CardsEvent, CardsState> {
           await cardRepo.fetchCards(collectionId: event.collectionId);
       emit(CardsState.loaded(cardsList: cardsList));
     } catch (e) {
-      emit(const CardsState.error());
+      emit( CardsState.error(error: e.toString()));
     }
 
   }
@@ -100,7 +100,7 @@ class CardsBloc extends Bloc<CardsEvent, CardsState> {
           await cardRepo.fetchCards(collectionId: event.collectionId);
       emit(CardsState.loaded(cardsList: cardsList));
     } catch (e) {
-      emit(const CardsState.error());
+      emit(CardsState.error(error: e.toString()));
     }
 
   }
