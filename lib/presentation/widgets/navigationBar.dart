@@ -46,7 +46,7 @@ class _CustomNavigationBarState extends State<CustomNavigationBar> {
                         ),
                     ),
                     Container(
-                      margin: EdgeInsets.only(left: 22, right: 22),
+                      margin: const EdgeInsets.only(left: 22, right: 22),
                       child: SvgPicture.asset(
                         pageIndex == 1 ? AppIcons.selectedHat : AppIcons.hat,
                         height: 27.5,
@@ -54,7 +54,7 @@ class _CustomNavigationBarState extends State<CustomNavigationBar> {
                       ),
                     ),
                     Container(
-                      margin: EdgeInsets.only(left: 22, right: 33),
+                      margin: const EdgeInsets.only(left: 22, right: 33),
                       child: SvgPicture.asset(
                         pageIndex == 2
                             ? AppIcons.selectedProfile
