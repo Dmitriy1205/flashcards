@@ -6,12 +6,13 @@
 	<true/>
 	<key>CFBundleURLTypes</key>
 	<array>
-		<string>https://flashcards-5984c.web.app/collection_share</string>
+
 		<dict>
 			<key>CFBundleTypeRole</key>
 			<string>Editor</string>
 			<key>CFBundleURLSchemes</key>
 			<array>
+			    <string>https://flashcards-5984c.web.app/collection_share</string>
 				<string>com.googleusercontent.apps.393510478049-0a6ajnahhrp200orlg169r85dsfefdj2</string>
 			</array>
 		</dict>

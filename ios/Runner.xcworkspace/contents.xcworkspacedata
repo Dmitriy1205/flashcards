@@ -2,9 +2,6 @@
 <Workspace
    version = "1.0">
    <FileRef
-      location = "group:apple-app-site-association">
-   </FileRef>
-   <FileRef
       location = "group:Runner.xcodeproj">
    </FileRef>
    <FileRef

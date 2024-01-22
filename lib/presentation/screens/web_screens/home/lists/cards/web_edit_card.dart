@@ -5,13 +5,15 @@ import 'package:flashcards/core/themes/theme.dart';
 import 'package:flashcards/domain/entities/card_entity/card_entity.dart';
 import 'package:flashcards/presentation/widgets/app_elevated_button.dart';
 import 'package:flashcards/presentation/widgets/app_icon_button.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_colorpicker/flutter_colorpicker.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'package:markdown_toolbar/markdown_toolbar.dart';
+import 'package:html_editor_enhanced/html_editor.dart';
+import 'package:quill_html_editor/quill_html_editor.dart';
 
 import '../../../../../../core/enum/enum.dart';
 import '../../../../../../core/router/router.dart';
@@ -32,6 +34,27 @@ class WebEditCard extends StatefulWidget {
 }
 
 class _WebEditCardState extends State<WebEditCard> {
+  late QuillEditorController controller;
+  bool _hasFocus = false;
+
+  void unFocusEditor() => controller.unFocus();
+  final customToolBarList = [
+
+
+  ];
+
+  final _toolbarColor = Colors.grey.shade200;
+  final _backgroundColor = Colors.white70;
+
+  final _editorTextStyle = const TextStyle(
+      fontSize: 18,
+      color: Colors.black,
+      fontWeight: FontWeight.normal,
+      fontFamily: 'Roboto');
+  final _hintTextStyle = const TextStyle(
+      fontSize: 18, color: Colors.black38, fontWeight: FontWeight.normal);
+
+
   final TextEditingController frontTextEditingController =
       TextEditingController();
 
@@ -42,12 +65,20 @@ class _WebEditCardState extends State<WebEditCard> {
   TextFormat currentTextFormat = TextFormat.normal;
   ParagraphFormat currentParagraphFormat = ParagraphFormat.normal;
 
+
   @override
   void initState() {
-    super.initState();
 
+    controller = QuillEditorController();
+    controller.onTextChanged((text) {
+      debugPrint('listening to $text');
+    });
+    controller.onEditorLoaded(() {
+      debugPrint('Editor Loaded :)');
+    });
     frontTextEditingController.text = widget.card.front;
     backTextEditingController.text = widget.card.back;
+    super.initState();
   }
 
   @override
@@ -92,6 +123,60 @@ class _WebEditCardState extends State<WebEditCard> {
                     borderRadius: BorderRadius.circular(10)),
                 child: Column(
                   children: [
+
+                    // ToolBar(
+                    //   toolBarColor: _toolbarColor,
+                    //   padding: const EdgeInsets.all(8),
+                    //   iconSize: 25,
+                    //   iconColor: Colors.black,
+                    //   activeIconColor: Colors.greenAccent.shade400,
+                    //   controller: controller,
+                    //   crossAxisAlignment: WrapCrossAlignment.start,
+                    //   direction: Axis.horizontal,
+                    //   toolBarConfig: const [
+                    //     ToolBarStyle.bold,
+                    //     ToolBarStyle.italic,
+                    //     ToolBarStyle.underline,
+                    //     ToolBarStyle.listOrdered,
+                    //     ToolBarStyle.listBullet,
+                    //   ],
+                    // ),
+                    // QuillHtmlEditor(text: "<h1>Hello</h1>This is a quill html editor example 😊",
+                    //   hintText: 'Hint text goes here',
+                    //   controller: controller,
+                    //   isEnabled: true,
+                    //   ensureVisible: false,
+                    //   minHeight: 100,
+                    //   autoFocus: false,
+                    //   textStyle: _editorTextStyle,
+                    //   hintTextStyle: _hintTextStyle,
+                    //   hintTextAlign: TextAlign.start,
+                    //   padding: const EdgeInsets.only(left: 10, top: 10),
+                    //   hintTextPadding: const EdgeInsets.only(left: 20),
+                    //   backgroundColor: _backgroundColor,
+                    //   inputAction: InputAction.newline,
+                    //   onEditingComplete: (s) => debugPrint('Editing completed $s'),
+                    //   loadingBuilder: (context) {
+                    //     return const Center(
+                    //         child: CircularProgressIndicator(
+                    //           strokeWidth: 1,
+                    //           color: Colors.red,
+                    //         ));
+                    //   },
+                    //   onFocusChanged: (focus) {
+                    //     debugPrint('has focus $focus');
+                    //     setState(() {
+                    //       _hasFocus = focus;
+                    //     });
+                    //   },
+                    //   onTextChanged: (text) => debugPrint('widget text change $text'),
+                    //   onEditorCreated: () {
+                    //     debugPrint('Editor has been loaded');
+                    //   },
+                    //   onEditorResized: (height) =>
+                    //       debugPrint('Editor resized $height'),
+                    //   onSelectionChanged: (sel) =>
+                    //       debugPrint('index ${sel.index}, range ${sel.length}'),),
                     buildInputField(
                         header: AppStrings.front,
                         controller: frontTextEditingController,
