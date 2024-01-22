@@ -36,31 +36,38 @@ class _HomeMobileState extends State<HomeMobile> {
         automaticallyImplyLeading: false,
         title: Column(
           children: [
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              mainAxisSize: MainAxisSize.max,
-              children: [
-                Text(
-                  pageNames[_selectedPage],
-                  style: AppTheme.themeData.textTheme.headlineLarge,
-                ),
-                _selectedPage == 0
-                    ? GestureDetector(
-                        onTap: () {
-                          context.read<ListsBloc>().listIdToDelete.clear();
-                          context.read<ListsBloc>().add(ListsEvent.started(
-                              isEditMode:
-                                  !context.read<ListsBloc>().isEditMode));
-                        },
-                        child: Text(
-                          context.watch<ListsBloc>().isEditMode
-                              ? AppStrings.cancel
-                              : AppStrings.edit,
-                          style: AppTheme.themeData.textTheme.titleLarge,
-                        ),
-                      )
-                    : SizedBox(),
-              ],
+            Padding(
+              padding: const EdgeInsets.only(left: 12),
+              child: Row(
+                mainAxisSize: MainAxisSize.max,
+                children: [
+                  Text(
+                    pageNames[_selectedPage],
+                    style: AppTheme.themeData.textTheme.headlineLarge,
+                  ),
+                  Spacer(),
+                  _selectedPage == 0
+                      ? GestureDetector(
+                          onTap: () {
+                            context.read<ListsBloc>().listIdToDelete.clear();
+                            context.read<ListsBloc>().add(ListsEvent.started(
+                                isEditMode:
+                                    !context.read<ListsBloc>().isEditMode));
+                          },
+                          child: Container(
+                            color: Colors.transparent,
+                            padding: EdgeInsets.symmetric(horizontal: 12, vertical: 10),
+                            child: Text(
+                              context.watch<ListsBloc>().isEditMode
+                                  ? AppStrings.cancel
+                                  : AppStrings.edit,
+                              style: AppTheme.themeData.textTheme.titleLarge?.copyWith(fontSize: 20),
+                            ),
+                          ),
+                        )
+                      : SizedBox(),
+                ],
+              ),
             ),
           ],
         ),

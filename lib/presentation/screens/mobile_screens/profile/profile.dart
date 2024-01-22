@@ -26,44 +26,51 @@ class Profile extends StatelessWidget {
               decoration: BoxDecoration(
                   color: Colors.white),
               child: Padding(
-                padding: const EdgeInsets.only(left: 34.0, right: 44),
+                padding: const EdgeInsets.only(left: 27, right: 25),
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    Row(
-                      children: [
-                        // context.read<AuthBloc>().state.user?.photoURL == null ?
-                        Container(
-                          width: 54,
-                          height: 54,
-                          decoration: BoxDecoration(
-                            color: Colors.grey,
-                            borderRadius: BorderRadius.circular(50),
-                          ),
-                          child: Center(child: SvgPicture.asset(AppIcons.profileThin),),
+                    Expanded(
+                      child: Row(
+                        children: [
+                          // context.read<AuthBloc>().state.user?.photoURL == null ?
+                          Container(
+                            width: 54,
+                            height: 54,
+                            decoration: BoxDecoration(
+                              color: Color(0xFFD9D9D9),
+                              borderRadius: BorderRadius.circular(50),
+                            ),
+                            child: Center(child: SvgPicture.asset(AppIcons.profileThin),),
 
-                        ),
-                        const SizedBox(width: 33,),
-                        Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            Text(
-                              'Account',
-                              style: AppTheme.themeData.textTheme.titleLarge!.copyWith(fontSize: 18),
+                          ),
+                          const SizedBox(width: 23,),
+                          Expanded(
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                Text(
+                                  'Account',
+                                  style: AppTheme.themeData.textTheme.titleLarge!.copyWith(fontSize: 18),
+                                ),
+                                Text(
+                                  context.read<AuthBloc>().state.user!.email!,
+                                  overflow: TextOverflow.ellipsis,
+                                  style: AppTheme.themeData.textTheme.titleSmall!.copyWith(color: AppColors.mainAccent, fontWeight: FontWeight.w400),
+                                ),
+                              ],
                             ),
-                            Text(
-                              context.read<AuthBloc>().state.user!.email!,
-                              style: AppTheme.themeData.textTheme.titleSmall!.copyWith(color: AppColors.mainAccent),
-                            ),
-                          ],
-                        )
-                      ],
+                          )
+                        ],
+                      ),
                     ),
+                    const SizedBox(width: 23,),
                     SizedBox(
-                        width: 98,
+                        width: 81,
                         child: AppElevatedButton(
                             text: 'Log out',
+                            shadowColor: Colors.transparent,
                             color: Colors.white,
                             borderColor: AppColors.mainAccent,
                             borderRadius: 33,
@@ -81,7 +88,7 @@ class Profile extends StatelessWidget {
             height: 38,
           ),
           Padding(
-            padding: const EdgeInsets.only(left: 27, right: 33),
+            padding: const EdgeInsets.only(left: 27, right: 38),
             child: Column(
               children: [
                 Row(

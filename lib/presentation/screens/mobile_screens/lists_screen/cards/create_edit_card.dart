@@ -46,100 +46,102 @@ class _CreateEditCardState extends State<CreateEditCard> {
       backgroundColor: AppColors.background,
       appBar: AppBar(
         automaticallyImplyLeading: false,
-        title: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          mainAxisSize: MainAxisSize.max,
-          children: [
-            Row(children: [
-              GestureDetector(
-                onTap: () {
+        title: GestureDetector(
+          onTap: (){
+            Navigator.of(context).pop();
+          },
+          child: Container(
+            color: Colors.transparent,
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              mainAxisSize: MainAxisSize.max,
+              children: [
+                Row(children: [
+                  SvgPicture.asset(
+                    AppIcons.leftArrow,
+                    color: Colors.black,
+                    height: 21,
+                    width: 19,
+                  ),
+                  const SizedBox(
+                    width: 19,
+                  ),
+                  Text(
+                    widget.cardEntity == null
+                        ? '${AppStrings.create} ${AppStrings.card.toLowerCase()}'
+                        : '${AppStrings.edit} ${AppStrings.card.toLowerCase()}',
+                    style: AppTheme.themeData.textTheme.headlineLarge,
+                  ),
+                ]),
+                TextButton(
+                  onPressed: () {
+                    if (frontTextEditingController.text.isNotEmpty &&
+                        backTextEditingController.text.isNotEmpty) {
+                      if (widget.cardEntity == null) {
+                        CreateCardParam card = CreateCardParam(
+                            front: frontTextEditingController.text,
+                            back: backTextEditingController.text,
+                            collectionId: widget.collectionId);
+                        Navigator.pop(context);
 
-                  // router.pushReplacement('view_card_mobile',);
-                  Navigator.of(context).pop();
-                },
-                child: SvgPicture.asset(
-                  AppIcons.leftArrow,
-                  height: 21,
-                  width: 19,
-                ),
-              ),
-              const SizedBox(
-                width: 19,
-              ),
-              Text(
-                widget.cardEntity == null
-                    ? '${AppStrings.create} ${AppStrings.card.toLowerCase()}'
-                    : '${AppStrings.edit} ${AppStrings.card.toLowerCase()}',
-                style: AppTheme.themeData.textTheme.titleLarge,
-              ),
-            ]),
-            TextButton(
-              onPressed: () {
-                if (frontTextEditingController.text.isNotEmpty &&
-                    backTextEditingController.text.isNotEmpty) {
-                  if (widget.cardEntity == null) {
-                    CreateCardParam card = CreateCardParam(
-                        front: frontTextEditingController.text,
-                        back: backTextEditingController.text,
-                        collectionId: widget.collectionId);
-                    Navigator.pop(context);
+                        context.read<CardsBloc>().add(CardsEvent.createNewCard(
+                            cardParam: card, collectionId: widget.collectionId));
+                        context
+                            .read<ListsBloc>()
+                            .add(const ListsEvent.started(isEditMode: false));
+                      } else {
+                        EditCardParam card = EditCardParam(
+                            front: frontTextEditingController.text,
+                            back: backTextEditingController.text,
+                            collectionId: widget.collectionId,
+                            id: widget.cardEntity!.id);
 
-                    context.read<CardsBloc>().add(CardsEvent.createNewCard(
-                        cardParam: card, collectionId: widget.collectionId));
-                    context
-                        .read<ListsBloc>()
-                        .add(const ListsEvent.started(isEditMode: false));
-                  } else {
-                    EditCardParam card = EditCardParam(
-                        front: frontTextEditingController.text,
-                        back: backTextEditingController.text,
-                        collectionId: widget.collectionId,
-                        id: widget.cardEntity!.id);
+                        router.push(
+                          '/view_card_mobile',
+                          extra: {
+                            "card": widget.cardEntity!.copyWith(
+                              front: frontTextEditingController.text,
+                              back: backTextEditingController.text,
+                            ),
+                            "collectionId": widget.collectionId,
+                          },
+                        );
 
-                    router.push(
-                      '/view_card_mobile',
-                      extra: {
-                        "card": widget.cardEntity!.copyWith(
-                          front: frontTextEditingController.text,
-                          back: backTextEditingController.text,
-                        ),
-                        "collectionId": widget.collectionId,
-                      },
-                    );
-
-
-                    // Navigator.pushReplacement(
-                    //     context,
-                    //     MaterialPageRoute(
-                    //         builder: (context) => ViewFlashCard(
-                    card:
-                    // widget.cardEntity!.copyWith(
-                    //     front: frontTextEditingController.text,
-                    //     back: backTextEditingController.text,
-                    //                   ),
-                        //               collectionId: widget.collectionId,
-                        //             )));
 
                         // Navigator.pushReplacement(
                         //     context,
                         //     MaterialPageRoute(
                         //         builder: (context) => ViewFlashCard(
-                        //               card: widget.cardEntity!,
-                        //               collectionId: widget.collectionId,
-                        //             )));
-                        context.read<CardsBloc>().add(CardsEvent.editCard(
-                        cardParam: card, collectionId: widget.collectionId));
-                  }
-                }
-              },
-              child: Text(
-                AppStrings.done,
-                style: AppTheme.themeData.textTheme.titleLarge!.copyWith(
-                  fontSize: 20,
+                        card:
+                        // widget.cardEntity!.copyWith(
+                        //     front: frontTextEditingController.text,
+                        //     back: backTextEditingController.text,
+                        //                   ),
+                            //               collectionId: widget.collectionId,
+                            //             )));
+
+                            // Navigator.pushReplacement(
+                            //     context,
+                            //     MaterialPageRoute(
+                            //         builder: (context) => ViewFlashCard(
+                            //               card: widget.cardEntity!,
+                            //               collectionId: widget.collectionId,
+                            //             )));
+                            context.read<CardsBloc>().add(CardsEvent.editCard(
+                            cardParam: card, collectionId: widget.collectionId));
+                      }
+                    }
+                  },
+                  child: Text(
+                    AppStrings.done,
+                    style: AppTheme.themeData.textTheme.titleLarge!.copyWith(
+                      fontSize: 20,
+                    ),
+                  ),
                 ),
-              ),
+              ],
             ),
-          ],
+          ),
         ),
       ),
       body: SingleChildScrollView(

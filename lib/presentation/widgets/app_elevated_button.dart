@@ -12,6 +12,7 @@ class AppElevatedButton extends StatelessWidget {
   final double? borderRadius;
   final Widget? widget;
   final Color? color;
+  final Color? shadowColor;
   final Color? borderColor;
 
   const AppElevatedButton({
@@ -23,7 +24,7 @@ class AppElevatedButton extends StatelessWidget {
     this.showPrefix = false,
     this.borderRadius,
     this.widget,
-    this.color, this.borderColor,
+    this.color, this.borderColor, this.shadowColor,
   });
 
   @override
@@ -34,6 +35,8 @@ class AppElevatedButton extends StatelessWidget {
       child: ElevatedButton(
         onPressed: onPressed,
         style: ElevatedButton.styleFrom(
+          shadowColor: shadowColor,
+          padding: EdgeInsets.zero,
           surfaceTintColor: Colors.white,
           foregroundColor: Colors.white,
           backgroundColor: color ?? AppColors.mainAccent,

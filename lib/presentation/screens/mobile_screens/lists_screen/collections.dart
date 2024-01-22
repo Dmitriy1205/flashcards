@@ -17,112 +17,106 @@ class Collections extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      children: [
-        Expanded(
-          child: Container(
-            color: AppColors.background,
-            child: ListView.builder(
-                itemBuilder: (context, i) {
-                  return Padding(
-                    padding: const EdgeInsets.only(
-                        left: 24, right: 24, bottom: 11, top: 11),
-                    child: Row(children: [
-                      isEditMode
-                          ? Flexible(
-                              flex: 1,
-                              child: InkWell(
-                                onTap: () {
-                                  if (context
-                                      .read<ListsBloc>()
-                                      .listIdToDelete
-                                      .contains(collectionsList[i].id)) {
-                                    context
-                                        .read<ListsBloc>()
-                                        .listIdToDelete
-                                        .remove(collectionsList[i].id);
-                                  } else {
-                                    context
-                                        .read<ListsBloc>()
-                                        .listIdToDelete
-                                        .add(collectionsList[i].id);
-                                  }
-                                  context
-                                      .read<ListsBloc>()
-                                      .add(ListsEvent.started(
-                                        isEditMode: isEditMode,
-                                      ));
-                                },
-                                child: Container(
-                                  decoration: const BoxDecoration(
-                                    shape: BoxShape.circle,
-                                  ),
-                                  child: Padding(
-                                    padding: const EdgeInsets.all(10.0),
-                                    child: context
-                                            .read<ListsBloc>()
-                                            .listIdToDelete
-                                            .contains(collectionsList[i].id)
-                                        ? const Icon(
-                                            Icons.check_circle,
-                                            size: 23.0,
-                                            color: AppColors.mainAccent,
-                                          )
-                                        : const Icon(
-                                            Icons.radio_button_unchecked,
-                                            size: 23.0,
-                                            color: AppColors.mainAccent,
-                                          ),
-                                  ),
-                                ),
-                              ),
-                            )
-                          : const SizedBox(),
-                      SizedBox(
-                        width: isEditMode ? 22 : 0,
-                      ),
-                      Flexible(
-                        flex: 8,
-                        child: Container(
-                          decoration: const BoxDecoration(
-                              color: Colors.white,
-                              borderRadius:
-                                  BorderRadius.all(Radius.circular(10))),
-                          child: ListTile(
-                            onTap: () {
+    return Container(
+      color: AppColors.background,
+      child: ListView.builder(
+          itemBuilder: (context, i) {
+            return Padding(
+              padding: const EdgeInsets.only(
+                  left: 24, right: 24, bottom: 11, top: 11),
+              child: Row(children: [
+                isEditMode
+                    ? Flexible(
+                        flex: 1,
+                        child: InkWell(
+                          onTap: () {
+                            if (context
+                                .read<ListsBloc>()
+                                .listIdToDelete
+                                .contains(collectionsList[i].id)) {
                               context
                                   .read<ListsBloc>()
-                                  .add(ListsEvent.selectCollection(
-                                    collection: collectionsList[i],
-                                  ));
-                            },
-                            title: Text(
-                              collectionsList[i].collectionName,
-                              style: AppTheme.themeData.textTheme.titleMedium!
-                                  .copyWith(fontSize: 18),
+                                  .listIdToDelete
+                                  .remove(collectionsList[i].id);
+                            } else {
+                              context
+                                  .read<ListsBloc>()
+                                  .listIdToDelete
+                                  .add(collectionsList[i].id);
+                            }
+                            context
+                                .read<ListsBloc>()
+                                .add(ListsEvent.started(
+                                  isEditMode: isEditMode,
+                                ));
+                          },
+                          child: Container(
+                            decoration: const BoxDecoration(
+                              shape: BoxShape.circle,
                             ),
-                            subtitle: Text(
-                              '${collectionsList[i].cards?.length ?? 0} ${AppStrings.cards.toLowerCase()}',
-                              style: AppTheme.themeData.textTheme.labelSmall!
-                                  .copyWith(
-                                color: AppColors.mainAccent,
-                              ),
-                            ),
-                            trailing: SvgPicture.asset(
-                              AppIcons.rightArrow,
-                              height: 18,
-                              width: 9,
+                            child: Padding(
+                              padding: const EdgeInsets.all(10.0),
+                              child: context
+                                      .read<ListsBloc>()
+                                      .listIdToDelete
+                                      .contains(collectionsList[i].id)
+                                  ? const Icon(
+                                      Icons.check_circle,
+                                      size: 23.0,
+                                      color: AppColors.mainAccent,
+                                    )
+                                  : const Icon(
+                                      Icons.radio_button_unchecked,
+                                      size: 23.0,
+                                      color: AppColors.mainAccent,
+                                    ),
                             ),
                           ),
                         ),
+                      )
+                    : const SizedBox(),
+                SizedBox(
+                  width: isEditMode ? 22 : 0,
+                ),
+                Flexible(
+                  flex: 8,
+                  child: Container(
+                    decoration: const BoxDecoration(
+                        color: Colors.white,
+                        borderRadius:
+                            BorderRadius.all(Radius.circular(10))),
+                    child: ListTile(
+                      onTap: () {
+                        context
+                            .read<ListsBloc>()
+                            .add(ListsEvent.selectCollection(
+                              collection: collectionsList[i],
+                            ));
+                      },
+                      title: Text(
+                        collectionsList[i].collectionName,
+                        style: AppTheme.themeData.textTheme.titleMedium!
+                            .copyWith(fontSize: 18),
                       ),
-                    ]),
-                  );
-                },
-                itemCount: collectionsList.length),
-          ),
-        ),
-      ],
+                      subtitle: Text(
+                        '${collectionsList[i].cards?.length ?? 0} ${AppStrings.cards.toLowerCase()}',
+                        style: AppTheme.themeData.textTheme.labelSmall!
+                            .copyWith(
+                          color: Colors.black,
+                        ),
+                      ),
+                      trailing: SvgPicture.asset(
+                        isEditMode ? AppIcons.pen : AppIcons.rightArrow,
+                        height: 18,
+                        width: 9,
+                      ),
+                    ),
+                  ),
+                ),
+              ]),
+            );
+          },
+          itemCount: collectionsList.length),
     );
   }
 }
