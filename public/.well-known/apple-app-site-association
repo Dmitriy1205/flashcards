@@ -5,9 +5,8 @@
     ],
     "details":[
       {
-        "appIDs":[
-          "HRMX97GD4M.com.pandascode.flashcards"
-        ],
+        "appID":
+          "HRMX97GD4M.com.pandascode.flashcards",
         "components":[
           {
             "/":"/login",
@@ -15,7 +14,7 @@
           },
           {
             "/":"/collection_share",
-            "comment":"Matches any URL with a path that starts with /collection_share/."
+            "comment":"Matches any URL with a path that starts with /collection_share."
           }
         ]
       }

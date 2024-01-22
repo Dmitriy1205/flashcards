@@ -82,6 +82,7 @@ final GoRouter router = GoRouter(
             pageBuilder: (c, s) =>
                 const MaterialPage(child: MobileSignInScreen()),
             redirect: (contest, state) {
+
               final st = _bloc.state;
               return st.maybeMap(
                   authenticated: (_) => '/mobile_home',
@@ -201,16 +202,18 @@ final GoRouter router = GoRouter(
     ),
     GoRoute(
       path: '/collection_share',
-
-      pageBuilder: (context, state) => slideAnimation<void>(
-        context: context,
-        state: state,
-        child: Cards(
-          collectionId: state.uri.queryParameters['collectionId']!,
-          collectionName: state.uri.queryParameters['collectionName']!,
-        ),
-      ),
-    ),
+      pageBuilder: (context, state)
+      {
+        print('collection_share collection_share');
+              return slideAnimation<void>(
+                context: context,
+                state: state,
+                child: Cards(
+                  collectionId: state.uri.queryParameters['collectionId']!,
+                  collectionName: state.uri.queryParameters['collectionName']!,
+                ),
+              );
+            }),
 
     GoRoute(
         path: '/view_card_mobile',

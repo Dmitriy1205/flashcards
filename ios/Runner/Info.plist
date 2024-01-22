@@ -2,19 +2,20 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
-
-   <key>CFBundleURLTypes</key>
-   <array>
-   	<dict>
-   		<key>CFBundleTypeRole</key>
-   		<string>Editor</string>
-   		<key>CFBundleURLSchemes</key>
-   		<array>
-   			<string>com.googleusercontent.apps.393510478049-0a6ajnahhrp200orlg169r85dsfefdj2</string>
-   		</array>
-   	</dict>
-   </array>
-
+	<key>FlutterDeepLinkingEnabled</key>
+	<true/>
+	<key>CFBundleURLTypes</key>
+	<array>
+		<string>https://flashcards-5984c.web.app/collection_share</string>
+		<dict>
+			<key>CFBundleTypeRole</key>
+			<string>Editor</string>
+			<key>CFBundleURLSchemes</key>
+			<array>
+				<string>com.googleusercontent.apps.393510478049-0a6ajnahhrp200orlg169r85dsfefdj2</string>
+			</array>
+		</dict>
+	</array>
 	<key>CFBundleDevelopmentRegion</key>
 	<string>$(DEVELOPMENT_LANGUAGE)</string>
 	<key>CFBundleDisplayName</key>
