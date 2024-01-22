@@ -67,7 +67,7 @@ class _WebProfileScreenState extends State<WebProfileScreen> {
                                       width: 54,
                                       height: 54,
                                       decoration: BoxDecoration(
-                                        color: Colors.grey,
+                                        color: Color(0xFFD9D9D9),
                                         borderRadius: BorderRadius.circular(50),
                                       ),
                                       child: Center(
@@ -97,7 +97,7 @@ class _WebProfileScreenState extends State<WebProfileScreen> {
                                       ),
                                     ),
                               const SizedBox(
-                                width: 33,
+                                width: 23,
                               ),
                               Column(
                                 crossAxisAlignment: CrossAxisAlignment.start,
@@ -113,7 +113,7 @@ class _WebProfileScreenState extends State<WebProfileScreen> {
                                     context.read<AuthBloc>().state.user!.email!,
                                     style: AppTheme
                                         .themeData.textTheme.titleSmall!
-                                        .copyWith(color: AppColors.mainAccent),
+                                        .copyWith(color: AppColors.mainAccent, fontWeight: FontWeight.w400),
                                   ),
                                 ],
                               )
@@ -124,6 +124,7 @@ class _WebProfileScreenState extends State<WebProfileScreen> {
                               child: AppElevatedButton(
                                   text: 'Log out',
                                   color: Colors.white,
+                                  shadowColor: Colors.transparent,
                                   borderColor: AppColors.mainAccent,
                                   borderRadius: 33,
                                   style: AppTheme
@@ -196,7 +197,7 @@ class _WebProfileScreenState extends State<WebProfileScreen> {
                                       width: 78,
                                       height: 78,
                                       decoration: BoxDecoration(
-                                        color: Colors.grey,
+                                        color: Color(0xFFD9D9D9),
                                         borderRadius: BorderRadius.circular(50),
                                       ),
                                       child: Center(
@@ -242,7 +243,7 @@ class _WebProfileScreenState extends State<WebProfileScreen> {
                                     context.read<AuthBloc>().state.user!.email!,
                                     style: AppTheme
                                         .themeData.textTheme.titleSmall!
-                                        .copyWith(color: AppColors.mainAccent),
+                                        .copyWith(color: AppColors.mainAccent, fontWeight: FontWeight.w400),
                                   ),
                                 ],
                               )
@@ -252,6 +253,7 @@ class _WebProfileScreenState extends State<WebProfileScreen> {
                               width: 98,
                               child: AppElevatedButton(
                                   text: 'Log out',
+                                  shadowColor: Colors.transparent,
                                   color: Colors.white,
                                   borderColor: AppColors.mainAccent,
                                   borderRadius: 33,

@@ -123,7 +123,7 @@ class _WebCollectionsState extends State<WebCollections> {
                               );
                             },
                       contentPadding:
-                          const EdgeInsets.only(left: 28, right: 33),
+                          const EdgeInsets.only(left: 28, right: 33, bottom: 6, top: 6),
                       title: Text(
                         context
                             .read<WebListBloc>()
@@ -131,7 +131,7 @@ class _WebCollectionsState extends State<WebCollections> {
                             .collectionsList![i]
                             .collectionName,
                         style: AppTheme.themeData.textTheme.titleMedium!
-                            .copyWith(fontSize: 18),
+                            .copyWith(fontSize: 18, fontWeight: FontWeight.w600),
                       ),
                       subtitle: Text(
 
@@ -140,6 +140,7 @@ class _WebCollectionsState extends State<WebCollections> {
                         style:
                             AppTheme.themeData.textTheme.labelSmall!.copyWith(
                           color: Colors.black,
+                              fontSize: 14
                         ),
                       ),
                       trailing: context.watch<WebListBloc>().state.isEdit
@@ -224,7 +225,7 @@ class _WebCollectionsState extends State<WebCollections> {
                     ),
                     Text(AppStrings.giveName,
                         style: AppTheme.themeData.textTheme.labelSmall!
-                            .copyWith(color: AppColors.mainAccent)),
+                            .copyWith(color: Colors.black)),
                     const SizedBox(
                       height: 22,
                     ),
@@ -235,13 +236,22 @@ class _WebCollectionsState extends State<WebCollections> {
                         textAlignVertical: TextAlignVertical.top,
                         style: AppTheme.themeData.textTheme.labelMedium!
                             .copyWith(
-                                color: AppColors.mainAccent,
+                                color: Colors.black,
                                 fontWeight: FontWeight.w700),
                         controller: nameTextEditingController..text = collectionName,
-                        decoration: const InputDecoration(
+                        decoration: InputDecoration(
                             filled: true,
                             focusColor: AppColors.mainAccent,
+                            enabledBorder: OutlineInputBorder(
+                                borderSide: BorderSide(
+                                  color: AppColors.mainAccent.withOpacity(0.15)
+                                ),
+                                borderRadius:
+                                BorderRadius.all(Radius.circular(15))),
                             border: OutlineInputBorder(
+                                borderSide: BorderSide(
+                                    color: AppColors.mainAccent.withOpacity(0.15)
+                                ),
                                 borderRadius:
                                     BorderRadius.all(Radius.circular(15)))),
                       ),

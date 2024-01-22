@@ -36,6 +36,7 @@ class _HomeMobileState extends State<HomeMobile> {
         automaticallyImplyLeading: false,
         title: Column(
           children: [
+
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               mainAxisSize: MainAxisSize.max,
@@ -61,6 +62,7 @@ class _HomeMobileState extends State<HomeMobile> {
                       )
                     : const SizedBox(),
               ],
+
             ),
           ],
         ),

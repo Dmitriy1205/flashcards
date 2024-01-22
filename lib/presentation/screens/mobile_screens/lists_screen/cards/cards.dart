@@ -43,31 +43,35 @@ class _CardsState extends State<Cards> {
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             mainAxisSize: MainAxisSize.max,
             children: [
-              Row(children: [
-                GestureDetector(
-                  onTap: () {
-                    context
-                        .read<ListsBloc>()
-                        .add(const ListsEvent.started(isEditMode: false));
-                    context
-                        .read<CardsBloc>()
-                        .add(const CardsEvent.emptyCardsList());
-                    router.go('/mobile_home');
-                  },
-                  child: SvgPicture.asset(
-                    AppIcons.leftArrow,
-                    height: 21,
-                    width: 19,
-                  ),
+              GestureDetector(
+                onTap: (){
+                  context
+                      .read<ListsBloc>()
+                      .add(const ListsEvent.started(isEditMode: false));
+                  context
+                      .read<CardsBloc>()
+                      .add(const CardsEvent.emptyCardsList());
+                  router.go('/mobile_home');
+                },
+                child: Container(
+                  color: Colors.transparent,
+                  child: Row(children: [
+                    SvgPicture.asset(
+                      AppIcons.leftArrow,
+                      color: Colors.black,
+                      height: 21,
+                      width: 19,
+                    ),
+                    const SizedBox(
+                      width: 19,
+                    ),
+                    Text(
+                      AppStrings.cards,
+                      style: AppTheme.themeData.textTheme.headlineLarge,
+                    ),
+                  ]),
                 ),
-                const SizedBox(
-                  width: 19,
-                ),
-                Text(
-                  AppStrings.cards,
-                  style: AppTheme.themeData.textTheme.headlineLarge,
-                ),
-              ]),
+              ),
               context.read<CardsBloc>().isEditMode
                   ? TextButton(
                       onPressed: () {
@@ -233,13 +237,13 @@ class _CardsState extends State<Cards> {
                           Text(
                             widget.collectionName,
                             style: AppTheme.themeData.textTheme.titleMedium!
-                                .copyWith(fontSize: 18),
+                                .copyWith(fontSize: 18, fontWeight: FontWeight.w600),
                           ),
                           Text(
                             '${data.cardsList!.length} cards',
                             style: AppTheme.themeData.textTheme.labelSmall!
                                 .copyWith(
-                              color: AppColors.mainAccent,
+                              color: Colors.black,
                             ),
                           )
                         ]),
@@ -337,7 +341,7 @@ class _CardsState extends State<Cards> {
                                           card.front,
                                           style: AppTheme
                                               .themeData.textTheme.titleMedium!
-                                              .copyWith(fontSize: 18),
+                                              .copyWith(fontSize: 14),
                                         ),
                                         subtitle: Text(
                                           card.back,
@@ -374,7 +378,7 @@ class _CardsState extends State<Cards> {
       ),
       floatingActionButton: context.watch<CardsBloc>().isEditMode
           ? Padding(
-              padding: const EdgeInsets.only(bottom: 60),
+              padding: const EdgeInsets.only(bottom: 60, right: 20),
               child: GestureDetector(
                 onTap: () {
                   context.read<CardsBloc>().add(CardsEvent.deleteSelectedCards(
@@ -395,7 +399,7 @@ class _CardsState extends State<Cards> {
               ),
             )
           : Padding(
-              padding: const EdgeInsets.only(bottom: 60),
+              padding: const EdgeInsets.only(bottom: 60, right: 20),
               child: GestureDetector(
                 onTap: () {
                   Navigator.push(

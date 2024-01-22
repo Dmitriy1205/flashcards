@@ -235,7 +235,7 @@ class _WebCardsState extends State<WebCards> {
                                     '${state.cardsList!.length} cards',
                                     style: AppTheme.themeData.textTheme.labelSmall!
                                         .copyWith(
-                                      color: AppColors.mainAccent,
+                                      color: Colors.black,
                                     ),
                                   )
                                 ]),
@@ -630,7 +630,7 @@ class _WebCardsState extends State<WebCards> {
                                   '${state.cardsList!.length} cards',
                                   style: AppTheme.themeData.textTheme.labelSmall!
                                       .copyWith(
-                                    color: AppColors.mainAccent,
+                                    color: Colors.black,
                                   ),
                                 )
                               ]),

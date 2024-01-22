@@ -27,13 +27,15 @@ class _CustomTextInputState extends State<CustomTextInput> {
           height: 163,
           decoration: BoxDecoration(
             color: Colors.white,
-            border: Border.all(),
+            border: Border.all(
+              color: AppColors.borderGrey
+            ),
             borderRadius: BorderRadius.all(Radius.circular(15)),
           ),
           child: Column(
             children: [
               Padding(
-                padding: const EdgeInsets.all(8.0),
+                padding: const EdgeInsets.symmetric(horizontal: 19, vertical: 6),
                 child: TextFormField(
                   controller: widget.textEditingController,
                   decoration: const InputDecoration(
@@ -99,7 +101,7 @@ class _CustomTextInputState extends State<CustomTextInput> {
         itemCount: _images.length,
         itemBuilder: (_, index) {
           return Padding(
-            padding: const EdgeInsets.only(left: 4.0),
+            padding: const EdgeInsets.only(left: 16.0),
             child: Stack(
               children: [
                 Positioned(
