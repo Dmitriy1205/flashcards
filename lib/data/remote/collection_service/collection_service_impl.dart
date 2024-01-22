@@ -40,6 +40,24 @@ class CollectionServiceImpl extends CollectionServiceContract {
   }
 
   @override
+  Future<void> editCollection(
+      {required String collectionName, required String collectionId}) async {
+    print(' editCollection collectionId $collectionId');
+    try {
+      final collections = _fireStore
+          .collection(FirestoreCollections.users)
+          .doc(_firebaseAuth.currentUser!.uid)
+          .collection(FirestoreCollections.collections);
+
+      await collections
+          .doc(collectionId)
+          .update({'collectionName': collectionName});
+    } catch (e) {
+      throw Exception("Exception deleteCollections $e");
+    }
+  }
+
+  @override
   Future<void> deleteCollections(
       {required List<String> collectionsListToDelete}) async {
     print('collectionsListToDelete ${collectionsListToDelete.length}');
@@ -60,15 +78,20 @@ class CollectionServiceImpl extends CollectionServiceContract {
   Future<List<CollectionEntity>> fetchCollections() async {
     try {
       final collectionDocs = await _fireStore
-          .collection("${FirestoreCollections.users}/${_firebaseAuth.currentUser!.uid}/${FirestoreCollections.collections}")
+          .collection(
+              "${FirestoreCollections.users}/${_firebaseAuth.currentUser!.uid}/${FirestoreCollections.collections}")
           .get();
 
-      List<CollectionEntity> collectionList = await Future.wait(collectionDocs.docs.map((collectionDoc) async {
+      List<CollectionEntity> collectionList =
+          await Future.wait(collectionDocs.docs.map((collectionDoc) async {
         final collectionData = collectionDoc.data();
         var collectionEntity = CollectionEntity.fromJson(collectionData);
 
-        final cardsSnapshot = await collectionDoc.reference.collection('cards').get();
-        final cardList = cardsSnapshot.docs.map((card) => CardEntity.fromJson(card.data())).toList();
+        final cardsSnapshot =
+            await collectionDoc.reference.collection('cards').get();
+        final cardList = cardsSnapshot.docs
+            .map((card) => CardEntity.fromJson(card.data()))
+            .toList();
 
         return collectionEntity.copyWith(cards: cardList);
       }));
@@ -79,8 +102,6 @@ class CollectionServiceImpl extends CollectionServiceContract {
       throw Exception("Exception fetchCollections $e");
     }
   }
-
-
 
   @override
   Future<void> updateCollectionName(

@@ -23,6 +23,8 @@ class AppStrings {
   static const String collections = 'Collections';
   static const String edit = 'Edit';
   static const String newCollection = 'New Collection';
+  static const String renameCollection = 'Rename collection';
+  static const String renameCollectionSubTitle = 'Give a new name to your collection';
   static const String create = 'Create';
   static const String save = 'Save';
   static const String giveName = 'Give a name to your collection';

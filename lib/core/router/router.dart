@@ -32,57 +32,51 @@ final GoRouter router = GoRouter(
   routes: [
     kIsWeb
         ? ShellRoute(
-      builder: (context, state, child) =>
-          Scaffold(
-            body: WebMainScreen(
-              child: child,
+            builder: (context, state, child) => Scaffold(
+              body: WebMainScreen(
+                child: child,
+              ),
             ),
-          ),
-      routes: [
-        GoRoute(
-          path: '/',
-          pageBuilder: (context, state) =>
-              fadeAnimation<void>(
-                context: context,
-                state: state,
-                child: const WebSignInScreen(),
-              ),
-          redirect: (contest, state) {
-            final st = _bloc.state;
+            routes: [
+              GoRoute(
+                path: '/',
+                pageBuilder: (context, state) => fadeAnimation<void>(
+                  context: context,
+                  state: state,
+                  child: const WebSignInScreen(),
+                ),
+                redirect: (contest, state) {
+                  final st = _bloc.state;
 
-            return st.maybeMap(
-                authenticated: (_) => '/web_lists',
-                unauthenticated: (_) => '/',
-                orElse: () => null);
-          },
-        ),
-        GoRoute(
-          path: '/sign_up',
-          pageBuilder: (context, state) =>
-              fadeAnimation<void>(
-                context: context,
-                state: state,
-                child: const WebSignUpScreen(),
+                  return st.maybeMap(
+                      authenticated: (_) => '/web_lists',
+                      unauthenticated: (_) => '/',
+                      orElse: () => null);
+                },
               ),
-        ),
-        GoRoute(
-          path: '/forgot_pass',
-          pageBuilder: (context, state) =>
-              fadeAnimation<void>(
-                context: context,
-                state: state,
-                child: const WebForgotPasswordScreen(),
+              GoRoute(
+                path: '/sign_up',
+                pageBuilder: (context, state) => fadeAnimation<void>(
+                  context: context,
+                  state: state,
+                  child: const WebSignUpScreen(),
+                ),
               ),
-        ),
-      ],
-    )
+              GoRoute(
+                path: '/forgot_pass',
+                pageBuilder: (context, state) => fadeAnimation<void>(
+                  context: context,
+                  state: state,
+                  child: const WebForgotPasswordScreen(),
+                ),
+              ),
+            ],
+          )
         : GoRoute(
-
             path: '/',
             pageBuilder: (c, s) =>
                 const MaterialPage(child: MobileSignInScreen()),
             redirect: (contest, state) {
-
               final st = _bloc.state;
               return st.maybeMap(
                   authenticated: (_) => '/mobile_home',
@@ -93,7 +87,6 @@ final GoRouter router = GoRouter(
     GoRoute(
         path: '/mobile_home',
         pageBuilder: (context, state) => fadeAnimation<void>(
-
               context: context,
               state: state,
               child: const HomeMobile(),
@@ -112,30 +105,27 @@ final GoRouter router = GoRouter(
       routes: [
         GoRoute(
           path: '/web_lists',
-          pageBuilder: (context, state) =>
-              fadeAnimation<void>(
-                context: context,
-                state: state,
-                child: const WebListsScreen(),
-              ),
+          pageBuilder: (context, state) => fadeAnimation<void>(
+            context: context,
+            state: state,
+            child: const WebListsScreen(),
+          ),
         ),
         GoRoute(
           path: '/web_learn',
-          pageBuilder: (context, state) =>
-              fadeAnimation<void>(
-                context: context,
-                state: state,
-                child: const WebLearnScreen(),
-              ),
+          pageBuilder: (context, state) => fadeAnimation<void>(
+            context: context,
+            state: state,
+            child: const WebLearnScreen(),
+          ),
         ),
         GoRoute(
           path: '/web_profile',
-          pageBuilder: (context, state) =>
-              fadeAnimation<void>(
-                context: context,
-                state: state,
-                child: const WebProfileScreen(),
-              ),
+          pageBuilder: (context, state) => fadeAnimation<void>(
+            context: context,
+            state: state,
+            child: const WebProfileScreen(),
+          ),
           redirect: (contest, state) {
             final st = _bloc.state;
 
@@ -149,38 +139,34 @@ final GoRouter router = GoRouter(
     ),
     GoRoute(
       path: '/web_cards',
-      pageBuilder: (context, state) =>
-          slideAnimation<void>(
-            context: context,
-            state: state,
-            child: WebCards(
-              collectionName:
+      pageBuilder: (context, state) => slideAnimation<void>(
+        context: context,
+        state: state,
+        child: WebCards(
+          collectionName:
               (state.extra as Map<String, dynamic>?)?["collectionName"],
-              collectionId: (state.extra as Map<String,
-                  dynamic>?)?['collectionId'],
-            ),
-          ),
+          collectionId: (state.extra as Map<String, dynamic>?)?['collectionId'],
+        ),
+      ),
     ),
     GoRoute(
       path: '/create_card',
-      pageBuilder: (context, state) =>
-          slideBottomAnimation<void>(
-            context: context,
-            state: state,
-            child: WebCreateCard(collectionId: (state.extra as Map<String,
-                dynamic>?)?['collectionId'],),
-          ),
+      pageBuilder: (context, state) => slideBottomAnimation<void>(
+        context: context,
+        state: state,
+        child: WebCreateCard(
+          collectionId: (state.extra as Map<String, dynamic>?)?['collectionId'],
+        ),
+      ),
     ),
     GoRoute(
       path: '/edit_card',
       pageBuilder: (context, state) {
-
         return slideBottomAnimation<void>(
           context: context,
           state: state,
           child: WebEditCard(
             card: state.extra as CardEntity,
-
           ),
         );
       },
@@ -202,25 +188,21 @@ final GoRouter router = GoRouter(
     ),
     GoRoute(
       path: '/collection_share',
-      pageBuilder: (context, state)
-      {
-        print('collection_share collection_share');
-              return slideAnimation<void>(
-                context: context,
-                state: state,
-                child: Cards(
-                  collectionId: state.uri.queryParameters['collectionId']!,
-                  collectionName: state.uri.queryParameters['collectionName']!,
-                ),
-              );
-            }),
-
+      pageBuilder: (context, state) => slideAnimation<void>(
+        context: context,
+        state: state,
+        child: Cards(
+          collectionId: state.uri.queryParameters['collectionId']!,
+          collectionName: state.uri.queryParameters['collectionName']!,
+        ),
+      ),
+    ),
     GoRoute(
         path: '/view_card_mobile',
         builder: (context, state) {
           return ViewFlashCard(
               collectionId:
-              (state.extra as Map<String, dynamic>?)?['collectionId']!,
+                  (state.extra as Map<String, dynamic>?)?['collectionId']!,
               card: (state.extra as Map<String, dynamic>?)?['card']);
         }),
     GoRoute(
@@ -272,7 +254,6 @@ CustomTransitionPage slideAnimation<T>({
   required GoRouterState state,
   required Widget child,
 }) {
-
   return CustomTransitionPage<T>(
     restorationId: restorationId,
     key: state.pageKey,
@@ -323,7 +304,7 @@ class GoRouterRefreshStream extends ChangeNotifier {
     notifyListeners();
     _subscription = stream.asBroadcastStream().listen(
           (event) => notifyListeners(),
-    );
+        );
   }
 
   late final StreamSubscription _subscription;

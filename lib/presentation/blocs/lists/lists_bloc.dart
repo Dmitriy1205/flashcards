@@ -31,12 +31,23 @@ class ListsBloc extends Bloc<ListsEvent, ListsState> {
       started: (event) => _started(event, emit),
       deleteSelectedCollection: (event) =>
           _deleteSelectedCollection(event, emit),
+      editListName: (event) => _editListName(event, emit),
     );
   }
 
   Future<void> _createNewList(
       _CreateNewList event, Emitter<ListsState> emit) async {
     await collectionRepo.createCollection(collectionName: event.name);
+    final List<CollectionEntity> data = await collectionRepo.fetchCollections();
+    emit(const ListsState.loading());
+    emit(ListsState.viewCollections(
+        collectionsList: data, isEditMode: false, listToDelete: []));
+  }
+
+  Future<void> _editListName(
+      _EditListName event, Emitter<ListsState> emit) async {
+    await collectionRepo.editCollection(
+        collectionName: event.name, collectionId: event.id);
     final List<CollectionEntity> data = await collectionRepo.fetchCollections();
     emit(const ListsState.loading());
     emit(ListsState.viewCollections(
