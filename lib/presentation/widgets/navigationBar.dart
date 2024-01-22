@@ -30,49 +30,32 @@ class _CustomNavigationBarState extends State<CustomNavigationBar> {
           Positioned(
             left: 24,
             bottom: 36,
-            child: SizedBox(
-              width: 254,
-              height: 73,
-              child: ClipRRect(
-                borderRadius: const BorderRadius.all(Radius.circular(50)),
-                child: BottomNavigationBar(
-                  onTap: (page) {
-                    setState(() {
-                      pageIndex = page;
-                      widget.pageController.animateToPage(page,
-                          duration: const Duration(milliseconds: 100),
-                          curve: Curves.ease);
-                    });
-                  },
-                  currentIndex: pageIndex,
-                  backgroundColor: Colors.white,
-                  showSelectedLabels: false,
-                  showUnselectedLabels: false,
-                  items: [
-                    BottomNavigationBarItem(
-                      activeIcon: SvgPicture.asset(
-                        AppIcons.selectedHamburger,
-                        height: 27.5,
-                        width: 30,
-                      ),
-                      icon: SvgPicture.asset(
-                        AppIcons.defaultHamburger,
-                        height: 27.5,
-                        width: 30,
-                      ),
-                      label: '',
+            child: ClipRRect(
+              borderRadius: BorderRadius.circular(50),
+              child: Container(
+                height: 73,
+                color: Colors.white,
+                child: Row(
+                  children: [
+                    Container(
+                      margin: EdgeInsets.only(left: 34, right: 22),
+                      child: SvgPicture.asset(
+                          pageIndex == 0 ? AppIcons.selectedHamburger : AppIcons.defaultHamburger,
+                          height: 27.5,
+                          width: 30,
+                        ),
                     ),
-                    BottomNavigationBarItem(
-                      label: '',
-                      icon: SvgPicture.asset(
+                    Container(
+                      margin: EdgeInsets.only(left: 22, right: 22),
+                      child: SvgPicture.asset(
                         pageIndex == 1 ? AppIcons.selectedHat : AppIcons.hat,
                         height: 27.5,
                         width: 30,
                       ),
                     ),
-                    BottomNavigationBarItem(
-                      label: '',
-                      icon: SvgPicture.asset(
+                    Container(
+                      margin: EdgeInsets.only(left: 22, right: 33),
+                      child: SvgPicture.asset(
                         pageIndex == 2
                             ? AppIcons.selectedProfile
                             : AppIcons.defaultProfile,
@@ -80,7 +63,22 @@ class _CustomNavigationBarState extends State<CustomNavigationBar> {
                         width: 30,
                       ),
                     ),
-                  ],
+                  ].asMap().entries.map((e) => SizedBox(
+                    height: double.infinity,
+                    child: Material(
+                      child: InkWell(
+                        onTap: (){
+                          setState(() {
+                            pageIndex = e.key;
+                            widget.pageController.animateToPage(e.key,
+                                duration: const Duration(milliseconds: 100),
+                                curve: Curves.ease);
+                          });
+                        },
+                        child: e.value,
+                      ),
+                    ),
+                  )).toList(),
                 ),
               ),
             ),
