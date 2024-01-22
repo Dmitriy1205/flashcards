@@ -25,11 +25,10 @@ class CreateEditCollectionDialog {
             shape: const RoundedRectangleBorder(
                 borderRadius: BorderRadius.all(Radius.circular(15.0))),
             backgroundColor: Colors.white,
-            child: Padding(
-              padding: const EdgeInsets.only(
-                  left: 12, top: 12, right: 12, bottom: 12),
-              child: SizedBox(
-                height: 178,
+            child: IntrinsicHeight(
+              child: Padding(
+                padding: const EdgeInsets.only(
+                    left: 12, top: 12, right: 12),
                 child: Column(
                   children: [
                     Row(
@@ -64,7 +63,7 @@ class CreateEditCollectionDialog {
                             ? AppStrings.giveName
                             : AppStrings.renameCollectionSubTitle,
                         style: AppTheme.themeData.textTheme.labelSmall!
-                            .copyWith(color: AppColors.mainAccent)),
+                            .copyWith(color: Colors.black)),
                     const SizedBox(
                       height: 22,
                     ),
@@ -75,43 +74,52 @@ class CreateEditCollectionDialog {
                         textAlignVertical: TextAlignVertical.top,
                         style: AppTheme.themeData.textTheme.labelMedium!
                             .copyWith(
-                                color: AppColors.mainAccent,
+                                color: Colors.black,
                                 fontWeight: FontWeight.w700),
                         controller: nameTextEditingController,
-                        decoration: const InputDecoration(
+                        decoration: InputDecoration(
                             filled: true,
+                            enabledBorder: OutlineInputBorder(
+                              borderSide: BorderSide(
+                                color: AppColors.mainAccent.withOpacity(0.15)
+                              ),
+                                borderRadius:
+                                BorderRadius.all(Radius.circular(15))),
                             border: OutlineInputBorder(
+                                borderSide: BorderSide(
+                                    color: AppColors.mainAccent.withOpacity(0.15)
+                                ),
                                 borderRadius:
                                     BorderRadius.all(Radius.circular(15)))),
                       ),
                     ),
-                    const SizedBox(
-                      height: 16,
-                    ),
-                    TextButton(
-                      child: Text(AppStrings.save,
-                          style: AppTheme.themeData.textTheme.labelMedium!
-                              .copyWith(color: AppColors.mainAccent)),
-                      onPressed: () {
-                        if (nameTextEditingController.text.isNotEmpty) {
-                          if (collectionName == null) {
-                            context.read<ListsBloc>().add(
-                                ListsEvent.createNewList(
-                                    name: nameTextEditingController.text));
-                          } else {
-                            context.read<ListsBloc>().add(
-                                ListsEvent.editListName(
-                                    name: nameTextEditingController.text,
-                                    id: collectionId!));
-                            context.read<ListsBloc>().listIdToDelete.clear();
-                            context.read<ListsBloc>().add(ListsEvent.started(
-                                isEditMode:
-                                !context.read<ListsBloc>().isEditMode));
+                    SizedBox(
+                      height: 46,
+                      child: TextButton(
+                        child: Text(AppStrings.save,
+                            style: AppTheme.themeData.textTheme.labelMedium!
+                                .copyWith(color: AppColors.mainAccent)),
+                        onPressed: () {
+                          if (nameTextEditingController.text.isNotEmpty) {
+                            if (collectionName == null) {
+                              context.read<ListsBloc>().add(
+                                  ListsEvent.createNewList(
+                                      name: nameTextEditingController.text));
+                            } else {
+                              context.read<ListsBloc>().add(
+                                  ListsEvent.editListName(
+                                      name: nameTextEditingController.text,
+                                      id: collectionId!));
+                              context.read<ListsBloc>().listIdToDelete.clear();
+                              context.read<ListsBloc>().add(ListsEvent.started(
+                                  isEditMode:
+                                  !context.read<ListsBloc>().isEditMode));
+                            }
+                            nameTextEditingController.clear();
+                            Navigator.of(context).pop();
                           }
-                          nameTextEditingController.clear();
-                          Navigator.of(context).pop();
-                        }
-                      },
+                        },
+                      ),
                     )
                   ],
                 ),

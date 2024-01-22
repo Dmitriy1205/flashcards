@@ -28,105 +28,110 @@ class _MobileForgotPasswordScreenState
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      color: Colors.white,
-      child: SafeArea(
-        child: BlocConsumer<ForgotPasswordBloc, ForgotPasswordState>(
-          bloc: _bloc,
-          listener: (context, state) {
-            state.maybeMap(
-                error: (e) {
-                  ScaffoldMessenger.of(context).showSnackBar(
-                    SnackBar(
-                      backgroundColor: Colors.red,
-                      duration: const Duration(seconds: 5),
-                      content: Text(
-                        e.error,
-                        textAlign: TextAlign.center,
-                      ),
-                    ),
-                  );
-                },
-                success: (_) {
-                  Navigator.pop(context);
-                  ScaffoldMessenger.of(context).showSnackBar(
-                    const SnackBar(
-                      backgroundColor: AppColors.green,
-                      duration: Duration(seconds: 5),
-                      content: Text(
-                        'Check your Email',
-                        textAlign: TextAlign.center,
-                      ),
-                    ),
-                  );
-                },
-                orElse: () {});
-          },
-          builder: (context, state) {
-            return Scaffold(
-              appBar: AppBar(),
-              body: SingleChildScrollView(
-                child: Padding(
-                  padding: const EdgeInsets.only(
-                      top: 55.0, left: 24, right: 24),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Text(
-                        AppStrings.forgotPass,
-                        style: AppTheme.themeData.textTheme.headlineLarge,
-                      ),
-                      Text(
-                        AppStrings.forgotPassHeader,
-                        style: AppTheme.themeData.textTheme.headlineSmall,
-                      ),
-                      const SizedBox(
-                        height: 30,
-                      ),
-                      Text(
-                        AppStrings.email,
-                        style: AppTheme.themeData.textTheme.titleMedium,
-                      ),
-                      const SizedBox(
-                        height: 7,
-                      ),
-                      Form(
-                        key: _formKey,
-                        child: AppTextField(
-                          focusNode: _emailNode,
-                          textController: _emailController,
-                          hintText: AppStrings.enterEmail,
-                          validator: Validator.validateEmail,
+    return GestureDetector(
+      onTap: (){
+        FocusScope.of(context).unfocus();
+      },
+      child: Container(
+        color: Colors.white,
+        child: SafeArea(
+          child: BlocConsumer<ForgotPasswordBloc, ForgotPasswordState>(
+            bloc: _bloc,
+            listener: (context, state) {
+              state.maybeMap(
+                  error: (e) {
+                    ScaffoldMessenger.of(context).showSnackBar(
+                      SnackBar(
+                        backgroundColor: Colors.red,
+                        duration: const Duration(seconds: 5),
+                        content: Text(
+                          e.error,
+                          textAlign: TextAlign.center,
                         ),
                       ),
-                      const SizedBox(
-                        height: 27,
+                    );
+                  },
+                  success: (_) {
+                    Navigator.pop(context);
+                    ScaffoldMessenger.of(context).showSnackBar(
+                      const SnackBar(
+                        backgroundColor: AppColors.green,
+                        duration: Duration(seconds: 5),
+                        content: Text(
+                          'Check your Email',
+                          textAlign: TextAlign.center,
+                        ),
                       ),
-                      AppElevatedButton(
-                          widget: state.maybeMap(
-                              loading: (_)=> const SizedBox(width:20,height:20,child: LoadingIndicator(color: Colors.white,)),
-                              orElse: ()=>Text(
-                                AppStrings.buttonSend,
-                                style: AppTheme.themeData.textTheme.titleSmall!
-                                    .copyWith(color: Colors.white),
-                              )),
-                          text: AppStrings.buttonSend, onPressed: () {
-                        if (!_formKey.currentState!.validate()) {
-                          return;
-                        }
-                        _formKey.currentState!.save();
-                        _bloc.add(ForgotPasswordEvent.resetPassword(
-                            email: _emailController.text));
-                      }),
-                      const SizedBox(
-                        height: 17,
-                      ),
-                    ],
+                    );
+                  },
+                  orElse: () {});
+            },
+            builder: (context, state) {
+              return Scaffold(
+                appBar: AppBar(),
+                body: SingleChildScrollView(
+                  child: Padding(
+                    padding: const EdgeInsets.only(
+                        top: 55.0, left: 24, right: 24),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(
+                          AppStrings.forgotPass,
+                          style: AppTheme.themeData.textTheme.headlineLarge,
+                        ),
+                        Text(
+                          AppStrings.forgotPassHeader,
+                          style: AppTheme.themeData.textTheme.headlineSmall,
+                        ),
+                        const SizedBox(
+                          height: 30,
+                        ),
+                        Text(
+                          AppStrings.email,
+                          style: AppTheme.themeData.textTheme.titleMedium,
+                        ),
+                        const SizedBox(
+                          height: 7,
+                        ),
+                        Form(
+                          key: _formKey,
+                          child: AppTextField(
+                            focusNode: _emailNode,
+                            textController: _emailController,
+                            hintText: AppStrings.enterEmail,
+                            validator: Validator.validateEmail,
+                          ),
+                        ),
+                        const SizedBox(
+                          height: 27,
+                        ),
+                        AppElevatedButton(
+                            widget: state.maybeMap(
+                                loading: (_)=> const SizedBox(width:20,height:20,child: LoadingIndicator(color: Colors.white,)),
+                                orElse: ()=>Text(
+                                  AppStrings.buttonSend,
+                                  style: AppTheme.themeData.textTheme.titleSmall!
+                                      .copyWith(color: Colors.white),
+                                )),
+                            text: AppStrings.buttonSend, onPressed: () {
+                          if (!_formKey.currentState!.validate()) {
+                            return;
+                          }
+                          _formKey.currentState!.save();
+                          _bloc.add(ForgotPasswordEvent.resetPassword(
+                              email: _emailController.text));
+                        }),
+                        const SizedBox(
+                          height: 17,
+                        ),
+                      ],
+                    ),
                   ),
                 ),
-              ),
-            );
-          },
+              );
+            },
+          ),
         ),
       ),
     );
