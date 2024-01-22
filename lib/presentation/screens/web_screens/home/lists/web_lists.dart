@@ -269,7 +269,7 @@ class _WebListsScreenState extends State<WebListsScreen> {
                     ),
                     Text(AppStrings.giveName,
                         style: AppTheme.themeData.textTheme.labelSmall!
-                            .copyWith(color: AppColors.mainAccent)),
+                            .copyWith(color: Colors.black)),
                     const SizedBox(
                       height: 22,
                     ),
@@ -280,13 +280,18 @@ class _WebListsScreenState extends State<WebListsScreen> {
                         textAlignVertical: TextAlignVertical.top,
                         style: AppTheme.themeData.textTheme.labelMedium!
                             .copyWith(
-                                color: AppColors.mainAccent,
+                                color: Colors.black,
                                 fontWeight: FontWeight.w700),
                         controller: nameTextEditingController,
-                        decoration: const InputDecoration(
+                        decoration: InputDecoration(
                             filled: true,
                             focusColor: AppColors.mainAccent,
+                            enabledBorder: OutlineInputBorder(
+                                borderSide: BorderSide(color: AppColors.mainAccent.withOpacity(0.15)),
+                                borderRadius:
+                                BorderRadius.all(Radius.circular(15))),
                             border: OutlineInputBorder(
+                                borderSide: BorderSide(color: AppColors.mainAccent.withOpacity(0.15)),
                                 borderRadius:
                                     BorderRadius.all(Radius.circular(15)))),
                       ),
