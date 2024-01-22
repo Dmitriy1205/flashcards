@@ -59,7 +59,7 @@ class _HomeMobileState extends State<HomeMobile> {
                           style: AppTheme.themeData.textTheme.titleLarge,
                         ),
                       )
-                    : SizedBox(),
+                    : const SizedBox(),
               ],
             ),
           ],

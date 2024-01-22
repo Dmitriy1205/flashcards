@@ -7,7 +7,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/svg.dart';
 
-
 class CustomNavigationBar extends StatefulWidget {
   const CustomNavigationBar({Key? key, required this.pageController})
       : super(key: key);
@@ -40,10 +39,12 @@ class _CustomNavigationBarState extends State<CustomNavigationBar> {
                     Container(
                       margin: EdgeInsets.only(left: 34, right: 22),
                       child: SvgPicture.asset(
-                          pageIndex == 0 ? AppIcons.selectedHamburger : AppIcons.defaultHamburger,
-                          height: 27.5,
-                          width: 30,
-                        ),
+                        pageIndex == 0
+                            ? AppIcons.selectedHamburger
+                            : AppIcons.defaultHamburger,
+                        height: 27.5,
+                        width: 30,
+                      ),
                     ),
                     Container(
                       margin: const EdgeInsets.only(left: 22, right: 22),
@@ -63,22 +64,27 @@ class _CustomNavigationBarState extends State<CustomNavigationBar> {
                         width: 30,
                       ),
                     ),
-                  ].asMap().entries.map((e) => SizedBox(
-                    height: double.infinity,
-                    child: Material(
-                      child: InkWell(
-                        onTap: (){
-                          setState(() {
-                            pageIndex = e.key;
-                            widget.pageController.animateToPage(e.key,
-                                duration: const Duration(milliseconds: 100),
-                                curve: Curves.ease);
-                          });
-                        },
-                        child: e.value,
-                      ),
-                    ),
-                  )).toList(),
+                  ]
+                      .asMap()
+                      .entries
+                      .map((e) => SizedBox(
+                            height: double.infinity,
+                            child: Material(
+                              child: InkWell(
+                                onTap: () {
+                                  setState(() {
+                                    pageIndex = e.key;
+                                    widget.pageController.animateToPage(e.key,
+                                        duration:
+                                            const Duration(milliseconds: 100),
+                                        curve: Curves.ease);
+                                  });
+                                },
+                                child: e.value,
+                              ),
+                            ),
+                          ))
+                      .toList(),
                 ),
               ),
             ),

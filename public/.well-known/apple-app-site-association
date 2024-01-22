@@ -1,0 +1,24 @@
+{
+  "applinks":{
+    "apps":[
+       
+    ],
+    "details":[
+      {
+        "appIDs":[
+          "HRMX97GD4M.com.pandascode.flashcards"
+        ],
+        "components":[
+          {
+            "/":"/login",
+            "comment":"Matches URL with a path /login"
+          },
+          {
+            "/":"/collection_share",
+            "comment":"Matches any URL with a path that starts with /collection_share/."
+          }
+        ]
+      }
+    ]
+  }
+}
