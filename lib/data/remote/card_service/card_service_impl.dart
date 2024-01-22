@@ -130,7 +130,6 @@ class CardServiceImpl extends CardService {
   @override
   Future<List<CardEntity>> fetchCards({required String collectionId}) async {
     try {
-      print('collectionId $collectionId');
       final cards = await _fireStore
           .collection(FirestoreCollections.users)
           .doc(_firebaseAuth.currentUser!.uid)
