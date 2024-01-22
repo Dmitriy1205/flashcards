@@ -43,7 +43,8 @@ dependencies:
 
   share_plus: ^7.2.1
 
-  markdown_toolbar: ^0.5.0
+  html_editor_enhanced: ^2.5.1
+  quill_html_editor: any
 
 
 
