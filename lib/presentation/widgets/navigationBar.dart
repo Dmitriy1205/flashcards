@@ -30,49 +30,32 @@ class _CustomNavigationBarState extends State<CustomNavigationBar> {
           Positioned(
             left: 24,
             bottom: 36,
-            child: SizedBox(
-              width: 254,
-              height: 73,
-              child: ClipRRect(
-                borderRadius: const BorderRadius.all(Radius.circular(50)),
-                child: BottomNavigationBar(
-                  onTap: (page) {
-                    setState(() {
-                      pageIndex = page;
-                      widget.pageController.animateToPage(page,
-                          duration: const Duration(milliseconds: 100),
-                          curve: Curves.ease);
-                    });
-                  },
-                  currentIndex: pageIndex,
-                  backgroundColor: Colors.white,
-                  showSelectedLabels: false,
-                  showUnselectedLabels: false,
-                  items: [
-                    BottomNavigationBarItem(
-                      activeIcon: SvgPicture.asset(
-                        AppIcons.selectedHamburger,
-                        height: 27.5,
-                        width: 30,
-                      ),
-                      icon: SvgPicture.asset(
-                        AppIcons.defaultHamburger,
-                        height: 27.5,
-                        width: 30,
-                      ),
-                      label: '',
+            child: ClipRRect(
+              borderRadius: BorderRadius.circular(50),
+              child: Container(
+                height: 73,
+                color: Colors.white,
+                child: Row(
+                  children: [
+                    Container(
+                      margin: EdgeInsets.only(left: 34, right: 22),
+                      child: SvgPicture.asset(
+                          pageIndex == 0 ? AppIcons.selectedHamburger : AppIcons.defaultHamburger,
+                          height: 27.5,
+                          width: 30,
+                        ),
                     ),
-                    BottomNavigationBarItem(
-                      label: '',
-                      icon: SvgPicture.asset(
+                    Container(
+                      margin: EdgeInsets.only(left: 22, right: 22),
+                      child: SvgPicture.asset(
                         pageIndex == 1 ? AppIcons.selectedHat : AppIcons.hat,
                         height: 27.5,
                         width: 30,
                       ),
                     ),
-                    BottomNavigationBarItem(
-                      label: '',
-                      icon: SvgPicture.asset(
+                    Container(
+                      margin: EdgeInsets.only(left: 22, right: 33),
+                      child: SvgPicture.asset(
                         pageIndex == 2
                             ? AppIcons.selectedProfile
                             : AppIcons.defaultProfile,
@@ -80,7 +63,22 @@ class _CustomNavigationBarState extends State<CustomNavigationBar> {
                         width: 30,
                       ),
                     ),
-                  ],
+                  ].asMap().entries.map((e) => SizedBox(
+                    height: double.infinity,
+                    child: Material(
+                      child: InkWell(
+                        onTap: (){
+                          setState(() {
+                            pageIndex = e.key;
+                            widget.pageController.animateToPage(e.key,
+                                duration: const Duration(milliseconds: 100),
+                                curve: Curves.ease);
+                          });
+                        },
+                        child: e.value,
+                      ),
+                    ),
+                  )).toList(),
                 ),
               ),
             ),
@@ -144,9 +142,8 @@ class _CustomNavigationBarState extends State<CustomNavigationBar> {
             backgroundColor: Colors.white,
             child: Padding(
               padding: const EdgeInsets.only(
-                  left: 12, top: 12, right: 12, bottom: 12),
-              child: SizedBox(
-                height: 178,
+                  left: 12, top: 12, right: 12),
+              child: IntrinsicHeight(
                 child: Column(
                   children: [
                     Row(
@@ -176,7 +173,7 @@ class _CustomNavigationBarState extends State<CustomNavigationBar> {
                     ),
                     Text(AppStrings.giveName,
                         style: AppTheme.themeData.textTheme.labelSmall!
-                            .copyWith(color: AppColors.mainAccent)),
+                            .copyWith(color: Colors.black)),
                     const SizedBox(
                       height: 22,
                     ),
@@ -187,32 +184,42 @@ class _CustomNavigationBarState extends State<CustomNavigationBar> {
                         textAlignVertical: TextAlignVertical.top,
                         style: AppTheme.themeData.textTheme.labelMedium!
                             .copyWith(
-                                color: AppColors.mainAccent,
+                                color: Colors.black,
                                 fontWeight: FontWeight.w700),
                         controller: nameTextEditingController,
-                        decoration: const InputDecoration(
+                        decoration: InputDecoration(
                             filled: true,
+                            enabledBorder: OutlineInputBorder(
+                                borderSide: BorderSide(
+                                    color: Color(0xFF2B635A).withOpacity(0.15)
+                                ),
+                                borderRadius:
+                                BorderRadius.all(Radius.circular(15))),
                             border: OutlineInputBorder(
+                                borderSide: BorderSide(
+                                  color: Color(0xFF2B635A).withOpacity(0.15)
+                                ),
                                 borderRadius:
                                     BorderRadius.all(Radius.circular(15)))),
                       ),
                     ),
-                    const SizedBox(
-                      height: 16,
-                    ),
-                    TextButton(
-                      child: Text(AppStrings.save,
-                          style: AppTheme.themeData.textTheme.labelMedium!
-                              .copyWith(color: AppColors.mainAccent)),
-                      onPressed: () {
-                        if (nameTextEditingController.text.isNotEmpty) {
-                          context.read<ListsBloc>().add(
-                              ListsEvent.createNewList(
-                                  name: nameTextEditingController.text));
-                          nameTextEditingController.clear();
-                          Navigator.of(context).pop();
-                        }
-                      },
+                    SizedBox(
+                      height: 54,
+                      width: double.infinity,
+                      child: TextButton(
+                        child: Text(AppStrings.done,
+                            style: AppTheme.themeData.textTheme.labelMedium!
+                                .copyWith(color: AppColors.mainAccent)),
+                        onPressed: () {
+                          if (nameTextEditingController.text.isNotEmpty) {
+                            context.read<ListsBloc>().add(
+                                ListsEvent.createNewList(
+                                    name: nameTextEditingController.text));
+                            nameTextEditingController.clear();
+                            Navigator.of(context).pop();
+                          }
+                        },
+                      ),
                     )
                   ],
                 ),

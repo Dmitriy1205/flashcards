@@ -122,8 +122,7 @@ class _WebViewFlashCardState extends State<WebViewFlashCard> {
                                           style: AppTheme.themeData
                                               .textTheme.labelMedium!
                                               .copyWith(
-                                              color: AppColors
-                                                  .mainAccent),
+                                              color: Colors.black),
                                         ),
                                         const Spacer(),
                                         Align(
@@ -157,8 +156,7 @@ class _WebViewFlashCardState extends State<WebViewFlashCard> {
                                         style: AppTheme.themeData
                                             .textTheme.labelMedium!
                                             .copyWith(
-                                            color:
-                                            AppColors.mainAccent),
+                                          color: Colors.black,),
                                       ),
                                       const Spacer(),
                                       const SizedBox(),
@@ -265,8 +263,7 @@ class _WebViewFlashCardState extends State<WebViewFlashCard> {
                                               style: AppTheme.themeData.textTheme
                                                   .labelMedium!
                                                   .copyWith(
-                                                  color:
-                                                  AppColors.mainAccent),
+                                                color: AppColors.mainAccent,),
                                             ),
                                             Text(
                                               card.back,
@@ -334,8 +331,7 @@ class _WebViewFlashCardState extends State<WebViewFlashCard> {
                                             style: AppTheme.themeData
                                                 .textTheme.labelMedium!
                                                 .copyWith(
-                                                color: AppColors
-                                                    .mainAccent),
+                                              color: Colors.black,),
                                           ),
                                           const Spacer(),
                                           Align(
@@ -369,8 +365,7 @@ class _WebViewFlashCardState extends State<WebViewFlashCard> {
                                           style: AppTheme.themeData
                                               .textTheme.labelMedium!
                                               .copyWith(
-                                              color:
-                                              AppColors.mainAccent),
+                                            color: Colors.black,),
                                         ),
                                         const Spacer(),
                                         const SizedBox(),
