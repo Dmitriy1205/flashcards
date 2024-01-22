@@ -14,6 +14,13 @@ class CollectionRepoImpl extends CollectionRepoContract {
   }
 
   @override
+  Future<void> editCollection(
+      {required String collectionName, required String collectionId}) async {
+    await collectionServiceImpl.editCollection(
+        collectionId: collectionId, collectionName: collectionName);
+  }
+
+  @override
   Future<void> deleteCollections({required List<String> collections}) async {
     await collectionServiceImpl.deleteCollections(
         collectionsListToDelete: collections);

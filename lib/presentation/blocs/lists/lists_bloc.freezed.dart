@@ -21,6 +21,7 @@ mixin _$ListsEvent {
     required TResult Function(bool isEditMode) started,
     required TResult Function(CollectionEntity collection) selectCollection,
     required TResult Function(String name) createNewList,
+    required TResult Function(String name, String id) editListName,
     required TResult Function(List<CollectionEntity> collectionsList)
         deleteSelectedCollection,
   }) =>
@@ -30,6 +31,7 @@ mixin _$ListsEvent {
     TResult? Function(bool isEditMode)? started,
     TResult? Function(CollectionEntity collection)? selectCollection,
     TResult? Function(String name)? createNewList,
+    TResult? Function(String name, String id)? editListName,
     TResult? Function(List<CollectionEntity> collectionsList)?
         deleteSelectedCollection,
   }) =>
@@ -39,6 +41,7 @@ mixin _$ListsEvent {
     TResult Function(bool isEditMode)? started,
     TResult Function(CollectionEntity collection)? selectCollection,
     TResult Function(String name)? createNewList,
+    TResult Function(String name, String id)? editListName,
     TResult Function(List<CollectionEntity> collectionsList)?
         deleteSelectedCollection,
     required TResult orElse(),
@@ -49,6 +52,7 @@ mixin _$ListsEvent {
     required TResult Function(_Started value) started,
     required TResult Function(_SelectCollection value) selectCollection,
     required TResult Function(_CreateNewList value) createNewList,
+    required TResult Function(_EditListName value) editListName,
     required TResult Function(_DeleteSelecteCollection value)
         deleteSelectedCollection,
   }) =>
@@ -58,6 +62,7 @@ mixin _$ListsEvent {
     TResult? Function(_Started value)? started,
     TResult? Function(_SelectCollection value)? selectCollection,
     TResult? Function(_CreateNewList value)? createNewList,
+    TResult? Function(_EditListName value)? editListName,
     TResult? Function(_DeleteSelecteCollection value)? deleteSelectedCollection,
   }) =>
       throw _privateConstructorUsedError;
@@ -66,6 +71,7 @@ mixin _$ListsEvent {
     TResult Function(_Started value)? started,
     TResult Function(_SelectCollection value)? selectCollection,
     TResult Function(_CreateNewList value)? createNewList,
+    TResult Function(_EditListName value)? editListName,
     TResult Function(_DeleteSelecteCollection value)? deleteSelectedCollection,
     required TResult orElse(),
   }) =>
@@ -158,6 +164,7 @@ class _$StartedImpl implements _Started {
     required TResult Function(bool isEditMode) started,
     required TResult Function(CollectionEntity collection) selectCollection,
     required TResult Function(String name) createNewList,
+    required TResult Function(String name, String id) editListName,
     required TResult Function(List<CollectionEntity> collectionsList)
         deleteSelectedCollection,
   }) {
@@ -170,6 +177,7 @@ class _$StartedImpl implements _Started {
     TResult? Function(bool isEditMode)? started,
     TResult? Function(CollectionEntity collection)? selectCollection,
     TResult? Function(String name)? createNewList,
+    TResult? Function(String name, String id)? editListName,
     TResult? Function(List<CollectionEntity> collectionsList)?
         deleteSelectedCollection,
   }) {
@@ -182,6 +190,7 @@ class _$StartedImpl implements _Started {
     TResult Function(bool isEditMode)? started,
     TResult Function(CollectionEntity collection)? selectCollection,
     TResult Function(String name)? createNewList,
+    TResult Function(String name, String id)? editListName,
     TResult Function(List<CollectionEntity> collectionsList)?
         deleteSelectedCollection,
     required TResult orElse(),
@@ -198,6 +207,7 @@ class _$StartedImpl implements _Started {
     required TResult Function(_Started value) started,
     required TResult Function(_SelectCollection value) selectCollection,
     required TResult Function(_CreateNewList value) createNewList,
+    required TResult Function(_EditListName value) editListName,
     required TResult Function(_DeleteSelecteCollection value)
         deleteSelectedCollection,
   }) {
@@ -210,6 +220,7 @@ class _$StartedImpl implements _Started {
     TResult? Function(_Started value)? started,
     TResult? Function(_SelectCollection value)? selectCollection,
     TResult? Function(_CreateNewList value)? createNewList,
+    TResult? Function(_EditListName value)? editListName,
     TResult? Function(_DeleteSelecteCollection value)? deleteSelectedCollection,
   }) {
     return started?.call(this);
@@ -221,6 +232,7 @@ class _$StartedImpl implements _Started {
     TResult Function(_Started value)? started,
     TResult Function(_SelectCollection value)? selectCollection,
     TResult Function(_CreateNewList value)? createNewList,
+    TResult Function(_EditListName value)? editListName,
     TResult Function(_DeleteSelecteCollection value)? deleteSelectedCollection,
     required TResult orElse(),
   }) {
@@ -319,6 +331,7 @@ class _$SelectCollectionImpl implements _SelectCollection {
     required TResult Function(bool isEditMode) started,
     required TResult Function(CollectionEntity collection) selectCollection,
     required TResult Function(String name) createNewList,
+    required TResult Function(String name, String id) editListName,
     required TResult Function(List<CollectionEntity> collectionsList)
         deleteSelectedCollection,
   }) {
@@ -331,6 +344,7 @@ class _$SelectCollectionImpl implements _SelectCollection {
     TResult? Function(bool isEditMode)? started,
     TResult? Function(CollectionEntity collection)? selectCollection,
     TResult? Function(String name)? createNewList,
+    TResult? Function(String name, String id)? editListName,
     TResult? Function(List<CollectionEntity> collectionsList)?
         deleteSelectedCollection,
   }) {
@@ -343,6 +357,7 @@ class _$SelectCollectionImpl implements _SelectCollection {
     TResult Function(bool isEditMode)? started,
     TResult Function(CollectionEntity collection)? selectCollection,
     TResult Function(String name)? createNewList,
+    TResult Function(String name, String id)? editListName,
     TResult Function(List<CollectionEntity> collectionsList)?
         deleteSelectedCollection,
     required TResult orElse(),
@@ -359,6 +374,7 @@ class _$SelectCollectionImpl implements _SelectCollection {
     required TResult Function(_Started value) started,
     required TResult Function(_SelectCollection value) selectCollection,
     required TResult Function(_CreateNewList value) createNewList,
+    required TResult Function(_EditListName value) editListName,
     required TResult Function(_DeleteSelecteCollection value)
         deleteSelectedCollection,
   }) {
@@ -371,6 +387,7 @@ class _$SelectCollectionImpl implements _SelectCollection {
     TResult? Function(_Started value)? started,
     TResult? Function(_SelectCollection value)? selectCollection,
     TResult? Function(_CreateNewList value)? createNewList,
+    TResult? Function(_EditListName value)? editListName,
     TResult? Function(_DeleteSelecteCollection value)? deleteSelectedCollection,
   }) {
     return selectCollection?.call(this);
@@ -382,6 +399,7 @@ class _$SelectCollectionImpl implements _SelectCollection {
     TResult Function(_Started value)? started,
     TResult Function(_SelectCollection value)? selectCollection,
     TResult Function(_CreateNewList value)? createNewList,
+    TResult Function(_EditListName value)? editListName,
     TResult Function(_DeleteSelecteCollection value)? deleteSelectedCollection,
     required TResult orElse(),
   }) {
@@ -469,6 +487,7 @@ class _$CreateNewListImpl implements _CreateNewList {
     required TResult Function(bool isEditMode) started,
     required TResult Function(CollectionEntity collection) selectCollection,
     required TResult Function(String name) createNewList,
+    required TResult Function(String name, String id) editListName,
     required TResult Function(List<CollectionEntity> collectionsList)
         deleteSelectedCollection,
   }) {
@@ -481,6 +500,7 @@ class _$CreateNewListImpl implements _CreateNewList {
     TResult? Function(bool isEditMode)? started,
     TResult? Function(CollectionEntity collection)? selectCollection,
     TResult? Function(String name)? createNewList,
+    TResult? Function(String name, String id)? editListName,
     TResult? Function(List<CollectionEntity> collectionsList)?
         deleteSelectedCollection,
   }) {
@@ -493,6 +513,7 @@ class _$CreateNewListImpl implements _CreateNewList {
     TResult Function(bool isEditMode)? started,
     TResult Function(CollectionEntity collection)? selectCollection,
     TResult Function(String name)? createNewList,
+    TResult Function(String name, String id)? editListName,
     TResult Function(List<CollectionEntity> collectionsList)?
         deleteSelectedCollection,
     required TResult orElse(),
@@ -509,6 +530,7 @@ class _$CreateNewListImpl implements _CreateNewList {
     required TResult Function(_Started value) started,
     required TResult Function(_SelectCollection value) selectCollection,
     required TResult Function(_CreateNewList value) createNewList,
+    required TResult Function(_EditListName value) editListName,
     required TResult Function(_DeleteSelecteCollection value)
         deleteSelectedCollection,
   }) {
@@ -521,6 +543,7 @@ class _$CreateNewListImpl implements _CreateNewList {
     TResult? Function(_Started value)? started,
     TResult? Function(_SelectCollection value)? selectCollection,
     TResult? Function(_CreateNewList value)? createNewList,
+    TResult? Function(_EditListName value)? editListName,
     TResult? Function(_DeleteSelecteCollection value)? deleteSelectedCollection,
   }) {
     return createNewList?.call(this);
@@ -532,6 +555,7 @@ class _$CreateNewListImpl implements _CreateNewList {
     TResult Function(_Started value)? started,
     TResult Function(_SelectCollection value)? selectCollection,
     TResult Function(_CreateNewList value)? createNewList,
+    TResult Function(_EditListName value)? editListName,
     TResult Function(_DeleteSelecteCollection value)? deleteSelectedCollection,
     required TResult orElse(),
   }) {
@@ -549,6 +573,172 @@ abstract class _CreateNewList implements ListsEvent {
   String get name;
   @JsonKey(ignore: true)
   _$$CreateNewListImplCopyWith<_$CreateNewListImpl> get copyWith =>
+      throw _privateConstructorUsedError;
+}
+
+/// @nodoc
+abstract class _$$EditListNameImplCopyWith<$Res> {
+  factory _$$EditListNameImplCopyWith(
+          _$EditListNameImpl value, $Res Function(_$EditListNameImpl) then) =
+      __$$EditListNameImplCopyWithImpl<$Res>;
+  @useResult
+  $Res call({String name, String id});
+}
+
+/// @nodoc
+class __$$EditListNameImplCopyWithImpl<$Res>
+    extends _$ListsEventCopyWithImpl<$Res, _$EditListNameImpl>
+    implements _$$EditListNameImplCopyWith<$Res> {
+  __$$EditListNameImplCopyWithImpl(
+      _$EditListNameImpl _value, $Res Function(_$EditListNameImpl) _then)
+      : super(_value, _then);
+
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? name = null,
+    Object? id = null,
+  }) {
+    return _then(_$EditListNameImpl(
+      name: null == name
+          ? _value.name
+          : name // ignore: cast_nullable_to_non_nullable
+              as String,
+      id: null == id
+          ? _value.id
+          : id // ignore: cast_nullable_to_non_nullable
+              as String,
+    ));
+  }
+}
+
+/// @nodoc
+
+class _$EditListNameImpl implements _EditListName {
+  const _$EditListNameImpl({required this.name, required this.id});
+
+  @override
+  final String name;
+  @override
+  final String id;
+
+  @override
+  String toString() {
+    return 'ListsEvent.editListName(name: $name, id: $id)';
+  }
+
+  @override
+  bool operator ==(Object other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType &&
+            other is _$EditListNameImpl &&
+            (identical(other.name, name) || other.name == name) &&
+            (identical(other.id, id) || other.id == id));
+  }
+
+  @override
+  int get hashCode => Object.hash(runtimeType, name, id);
+
+  @JsonKey(ignore: true)
+  @override
+  @pragma('vm:prefer-inline')
+  _$$EditListNameImplCopyWith<_$EditListNameImpl> get copyWith =>
+      __$$EditListNameImplCopyWithImpl<_$EditListNameImpl>(this, _$identity);
+
+  @override
+  @optionalTypeArgs
+  TResult when<TResult extends Object?>({
+    required TResult Function(bool isEditMode) started,
+    required TResult Function(CollectionEntity collection) selectCollection,
+    required TResult Function(String name) createNewList,
+    required TResult Function(String name, String id) editListName,
+    required TResult Function(List<CollectionEntity> collectionsList)
+        deleteSelectedCollection,
+  }) {
+    return editListName(name, id);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? whenOrNull<TResult extends Object?>({
+    TResult? Function(bool isEditMode)? started,
+    TResult? Function(CollectionEntity collection)? selectCollection,
+    TResult? Function(String name)? createNewList,
+    TResult? Function(String name, String id)? editListName,
+    TResult? Function(List<CollectionEntity> collectionsList)?
+        deleteSelectedCollection,
+  }) {
+    return editListName?.call(name, id);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeWhen<TResult extends Object?>({
+    TResult Function(bool isEditMode)? started,
+    TResult Function(CollectionEntity collection)? selectCollection,
+    TResult Function(String name)? createNewList,
+    TResult Function(String name, String id)? editListName,
+    TResult Function(List<CollectionEntity> collectionsList)?
+        deleteSelectedCollection,
+    required TResult orElse(),
+  }) {
+    if (editListName != null) {
+      return editListName(name, id);
+    }
+    return orElse();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult map<TResult extends Object?>({
+    required TResult Function(_Started value) started,
+    required TResult Function(_SelectCollection value) selectCollection,
+    required TResult Function(_CreateNewList value) createNewList,
+    required TResult Function(_EditListName value) editListName,
+    required TResult Function(_DeleteSelecteCollection value)
+        deleteSelectedCollection,
+  }) {
+    return editListName(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? mapOrNull<TResult extends Object?>({
+    TResult? Function(_Started value)? started,
+    TResult? Function(_SelectCollection value)? selectCollection,
+    TResult? Function(_CreateNewList value)? createNewList,
+    TResult? Function(_EditListName value)? editListName,
+    TResult? Function(_DeleteSelecteCollection value)? deleteSelectedCollection,
+  }) {
+    return editListName?.call(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeMap<TResult extends Object?>({
+    TResult Function(_Started value)? started,
+    TResult Function(_SelectCollection value)? selectCollection,
+    TResult Function(_CreateNewList value)? createNewList,
+    TResult Function(_EditListName value)? editListName,
+    TResult Function(_DeleteSelecteCollection value)? deleteSelectedCollection,
+    required TResult orElse(),
+  }) {
+    if (editListName != null) {
+      return editListName(this);
+    }
+    return orElse();
+  }
+}
+
+abstract class _EditListName implements ListsEvent {
+  const factory _EditListName(
+      {required final String name,
+      required final String id}) = _$EditListNameImpl;
+
+  String get name;
+  String get id;
+  @JsonKey(ignore: true)
+  _$$EditListNameImplCopyWith<_$EditListNameImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }
 
@@ -631,6 +821,7 @@ class _$DeleteSelecteCollectionImpl implements _DeleteSelecteCollection {
     required TResult Function(bool isEditMode) started,
     required TResult Function(CollectionEntity collection) selectCollection,
     required TResult Function(String name) createNewList,
+    required TResult Function(String name, String id) editListName,
     required TResult Function(List<CollectionEntity> collectionsList)
         deleteSelectedCollection,
   }) {
@@ -643,6 +834,7 @@ class _$DeleteSelecteCollectionImpl implements _DeleteSelecteCollection {
     TResult? Function(bool isEditMode)? started,
     TResult? Function(CollectionEntity collection)? selectCollection,
     TResult? Function(String name)? createNewList,
+    TResult? Function(String name, String id)? editListName,
     TResult? Function(List<CollectionEntity> collectionsList)?
         deleteSelectedCollection,
   }) {
@@ -655,6 +847,7 @@ class _$DeleteSelecteCollectionImpl implements _DeleteSelecteCollection {
     TResult Function(bool isEditMode)? started,
     TResult Function(CollectionEntity collection)? selectCollection,
     TResult Function(String name)? createNewList,
+    TResult Function(String name, String id)? editListName,
     TResult Function(List<CollectionEntity> collectionsList)?
         deleteSelectedCollection,
     required TResult orElse(),
@@ -671,6 +864,7 @@ class _$DeleteSelecteCollectionImpl implements _DeleteSelecteCollection {
     required TResult Function(_Started value) started,
     required TResult Function(_SelectCollection value) selectCollection,
     required TResult Function(_CreateNewList value) createNewList,
+    required TResult Function(_EditListName value) editListName,
     required TResult Function(_DeleteSelecteCollection value)
         deleteSelectedCollection,
   }) {
@@ -683,6 +877,7 @@ class _$DeleteSelecteCollectionImpl implements _DeleteSelecteCollection {
     TResult? Function(_Started value)? started,
     TResult? Function(_SelectCollection value)? selectCollection,
     TResult? Function(_CreateNewList value)? createNewList,
+    TResult? Function(_EditListName value)? editListName,
     TResult? Function(_DeleteSelecteCollection value)? deleteSelectedCollection,
   }) {
     return deleteSelectedCollection?.call(this);
@@ -694,6 +889,7 @@ class _$DeleteSelecteCollectionImpl implements _DeleteSelecteCollection {
     TResult Function(_Started value)? started,
     TResult Function(_SelectCollection value)? selectCollection,
     TResult Function(_CreateNewList value)? createNewList,
+    TResult Function(_EditListName value)? editListName,
     TResult Function(_DeleteSelecteCollection value)? deleteSelectedCollection,
     required TResult orElse(),
   }) {
