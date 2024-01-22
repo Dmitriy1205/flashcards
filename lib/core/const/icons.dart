@@ -45,4 +45,5 @@ class AppIcons {
   static const String miniPlus = 'assets/icons/mini_plus.svg';
   static const String imageIcon = 'assets/icons/image_icon.svg';
   static const String editIcon = 'assets/icons/edit_icon.svg';
+  static const String editGreen = 'assets/icons/edit_green.svg';
 }

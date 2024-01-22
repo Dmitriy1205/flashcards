@@ -4,6 +4,7 @@ import 'package:flashcards/core/const/strings.dart';
 import 'package:flashcards/core/themes/theme.dart';
 import 'package:flashcards/domain/entities/collection_entity/collection_entity.dart';
 import 'package:flashcards/presentation/blocs/lists/lists_bloc.dart';
+import 'package:flashcards/presentation/widgets/create_edit_collection.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/svg.dart';
@@ -44,9 +45,7 @@ class Collections extends StatelessWidget {
                                   .listIdToDelete
                                   .add(collectionsList[i].id);
                             }
-                            context
-                                .read<ListsBloc>()
-                                .add(ListsEvent.started(
+                            context.read<ListsBloc>().add(ListsEvent.started(
                                   isEditMode: isEditMode,
                                 ));
                           },
@@ -83,8 +82,7 @@ class Collections extends StatelessWidget {
                   child: Container(
                     decoration: const BoxDecoration(
                         color: Colors.white,
-                        borderRadius:
-                            BorderRadius.all(Radius.circular(10))),
+                        borderRadius: BorderRadius.all(Radius.circular(10))),
                     child: ListTile(
                       onTap: () {
                         context
@@ -100,16 +98,30 @@ class Collections extends StatelessWidget {
                       ),
                       subtitle: Text(
                         '${collectionsList[i].cards?.length ?? 0} ${AppStrings.cards.toLowerCase()}',
-                        style: AppTheme.themeData.textTheme.labelSmall!
-                            .copyWith(
+                        style:
+                            AppTheme.themeData.textTheme.labelSmall!.copyWith(
                           color: Colors.black,
                         ),
                       ),
-                      trailing: SvgPicture.asset(
-                        isEditMode ? AppIcons.pen : AppIcons.rightArrow,
-                        height: 18,
-                        width: 9,
-                      ),
+                      trailing: isEditMode
+                          ? InkWell(
+                              onTap: () {
+                                CreateEditCollectionDialog().dialog(context,
+                                    collectionName:
+                                        collectionsList[i].collectionName,
+                                    collectionId: collectionsList[i].id);
+                              },
+                              child: SvgPicture.asset(
+                                AppIcons.editGreen,
+                                height: 18,
+                                width: 9,
+                              ),
+                            )
+                          : SvgPicture.asset(
+                              AppIcons.rightArrow,
+                              height: 18,
+                              width: 9,
+                            ),
                     ),
                   ),
                 ),

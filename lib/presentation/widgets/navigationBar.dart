@@ -39,7 +39,6 @@ class _CustomNavigationBarState extends State<CustomNavigationBar> {
                     Container(
                       margin: EdgeInsets.only(left: 34, right: 22),
                       child: SvgPicture.asset(
-
                         pageIndex == 0
                             ? AppIcons.selectedHamburger
                             : AppIcons.defaultHamburger,
@@ -49,7 +48,6 @@ class _CustomNavigationBarState extends State<CustomNavigationBar> {
                     ),
                     Container(
                       margin: const EdgeInsets.only(left: 22, right: 22),
-
                       child: SvgPicture.asset(
                         pageIndex == 1 ? AppIcons.selectedHat : AppIcons.hat,
                         height: 27.5,
@@ -57,9 +55,7 @@ class _CustomNavigationBarState extends State<CustomNavigationBar> {
                       ),
                     ),
                     Container(
-
                       margin: const EdgeInsets.only(left: 22, right: 33),
-
                       child: SvgPicture.asset(
                         pageIndex == 2
                             ? AppIcons.selectedProfile
@@ -68,7 +64,6 @@ class _CustomNavigationBarState extends State<CustomNavigationBar> {
                         width: 30,
                       ),
                     ),
-
                   ]
                       .asMap()
                       .entries
@@ -90,7 +85,6 @@ class _CustomNavigationBarState extends State<CustomNavigationBar> {
                             ),
                           ))
                       .toList(),
-
                 ),
               ),
             ),
