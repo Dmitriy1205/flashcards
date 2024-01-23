@@ -36,33 +36,41 @@ class _HomeMobileState extends State<HomeMobile> {
         automaticallyImplyLeading: false,
         title: Column(
           children: [
+            Padding(
+              padding: EdgeInsets.only(left: 13),
+              child: Row(
+                mainAxisSize: MainAxisSize.max,
+                children: [
+                  Text(
+                    pageNames[_selectedPage],
+                    style: AppTheme.themeData.textTheme.headlineLarge,
+                  ),
+                  Spacer(),
+                  _selectedPage == 0
+                      ? GestureDetector(
+                          onTap: () {
+                            context.read<ListsBloc>().listIdToDelete.clear();
+                            context.read<ListsBloc>().add(ListsEvent.started(
+                                isEditMode:
+                                    !context.read<ListsBloc>().isEditMode));
+                          },
+                          child: Container(
+                            color: Colors.transparent,
+                            child: Padding(
+                              padding: EdgeInsets.symmetric(horizontal: 13, vertical: 20),
+                              child: Text(
+                                context.watch<ListsBloc>().isEditMode
+                                    ? AppStrings.cancel
+                                    : AppStrings.edit,
+                                style: AppTheme.themeData.textTheme.titleLarge?.copyWith(fontSize: 20),
+                              ),
+                            ),
+                          ),
+                        )
+                      : const SizedBox(),
+                ],
 
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              mainAxisSize: MainAxisSize.max,
-              children: [
-                Text(
-                  pageNames[_selectedPage],
-                  style: AppTheme.themeData.textTheme.headlineLarge,
-                ),
-                _selectedPage == 0
-                    ? GestureDetector(
-                        onTap: () {
-                          context.read<ListsBloc>().listIdToDelete.clear();
-                          context.read<ListsBloc>().add(ListsEvent.started(
-                              isEditMode:
-                                  !context.read<ListsBloc>().isEditMode));
-                        },
-                        child: Text(
-                          context.watch<ListsBloc>().isEditMode
-                              ? AppStrings.cancel
-                              : AppStrings.edit,
-                          style: AppTheme.themeData.textTheme.titleLarge,
-                        ),
-                      )
-                    : const SizedBox(),
-              ],
-
+              ),
             ),
           ],
         ),

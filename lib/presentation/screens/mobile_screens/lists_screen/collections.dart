@@ -85,11 +85,18 @@ class Collections extends StatelessWidget {
                         borderRadius: BorderRadius.all(Radius.circular(10))),
                     child: ListTile(
                       onTap: () {
-                        context
-                            .read<ListsBloc>()
-                            .add(ListsEvent.selectCollection(
-                              collection: collectionsList[i],
-                            ));
+                        if(isEditMode){
+                          CreateEditCollectionDialog().dialog(context,
+                              collectionName:
+                              collectionsList[i].collectionName,
+                              collectionId: collectionsList[i].id);
+                        }else{
+                          context
+                              .read<ListsBloc>()
+                              .add(ListsEvent.selectCollection(
+                            collection: collectionsList[i],
+                          ));
+                        }
                       },
                       title: Text(
                         collectionsList[i].collectionName,
@@ -104,19 +111,11 @@ class Collections extends StatelessWidget {
                         ),
                       ),
                       trailing: isEditMode
-                          ? InkWell(
-                              onTap: () {
-                                CreateEditCollectionDialog().dialog(context,
-                                    collectionName:
-                                        collectionsList[i].collectionName,
-                                    collectionId: collectionsList[i].id);
-                              },
-                              child: SvgPicture.asset(
-                                AppIcons.editGreen,
-                                height: 18,
-                                width: 9,
-                              ),
-                            )
+                          ? SvgPicture.asset(
+                            AppIcons.editGreen,
+                            height: 18,
+                            width: 9,
+                          )
                           : SvgPicture.asset(
                               AppIcons.rightArrow,
                               height: 18,
