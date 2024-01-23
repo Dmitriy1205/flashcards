@@ -5,10 +5,11 @@ import 'package:flashcards/core/const/firebase_collections.dart';
 import 'package:flashcards/core/const/strings.dart';
 import 'package:flashcards/data/remote/card_service/card_service_contract.dart';
 import 'package:flashcards/domain/entities/card_entity/card_entity.dart';
-import 'package:flashcards/domain/entities/collection_entity/collection_entity.dart';
 import 'package:flashcards/domain/params/card_param/create_card_param.dart';
 import 'package:flashcards/domain/params/card_param/edit_card_param.dart';
+import 'package:flutter/services.dart';
 import 'package:share_plus/share_plus.dart';
+import 'package:flutter/foundation.dart';
 
 class CardServiceImpl extends CardService {
   CardServiceImpl(
@@ -130,9 +131,16 @@ class CardServiceImpl extends CardService {
     print(
       'https://flashcards-5984c.web.app/collection_share?sender=${_firebaseAuth.currentUser!.uid}&collectionId=${collectionId}&collectionName=${collectionName}',
     );
-    await Share.share(
-        'https://flashcards-5984c.web.app/collection_share?sender=${_firebaseAuth.currentUser!.uid}&collectionId=$collectionId&collectionName=$collectionName',
-        subject: 'Look what I made!');
+    kIsWeb
+        ? Clipboard.setData(
+            ClipboardData(
+              text:
+                  'https://flashcards-5984c.web.app/collection_share?sender=${_firebaseAuth.currentUser!.uid}&collectionId=$collectionId&collectionName=$collectionName',
+            ),
+          )
+        : await Share.share(
+            'https://flashcards-5984c.web.app/collection_share?sender=${_firebaseAuth.currentUser!.uid}&collectionId=$collectionId&collectionName=$collectionName',
+            subject: 'Look what I made!');
 
     print('status success');
     try {
