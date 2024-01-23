@@ -129,39 +129,37 @@ class CardServiceImpl extends CardService {
     print(
       'https://flashcards-5984c.web.app/collection_share?sender=${_firebaseAuth.currentUser!.uid}&collectionId=${collectionId}&collectionName=${collectionName}',
     );
-    final result = await Share.shareWithResult(
+    await Share.share(
         'https://flashcards-5984c.web.app/collection_share?sender=${_firebaseAuth.currentUser!.uid}&collectionId=$collectionId&collectionName=$collectionName',
         subject: 'Look what I made!');
 
-    if (result.status == ShareResultStatus.success) {
-      print('status success');
-      try {
-        final shareCollection = _fireStore
-            .collection(FirestoreCollections.collectionShare)
-            .doc(_firebaseAuth.currentUser!.uid)
-            .collection(FirestoreCollections.collections)
-            .doc(collectionId);
+    print('status success');
+    try {
+      final shareCollection = _fireStore
+          .collection(FirestoreCollections.collectionShare)
+          .doc(_firebaseAuth.currentUser!.uid)
+          .collection(FirestoreCollections.collections)
+          .doc(collectionId);
 
-        final collection = await _fireStore
-            .collection(FirestoreCollections.users)
-            .doc(_firebaseAuth.currentUser!.uid)
-            .collection(FirestoreCollections.collections)
-            .doc(collectionId)
-            .get();
+      final collection = await _fireStore
+          .collection(FirestoreCollections.users)
+          .doc(_firebaseAuth.currentUser!.uid)
+          .collection(FirestoreCollections.collections)
+          .doc(collectionId)
+          .get();
 
-        final cards = await fetchCards(collectionId: collectionId);
+      final cards = await fetchCards(collectionId: collectionId);
 
-        if (collection.exists) {
-          shareCollection.set(collection.data()!);
-          for (int i = 0; i < cards.length; i++) {
-            shareCollection.collection(FirestoreCollections.cards).add(cards[i]
-                .copyWith(sharedFrom: _firebaseAuth.currentUser!.uid)
-                .toJson());
-          }
+      if (collection.exists) {
+        shareCollection.set(collection.data()!);
+        for (int i = 0; i < cards.length; i++) {
+          shareCollection.collection(FirestoreCollections.cards).add(cards[i]
+              .copyWith(sharedFrom: _firebaseAuth.currentUser!.uid)
+              .toJson());
         }
-      } on FirebaseException catch (e) {
-        throw Exception("Exception createCard $e");
       }
+    } on FirebaseException catch (e) {
+      throw Exception("Exception createCard $e");
     }
   }
 
