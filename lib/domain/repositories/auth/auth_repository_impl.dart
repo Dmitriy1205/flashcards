@@ -24,7 +24,7 @@ class AuthRepositoryImpl implements AuthRepository {
       await _auth.signInWithEmailAndPassword(email: email, password: password);
     } on FirebaseAuthException catch (e) {
       print(e);
-      if(e.code == 'invalid-credential'){
+      if (e.code == 'invalid-credential') {
         throw BadRequestException(
             message: 'email or password is wrong', attribute: 'password');
       }

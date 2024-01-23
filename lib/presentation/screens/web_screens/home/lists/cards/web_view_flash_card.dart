@@ -11,6 +11,7 @@ import 'package:flashcards/presentation/widgets/app_round_button.dart';
 import 'package:flashcards/presentation/widgets/loading_indicator.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_html/flutter_html.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 import '../../../../../blocs/cards/cards_bloc.dart';
@@ -117,12 +118,14 @@ class _WebViewFlashCardState extends State<WebViewFlashCard> {
                                           height: 140,
                                         ),
                                         const Spacer(),
-                                        Text(
-                                          pickedCard.front,
-                                          style: AppTheme.themeData
-                                              .textTheme.labelMedium!
-                                              .copyWith(
-                                              color: Colors.black),
+                                        Align(
+                                          alignment: Alignment.center,
+                                          child: FractionallySizedBox(
+                                            widthFactor: 0.3, // Adjust the width factor as needed
+                                            child: Html(data: pickedCard.front,style: {
+                                              'html': Style(textAlign: TextAlign.center),
+                                            },),
+                                          ),
                                         ),
                                         const Spacer(),
                                         Align(
@@ -151,12 +154,14 @@ class _WebViewFlashCardState extends State<WebViewFlashCard> {
                                         height: 80,
                                       ),
                                       const Spacer(),
-                                      Text(
-                                        pickedCard.back,
-                                        style: AppTheme.themeData
-                                            .textTheme.labelMedium!
-                                            .copyWith(
-                                          color: Colors.black,),
+                                      Align(
+                                        alignment: Alignment.center,
+                                        child: FractionallySizedBox(
+                                          widthFactor: 0.3, // Adjust the width factor as needed
+                                          child: Html(data: pickedCard.back,style: {
+                                            'html': Style(textAlign: TextAlign.center),
+                                          },),
+                                        ),
                                       ),
                                       const Spacer(),
                                       const SizedBox(),
@@ -258,7 +263,7 @@ class _WebViewFlashCardState extends State<WebViewFlashCard> {
                                           CrossAxisAlignment.center,
                                           children: [
                                             Text(
-                                              card.front,
+                                              card.front.replaceAll(RegExp(r'<[^>]*>'), ''),
                                               textAlign: TextAlign.center,
                                               style: AppTheme.themeData.textTheme
                                                   .labelMedium!
@@ -266,7 +271,7 @@ class _WebViewFlashCardState extends State<WebViewFlashCard> {
                                                 color: AppColors.mainAccent,),
                                             ),
                                             Text(
-                                              card.back,
+                                              card.back.replaceAll(RegExp(r'<[^>]*>'), ''),
                                               style: AppTheme
                                                   .themeData.textTheme.labelSmall!
                                                   .copyWith(
@@ -321,17 +326,20 @@ class _WebViewFlashCardState extends State<WebViewFlashCard> {
                                       padding: const EdgeInsets.only(
                                           bottom: 38.0, right: 43),
                                       child: Column(
+                                        crossAxisAlignment: CrossAxisAlignment.center,
                                         children: [
                                           const SizedBox(
                                             height: 140,
                                           ),
                                           const Spacer(),
-                                          Text(
-                                            pickedCard.front,
-                                            style: AppTheme.themeData
-                                                .textTheme.labelMedium!
-                                                .copyWith(
-                                              color: Colors.black,),
+                                          Align(
+                                            alignment: Alignment.center,
+                                            child: FractionallySizedBox(
+                                              widthFactor: 0.5, // Adjust the width factor as needed
+                                              child: Html(data: pickedCard.front,style: {
+                                                'html': Style(textAlign: TextAlign.center),
+                                              },),
+                                            ),
                                           ),
                                           const Spacer(),
                                           Align(
@@ -360,12 +368,14 @@ class _WebViewFlashCardState extends State<WebViewFlashCard> {
                                           height: 80,
                                         ),
                                         const Spacer(),
-                                        Text(
-                                          pickedCard.back,
-                                          style: AppTheme.themeData
-                                              .textTheme.labelMedium!
-                                              .copyWith(
-                                            color: Colors.black,),
+                                        Align(
+                                          alignment: Alignment.center,
+                                          child: FractionallySizedBox(
+                                            widthFactor: 0.3, // Adjust the width factor as needed
+                                            child: Html(data: pickedCard.back,style: {
+                                              'html': Style(textAlign: TextAlign.center),
+                                            },),
+                                          ),
                                         ),
                                         const Spacer(),
                                         const SizedBox(),

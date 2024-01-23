@@ -11,6 +11,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_colorpicker/flutter_colorpicker.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:quill_html_editor/quill_html_editor.dart';
 
 import '../../../../../../core/enum/enum.dart';
 import '../../../../../../core/router/router.dart';
@@ -30,23 +31,31 @@ class WebCreateCard extends StatefulWidget {
 }
 
 class _WebCreateCardState extends State<WebCreateCard> {
-  final TextEditingController frontTextEditingController =
-      TextEditingController();
+  late QuillEditorController frontController;
+  late QuillEditorController backController;
 
-  final TextEditingController backTextEditingController =
-      TextEditingController();
-  String textLengthFirst = '0';
-  String textLengthSecond = '0';
+  bool _frontHasFocus = false;
+  bool _backHasFocus = false;
+
+  String frontText = '';
+  String backText = '';
+
+  Color frontPickedColor = Colors.black;
+  Color backPickedColor = Colors.black;
+
+
+  String textLengthFront = '0';
+  String textLengthBack = '0';
+
+
   TextFormat currentTextFormat = TextFormat.normal;
   ParagraphFormat currentParagraphFormat = ParagraphFormat.normal;
 
   @override
   void initState() {
+    frontController = QuillEditorController();
+    backController = QuillEditorController();
     super.initState();
-    if (widget.card != null) {
-      frontTextEditingController.text = widget.card!.front;
-      backTextEditingController.text = widget.card!.back;
-    }
   }
 
   @override
@@ -76,40 +85,6 @@ class _WebCreateCardState extends State<WebCreateCard> {
                   : '${AppStrings.edit} ${AppStrings.card.toLowerCase()}',
               style: AppTheme.themeData.textTheme.headlineLarge,
             ),
-            // TextButton(
-            //   onPressed: () {
-            //     if (frontTextEditingController.text.isNotEmpty &&
-            //         backTextEditingController.text.isNotEmpty) {
-            //       if (widget.card == null) {
-            //         Navigator.pop(context);
-            //         context.read<CardsBloc>().add(CardsEvent.createNewCard(
-            //             front: frontTextEditingController.text,
-            //             back: backTextEditingController.text));
-            //       } else {
-            //         Navigator.pushReplacement(
-            //             context,
-            //             MaterialPageRoute(
-            //                 builder: (context) => ViewFlashCard(
-            //                   card: CardEntity(
-            //                       id: widget.card!.id,
-            //                       front: frontTextEditingController.text,
-            //                       back: backTextEditingController.text),
-            //                 )));
-            //         context.read<CardsBloc>().add(CardsEvent.editCard(
-            //             card: CardEntity(
-            //                 id: widget.card!.id,
-            //                 front: frontTextEditingController.text,
-            //                 back: backTextEditingController.text)));
-            //       }
-            //     }
-            //   },
-            //   child: Text(
-            //     AppStrings.done,
-            //     style: AppTheme.themeData.textTheme.titleLarge!.copyWith(
-            //       fontSize: 20,
-            //     ),
-            //   ),
-            // ),
           ],
         ),
       ),
@@ -127,14 +102,14 @@ class _WebCreateCardState extends State<WebCreateCard> {
                     borderRadius: BorderRadius.circular(10)),
                 child: Column(
                   children: [
-                    buildInputField(
-                        header: AppStrings.front,
-                        controller: frontTextEditingController,
-                        textLength: textLengthFirst),
-                    buildInputField(
-                        header: AppStrings.back,
-                        controller: backTextEditingController,
-                        textLength: textLengthSecond),
+                    Padding(
+                      padding: const EdgeInsets.only(top: 24.0),
+                      child: frontEditor(context),
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.only(top: 30.0),
+                      child: backEditor(context),
+                    ),
                     Padding(
                       padding: const EdgeInsets.only(
                           right: 37.0, bottom: 25, top: 12),
@@ -146,15 +121,12 @@ class _WebCreateCardState extends State<WebCreateCard> {
                                 borderRadius: 36,
                                 text: AppStrings.done,
                                 onPressed: () {
-                                  if (frontTextEditingController
-                                          .text.isNotEmpty &&
-                                      backTextEditingController
-                                          .text.isNotEmpty) {
+                                  if (frontText.isNotEmpty &&
+                                      backText.isNotEmpty) {
                                     if (widget.card == null) {
                                       CreateCardParam card = CreateCardParam(
-                                          front:
-                                              frontTextEditingController.text,
-                                          back: backTextEditingController.text,
+                                          front: frontText.toString(),
+                                          back: backText.toString(),
                                           collectionId: widget.collectionId);
                                       Navigator.pop(context);
 
@@ -165,9 +137,8 @@ class _WebCreateCardState extends State<WebCreateCard> {
                                                   widget.collectionId));
                                     } else {
                                       EditCardParam card = EditCardParam(
-                                          front:
-                                              frontTextEditingController.text,
-                                          back: backTextEditingController.text,
+                                          front: frontText.toString(),
+                                          back: backText.toString(),
                                           collectionId: widget.collectionId,
                                           id: widget.card!.id);
                                       Navigator.pop(context);
@@ -200,27 +171,21 @@ class _WebCreateCardState extends State<WebCreateCard> {
     );
   }
 
-  Padding buildInputField({
-    required String header,
-    required TextEditingController controller,
-    required String textLength,
-  }) {
-    return Padding(
-      padding: const EdgeInsets.only(bottom: 0, top: 26, left: 24, right: 24),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Padding(
-            padding: const EdgeInsets.only(left: 15.0),
-            child: Text(
-              header,
-              style: AppTheme.themeData.textTheme.titleMedium,
-            ),
+  Column backEditor(BuildContext context) {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Padding(
+          padding: const EdgeInsets.only(left: 35.0),
+          child: Text(
+            AppStrings.back,
+            style: AppTheme.themeData.textTheme.titleMedium,
           ),
-          const SizedBox(
-            height: 12,
-          ),
-          Container(
+        ),
+        Padding(
+          padding: const EdgeInsets.only(
+              bottom: 0, top: 26, left: 24, right: 24),
+          child: Container(
             decoration: BoxDecoration(
               border: Border.all(color: AppColors.borderGrey),
               borderRadius: BorderRadius.circular(20),
@@ -231,97 +196,246 @@ class _WebCreateCardState extends State<WebCreateCard> {
               children: [
                 Padding(
                   padding: const EdgeInsets.only(left: 20),
-                  child: Row(
+                  child: ClipRRect(
+                    borderRadius: BorderRadius.circular(20),
+                    child: ToolBar(
+                      mainAxisSize: MainAxisSize.min,
+                      toolBarColor: Colors.white,
+                      padding: const EdgeInsets.all(8),
+                      iconSize: 21,
+                      iconColor: AppColors.veryLightGrey,
+                      activeIconColor: Colors.black,
+                      controller: backController,
+                      crossAxisAlignment:
+                      WrapCrossAlignment.start,
+                      direction: Axis.horizontal,
+                      toolBarConfig: const [
+                        ToolBarStyle.bold,
+                        ToolBarStyle.italic,
+                        ToolBarStyle.underline,
+                        ToolBarStyle.listOrdered,
+                        ToolBarStyle.listBullet,
+                      ],
+                      customButtons: [
+                        Padding(
+                          padding:
+                          const EdgeInsets.only(top: 3.0),
+                          child: InkWell(
+                            child: Container(
+                              decoration: BoxDecoration(
+                                  color: backPickedColor,
+                                  borderRadius:
+                                  BorderRadius.circular(4)),
+                              height: 17,
+                              width: 17,
+                            ),
+                            onTap: () {
+                              showBackColorPicker(context);
+                            },
+                          ),
+                        )
+                      ],
+                    ),
+                  ),
+                ),
+                Container(
+                  height: 1.0,
+                  color: AppColors.borderGrey,
+                ),
+                Padding(
+                  padding: const EdgeInsets.symmetric(
+                      vertical: 8.0, horizontal: 10),
+                  child: QuillHtmlEditor(
+
+                    controller: backController,
+                    isEnabled: true,
+                    ensureVisible: false,
+                    minHeight: 130,
+                    autoFocus: false,
+                    textStyle: AppTheme
+                        .themeData.textTheme.titleMedium!
+                        .copyWith(
+                        color: backPickedColor,
+                        fontWeight: FontWeight.w300,
+                        fontSize: 17),
+                    hintTextAlign: TextAlign.start,
+                    padding: const EdgeInsets.only(
+                        left: 10, top: 10),
+                    hintTextPadding:
+                    const EdgeInsets.only(left: 20),
+                    backgroundColor: Colors.white,
+                    inputAction: InputAction.newline,
+                    // loadingBuilder: (context) {
+                    //   return const Center(
+                    //       child: CircularProgressIndicator(
+                    //     strokeWidth: 1,
+                    //     color: Colors.red,
+                    //   ));
+                    // },
+                    onFocusChanged: (focus) {
+                      debugPrint('has focus $focus');
+                      setState(() {
+                        _backHasFocus = focus;
+                      });
+                    },
+                    onTextChanged: (text) {
+                      setState(() {
+                        backText = text;
+                        textLengthBack =
+                            text.replaceAll(RegExp(r'<[^>]*>'), '').length.toString();
+                      });
+                    },
+                  ),
+                ),
+              ],
+            ),
+          ),
+        ),
+        Padding(
+          padding: const EdgeInsets.only(right: 24),
+          child: Align(
+            alignment: Alignment.bottomRight,
+            child: Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: Text('$textLengthBack/400'),
+            ),
+          ),
+        ),
+        Padding(
+          padding: const EdgeInsets.only(left: 25.0),
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.start,
+            children: [
+              InkWell(
+                onTap: () {},
+                child: Container(
+                  height: 65,
+                  width: 65,
+                  decoration: BoxDecoration(
+                      color: AppColors.background,
+                      borderRadius: BorderRadius.circular(65)),
+                  child: Stack(
                     children: [
-                      AppIconButton(
-                        svgIcon: AppIcons.big,
-                        color: currentTextFormat == TextFormat.bold
-                            ? Colors.black
-                            : AppColors.veryLightGrey,
-                        height: 22,
-                        width: 22,
-                        onTap: () {
-                          setState(() {
-                            currentTextFormat == TextFormat.bold
-                                ? currentTextFormat = TextFormat.normal
-                                : currentTextFormat = TextFormat.bold;
-                          });
-                        },
+                      Center(
+                        child: SvgPicture.asset(
+                          AppIcons.imageIcon,
+                          height: 22,
+                          width: 22,
+                        ),
                       ),
-                      AppIconButton(
-                        svgIcon: AppIcons.italic,
-                        color: currentTextFormat == TextFormat.italic
-                            ? Colors.black
-                            : AppColors.veryLightGrey,
-                        height: 22,
-                        width: 22,
-                        onTap: () {
-                          setState(() {
-                            currentTextFormat == TextFormat.italic
-                                ? currentTextFormat = TextFormat.normal
-                                : currentTextFormat = TextFormat.italic;
-                          });
-                        },
+                      Positioned(
+                        bottom: 15,
+                        right: 15,
+                        child: SvgPicture.asset(
+                          AppIcons.miniPlus,
+                          height: 12,
+                          width: 12,
+                        ),
                       ),
-                      AppIconButton(
-                        svgIcon: AppIcons.underscore,
-                        color: currentTextFormat == TextFormat.underscore
-                            ? Colors.black
-                            : AppColors.veryLightGrey,
-                        height: 22,
-                        width: 22,
-                        onTap: () {
-                          setState(() {
-                            currentTextFormat == TextFormat.underscore
-                                ? currentTextFormat = TextFormat.normal
-                                : currentTextFormat = TextFormat.underscore;
-                          });
-                        },
-                      ),
-                      AppIconButton(
-                        svgIcon: AppIcons.numerated,
-                        color: currentParagraphFormat == ParagraphFormat.number
-                            ? Colors.black
-                            : AppColors.veryLightGrey,
-                        height: 22,
-                        width: 22,
-                        onTap: () {
-                          setState(() {
-                            currentParagraphFormat == ParagraphFormat.number
-                                ? currentParagraphFormat =
-                                    ParagraphFormat.normal
-                                : currentParagraphFormat =
-                                    ParagraphFormat.number;
-                          });
-                        },
-                      ),
-                      AppIconButton(
-                        svgIcon: AppIcons.sorted,
-                        color: currentParagraphFormat == ParagraphFormat.bullet
-                            ? Colors.black
-                            : AppColors.veryLightGrey,
-                        height: 24,
-                        width: 22,
-                        onTap: () {
-                          setState(() {
-                            currentParagraphFormat == ParagraphFormat.bullet
-                                ? currentParagraphFormat =
-                                    ParagraphFormat.normal
-                                : currentParagraphFormat =
-                                    ParagraphFormat.bullet;
-                          });
-                        },
-                      ),
-                      const SizedBox(
-                        width: 10,
-                      ),
-                      // BlockPicker(
-                      //   pickerColor: Colors.red, //default color
-                      //   onColorChanged: (Color color){ //on the color picked
-                      //     print(color);
-                      //   },
-                      // )
                     ],
+                  ),
+                ),
+              ),
+              const SizedBox(width: 25),
+              InkWell(
+                onTap: () {},
+                child: Container(
+                  height: 65,
+                  width: 65,
+                  decoration: BoxDecoration(
+                      color: AppColors.background,
+                      borderRadius: BorderRadius.circular(65)),
+                  child: Stack(
+                    children: [
+                      Center(
+                        child: SvgPicture.asset(
+                          AppIcons.editIcon,
+                          height: 22,
+                          width: 22,
+                        ),
+                      ),
+                      Positioned(
+                        bottom: 15,
+                        right: 15,
+                        child: SvgPicture.asset(
+                          AppIcons.miniPlus,
+                          height: 12,
+                          width: 12,
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+              ),
+            ],
+          ),
+        ),
+      ],
+    );
+  }
+
+  Column frontEditor(BuildContext context) {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Padding(
+          padding: const EdgeInsets.only(left: 35.0),
+          child: Text(
+            AppStrings.front,
+            style: AppTheme.themeData.textTheme.titleMedium,
+          ),
+        ),
+        Padding(
+          padding:
+          const EdgeInsets.only(bottom: 0, top: 26, left: 24, right: 24),
+          child: Container(
+            decoration: BoxDecoration(
+              border: Border.all(color: AppColors.borderGrey),
+              borderRadius: BorderRadius.circular(20),
+              color: Colors.white,
+            ),
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                Padding(
+                  padding: const EdgeInsets.only(left: 20),
+                  child: ClipRRect(
+                    borderRadius: BorderRadius.circular(20),
+                    child: ToolBar(
+                      mainAxisSize: MainAxisSize.min,
+                      toolBarColor: Colors.white,
+                      padding: const EdgeInsets.all(8),
+                      iconSize: 21,
+                      iconColor: AppColors.veryLightGrey,
+                      activeIconColor: Colors.black,
+                      controller: frontController,
+                      crossAxisAlignment: WrapCrossAlignment.start,
+                      direction: Axis.horizontal,
+                      toolBarConfig: const [
+                        ToolBarStyle.bold,
+                        ToolBarStyle.italic,
+                        ToolBarStyle.underline,
+                        ToolBarStyle.listOrdered,
+                        ToolBarStyle.listBullet,
+                      ],
+                      customButtons: [
+                        Padding(
+                          padding: const EdgeInsets.only(top: 3.0),
+                          child: InkWell(
+                            child: Container(
+                              decoration: BoxDecoration(
+                                  color: frontPickedColor,
+                                  borderRadius: BorderRadius.circular(4)),
+                              height: 17,
+                              width: 17,
+                            ),
+                            onTap: () {
+                              showFrontColorPicker(context);
+                            },
+                          ),
+                        )
+                      ],
+                    ),
                   ),
                 ),
                 Container(
@@ -330,30 +444,41 @@ class _WebCreateCardState extends State<WebCreateCard> {
                 ),
                 Padding(
                   padding:
-                      const EdgeInsets.symmetric(vertical: 8.0, horizontal: 19),
-                  child: TextField(
-                    controller: controller,
-                    maxLines: 5,
-                    style: TextStyle(
-                        fontStyle: currentTextFormat == TextFormat.italic
-                            ? FontStyle.italic
-                            : FontStyle.normal,
-                        fontWeight: currentTextFormat == TextFormat.bold
-                            ? FontWeight.bold
-                            : FontWeight.normal,
-                        decoration: currentTextFormat == TextFormat.underscore
-                            ? TextDecoration.underline
-                            : TextDecoration.none),
-                    decoration: const InputDecoration(
-                      errorBorder: InputBorder.none,
-                      focusedBorder: InputBorder.none,
-                      enabledBorder: InputBorder.none,
-                      border: InputBorder.none,
-                    ),
-                    onChanged: (text) {
+                  const EdgeInsets.symmetric(vertical: 8.0, horizontal: 10),
+                  child: QuillHtmlEditor(
+
+                    controller: frontController,
+                    isEnabled: true,
+                    ensureVisible: false,
+                    minHeight: 130,
+                    autoFocus: false,
+                    textStyle: AppTheme.themeData.textTheme.titleMedium!
+                        .copyWith(
+                        color: frontPickedColor,
+                        fontWeight: FontWeight.w300,
+                        fontSize: 17),
+                    hintTextAlign: TextAlign.start,
+                    padding: const EdgeInsets.only(left: 10, top: 10),
+                    hintTextPadding: const EdgeInsets.only(left: 20),
+                    backgroundColor: Colors.white,
+                    inputAction: InputAction.newline,
+                    // loadingBuilder: (context) {
+                    //   return const Center(
+                    //       child: CircularProgressIndicator(
+                    //     strokeWidth: 1,
+                    //     color: Colors.red,
+                    //   ));
+                    // },
+                    onFocusChanged: (focus) {
+                      debugPrint('has focus $focus');
                       setState(() {
-                        textLength =
-                            frontTextEditingController.text.length.toString();
+                        _frontHasFocus = focus;
+                      });
+                    },
+                    onTextChanged: (text) {
+                      setState(() {
+                        frontText = text;
+                        textLengthFront = text.replaceAll(RegExp(r'<[^>]*>'), '').length.toString();
                       });
                     },
                   ),
@@ -361,84 +486,171 @@ class _WebCreateCardState extends State<WebCreateCard> {
               ],
             ),
           ),
-          Align(
+        ),
+        Padding(
+          padding: const EdgeInsets.only(right: 24),
+          child: Align(
             alignment: Alignment.bottomRight,
             child: Padding(
               padding: const EdgeInsets.all(8.0),
-              child: Text('$textLength/400'),
+              child: Text('$textLengthFront/400'),
             ),
           ),
-          Padding(
-            padding: const EdgeInsets.only(left: 25.0),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.start,
-              children: [
-                InkWell(
-                  onTap: () {},
-                  child: Container(
-                    height: 65,
-                    width: 65,
-                    decoration: BoxDecoration(
-                        color: AppColors.background,
-                        borderRadius: BorderRadius.circular(65)),
-                    child: Stack(
-                      children: [
-                        Center(
-                          child: SvgPicture.asset(
-                            AppIcons.imageIcon,
-                            height: 22,
-                            width: 22,
-                          ),
+        ),
+        Padding(
+          padding: const EdgeInsets.only(left: 25.0),
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.start,
+            children: [
+              InkWell(
+                onTap: () {},
+                child: Container(
+                  height: 65,
+                  width: 65,
+                  decoration: BoxDecoration(
+                      color: AppColors.background,
+                      borderRadius: BorderRadius.circular(65)),
+                  child: Stack(
+                    children: [
+                      Center(
+                        child: SvgPicture.asset(
+                          AppIcons.imageIcon,
+                          height: 22,
+                          width: 22,
                         ),
-                        Positioned(
-                          bottom: 15,
-                          right: 15,
-                          child: SvgPicture.asset(
-                            AppIcons.miniPlus,
-                            height: 12,
-                            width: 12,
-                          ),
+                      ),
+                      Positioned(
+                        bottom: 15,
+                        right: 15,
+                        child: SvgPicture.asset(
+                          AppIcons.miniPlus,
+                          height: 12,
+                          width: 12,
                         ),
-                      ],
-                    ),
+                      ),
+                    ],
                   ),
                 ),
-                const SizedBox(width: 25),
-                InkWell(
-                  onTap: () {},
-                  child: Container(
-                    height: 65,
-                    width: 65,
-                    decoration: BoxDecoration(
-                        color: AppColors.background,
-                        borderRadius: BorderRadius.circular(65)),
-                    child: Stack(
-                      children: [
-                        Center(
-                          child: SvgPicture.asset(
-                            AppIcons.editIcon,
-                            height: 22,
-                            width: 22,
-                          ),
+              ),
+              const SizedBox(width: 25),
+              InkWell(
+                onTap: () {},
+                child: Container(
+                  height: 65,
+                  width: 65,
+                  decoration: BoxDecoration(
+                      color: AppColors.background,
+                      borderRadius: BorderRadius.circular(65)),
+                  child: Stack(
+                    children: [
+                      Center(
+                        child: SvgPicture.asset(
+                          AppIcons.editIcon,
+                          height: 22,
+                          width: 22,
                         ),
-                        Positioned(
-                          bottom: 15,
-                          right: 15,
-                          child: SvgPicture.asset(
-                            AppIcons.miniPlus,
-                            height: 12,
-                            width: 12,
-                          ),
+                      ),
+                      Positioned(
+                        bottom: 15,
+                        right: 15,
+                        child: SvgPicture.asset(
+                          AppIcons.miniPlus,
+                          height: 12,
+                          width: 12,
                         ),
-                      ],
-                    ),
+                      ),
+                    ],
                   ),
                 ),
-              ],
-            ),
+              ),
+            ],
           ),
-        ],
-      ),
+        ),
+      ],
     );
+  }
+
+  Future<dynamic> showFrontColorPicker(BuildContext context) {
+    return showDialog(
+        context: context,
+        builder: (_) {
+          return Dialog(
+            shape: const RoundedRectangleBorder(
+                borderRadius: BorderRadius.all(Radius.circular(15.0))),
+            surfaceTintColor: Colors.white,
+            backgroundColor: Colors.white,
+            child: Padding(
+              padding: const EdgeInsets.all(15.0),
+              child: SizedBox(
+                height: 180,
+                width: MediaQuery.of(context).size.width / 5,
+                child: SingleChildScrollView(
+                  child: Column(
+                    children: [
+                      BlockPicker(
+                        pickerColor: frontPickedColor,
+                        onColorChanged: (value) {
+                          setState(() {
+                            frontPickedColor = value;
+                          });
+                        },
+                      ),
+                      InkWell(
+                          onTap: () {
+                            router.pop();
+                          },
+                          child: const Text('OK')),
+                    ],
+                  ),
+                ),
+              ),
+            ),
+          );
+        });
+  }
+  Future<dynamic> showBackColorPicker(BuildContext context) {
+    return showDialog(
+        context: context,
+        builder: (_) {
+          return Dialog(
+            shape: const RoundedRectangleBorder(
+                borderRadius: BorderRadius.all(Radius.circular(15.0))),
+            surfaceTintColor: Colors.white,
+            backgroundColor: Colors.white,
+            child: Padding(
+              padding: const EdgeInsets.all(15.0),
+              child: SizedBox(
+                height: 180,
+                width: MediaQuery.of(context).size.width / 5,
+                child: SingleChildScrollView(
+                  child: Column(
+                    children: [
+                      BlockPicker(
+                        pickerColor: backPickedColor,
+                        onColorChanged: (value) {
+                          setState(() {
+                            backPickedColor = value;
+                          });
+                        },
+                      ),
+                      InkWell(
+                          onTap: () {
+                            router.pop();
+                          },
+                          child: const Text('OK')),
+                    ],
+                  ),
+                ),
+              ),
+            ),
+          );
+        });
+  }
+
+  @override
+  void dispose() {
+    frontController.dispose();
+    backController.dispose();
+    super.dispose();
   }
 }
