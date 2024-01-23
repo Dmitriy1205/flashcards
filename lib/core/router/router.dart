@@ -180,10 +180,10 @@ final GoRouter router = GoRouter(
         context: context,
         state: state,
         child: Cards(
-          collectionName:
-              (state.extra as Map<String, dynamic>?)?["collectionName"],
-          collectionId: (state.extra as Map<String, dynamic>?)?['collectionId'],
-        ),
+            collectionName:
+                (state.extra as Map<String, dynamic>?)?["collectionName"],
+            collectionId:
+                (state.extra as Map<String, dynamic>?)?['collectionId']),
       ),
     ),
     GoRoute(
@@ -192,9 +192,9 @@ final GoRouter router = GoRouter(
         context: context,
         state: state,
         child: Cards(
-          collectionId: state.uri.queryParameters['collectionId']!,
-          collectionName: state.uri.queryParameters['collectionName']!,
-        ),
+            collectionId: state.uri.queryParameters['collectionId']!,
+            collectionName: state.uri.queryParameters['collectionName']!,
+            sender: state.uri.queryParameters['sender']!),
       ),
     ),
     GoRoute(

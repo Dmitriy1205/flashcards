@@ -13,10 +13,14 @@ import 'create_edit_card.dart';
 
 class Cards extends StatefulWidget {
   const Cards(
-      {Key? key, required this.collectionId, required this.collectionName})
+      {Key? key,
+      required this.collectionId,
+      required this.collectionName,
+      this.sender})
       : super(key: key);
   final String collectionId;
   final String collectionName;
+  final String? sender;
 
   @override
   State<Cards> createState() => _CardsState();
@@ -28,6 +32,11 @@ class _CardsState extends State<Cards> {
   @override
   void initState() {
     super.initState();
+    if (widget.sender != null) {
+      print('sender ${widget.sender}');
+      context.read<CardsBloc>().add(CardsEvent.createSharedCards(
+          collectionId: widget.collectionId, sender: widget.sender!));
+    }
     context
         .read<CardsBloc>()
         .add(CardsEvent.initCard(collectionId: widget.collectionId));
@@ -44,7 +53,7 @@ class _CardsState extends State<Cards> {
             mainAxisSize: MainAxisSize.max,
             children: [
               GestureDetector(
-                onTap: (){
+                onTap: () {
                   context
                       .read<ListsBloc>()
                       .add(const ListsEvent.started(isEditMode: false));
@@ -237,7 +246,8 @@ class _CardsState extends State<Cards> {
                           Text(
                             widget.collectionName,
                             style: AppTheme.themeData.textTheme.titleMedium!
-                                .copyWith(fontSize: 18, fontWeight: FontWeight.w600),
+                                .copyWith(
+                                    fontSize: 18, fontWeight: FontWeight.w600),
                           ),
                           Text(
                             '${data.cardsList!.length} cards',
@@ -253,6 +263,7 @@ class _CardsState extends State<Cards> {
                   child: Container(
                     color: AppColors.background,
                     child: ListView.builder(
+                        physics: const BouncingScrollPhysics(),
                         itemBuilder: (context, i) {
                           CardEntity card = data.cardsList![i];
                           return Padding(
