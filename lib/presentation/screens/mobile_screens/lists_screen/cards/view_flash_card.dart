@@ -136,8 +136,8 @@ class _ViewFlashCardState extends State<ViewFlashCard> {
                                             horizontal: 50),
                                         child: Text(
                                           value >= 90
-                                              ? widget.card.front
-                                              : widget.card.back,
+                                              ? widget.card.front!
+                                              : widget.card.back!,
                                           textAlign: TextAlign.center,
                                           style: AppTheme
                                               .themeData.textTheme.headlineSmall!

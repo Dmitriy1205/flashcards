@@ -140,7 +140,7 @@ class CardServiceImpl extends CardService {
 
       List<CardEntity> cardsList =
           cards.docs.map((card) => CardEntity.fromJson(card.data())).toList();
-      cardsList.sort((a, b) => b.createdAt.compareTo(a.createdAt));
+      cardsList.sort((a, b) => b.createdAt!.compareTo(a.createdAt!));
       return cardsList;
 
     } catch (e) {

@@ -35,8 +35,8 @@ class _CreateEditCardState extends State<CreateEditCard> {
   void initState() {
     super.initState();
     if (widget.cardEntity != null) {
-      frontTextEditingController.text = widget.cardEntity!.front;
-      backTextEditingController.text = widget.cardEntity!.back;
+      frontTextEditingController.text = widget.cardEntity!.front!;
+      backTextEditingController.text = widget.cardEntity!.back!;
     }
   }
 
@@ -94,7 +94,7 @@ class _CreateEditCardState extends State<CreateEditCard> {
                             front: frontTextEditingController.text,
                             back: backTextEditingController.text,
                             collectionId: widget.collectionId,
-                            id: widget.cardEntity!.id);
+                            id: widget.cardEntity!.id!);
 
                         router.push(
                           '/view_card_mobile',

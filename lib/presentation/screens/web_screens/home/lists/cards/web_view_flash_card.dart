@@ -263,7 +263,7 @@ class _WebViewFlashCardState extends State<WebViewFlashCard> {
                                           CrossAxisAlignment.center,
                                           children: [
                                             Text(
-                                              card.front.replaceAll(RegExp(r'<[^>]*>'), ''),
+                                              card.front!.replaceAll(RegExp(r'<[^>]*>'), ''),
                                               textAlign: TextAlign.center,
                                               style: AppTheme.themeData.textTheme
                                                   .labelMedium!
@@ -271,7 +271,7 @@ class _WebViewFlashCardState extends State<WebViewFlashCard> {
                                                 color: AppColors.mainAccent,),
                                             ),
                                             Text(
-                                              card.back.replaceAll(RegExp(r'<[^>]*>'), ''),
+                                              card.back!.replaceAll(RegExp(r'<[^>]*>'), ''),
                                               style: AppTheme
                                                   .themeData.textTheme.labelSmall!
                                                   .copyWith(

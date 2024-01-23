@@ -134,14 +134,14 @@ class _WebEditCardState extends State<WebEditCard> {
                                     EditCardParam card = EditCardParam(
                                         front: frontText.toString(),
                                         back: backText.toString(),
-                                        collectionId: widget.card.collectionId,
-                                        id: widget.card.id);
+                                        collectionId: widget.card.collectionId!,
+                                        id: widget.card.id!);
                                     router.pop();
                                     context.read<CardsBloc>().add(
                                         CardsEvent.editCard(
                                             cardParam: card,
                                             collectionId:
-                                                widget.card.collectionId));
+                                                widget.card.collectionId!));
                                   }
                                 },
                               ))),

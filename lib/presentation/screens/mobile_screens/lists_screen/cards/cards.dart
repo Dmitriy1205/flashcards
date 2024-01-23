@@ -280,7 +280,7 @@ class _CardsState extends State<Cards> {
                                                 context
                                                     .read<CardsBloc>()
                                                     .cardsListToDelete
-                                                    .add(data.cardsList![i].id);
+                                                    .add(data.cardsList![i].id!);
                                               }
                                             });
                                           },
@@ -338,13 +338,13 @@ class _CardsState extends State<Cards> {
                                       },
                                       child: ListTile(
                                         title: Text(
-                                          card.front,
+                                          card.front!,
                                           style: AppTheme
                                               .themeData.textTheme.titleMedium!
                                               .copyWith(fontSize: 14),
                                         ),
                                         subtitle: Text(
-                                          card.back,
+                                          card.back!,
                                           style: AppTheme
                                               .themeData.textTheme.labelSmall!
                                               .copyWith(

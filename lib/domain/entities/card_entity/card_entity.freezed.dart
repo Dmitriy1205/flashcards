@@ -20,13 +20,13 @@ CardEntity _$CardEntityFromJson(Map<String, dynamic> json) {
 
 /// @nodoc
 mixin _$CardEntity {
-  String get id => throw _privateConstructorUsedError;
-  String get collectionId => throw _privateConstructorUsedError;
-  String get collectionName => throw _privateConstructorUsedError;
-  String get front => throw _privateConstructorUsedError;
-  String get back => throw _privateConstructorUsedError;
+  String? get id => throw _privateConstructorUsedError;
+  String? get collectionId => throw _privateConstructorUsedError;
+  String? get collectionName => throw _privateConstructorUsedError;
+  String? get front => throw _privateConstructorUsedError;
+  String? get back => throw _privateConstructorUsedError;
   @JsonKey(fromJson: FirebaseTimestampConverters.fromTimestamp)
-  DateTime get createdAt => throw _privateConstructorUsedError;
+  DateTime? get createdAt => throw _privateConstructorUsedError;
   String? get sharedFrom => throw _privateConstructorUsedError;
   List<String>? get shareWithId => throw _privateConstructorUsedError;
   List<String>? get frontImages => throw _privateConstructorUsedError;
@@ -45,13 +45,13 @@ abstract class $CardEntityCopyWith<$Res> {
       _$CardEntityCopyWithImpl<$Res, CardEntity>;
   @useResult
   $Res call(
-      {String id,
-      String collectionId,
-      String collectionName,
-      String front,
-      String back,
+      {String? id,
+      String? collectionId,
+      String? collectionName,
+      String? front,
+      String? back,
       @JsonKey(fromJson: FirebaseTimestampConverters.fromTimestamp)
-      DateTime createdAt,
+      DateTime? createdAt,
       String? sharedFrom,
       List<String>? shareWithId,
       List<String>? frontImages,
@@ -71,42 +71,42 @@ class _$CardEntityCopyWithImpl<$Res, $Val extends CardEntity>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? id = null,
-    Object? collectionId = null,
-    Object? collectionName = null,
-    Object? front = null,
-    Object? back = null,
-    Object? createdAt = null,
+    Object? id = freezed,
+    Object? collectionId = freezed,
+    Object? collectionName = freezed,
+    Object? front = freezed,
+    Object? back = freezed,
+    Object? createdAt = freezed,
     Object? sharedFrom = freezed,
     Object? shareWithId = freezed,
     Object? frontImages = freezed,
     Object? backImages = freezed,
   }) {
     return _then(_value.copyWith(
-      id: null == id
+      id: freezed == id
           ? _value.id
           : id // ignore: cast_nullable_to_non_nullable
-              as String,
-      collectionId: null == collectionId
+              as String?,
+      collectionId: freezed == collectionId
           ? _value.collectionId
           : collectionId // ignore: cast_nullable_to_non_nullable
-              as String,
-      collectionName: null == collectionName
+              as String?,
+      collectionName: freezed == collectionName
           ? _value.collectionName
           : collectionName // ignore: cast_nullable_to_non_nullable
-              as String,
-      front: null == front
+              as String?,
+      front: freezed == front
           ? _value.front
           : front // ignore: cast_nullable_to_non_nullable
-              as String,
-      back: null == back
+              as String?,
+      back: freezed == back
           ? _value.back
           : back // ignore: cast_nullable_to_non_nullable
-              as String,
-      createdAt: null == createdAt
+              as String?,
+      createdAt: freezed == createdAt
           ? _value.createdAt
           : createdAt // ignore: cast_nullable_to_non_nullable
-              as DateTime,
+              as DateTime?,
       sharedFrom: freezed == sharedFrom
           ? _value.sharedFrom
           : sharedFrom // ignore: cast_nullable_to_non_nullable
@@ -136,13 +136,13 @@ abstract class _$$CardEntityImplCopyWith<$Res>
   @override
   @useResult
   $Res call(
-      {String id,
-      String collectionId,
-      String collectionName,
-      String front,
-      String back,
+      {String? id,
+      String? collectionId,
+      String? collectionName,
+      String? front,
+      String? back,
       @JsonKey(fromJson: FirebaseTimestampConverters.fromTimestamp)
-      DateTime createdAt,
+      DateTime? createdAt,
       String? sharedFrom,
       List<String>? shareWithId,
       List<String>? frontImages,
@@ -160,42 +160,42 @@ class __$$CardEntityImplCopyWithImpl<$Res>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? id = null,
-    Object? collectionId = null,
-    Object? collectionName = null,
-    Object? front = null,
-    Object? back = null,
-    Object? createdAt = null,
+    Object? id = freezed,
+    Object? collectionId = freezed,
+    Object? collectionName = freezed,
+    Object? front = freezed,
+    Object? back = freezed,
+    Object? createdAt = freezed,
     Object? sharedFrom = freezed,
     Object? shareWithId = freezed,
     Object? frontImages = freezed,
     Object? backImages = freezed,
   }) {
     return _then(_$CardEntityImpl(
-      id: null == id
+      id: freezed == id
           ? _value.id
           : id // ignore: cast_nullable_to_non_nullable
-              as String,
-      collectionId: null == collectionId
+              as String?,
+      collectionId: freezed == collectionId
           ? _value.collectionId
           : collectionId // ignore: cast_nullable_to_non_nullable
-              as String,
-      collectionName: null == collectionName
+              as String?,
+      collectionName: freezed == collectionName
           ? _value.collectionName
           : collectionName // ignore: cast_nullable_to_non_nullable
-              as String,
-      front: null == front
+              as String?,
+      front: freezed == front
           ? _value.front
           : front // ignore: cast_nullable_to_non_nullable
-              as String,
-      back: null == back
+              as String?,
+      back: freezed == back
           ? _value.back
           : back // ignore: cast_nullable_to_non_nullable
-              as String,
-      createdAt: null == createdAt
+              as String?,
+      createdAt: freezed == createdAt
           ? _value.createdAt
           : createdAt // ignore: cast_nullable_to_non_nullable
-              as DateTime,
+              as DateTime?,
       sharedFrom: freezed == sharedFrom
           ? _value.sharedFrom
           : sharedFrom // ignore: cast_nullable_to_non_nullable
@@ -239,18 +239,18 @@ class _$CardEntityImpl implements _CardEntity {
       _$$CardEntityImplFromJson(json);
 
   @override
-  final String id;
+  final String? id;
   @override
-  final String collectionId;
+  final String? collectionId;
   @override
-  final String collectionName;
+  final String? collectionName;
   @override
-  final String front;
+  final String? front;
   @override
-  final String back;
+  final String? back;
   @override
   @JsonKey(fromJson: FirebaseTimestampConverters.fromTimestamp)
-  final DateTime createdAt;
+  final DateTime? createdAt;
   @override
   final String? sharedFrom;
   final List<String>? _shareWithId;
@@ -343,13 +343,13 @@ class _$CardEntityImpl implements _CardEntity {
 
 abstract class _CardEntity implements CardEntity {
   factory _CardEntity(
-      {required final String id,
-      required final String collectionId,
-      required final String collectionName,
-      required final String front,
-      required final String back,
+      {required final String? id,
+      required final String? collectionId,
+      required final String? collectionName,
+      required final String? front,
+      required final String? back,
       @JsonKey(fromJson: FirebaseTimestampConverters.fromTimestamp)
-      required final DateTime createdAt,
+      required final DateTime? createdAt,
       final String? sharedFrom,
       final List<String>? shareWithId,
       final List<String>? frontImages,
@@ -359,18 +359,18 @@ abstract class _CardEntity implements CardEntity {
       _$CardEntityImpl.fromJson;
 
   @override
-  String get id;
+  String? get id;
   @override
-  String get collectionId;
+  String? get collectionId;
   @override
-  String get collectionName;
+  String? get collectionName;
   @override
-  String get front;
+  String? get front;
   @override
-  String get back;
+  String? get back;
   @override
   @JsonKey(fromJson: FirebaseTimestampConverters.fromTimestamp)
-  DateTime get createdAt;
+  DateTime? get createdAt;
   @override
   String? get sharedFrom;
   @override

@@ -140,7 +140,7 @@ class _WebCreateCardState extends State<WebCreateCard> {
                                           front: frontText.toString(),
                                           back: backText.toString(),
                                           collectionId: widget.collectionId,
-                                          id: widget.card!.id);
+                                          id: widget.card!.id!);
                                       Navigator.pop(context);
                                       Navigator.pushReplacement(
                                           context,

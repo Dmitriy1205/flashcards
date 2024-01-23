@@ -287,7 +287,7 @@ class _WebCardsState extends State<WebCards> {
                                                           .read<CardsBloc>()
                                                           .state
                                                           .cardsList![i]
-                                                          .id);
+                                                          .id!);
                                                 }
                                               });
                                             },
@@ -354,7 +354,7 @@ class _WebCardsState extends State<WebCards> {
                                                     CrossAxisAlignment.start,
                                                     children: [
                                                       Text(
-                                                        card.front.replaceAll(RegExp(r'<[^>]*>'), ''),
+                                                        card.front!.replaceAll(RegExp(r'<[^>]*>'), ''),
                                                         style: AppTheme.themeData
                                                             .textTheme.titleSmall!
                                                             .copyWith(
@@ -362,7 +362,7 @@ class _WebCardsState extends State<WebCards> {
                                                                 .mainAccent),
                                                       ),
                                                       Text(
-                                                        card.back.replaceAll(RegExp(r'<[^>]*>'), ''),
+                                                        card.back!.replaceAll(RegExp(r'<[^>]*>'), ''),
                                                         style: AppTheme.themeData
                                                             .textTheme.labelSmall!
                                                             .copyWith(
@@ -691,7 +691,7 @@ class _WebCardsState extends State<WebCards> {
                                                       .read<CardsBloc>()
                                                       .state
                                                       .cardsList![i]
-                                                      .id);
+                                                      .id!);
                                             }
                                           });
                                         },
@@ -758,7 +758,7 @@ class _WebCardsState extends State<WebCards> {
                                                 CrossAxisAlignment.start,
                                                 children: [
                                                   Text(
-                                                    card.front.replaceAll(RegExp(r'<[^>]*>'), ''),
+                                                    card.front!.replaceAll(RegExp(r'<[^>]*>'), ''),
                                                     style: AppTheme.themeData
                                                         .textTheme.titleSmall!
                                                         .copyWith(
@@ -766,7 +766,7 @@ class _WebCardsState extends State<WebCards> {
                                                             .mainAccent),
                                                   ),
                                                   Text(
-                                                    card.back.replaceAll(RegExp(r'<[^>]*>'), ''),
+                                                    card.back!.replaceAll(RegExp(r'<[^>]*>'), ''),
                                                     style: AppTheme.themeData
                                                         .textTheme.labelSmall!
                                                         .copyWith(
