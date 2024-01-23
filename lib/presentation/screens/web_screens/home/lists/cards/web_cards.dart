@@ -99,12 +99,16 @@ class _WebCardsState extends State<WebCards> {
                           DropdownMenuItem<String>(
                             value: 'false',
                             onTap: () {
-                              print('shareCollection');
                               context.read<CardsBloc>().add(
                                   CardsEvent.shareCollection(
                                       collectionId: widget.collectionId,
                                       collectionName: widget.collectionName));
-                              setState(() {});
+                              ScaffoldMessenger.of(context).showSnackBar(
+                                const SnackBar(
+                                  content:
+                                      Text('The link is copied to clipboard'),
+                                ),
+                              );
                             },
                             child: Row(
                               children: [
@@ -393,6 +397,8 @@ class _WebCardsState extends State<WebCards> {
                                                               .start,
                                                       children: [
                                                         Text(
+                                                          overflow: TextOverflow
+                                                              .ellipsis,
                                                           card.front,
                                                           style: AppTheme
                                                               .themeData
@@ -403,6 +409,8 @@ class _WebCardsState extends State<WebCards> {
                                                                       .mainAccent),
                                                         ),
                                                         Text(
+                                                          overflow: TextOverflow
+                                                              .ellipsis,
                                                           card.back,
                                                           style: AppTheme
                                                               .themeData
@@ -827,6 +835,9 @@ class _WebCardsState extends State<WebCards> {
                                                       CrossAxisAlignment.start,
                                                   children: [
                                                     Text(
+                                                      overflow:
+                                                          TextOverflow.ellipsis,
+                                                      maxLines: 2,
                                                       card.front,
                                                       style: AppTheme.themeData
                                                           .textTheme.titleSmall!
@@ -835,6 +846,9 @@ class _WebCardsState extends State<WebCards> {
                                                                   .mainAccent),
                                                     ),
                                                     Text(
+                                                      overflow:
+                                                          TextOverflow.ellipsis,
+                                                      maxLines: 2,
                                                       card.back,
                                                       style: AppTheme.themeData
                                                           .textTheme.labelSmall!

@@ -188,4 +188,11 @@ class _CreateEditCardState extends State<CreateEditCard> {
       ),
     );
   }
+
+  @override
+  void dispose() {
+    frontTextEditingController.dispose();
+    backTextEditingController.dispose();
+    super.dispose();
+  }
 }

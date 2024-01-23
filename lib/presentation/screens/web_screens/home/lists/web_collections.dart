@@ -2,6 +2,7 @@ import 'package:flashcards/core/const/colors.dart';
 import 'package:flashcards/core/const/strings.dart';
 import 'package:flashcards/core/themes/theme.dart';
 import 'package:flashcards/presentation/blocs/web_list/web_list_bloc.dart';
+import 'package:flashcards/presentation/widgets/create_edit_collection.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
@@ -232,6 +233,7 @@ class _WebCollectionsState extends State<WebCollections> {
                     SizedBox(
                       height: 45,
                       child: TextField(
+                        maxLength: 29,
                         textAlign: TextAlign.start,
                         textAlignVertical: TextAlignVertical.top,
                         style: AppTheme.themeData.textTheme.labelMedium!
@@ -240,6 +242,7 @@ class _WebCollectionsState extends State<WebCollections> {
                                 fontWeight: FontWeight.w700),
                         controller: nameTextEditingController..text = collectionName,
                         decoration: InputDecoration(
+                            counterText: '',
                             filled: true,
                             focusColor: AppColors.mainAccent,
                             enabledBorder: OutlineInputBorder(

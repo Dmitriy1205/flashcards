@@ -275,7 +275,7 @@ class _WebListsScreenState extends State<WebListsScreen> {
                     ),
                     SizedBox(
                       height: 45,
-                      child: TextField(
+                      child: TextField(maxLength: 29,
                         textAlign: TextAlign.start,
                         textAlignVertical: TextAlignVertical.top,
                         style: AppTheme.themeData.textTheme.labelMedium!
@@ -284,6 +284,7 @@ class _WebListsScreenState extends State<WebListsScreen> {
                                 fontWeight: FontWeight.w700),
                         controller: nameTextEditingController,
                         decoration: InputDecoration(
+                            counterText: '',
                             filled: true,
                             focusColor: AppColors.mainAccent,
                             enabledBorder: OutlineInputBorder(
