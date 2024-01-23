@@ -21,7 +21,6 @@ class Collections extends StatelessWidget {
     return Container(
       color: AppColors.background,
       child: ListView.builder(
-          physics: const BouncingScrollPhysics(),
           itemBuilder: (context, i) {
             return Padding(
               padding: const EdgeInsets.only(
