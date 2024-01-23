@@ -43,7 +43,7 @@ class Collections extends StatelessWidget {
                               context
                                   .read<ListsBloc>()
                                   .listIdToDelete
-                                  .add(collectionsList[i].id);
+                                  .add(collectionsList[i].id!);
                             }
                             context.read<ListsBloc>().add(ListsEvent.started(
                                   isEditMode: isEditMode,
@@ -99,7 +99,7 @@ class Collections extends StatelessWidget {
                         }
                       },
                       title: Text(
-                        collectionsList[i].collectionName,
+                        collectionsList[i].collectionName!,
                         style: AppTheme.themeData.textTheme.titleMedium!
                             .copyWith(fontSize: 18),
                       ),

@@ -857,7 +857,7 @@ mixin _$WebListState {
     required TResult Function() initial,
     required TResult Function() loading,
     required TResult Function(
-            List<CollectionEntity> collectionsList, bool isEdit)
+            List<CollectionEntity>? collectionsList, bool isEdit)
         loaded,
     required TResult Function(String error) error,
   }) =>
@@ -866,7 +866,7 @@ mixin _$WebListState {
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? initial,
     TResult? Function()? loading,
-    TResult? Function(List<CollectionEntity> collectionsList, bool isEdit)?
+    TResult? Function(List<CollectionEntity>? collectionsList, bool isEdit)?
         loaded,
     TResult? Function(String error)? error,
   }) =>
@@ -875,7 +875,7 @@ mixin _$WebListState {
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? initial,
     TResult Function()? loading,
-    TResult Function(List<CollectionEntity> collectionsList, bool isEdit)?
+    TResult Function(List<CollectionEntity>? collectionsList, bool isEdit)?
         loaded,
     TResult Function(String error)? error,
     required TResult orElse(),
@@ -967,7 +967,7 @@ class _$InitialImpl extends _Initial {
     required TResult Function() initial,
     required TResult Function() loading,
     required TResult Function(
-            List<CollectionEntity> collectionsList, bool isEdit)
+            List<CollectionEntity>? collectionsList, bool isEdit)
         loaded,
     required TResult Function(String error) error,
   }) {
@@ -979,7 +979,7 @@ class _$InitialImpl extends _Initial {
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? initial,
     TResult? Function()? loading,
-    TResult? Function(List<CollectionEntity> collectionsList, bool isEdit)?
+    TResult? Function(List<CollectionEntity>? collectionsList, bool isEdit)?
         loaded,
     TResult? Function(String error)? error,
   }) {
@@ -991,7 +991,7 @@ class _$InitialImpl extends _Initial {
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? initial,
     TResult Function()? loading,
-    TResult Function(List<CollectionEntity> collectionsList, bool isEdit)?
+    TResult Function(List<CollectionEntity>? collectionsList, bool isEdit)?
         loaded,
     TResult Function(String error)? error,
     required TResult orElse(),
@@ -1086,7 +1086,7 @@ class _$LoadingImpl extends _Loading {
     required TResult Function() initial,
     required TResult Function() loading,
     required TResult Function(
-            List<CollectionEntity> collectionsList, bool isEdit)
+            List<CollectionEntity>? collectionsList, bool isEdit)
         loaded,
     required TResult Function(String error) error,
   }) {
@@ -1098,7 +1098,7 @@ class _$LoadingImpl extends _Loading {
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? initial,
     TResult? Function()? loading,
-    TResult? Function(List<CollectionEntity> collectionsList, bool isEdit)?
+    TResult? Function(List<CollectionEntity>? collectionsList, bool isEdit)?
         loaded,
     TResult? Function(String error)? error,
   }) {
@@ -1110,7 +1110,7 @@ class _$LoadingImpl extends _Loading {
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? initial,
     TResult Function()? loading,
-    TResult Function(List<CollectionEntity> collectionsList, bool isEdit)?
+    TResult Function(List<CollectionEntity>? collectionsList, bool isEdit)?
         loaded,
     TResult Function(String error)? error,
     required TResult orElse(),
@@ -1170,7 +1170,7 @@ abstract class _$$LoadedImplCopyWith<$Res> {
           _$LoadedImpl value, $Res Function(_$LoadedImpl) then) =
       __$$LoadedImplCopyWithImpl<$Res>;
   @useResult
-  $Res call({List<CollectionEntity> collectionsList, bool isEdit});
+  $Res call({List<CollectionEntity>? collectionsList, bool isEdit});
 }
 
 /// @nodoc
@@ -1184,14 +1184,14 @@ class __$$LoadedImplCopyWithImpl<$Res>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? collectionsList = null,
+    Object? collectionsList = freezed,
     Object? isEdit = null,
   }) {
     return _then(_$LoadedImpl(
-      collectionsList: null == collectionsList
+      collectionsList: freezed == collectionsList
           ? _value._collectionsList
           : collectionsList // ignore: cast_nullable_to_non_nullable
-              as List<CollectionEntity>,
+              as List<CollectionEntity>?,
       isEdit: null == isEdit
           ? _value.isEdit
           : isEdit // ignore: cast_nullable_to_non_nullable
@@ -1204,17 +1204,19 @@ class __$$LoadedImplCopyWithImpl<$Res>
 
 class _$LoadedImpl extends _Loaded {
   const _$LoadedImpl(
-      {required final List<CollectionEntity> collectionsList,
+      {required final List<CollectionEntity>? collectionsList,
       required this.isEdit})
       : _collectionsList = collectionsList,
         super._();
 
-  final List<CollectionEntity> _collectionsList;
+  final List<CollectionEntity>? _collectionsList;
   @override
-  List<CollectionEntity> get collectionsList {
+  List<CollectionEntity>? get collectionsList {
+    final value = _collectionsList;
+    if (value == null) return null;
     if (_collectionsList is EqualUnmodifiableListView) return _collectionsList;
     // ignore: implicit_dynamic_type
-    return EqualUnmodifiableListView(_collectionsList);
+    return EqualUnmodifiableListView(value);
   }
 
   @override
@@ -1251,7 +1253,7 @@ class _$LoadedImpl extends _Loaded {
     required TResult Function() initial,
     required TResult Function() loading,
     required TResult Function(
-            List<CollectionEntity> collectionsList, bool isEdit)
+            List<CollectionEntity>? collectionsList, bool isEdit)
         loaded,
     required TResult Function(String error) error,
   }) {
@@ -1263,7 +1265,7 @@ class _$LoadedImpl extends _Loaded {
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? initial,
     TResult? Function()? loading,
-    TResult? Function(List<CollectionEntity> collectionsList, bool isEdit)?
+    TResult? Function(List<CollectionEntity>? collectionsList, bool isEdit)?
         loaded,
     TResult? Function(String error)? error,
   }) {
@@ -1275,7 +1277,7 @@ class _$LoadedImpl extends _Loaded {
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? initial,
     TResult Function()? loading,
-    TResult Function(List<CollectionEntity> collectionsList, bool isEdit)?
+    TResult Function(List<CollectionEntity>? collectionsList, bool isEdit)?
         loaded,
     TResult Function(String error)? error,
     required TResult orElse(),
@@ -1326,11 +1328,11 @@ class _$LoadedImpl extends _Loaded {
 
 abstract class _Loaded extends WebListState {
   const factory _Loaded(
-      {required final List<CollectionEntity> collectionsList,
+      {required final List<CollectionEntity>? collectionsList,
       required final bool isEdit}) = _$LoadedImpl;
   const _Loaded._() : super._();
 
-  List<CollectionEntity> get collectionsList;
+  List<CollectionEntity>? get collectionsList;
   bool get isEdit;
   @JsonKey(ignore: true)
   _$$LoadedImplCopyWith<_$LoadedImpl> get copyWith =>
@@ -1404,7 +1406,7 @@ class _$ErrorImpl extends _Error {
     required TResult Function() initial,
     required TResult Function() loading,
     required TResult Function(
-            List<CollectionEntity> collectionsList, bool isEdit)
+            List<CollectionEntity>? collectionsList, bool isEdit)
         loaded,
     required TResult Function(String error) error,
   }) {
@@ -1416,7 +1418,7 @@ class _$ErrorImpl extends _Error {
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? initial,
     TResult? Function()? loading,
-    TResult? Function(List<CollectionEntity> collectionsList, bool isEdit)?
+    TResult? Function(List<CollectionEntity>? collectionsList, bool isEdit)?
         loaded,
     TResult? Function(String error)? error,
   }) {
@@ -1428,7 +1430,7 @@ class _$ErrorImpl extends _Error {
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? initial,
     TResult Function()? loading,
-    TResult Function(List<CollectionEntity> collectionsList, bool isEdit)?
+    TResult Function(List<CollectionEntity>? collectionsList, bool isEdit)?
         loaded,
     TResult Function(String error)? error,
     required TResult orElse(),

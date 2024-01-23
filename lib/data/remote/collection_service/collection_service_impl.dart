@@ -96,7 +96,7 @@ class CollectionServiceImpl extends CollectionServiceContract {
         return collectionEntity.copyWith(cards: cardList);
       }));
 
-      collectionList.sort((a, b) => b.createdAt.compareTo(a.createdAt));
+      collectionList.sort((a, b) => b.createdAt!.compareTo(a.createdAt!));
       return collectionList;
     } catch (e) {
       throw Exception("Exception fetchCollections $e");

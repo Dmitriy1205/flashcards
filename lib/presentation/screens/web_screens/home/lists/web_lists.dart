@@ -55,7 +55,8 @@ class _WebListsScreenState extends State<WebListsScreen> {
               ),
             ),
             backgroundColor: AppColors.background,
-            body: state.maybeMap(
+            body: state.maybeMap(error: (e)=>Center(child: Text(e.error)),
+
               loading: (_) => const LoadingIndicator(),
               orElse: () => WebCollections(),
             ),

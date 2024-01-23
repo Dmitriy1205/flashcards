@@ -17,6 +17,6 @@ class WebListState with _$WebListState {
       });
   const factory WebListState.initial() = _Initial;
   const factory WebListState.loading() = _Loading;
-  const factory WebListState.loaded({required List<CollectionEntity> collectionsList,required bool isEdit,}) = _Loaded;
+  const factory WebListState.loaded({required List<CollectionEntity>? collectionsList,required bool isEdit,}) = _Loaded;
   const factory WebListState.error({required String error}) = _Error;
 }

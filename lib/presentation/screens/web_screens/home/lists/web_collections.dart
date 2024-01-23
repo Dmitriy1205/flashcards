@@ -60,7 +60,7 @@ class _WebCollectionsState extends State<WebCollections> {
                                         .read<WebListBloc>()
                                         .state
                                         .collectionsList![i]
-                                        .id);
+                                        .id!);
                               }
                             });
                           },
@@ -129,7 +129,7 @@ class _WebCollectionsState extends State<WebCollections> {
                             .read<WebListBloc>()
                             .state
                             .collectionsList![i]
-                            .collectionName,
+                            .collectionName!,
                         style: AppTheme.themeData.textTheme.titleMedium!
                             .copyWith(fontSize: 18, fontWeight: FontWeight.w600),
                       ),
@@ -151,11 +151,11 @@ class _WebCollectionsState extends State<WebCollections> {
                                         .read<WebListBloc>()
                                         .state
                                         .collectionsList![i]
-                                        .id, collectionName: context
+                                        .id!, collectionName: context
                                       .read<WebListBloc>()
                                       .state
                                       .collectionsList![i]
-                                      .collectionName,);
+                                      .collectionName!,);
                               },
                               svgIcon: AppIcons.pen,
                               color: AppColors.mainAccent,
