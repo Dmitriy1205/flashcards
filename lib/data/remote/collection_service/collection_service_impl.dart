@@ -25,24 +25,26 @@ class CollectionServiceImpl extends CollectionServiceContract {
 
   @override
   Future<void> createCollection({required String collectionName}) async {
-    print("createCollection $collectionName");
+    try{
+      final doc = _fireStore
+          .collection(FirestoreCollections.users)
+          .doc(_firebaseAuth.currentUser!.uid)
+          .collection(FirestoreCollections.collections)
+          .doc();
+      await doc.set({
+        "collectionName": collectionName,
+        "id": doc.id,
+        "createdAt": FieldValue.serverTimestamp()
+      });
+    }  on FirebaseException catch(e){
+      throw Exception("Exception createCollection $e");
 
-    final doc = _fireStore
-        .collection(FirestoreCollections.users)
-        .doc(_firebaseAuth.currentUser!.uid)
-        .collection(FirestoreCollections.collections)
-        .doc();
-    await doc.set({
-      "collectionName": collectionName,
-      "id": doc.id,
-      "createdAt": FieldValue.serverTimestamp()
-    });
+    }
   }
 
   @override
   Future<void> editCollection(
       {required String collectionName, required String collectionId}) async {
-    print(' editCollection collectionId $collectionId');
     try {
       final collections = _fireStore
           .collection(FirestoreCollections.users)
@@ -52,7 +54,7 @@ class CollectionServiceImpl extends CollectionServiceContract {
       await collections
           .doc(collectionId)
           .update({'collectionName': collectionName});
-    } catch (e) {
+    }  on FirebaseException catch (e) {
       throw Exception("Exception deleteCollections $e");
     }
   }
@@ -60,7 +62,6 @@ class CollectionServiceImpl extends CollectionServiceContract {
   @override
   Future<void> deleteCollections(
       {required List<String> collectionsListToDelete}) async {
-    print('collectionsListToDelete ${collectionsListToDelete.length}');
     try {
       final collections = _fireStore
           .collection(FirestoreCollections.users)
@@ -98,7 +99,7 @@ class CollectionServiceImpl extends CollectionServiceContract {
 
       collectionList.sort((a, b) => b.createdAt.compareTo(a.createdAt));
       return collectionList;
-    } catch (e) {
+    } on FirebaseException catch (e) {
       throw Exception("Exception fetchCollections $e");
     }
   }
