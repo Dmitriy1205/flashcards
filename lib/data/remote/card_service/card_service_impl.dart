@@ -67,14 +67,17 @@ class CardServiceImpl extends CardService {
           .collection(FirestoreCollections.collections)
           .doc(collectionId);
 
-     await sharedCollection.get().then((value) => collection.set(value.data()!));
+      await sharedCollection
+          .get()
+          .then((value) => collection.set(value.data()!));
       await sharedCollection
           .collection(FirestoreCollections.cards)
           .get()
           .then((value) => value.docs.forEach((element) {
                 collection
                     .collection(AppStrings.cards.toLowerCase())
-                    .add(element.data());
+                    .doc(element.get('id'))
+                    .set(element.data());
               }));
     } on FirebaseException catch (e) {
       throw Exception("Exception createSharedCards $e");

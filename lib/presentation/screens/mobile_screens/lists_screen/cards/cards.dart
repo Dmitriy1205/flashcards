@@ -36,6 +36,7 @@ class _CardsState extends State<Cards> {
       print('sender ${widget.sender}');
       context.read<CardsBloc>().add(CardsEvent.createSharedCards(
           collectionId: widget.collectionId, sender: widget.sender!));
+
     }
     context
         .read<CardsBloc>()
