@@ -391,44 +391,72 @@ class _CardsState extends State<Cards> {
       floatingActionButton: context.watch<CardsBloc>().isEditMode
           ? Padding(
               padding: const EdgeInsets.only(bottom: 60, right: 20),
-              child: GestureDetector(
-                onTap: () {
-                  context.read<CardsBloc>().add(CardsEvent.deleteSelectedCards(
-                      cardsIdToDelete:
-                          context.read<CardsBloc>().cardsListToDelete,
-                      collectionId: widget.collectionId));
-                  context.read<CardsBloc>().isEditMode = false;
-                },
-                child: SizedBox(
-                  height: 76,
-                  width: 76,
-                  child: SvgPicture.asset(
-                    AppIcons.redBucket,
-                    height: 18,
-                    width: 9,
+              child: Stack(
+                children: [
+                  SizedBox(
+                    height: 76,
+                    width: 76,
+                    child: SvgPicture.asset(
+                      AppIcons.redBucket,
+                      height: 18,
+                      width: 9,
+                    ),
                   ),
-                ),
+                  Material(
+                    color: Colors.transparent,
+                    borderRadius: BorderRadius.circular(32),
+                    child: InkWell(
+                        borderRadius: BorderRadius.circular(32),
+                        onTap: () {
+                          context.read<CardsBloc>().add(CardsEvent.deleteSelectedCards(
+                              cardsIdToDelete:
+                              context.read<CardsBloc>().cardsListToDelete,
+                              collectionId: widget.collectionId));
+                          context.read<CardsBloc>().isEditMode = false;
+                        },
+                        child: Container(
+                            width: 76,
+                            height: 76,
+                            color: Colors.transparent
+                        )
+                    ),
+                  ),
+                ],
               ),
             )
           : Padding(
               padding: const EdgeInsets.only(bottom: 60, right: 20),
-              child: GestureDetector(
-                onTap: () {
-                  Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                          builder: (context) => CreateEditCard(
-                              collectionId: widget.collectionId)));
-                },
-                child: SizedBox(
-                  height: 76,
-                  width: 76,
-                  child: SvgPicture.asset(
-                    AppIcons.addCard,
-                    height: 18,
-                    width: 9,
+              child: Stack(
+                children: [
+                  SizedBox(
+                    height: 76,
+                    width: 76,
+                    child: SvgPicture.asset(
+                      AppIcons.addCard,
+                      height: 18,
+                      width: 9,
+                    ),
                   ),
-                ),
+                  Material(
+                    color: Colors.transparent,
+                    borderRadius: BorderRadius.circular(32),
+                    child: InkWell(
+                        borderRadius: BorderRadius.circular(32),
+                        onTap: () {
+                          Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) => CreateEditCard(
+                                      collectionId: widget.collectionId)));
+                        },
+                        child: Container(
+                            width: 76,
+                            height: 76,
+                            color: Colors.transparent
+                        )
+                    ),
+                  ),
+                ],
               ),
             ),
     );

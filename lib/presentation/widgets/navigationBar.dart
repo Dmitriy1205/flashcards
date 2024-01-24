@@ -20,9 +20,6 @@ class CustomNavigationBar extends StatefulWidget {
 class _CustomNavigationBarState extends State<CustomNavigationBar> {
   int pageIndex = 0;
   TextEditingController nameTextEditingController = TextEditingController();
-  Color _color = AppColors.green;
-  double _height = 76;
-  double _width = 76;
 
   @override
   Widget build(BuildContext context) {
@@ -120,44 +117,29 @@ class _CustomNavigationBarState extends State<CustomNavigationBar> {
                         )
                       : Padding(
                           padding: const EdgeInsets.only(bottom: 20.0),
-                          child: GestureDetector(
-                            // borderRadius:
-                            //     const BorderRadius.all(Radius.circular(35)),
-                            onTapDown: (_) {
-                              setState(() {
-                                _color == AppColors.red
-                                    ? _color = AppColors.green
-                                    : _color = AppColors.red;
-                                _height = 85;
-                                _width = 85;
-                              });
-                              // CreateEditCollectionDialog().dialog(context);
-                            },
-                            onTapUp: (_) {
-                              setState(() {
-                                _color == AppColors.red
-                                    ? _color = AppColors.green
-                                    : _color = AppColors.red;
-                                _height = 76;
-                                _width = 76;
-                              });
-                              // CreateEditCollectionDialog().dialog(context);
-                            },
-                            child: AnimatedContainer(
-                              duration: const Duration(milliseconds: 100),
-                              height: _height,
-                              width: _width,
-                              decoration: BoxDecoration(
-                                borderRadius:
-                                    const BorderRadius.all(Radius.circular(35)),
-                                color: _color,
-                              ),
-                              child: SvgPicture.asset(
+                          child: Stack(
+                            children: [
+                              SvgPicture.asset(
                                 AppIcons.addCollection,
-                                height: _height,
-                                width: _width,
+                                height: 76,
+                                width: 76,
                               ),
-                            ),
+                              Material(
+                                color: Colors.transparent,
+                                borderRadius: BorderRadius.circular(32),
+                                child: InkWell(
+                                    borderRadius: BorderRadius.circular(32),
+                                    onTap: () {
+                                      CreateEditCollectionDialog().dialog(context);
+                                    },
+                                    child: Container(
+                                      width: 76,
+                                      height: 76,
+                                      color: Colors.transparent
+                                    )
+                                ),
+                              ),
+                            ],
                           ),
                         )
 
