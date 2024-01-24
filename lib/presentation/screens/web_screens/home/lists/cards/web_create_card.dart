@@ -83,6 +83,7 @@ class _WebCreateCardState extends State<WebCreateCard> {
         constraints:
             BoxConstraints(minWidth: MediaQuery.of(context).size.width),
         child: SingleChildScrollView(
+          physics: const AlwaysScrollableScrollPhysics(),
           child: Padding(
             padding: EdgeInsets.symmetric(
                 vertical: 39.0,

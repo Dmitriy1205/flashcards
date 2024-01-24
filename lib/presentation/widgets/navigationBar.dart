@@ -20,11 +20,14 @@ class CustomNavigationBar extends StatefulWidget {
 class _CustomNavigationBarState extends State<CustomNavigationBar> {
   int pageIndex = 0;
   TextEditingController nameTextEditingController = TextEditingController();
+  Color _color = AppColors.green;
+  double _height = 76;
+  double _width = 76;
 
   @override
   Widget build(BuildContext context) {
     return SizedBox(
-      height: 113,
+      height: 120,
       child: Stack(
         children: [
           Positioned(
@@ -117,24 +120,73 @@ class _CustomNavigationBarState extends State<CustomNavigationBar> {
                         )
                       : Padding(
                           padding: const EdgeInsets.only(bottom: 20.0),
-                          child: InkWell(splashColor: AppColors.greenBlack,
-                            onTap: () {
-                              CreateEditCollectionDialog().dialog(context);
+                          child: GestureDetector(
+                            // borderRadius:
+                            //     const BorderRadius.all(Radius.circular(35)),
+                            onTapDown: (_) {
+                              setState(() {
+                                _color == AppColors.red
+                                    ? _color = AppColors.green
+                                    : _color = AppColors.red;
+                                _height = 85;
+                                _width = 85;
+                              });
+                              // CreateEditCollectionDialog().dialog(context);
                             },
-                            child: SizedBox(
-                              height: 76,
-                              width: 76,
+                            onTapUp: (_) {
+                              setState(() {
+                                _color == AppColors.red
+                                    ? _color = AppColors.green
+                                    : _color = AppColors.red;
+                                _height = 76;
+                                _width = 76;
+                              });
+                              // CreateEditCollectionDialog().dialog(context);
+                            },
+                            child: AnimatedContainer(
+                              duration: const Duration(milliseconds: 100),
+                              height: _height,
+                              width: _width,
+                              decoration: BoxDecoration(
+                                borderRadius:
+                                    const BorderRadius.all(Radius.circular(35)),
+                                color: _color,
+                              ),
                               child: SvgPicture.asset(
                                 AppIcons.addCollection,
-                                height: 18,
-                                width: 9,
+                                height: _height,
+                                width: _width,
                               ),
                             ),
                           ),
-                        ),
-                )
+                        )
+
+                  // : Padding(
+                  //     padding: const EdgeInsets.only(bottom: 20.0),
+                  //     child: Material(
+                  //       color: Colors.grey.withOpacity(0.5),
+                  //       child: InkWell(
+                  //         borderRadius: BorderRadius.all(Radius.circular(35)),
+                  //         splashColor: AppColors.red,
+                  //         onTap: () {
+                  //           // CreateEditCollectionDialog().dialog(context);
+                  //         },
+                  //         child: SizedBox(
+                  //           height: 76,
+                  //           width: 76,
+                  //           child: SvgPicture.asset(
+                  //             AppIcons.addCollection,
+                  //             height: 18,
+                  //             width: 9,
+                  //           ),
+                  //         ),
+                  //       ),
+                  //     ),
+                  //   ),
+                  )
               : const SizedBox()
         ],
       ),
     );
-  }}
+  }
+}

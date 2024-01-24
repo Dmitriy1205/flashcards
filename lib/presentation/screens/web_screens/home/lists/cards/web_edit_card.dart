@@ -16,7 +16,6 @@ import '../../../../../../core/router/router.dart';
 import '../../../../../../domain/params/card_param/edit_card_param.dart';
 import '../../../../../blocs/cards/cards_bloc.dart';
 
-
 class WebEditCard extends StatefulWidget {
   const WebEditCard({
     Key? key,
@@ -33,10 +32,7 @@ class _WebEditCardState extends State<WebEditCard> {
   bool _hasFocus = false;
 
   void unFocusEditor() => controller.unFocus();
-  final customToolBarList = [
-
-
-  ];
+  final customToolBarList = [];
 
   final _toolbarColor = Colors.grey.shade200;
   final _backgroundColor = Colors.white70;
@@ -49,7 +45,6 @@ class _WebEditCardState extends State<WebEditCard> {
   final _hintTextStyle = const TextStyle(
       fontSize: 18, color: Colors.black38, fontWeight: FontWeight.normal);
 
-
   final TextEditingController frontTextEditingController =
       TextEditingController();
 
@@ -60,10 +55,8 @@ class _WebEditCardState extends State<WebEditCard> {
   TextFormat currentTextFormat = TextFormat.normal;
   ParagraphFormat currentParagraphFormat = ParagraphFormat.normal;
 
-
   @override
   void initState() {
-
     controller = QuillEditorController();
     controller.onTextChanged((text) {
       debugPrint('listening to $text');
@@ -108,6 +101,7 @@ class _WebEditCardState extends State<WebEditCard> {
         color: AppColors.background,
         child: Center(
           child: SingleChildScrollView(
+            physics: const AlwaysScrollableScrollPhysics(),
             child: Padding(
               padding: const EdgeInsets.symmetric(vertical: 39.0),
               child: Container(
@@ -118,7 +112,6 @@ class _WebEditCardState extends State<WebEditCard> {
                     borderRadius: BorderRadius.circular(10)),
                 child: Column(
                   children: [
-
                     // ToolBar(
                     //   toolBarColor: _toolbarColor,
                     //   padding: const EdgeInsets.all(8),
