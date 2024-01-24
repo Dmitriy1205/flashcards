@@ -1,17 +1,20 @@
 import 'dart:math';
+
 import 'package:flashcards/core/const/colors.dart';
 import 'package:flashcards/core/const/icons.dart';
 import 'package:flashcards/core/const/strings.dart';
 import 'package:flashcards/core/router/router.dart';
 import 'package:flashcards/core/themes/theme.dart';
 import 'package:flashcards/domain/entities/card_entity/card_entity.dart';
-import 'package:flashcards/presentation/blocs/cards/cards_bloc.dart';
+import 'package:flashcards/domain/entities/collection_entity/collection_entity.dart';
 import 'package:flashcards/presentation/widgets/app_round_button.dart';
 import 'package:flashcards/presentation/widgets/loading_indicator.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_html/flutter_html.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+
+import '../../../../../blocs/cards/cards_bloc.dart';
 
 class WebViewFlashCard extends StatefulWidget {
   const WebViewFlashCard(
@@ -35,15 +38,13 @@ class _WebViewFlashCardState extends State<WebViewFlashCard> {
         collectionId: widget.card.collectionId,
         front: widget.card.front,
         back: widget.card.back,
-        createdAt: widget.card.createdAt,
-        collectionName: widget.card.collectionName);
+        createdAt: widget.card.createdAt, collectionName: widget.card.collectionName);
     super.initState();
   }
 
   @override
   Widget build(BuildContext context) {
-    return LayoutBuilder(
-        builder: (BuildContext context, BoxConstraints constraints) {
+    return LayoutBuilder(builder: (BuildContext context, BoxConstraints constraints){
       if (constraints.maxWidth < 700) {
         return Scaffold(
             appBar: AppBar(
@@ -139,8 +140,11 @@ class _WebViewFlashCardState extends State<WebViewFlashCard> {
                                             svgIcon: AppIcons.pen,
                                             showBorder: true,
                                           ),
-                                        ),
-                                      )
+                                        )
+                                      ],
+                                    ),
+                                  ),
+                                )
                                     : Padding(
                                   padding: const EdgeInsets.only(
                                       bottom: 38.0, right: 43),
@@ -159,6 +163,11 @@ class _WebViewFlashCardState extends State<WebViewFlashCard> {
                                           },),
                                         ),
                                       ),
+                                      const Spacer(),
+                                      const SizedBox(),
+                                    ],
+                                  ),
+                                ),
                               ),
                             ),
                           );
@@ -206,8 +215,7 @@ class _WebViewFlashCardState extends State<WebViewFlashCard> {
                   listener: (context, state) {
                     state.maybeMap(
                       // initial: (_)=> ,
-                      orElse: () {},
-                    );
+                      orElse: (){},);
                   },
                   builder: (context, state) {
                     return state.maybeMap(
@@ -230,8 +238,8 @@ class _WebViewFlashCardState extends State<WebViewFlashCard> {
                                     .state
                                     .cardsList![index];
                                 return Padding(
-                                  padding: const EdgeInsets.only(
-                                      bottom: 36, left: 43),
+                                  padding:
+                                  const EdgeInsets.only(bottom: 36, left: 43),
                                   child: InkWell(
                                     onTap: () {
                                       setState(() {
@@ -244,24 +252,23 @@ class _WebViewFlashCardState extends State<WebViewFlashCard> {
                                       decoration: BoxDecoration(
                                           color: Colors.white,
                                           borderRadius:
-                                              BorderRadius.circular(10)),
+                                          BorderRadius.circular(10)),
                                       child: Padding(
                                         padding: const EdgeInsets.symmetric(
                                             horizontal: 13.0),
                                         child: Column(
                                           mainAxisAlignment:
-                                              MainAxisAlignment.center,
+                                          MainAxisAlignment.center,
                                           crossAxisAlignment:
-                                              CrossAxisAlignment.center,
+                                          CrossAxisAlignment.center,
                                           children: [
                                             Text(
                                               card.front!.replaceAll(RegExp(r'<[^>]*>'), ''),
                                               textAlign: TextAlign.center,
-                                              style: AppTheme.themeData
-                                                  .textTheme.labelMedium!
+                                              style: AppTheme.themeData.textTheme
+                                                  .labelMedium!
                                                   .copyWith(
-                                                color: AppColors.mainAccent,
-                                              ),
+                                                color: AppColors.mainAccent,),
                                             ),
                                             Text(
                                               card.back!.replaceAll(RegExp(r'<[^>]*>'), ''),
@@ -269,6 +276,7 @@ class _WebViewFlashCardState extends State<WebViewFlashCard> {
                                                   .themeData.textTheme.labelSmall!
                                                   .copyWith(
                                                 color: Colors.black,
+
                                               ),
                                             ),
                                           ],
@@ -346,8 +354,11 @@ class _WebViewFlashCardState extends State<WebViewFlashCard> {
                                               svgIcon: AppIcons.pen,
                                               showBorder: true,
                                             ),
-                                          ),
-                                        )
+                                          )
+                                        ],
+                                      ),
+                                    ),
+                                  )
                                       : Padding(
                                     padding: const EdgeInsets.only(
                                         bottom: 38.0, right: 43),
@@ -366,6 +377,11 @@ class _WebViewFlashCardState extends State<WebViewFlashCard> {
                                             },),
                                           ),
                                         ),
+                                        const Spacer(),
+                                        const SizedBox(),
+                                      ],
+                                    ),
+                                  ),
                                 ),
                               ),
                             );

@@ -13,10 +13,7 @@ import 'create_edit_card.dart';
 
 class Cards extends StatefulWidget {
   const Cards(
-      {Key? key,
-      required this.collectionId,
-      required this.collectionName,
-      this.sender})
+      {Key? key, required this.collectionId, required this.collectionName})
       : super(key: key);
   final String collectionId;
   final String collectionName;
@@ -31,10 +28,6 @@ class _CardsState extends State<Cards> {
   @override
   void initState() {
     super.initState();
-    if (widget.sender != null) {
-      context.read<CardsBloc>().add(CardsEvent.createSharedCards(
-          collectionId: widget.collectionId, sender: widget.sender!));
-    }
     context
         .read<CardsBloc>()
         .add(CardsEvent.initCard(collectionId: widget.collectionId));
@@ -242,12 +235,9 @@ class _CardsState extends State<Cards> {
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
                           Text(
-                            widget.sender != null
-                                ? widget.collectionName
-                                : widget.collectionName.replaceAll('%20', ' '),
+                            widget.collectionName,
                             style: AppTheme.themeData.textTheme.titleMedium!
-                                .copyWith(
-                                    fontSize: 18, fontWeight: FontWeight.w600),
+                                .copyWith(fontSize: 18, fontWeight: FontWeight.w600),
                           ),
                           Text(
                             '${data.cardsList!.length} cards',
@@ -389,72 +379,44 @@ class _CardsState extends State<Cards> {
       floatingActionButton: context.watch<CardsBloc>().isEditMode
           ? Padding(
               padding: const EdgeInsets.only(bottom: 60, right: 20),
-              child: Stack(
-                children: [
-                  SizedBox(
-                    height: 76,
-                    width: 76,
-                    child: SvgPicture.asset(
-                      AppIcons.redBucket,
-                      height: 18,
-                      width: 9,
-                    ),
+              child: GestureDetector(
+                onTap: () {
+                  context.read<CardsBloc>().add(CardsEvent.deleteSelectedCards(
+                      cardsIdToDelete:
+                          context.read<CardsBloc>().cardsListToDelete,
+                      collectionId: widget.collectionId));
+                  context.read<CardsBloc>().isEditMode = false;
+                },
+                child: SizedBox(
+                  height: 76,
+                  width: 76,
+                  child: SvgPicture.asset(
+                    AppIcons.redBucket,
+                    height: 18,
+                    width: 9,
                   ),
-                  Material(
-                    color: Colors.transparent,
-                    borderRadius: BorderRadius.circular(32),
-                    child: InkWell(
-                        borderRadius: BorderRadius.circular(32),
-                        onTap: () {
-                          context.read<CardsBloc>().add(CardsEvent.deleteSelectedCards(
-                              cardsIdToDelete:
-                              context.read<CardsBloc>().cardsListToDelete,
-                              collectionId: widget.collectionId));
-                          context.read<CardsBloc>().isEditMode = false;
-                        },
-                        child: Container(
-                            width: 76,
-                            height: 76,
-                            color: Colors.transparent
-                        )
-                    ),
-                  ),
-                ],
+                ),
               ),
             )
           : Padding(
               padding: const EdgeInsets.only(bottom: 60, right: 20),
-              child: Stack(
-                children: [
-                  SizedBox(
-                    height: 76,
-                    width: 76,
-                    child: SvgPicture.asset(
-                      AppIcons.addCard,
-                      height: 18,
-                      width: 9,
-                    ),
+              child: GestureDetector(
+                onTap: () {
+                  Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) => CreateEditCard(
+                              collectionId: widget.collectionId)));
+                },
+                child: SizedBox(
+                  height: 76,
+                  width: 76,
+                  child: SvgPicture.asset(
+                    AppIcons.addCard,
+                    height: 18,
+                    width: 9,
                   ),
-                  Material(
-                    color: Colors.transparent,
-                    borderRadius: BorderRadius.circular(32),
-                    child: InkWell(
-                        borderRadius: BorderRadius.circular(32),
-                        onTap: () {
-                          Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                  builder: (context) => CreateEditCard(
-                                      collectionId: widget.collectionId)));
-                        },
-                        child: Container(
-                            width: 76,
-                            height: 76,
-                            color: Colors.transparent
-                        )
-                    ),
-                  ),
-                ],
+                ),
               ),
             ),
     );
