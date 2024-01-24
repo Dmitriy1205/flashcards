@@ -70,7 +70,7 @@ class _MobileSignInScreenState extends State<MobileSignInScreen> {
                 body: SingleChildScrollView(
                   child: Padding(
                     padding: const EdgeInsets.only(
-                        left: 24, right: 24),
+                        left: 24, right: 24,bottom: 50),
                     child: Form(
                       key: _formKey,
                       child: Column(
@@ -256,6 +256,7 @@ class _MobileSignInScreenState extends State<MobileSignInScreen> {
                               GoogleSignInButton(),
                             ],
                           ) : SizedBox(child: GoogleSignInButton()),
+
                         ],
                       ),
                     ),

@@ -147,6 +147,7 @@ class _CreateEditCardState extends State<CreateEditCard> {
       ),
       body: GestureDetector(
         onTap: () {
+          FocusScope.of(context).unfocus() ;
 
           setState(() {
 
@@ -273,22 +274,27 @@ class _CreateEditCardState extends State<CreateEditCard> {
                 hintTextPadding: const EdgeInsets.only(left: 20),
                 backgroundColor: Colors.white,
                 inputAction: InputAction.newline,
-                // onFocusChanged: (focus) {
-                //
-                //   setState(() {
-                //     _frontHasFocus = focus;
-                //
-                //
-                //   });
-                // },
-                onSelectionChanged: (_) {
-                  if (MediaQuery.of(context).viewInsets.bottom > 0.0) {
-                    setState(() {
+                onFocusChanged: (focus) {
+
+                  setState(() {
+                    _frontHasFocus = focus;
+                    if (MediaQuery.of(context).viewInsets.bottom > 0.0) {
+
                       _showKeyboardBack = false;
                       _showKeyboardFront = true;
-                    });
-                  }
+
+                    }
+
+                  });
                 },
+                // onSelectionChanged: (_) {
+                //   if (MediaQuery.of(context).viewInsets.bottom > 0.0) {
+                //
+                //       _showKeyboardBack = false;
+                //       _showKeyboardFront = true;
+                //
+                //   }
+                // },
                 onTextChanged: (text) {
                   setState(() {
                     frontText = text;
@@ -375,21 +381,27 @@ class _CreateEditCardState extends State<CreateEditCard> {
                 hintTextPadding: const EdgeInsets.only(left: 20),
                 backgroundColor: Colors.white,
                 inputAction: InputAction.newline,
-                // onFocusChanged: (focus) {
-                //   setState(() {
-                //     _backHasFocus = focus;
-                //
-                //
-                //   });
-                // },
-                onSelectionChanged: (_) {
-                  if (MediaQuery.of(context).viewInsets.bottom > 0.0) {
-                    setState(() {
+                onFocusChanged: (focus) {
+                  setState(() {
+                    _backHasFocus = focus;
+                    if (MediaQuery.of(context).viewInsets.bottom > 0.0) {
+
                       _showKeyboardFront = false;
                       _showKeyboardBack = true;
-                    });
-                  }
+
+                    }
+
+
+                  });
                 },
+                // onSelectionChanged: (_) {
+                //   if (MediaQuery.of(context).viewInsets.bottom > 0.0) {
+                //
+                //       _showKeyboardFront = false;
+                //       _showKeyboardBack = true;
+                //
+                //   }
+                // },
                 onTextChanged: (text) {
                   setState(() {
                     backText = text;
