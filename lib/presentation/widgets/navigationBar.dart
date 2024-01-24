@@ -3,6 +3,7 @@ import 'package:flashcards/core/const/icons.dart';
 import 'package:flashcards/core/const/strings.dart';
 import 'package:flashcards/core/themes/theme.dart';
 import 'package:flashcards/presentation/blocs/lists/lists_bloc.dart';
+import 'package:flashcards/presentation/widgets/create_edit_collection.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/svg.dart';
@@ -23,7 +24,7 @@ class _CustomNavigationBarState extends State<CustomNavigationBar> {
   @override
   Widget build(BuildContext context) {
     return SizedBox(
-      height: 113,
+      height: 120,
       child: Stack(
         children: [
           Positioned(
@@ -116,122 +117,58 @@ class _CustomNavigationBarState extends State<CustomNavigationBar> {
                         )
                       : Padding(
                           padding: const EdgeInsets.only(bottom: 20.0),
-                          child: GestureDetector(
-                            onTap: () {
-                              dialog();
-                            },
-                            child: SizedBox(
-                              height: 76,
-                              width: 76,
-                              child: SvgPicture.asset(
+                          child: Stack(
+                            children: [
+                              SvgPicture.asset(
                                 AppIcons.addCollection,
-                                height: 18,
-                                width: 9,
+                                height: 76,
+                                width: 76,
                               ),
-                            ),
+                              Material(
+                                color: Colors.transparent,
+                                borderRadius: BorderRadius.circular(32),
+                                child: InkWell(
+                                    borderRadius: BorderRadius.circular(32),
+                                    onTap: () {
+                                      CreateEditCollectionDialog().dialog(context);
+                                    },
+                                    child: Container(
+                                      width: 76,
+                                      height: 76,
+                                      color: Colors.transparent
+                                    )
+                                ),
+                              ),
+                            ],
                           ),
-                        ),
-                )
+                        )
+
+                  // : Padding(
+                  //     padding: const EdgeInsets.only(bottom: 20.0),
+                  //     child: Material(
+                  //       color: Colors.grey.withOpacity(0.5),
+                  //       child: InkWell(
+                  //         borderRadius: BorderRadius.all(Radius.circular(35)),
+                  //         splashColor: AppColors.red,
+                  //         onTap: () {
+                  //           // CreateEditCollectionDialog().dialog(context);
+                  //         },
+                  //         child: SizedBox(
+                  //           height: 76,
+                  //           width: 76,
+                  //           child: SvgPicture.asset(
+                  //             AppIcons.addCollection,
+                  //             height: 18,
+                  //             width: 9,
+                  //           ),
+                  //         ),
+                  //       ),
+                  //     ),
+                  //   ),
+                  )
               : const SizedBox()
         ],
       ),
     );
-  }
-
-  Future<void> dialog() {
-    return showDialog(
-        context: context,
-        builder: (_) {
-          return Dialog(
-            shape: const RoundedRectangleBorder(
-                borderRadius: BorderRadius.all(Radius.circular(15.0))),
-            backgroundColor: Colors.white,
-            child: Padding(
-              padding: const EdgeInsets.only(
-                  left: 12, top: 12, right: 12),
-              child: IntrinsicHeight(
-                child: Column(
-                  children: [
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        InkWell(
-                          onTap: () {
-                            Navigator.pop(context);
-                          },
-                          child: SvgPicture.asset(
-                            AppIcons.leftArrow,
-                            height: 12,
-                            width: 6,
-                          ),
-                        ),
-                        Expanded(
-                          child: Align(
-                            alignment: Alignment.center,
-                            child: Text(
-                              AppStrings.newCollection,
-                              style: AppTheme.themeData.textTheme.titleMedium!
-                                  .copyWith(fontSize: 18),
-                            ),
-                          ),
-                        ),
-                      ],
-                    ),
-                    Text(AppStrings.giveName,
-                        style: AppTheme.themeData.textTheme.labelSmall!
-                            .copyWith(color: Colors.black)),
-                    const SizedBox(
-                      height: 22,
-                    ),
-                    SizedBox(
-                      height: 45,
-                      child: TextField(
-                        textAlign: TextAlign.start,
-                        textAlignVertical: TextAlignVertical.top,
-                        style: AppTheme.themeData.textTheme.labelMedium!
-                            .copyWith(
-                                color: Colors.black,
-                                fontWeight: FontWeight.w700),
-                        controller: nameTextEditingController,
-                        decoration: InputDecoration(
-                            filled: true,
-                            enabledBorder: OutlineInputBorder(
-                                borderSide: BorderSide(
-                                    color: Color(0xFF2B635A).withOpacity(0.15)
-                                ),
-                                borderRadius:
-                                BorderRadius.all(Radius.circular(15))),
-                            border: OutlineInputBorder(
-                                borderSide: BorderSide(
-                                  color: Color(0xFF2B635A).withOpacity(0.15)
-                                ),
-                                borderRadius:
-                                    BorderRadius.all(Radius.circular(15)))),
-                      ),
-                    ),
-                    SizedBox(
-                      height: 54,
-                      width: double.infinity,
-                      child: TextButton(
-                        child: Text(AppStrings.done,
-                            style: AppTheme.themeData.textTheme.labelMedium!
-                                .copyWith(color: AppColors.mainAccent)),
-                        onPressed: () {
-                          if (nameTextEditingController.text.isNotEmpty) {
-                            context.read<ListsBloc>().add(
-                                ListsEvent.createNewList(
-                                    name: nameTextEditingController.text));
-                            nameTextEditingController.clear();
-                            Navigator.of(context).pop();
-                          }
-                        },
-                      ),
-                    )
-                  ],
-                ),
-              ),
-            ),
-          );
-        });
   }
 }

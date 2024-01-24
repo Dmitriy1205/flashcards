@@ -6,6 +6,6 @@ class Learn extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Center(child: Text('LEARN PAGE'),);
+    return const Center(child: Text('LEARN PAGE'),);
   }
 }

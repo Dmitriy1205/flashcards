@@ -58,6 +58,16 @@ class CardsBloc extends Bloc<CardsEvent, CardsState> {
     } catch (e) {
       emit( CardsState.error(error: e.toString()));
 
+  Future<void> _createSharedCards(
+      _CreateSharedCards event, Emitter<CardsState> emit) async {
+    try {
+      await cardRepo.createSharedCards(
+          collectionId: event.collectionId, sender: event.sender);
+
+      add(_InitCard(collectionId: event.collectionId));
+      // _initCard(_InitCard(collectionId: event.collectionId,), emit);
+    } catch (e) {
+      emit(CardsState.error(error: e.toString()));
     }
   }
 
@@ -90,7 +100,6 @@ class CardsBloc extends Bloc<CardsEvent, CardsState> {
 
   Future<void> _deleteSelectedCards(
       _DeleteSelectedCards event, Emitter<CardsState> emit) async {
-
     try {
       emit(const CardsState.loading());
       await cardRepo.deleteCards(

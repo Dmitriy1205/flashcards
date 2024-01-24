@@ -161,6 +161,7 @@ class _CreateEditCardState extends State<CreateEditCard> {
         child: Stack(
           children: [
             SingleChildScrollView(
+              physics: const BouncingScrollPhysics(),
               child: Column(
                 children: [
                   frontEditor(),

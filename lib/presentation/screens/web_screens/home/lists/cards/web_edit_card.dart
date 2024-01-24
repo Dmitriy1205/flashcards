@@ -5,23 +5,16 @@ import 'package:flashcards/core/themes/theme.dart';
 import 'package:flashcards/domain/entities/card_entity/card_entity.dart';
 import 'package:flashcards/presentation/widgets/app_elevated_button.dart';
 import 'package:flashcards/presentation/widgets/app_icon_button.dart';
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_colorpicker/flutter_colorpicker.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'package:quill_html_editor/quill_html_editor.dart';
-import 'package:quill_html_editor/quill_html_editor.dart';
 import 'package:quill_html_editor/quill_html_editor.dart';
 
 import '../../../../../../core/enum/enum.dart';
 import '../../../../../../core/router/router.dart';
-import '../../../../../../domain/params/card_param/create_card_param.dart';
 import '../../../../../../domain/params/card_param/edit_card_param.dart';
 import '../../../../../blocs/cards/cards_bloc.dart';
-import '../../../../mobile_screens/lists_screen/cards/view_flash_card.dart';
 
 class WebEditCard extends StatefulWidget {
   const WebEditCard({
@@ -100,6 +93,7 @@ class _WebEditCardState extends State<WebEditCard> {
         color: AppColors.background,
         child: Center(
           child: SingleChildScrollView(
+            physics: const AlwaysScrollableScrollPhysics(),
             child: Padding(
               padding: const EdgeInsets.symmetric(vertical: 39.0),
               child: Container(

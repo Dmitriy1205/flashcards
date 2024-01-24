@@ -85,7 +85,7 @@ class _ViewFlashCardState extends State<ViewFlashCard> {
             child: Container(
               color: AppColors.background,
               child: Padding(
-                padding: EdgeInsets.symmetric(horizontal: 26),
+                padding: const EdgeInsets.symmetric(horizontal: 26),
                 child: Center(
                     child: GestureDetector(
                         onTap: () {
