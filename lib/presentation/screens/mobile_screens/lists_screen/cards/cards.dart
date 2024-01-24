@@ -338,13 +338,13 @@ class _CardsState extends State<Cards> {
                                       },
                                       child: ListTile(
                                         title: Text(
-                                          card.front!,
+                                          card.front!.replaceAll(RegExp(r'<[^>]*>'), ''),
                                           style: AppTheme
                                               .themeData.textTheme.titleMedium!
                                               .copyWith(fontSize: 14),
                                         ),
                                         subtitle: Text(
-                                          card.back!,
+                                          card.back!.replaceAll(RegExp(r'<[^>]*>'), ''),
                                           style: AppTheme
                                               .themeData.textTheme.labelSmall!
                                               .copyWith(

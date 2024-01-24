@@ -7,6 +7,7 @@ import 'package:flashcards/core/router/router.dart';
 import 'package:flashcards/core/themes/theme.dart';
 import 'package:flashcards/domain/entities/card_entity/card_entity.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_html/flutter_html.dart';
 import 'package:flutter_svg/svg.dart';
 
 class ViewFlashCard extends StatefulWidget {
@@ -34,13 +35,14 @@ class _ViewFlashCardState extends State<ViewFlashCard> {
             mainAxisSize: MainAxisSize.max,
             children: [
               GestureDetector(
-                onTap: (){
-                  router.go('/cards',
-                    extra: {
-                      "collectionName": widget.card.collectionName,
-                      "collectionId": widget.collectionId,
-                    },
-                  );
+                onTap: () {
+                  router.pop();
+                  // router.go('/cards',
+                  //   extra: {
+                  //     "collectionName": widget.card.collectionName,
+                  //     "collectionId": widget.collectionId,
+                  //   },
+                  // );
                 },
                 child: Container(
                   color: Colors.transparent,
@@ -63,17 +65,10 @@ class _ViewFlashCardState extends State<ViewFlashCard> {
               ),
               TextButton(
                 onPressed: () {
-                  router.push('/create_edit_card_mobile',
-                      extra: {'collectionId': widget.collectionId,
-                      "card": widget.card,
-                      });
-                  // Navigator.pushReplacement(
-                  //     context,
-                  //     MaterialPageRoute(
-                  //         builder: (context) => CreateEditCard(
-                  //               cardEntity: widget.card,
-                  //               collectionId: widget.collectionId,
-                  //             )));
+                  router.push('/create_edit_card_mobile', extra: {
+                    'collectionId': widget.collectionId,
+                    "card": widget.card,
+                  });
                 },
                 child: Text(
                   AppStrings.edit,
@@ -134,18 +129,49 @@ class _ViewFlashCardState extends State<ViewFlashCard> {
                                       child: Padding(
                                         padding: const EdgeInsets.symmetric(
                                             horizontal: 50),
-                                        child: Text(
-                                          value >= 90
-                                              ? widget.card.front!
-                                              : widget.card.back!,
-                                          textAlign: TextAlign.center,
-                                          style: AppTheme
-                                              .themeData.textTheme.headlineSmall!
-                                              .copyWith(
-                                            fontSize: 24,
-                                            color: Colors.black,
-                                          ),
-                                        ),
+                                        child: value >= 90
+                                            ? Align(
+                                                alignment: Alignment.center,
+                                                child: FractionallySizedBox(
+                                                  widthFactor: 1,
+                                                  // Adjust the width factor as needed
+                                                  child: Html(
+                                                    data: widget.card.front,
+                                                    style: {
+                                                      'html': Style(
+                                                          textAlign:
+                                                              TextAlign.center),
+                                                    },
+                                                  ),
+                                                ),
+                                              )
+                                            : Align(
+                                                alignment: Alignment.center,
+                                                child: FractionallySizedBox(
+                                                  widthFactor: 1,
+                                                  // Adjust the width factor as needed
+                                                  child: Html(
+                                                    data: widget.card.back,
+                                                    style: {
+                                                      'html': Style(
+                                                          textAlign:
+                                                              TextAlign.center),
+                                                    },
+                                                  ),
+                                                ),
+                                              ),
+                                        // Text(
+                                        //   value >= 90
+                                        //       ? widget.card.front!
+                                        //       : widget.card.back!,
+                                        //   textAlign: TextAlign.center,
+                                        //   style: AppTheme.themeData.textTheme
+                                        //       .headlineSmall!
+                                        //       .copyWith(
+                                        //     fontSize: 24,
+                                        //     color: Colors.black,
+                                        //   ),
+                                        // ),
                                       ),
                                     ),
                                   ),

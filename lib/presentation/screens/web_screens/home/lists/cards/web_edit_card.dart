@@ -202,23 +202,24 @@ class _WebEditCardState extends State<WebEditCard> {
                                       ToolBarStyle.listBullet,
                                     ],
                                     customButtons: [
-                                      Padding(
-                                        padding:
-                                            const EdgeInsets.only(top: 3.0),
-                                        child: InkWell(
-                                          child: Container(
-                                            decoration: BoxDecoration(
-                                                color: backPickedColor,
-                                                borderRadius:
-                                                    BorderRadius.circular(4)),
-                                            height: 17,
-                                            width: 17,
-                                          ),
-                                          onTap: () {
-                                            showBackColorPicker(context);
-                                          },
-                                        ),
-                                      )
+                                      ///color picker
+                                      // Padding(
+                                      //   padding:
+                                      //       const EdgeInsets.only(top: 3.0),
+                                      //   child: InkWell(
+                                      //     child: Container(
+                                      //       decoration: BoxDecoration(
+                                      //           color: backPickedColor,
+                                      //           borderRadius:
+                                      //               BorderRadius.circular(4)),
+                                      //       height: 17,
+                                      //       width: 17,
+                                      //     ),
+                                      //     onTap: () {
+                                      //       showBackColorPicker(context);
+                                      //     },
+                                      //   ),
+                                      // )
                                     ],
                                   ),
                                 ),
@@ -404,21 +405,22 @@ class _WebEditCardState extends State<WebEditCard> {
                         ToolBarStyle.listBullet,
                       ],
                       customButtons: [
-                        Padding(
-                          padding: const EdgeInsets.only(top: 3.0),
-                          child: InkWell(
-                            child: Container(
-                              decoration: BoxDecoration(
-                                  color: frontPickedColor,
-                                  borderRadius: BorderRadius.circular(4)),
-                              height: 17,
-                              width: 17,
-                            ),
-                            onTap: () {
-                              showFrontColorPicker(context);
-                            },
-                          ),
-                        )
+                        ///color picker
+                        // Padding(
+                        //   padding: const EdgeInsets.only(top: 3.0),
+                        //   child: InkWell(
+                        //     child: Container(
+                        //       decoration: BoxDecoration(
+                        //           color: frontPickedColor,
+                        //           borderRadius: BorderRadius.circular(4)),
+                        //       height: 17,
+                        //       width: 17,
+                        //     ),
+                        //     onTap: () {
+                        //       showFrontColorPicker(context);
+                        //     },
+                        //   ),
+                        // )
                       ],
                     ),
                   ),
