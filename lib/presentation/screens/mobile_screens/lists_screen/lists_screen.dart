@@ -30,6 +30,16 @@ class _ListsState extends State<Lists> {
                 "collectionId": selectedCollection.collection.id,
               },
             );
+
+            // Navigator.push(
+            //   context,
+            //   MaterialPageRoute(
+            //     builder: (context) => Cards(
+            //       collectionId: selectedCollection.collection.id,
+            //       collectionName: selectedCollection.collection.collectionName,
+            //     ),
+            //   ),
+            // );
           },
           orElse: () {
             print('Error in lists bloclistener');
