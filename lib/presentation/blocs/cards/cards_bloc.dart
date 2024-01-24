@@ -36,11 +36,11 @@ class CardsBloc extends Bloc<CardsEvent, CardsState> {
         editCard: (event) => _editCard(event, emit),
         emptyCardsList: (event) => _emptyCardsList(event, emit),
         shareCollection: (event) => _shareCard(event, emit),
-        createSharedCards: (event) => _createSharedCards(event, emit),
       );
 
   Future<void> _initCard(_InitCard event, Emitter<CardsState> emit) async {
     try {
+
       emit(const CardsState.loading());
       final cardsList =
           await cardRepo.fetchCards(collectionId: event.collectionId);
@@ -56,9 +56,7 @@ class CardsBloc extends Bloc<CardsEvent, CardsState> {
           collectionId: event.collectionId,
           collectionName: event.collectionName);
     } catch (e) {
-      emit(CardsState.error(error: e.toString()));
-    }
-  }
+      emit( CardsState.error(error: e.toString()));
 
   Future<void> _createSharedCards(
       _CreateSharedCards event, Emitter<CardsState> emit) async {
@@ -82,11 +80,12 @@ class CardsBloc extends Bloc<CardsEvent, CardsState> {
           await cardRepo.fetchCards(collectionId: event.collectionId);
       emit(CardsState.loaded(cardsList: cardsList));
     } catch (e) {
-      emit(CardsState.error(error: e.toString()));
+      emit( CardsState.error(error: e.toString()));
     }
   }
 
   Future<void> _editCard(_EditCard event, Emitter<CardsState> emit) async {
+
     try {
       emit(const CardsState.loading());
       cardRepo.editCard(cardParam: event.cardParam);
@@ -94,8 +93,9 @@ class CardsBloc extends Bloc<CardsEvent, CardsState> {
           await cardRepo.fetchCards(collectionId: event.collectionId);
       emit(CardsState.loaded(cardsList: cardsList));
     } catch (e) {
-      emit(CardsState.error(error: e.toString()));
+      emit( CardsState.error(error: e.toString()));
     }
+
   }
 
   Future<void> _deleteSelectedCards(
@@ -111,6 +111,7 @@ class CardsBloc extends Bloc<CardsEvent, CardsState> {
     } catch (e) {
       emit(CardsState.error(error: e.toString()));
     }
+
   }
 
   Future<void> _emptyCardsList(

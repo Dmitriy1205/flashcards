@@ -2,7 +2,6 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flashcards/core/const/firebase_collections.dart';
-import 'package:flashcards/core/const/strings.dart';
 import 'package:flashcards/data/remote/card_service/card_service_contract.dart';
 import 'package:flashcards/domain/entities/card_entity/card_entity.dart';
 import 'package:flashcards/domain/params/card_param/create_card_param.dart';
@@ -47,48 +46,15 @@ class CardServiceImpl extends CardService {
         "createdAt": FieldValue.serverTimestamp(),
         "collectionId": cardParam.collectionId
       });
-    } on FirebaseException catch (e) {
+    } on FirebaseException  catch (e) {
       throw Exception("Exception createCard $e");
-    }
-  }
-
-  @override
-  Future<void> createSharedCards(
-      {required String collectionId, required String sender}) async {
-    try {
-      final sharedCollection = _fireStore
-          .collection(FirestoreCollections.collectionShare)
-          .doc(sender)
-          .collection(FirestoreCollections.collections)
-          .doc(collectionId);
-
-      final collection = _fireStore
-          .collection(FirestoreCollections.users)
-          .doc(_firebaseAuth.currentUser!.uid)
-          .collection(FirestoreCollections.collections)
-          .doc(collectionId);
-
-      await sharedCollection
-          .get()
-          .then((value) => collection.set(value.data()!));
-      await sharedCollection
-          .collection(FirestoreCollections.cards)
-          .get()
-          .then((value) => value.docs.forEach((element) {
-                collection
-                    .collection(AppStrings.cards.toLowerCase())
-                    .doc(element.get('id'))
-                    .set(element.data());
-              }));
-    } on FirebaseException catch (e) {
-      throw Exception("Exception createSharedCards $e");
     }
   }
 
   @override
   Future<void> deleteCards(
       {required String collectionId,
-      required List<String> cardsToDelete}) async {
+        required List<String> cardsToDelete}) async {
     try {
       final cards = _fireStore
           .collection(FirestoreCollections.users)
@@ -100,7 +66,7 @@ class CardServiceImpl extends CardService {
       for (int i = 0; i < cardsToDelete.length; i++) {
         await cards.doc(cardsToDelete[i]).delete();
       }
-    } on FirebaseException catch (e) {
+    }  on FirebaseException catch (e) {
       throw Exception("Exception deleteCards $e");
     }
   }
@@ -119,7 +85,7 @@ class CardServiceImpl extends CardService {
         'back': cardParam.back,
         'front': cardParam.front,
       });
-    } on FirebaseException catch (e) {
+    }  on FirebaseException  catch (e) {
       throw Exception("Exception deleteCards $e");
     }
   }
@@ -127,7 +93,6 @@ class CardServiceImpl extends CardService {
   @override
   Future<void> shareCollection(
       {required String collectionId, required String collectionName}) async {
-    collectionName = collectionName.replaceAll(' ', '%20');
     print(
       'https://flashcards-5984c.web.app/collection_share?sender=${_firebaseAuth.currentUser!.uid}&collectionId=${collectionId}&collectionName=${collectionName}',
     );
@@ -142,33 +107,32 @@ class CardServiceImpl extends CardService {
             'https://flashcards-5984c.web.app/collection_share?sender=${_firebaseAuth.currentUser!.uid}&collectionId=$collectionId&collectionName=$collectionName',
             subject: 'Look what I made!');
 
-    print('status success');
-    try {
-      final shareCollection = _fireStore
-          .collection(FirestoreCollections.collectionShare)
-          .doc(_firebaseAuth.currentUser!.uid)
-          .collection(FirestoreCollections.collections)
-          .doc(collectionId);
+    if (result.status == ShareResultStatus.success) {
+      try {
+        final shareCollection = _fireStore
+            .collection(FirestoreCollections.collectionShare)
+            .doc(_firebaseAuth.currentUser!.uid)
+            .collection(collectionId);
 
-      final collection = await _fireStore
-          .collection(FirestoreCollections.users)
-          .doc(_firebaseAuth.currentUser!.uid)
-          .collection(FirestoreCollections.collections)
-          .doc(collectionId)
-          .get();
+        final collection = await _fireStore
+            .collection(FirestoreCollections.users)
+            .doc(_firebaseAuth.currentUser!.uid)
+            .collection(FirestoreCollections.collections)
+            .doc(collectionId)
+            .get();
 
-      final cards = await fetchCards(collectionId: collectionId);
+        final cards = await fetchCards(collectionId: collectionId);
 
-      if (collection.exists) {
-        shareCollection.set(collection.data()!);
-        for (int i = 0; i < cards.length; i++) {
-          shareCollection.collection(FirestoreCollections.cards).add(cards[i]
-              .copyWith(sharedFrom: _firebaseAuth.currentUser!.uid)
-              .toJson());
+        if (collection.exists) {
+          for (int i = 0; i < cards.length; i++) {
+            shareCollection.doc(cards[i].id).set(cards[i]
+                .copyWith(sharedFrom: _firebaseAuth.currentUser!.uid)
+                .toJson());
+          }
         }
+      }  on FirebaseException catch (e) {
+        throw Exception("Exception createCard $e");
       }
-    } on FirebaseException catch (e) {
-      throw Exception("Exception createCard $e");
     }
   }
 
@@ -185,9 +149,10 @@ class CardServiceImpl extends CardService {
 
       List<CardEntity> cardsList =
           cards.docs.map((card) => CardEntity.fromJson(card.data())).toList();
-      cardsList.sort((a, b) => b.createdAt.compareTo(a.createdAt));
+      cardsList.sort((a, b) => b.createdAt!.compareTo(a.createdAt!));
       return cardsList;
-    } on FirebaseException catch (e) {
+
+    } catch (e) {
       throw Exception("Exception fetchCards $e");
     }
   }

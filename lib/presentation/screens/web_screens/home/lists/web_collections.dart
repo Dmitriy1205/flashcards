@@ -175,6 +175,30 @@ class _WebCollectionsState extends State<WebCollections> {
                                 ),
                         ),
                       ),
+                      trailing: context.watch<WebListBloc>().state.isEdit
+                          ? AppIconButton(
+                              onTap: () {
+                                buildShowDialog(context,
+                                    collectionId: context
+                                        .read<WebListBloc>()
+                                        .state
+                                        .collectionsList![i]
+                                        .id!, collectionName: context
+                                      .read<WebListBloc>()
+                                      .state
+                                      .collectionsList![i]
+                                      .collectionName!,);
+                              },
+                              svgIcon: AppIcons.pen,
+                              color: AppColors.mainAccent,
+                              height: 24,
+                              width: 24,
+                            )
+                          : const FaIcon(
+                              FontAwesomeIcons.chevronRight,
+                              color: AppColors.mainAccent,
+                              size: 18,
+                            ),
                     ),
                   ]),
                 );

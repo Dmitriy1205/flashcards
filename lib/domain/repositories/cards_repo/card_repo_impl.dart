@@ -20,23 +20,15 @@ class CardRepoImpl extends CardRepo {
   }
 
   @override
-  Future<void> shareCollection(
-      {required String collectionId, required String collectionName}) async {
-    await cardService.shareCollection(
-        collectionId: collectionId, collectionName: collectionName);
-  }
-
-  @override
-  Future<void> createSharedCards(
-      {required String collectionId, required String sender}) async {
-    await cardService.createSharedCards(
-        collectionId: collectionId, sender: sender);
+  Future<void> shareCollection({required  String collectionId,
+    required String collectionName}) async {
+    await cardService.shareCollection(collectionId: collectionId, collectionName: collectionName);
   }
 
   @override
   Future<void> deleteCards(
       {required String collectionId,
-      required List<String> cardsToDelete}) async {
+        required List<String> cardsToDelete}) async {
     await cardService.deleteCards(
         collectionId: collectionId, cardsToDelete: cardsToDelete);
   }

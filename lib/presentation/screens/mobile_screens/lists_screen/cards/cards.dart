@@ -20,7 +20,6 @@ class Cards extends StatefulWidget {
       : super(key: key);
   final String collectionId;
   final String collectionName;
-  final String? sender;
 
   @override
   State<Cards> createState() => _CardsState();
@@ -52,7 +51,7 @@ class _CardsState extends State<Cards> {
             mainAxisSize: MainAxisSize.max,
             children: [
               GestureDetector(
-                onTap: () {
+                onTap: (){
                   context
                       .read<ListsBloc>()
                       .add(const ListsEvent.started(isEditMode: false));
@@ -264,7 +263,6 @@ class _CardsState extends State<Cards> {
                   child: Container(
                     color: AppColors.background,
                     child: ListView.builder(
-                        physics: const BouncingScrollPhysics(),
                         itemBuilder: (context, i) {
                           CardEntity card = data.cardsList![i];
                           return Padding(
@@ -292,7 +290,7 @@ class _CardsState extends State<Cards> {
                                                 context
                                                     .read<CardsBloc>()
                                                     .cardsListToDelete
-                                                    .add(data.cardsList![i].id);
+                                                    .add(data.cardsList![i].id!);
                                               }
                                             });
                                           },
@@ -350,13 +348,13 @@ class _CardsState extends State<Cards> {
                                       },
                                       child: ListTile(
                                         title: Text(
-                                          card.front,
+                                          card.front!.replaceAll(RegExp(r'<[^>]*>'), ''),
                                           style: AppTheme
                                               .themeData.textTheme.titleMedium!
                                               .copyWith(fontSize: 14),
                                         ),
                                         subtitle: Text(
-                                          card.back,
+                                          card.back!.replaceAll(RegExp(r'<[^>]*>'), ''),
                                           style: AppTheme
                                               .themeData.textTheme.labelSmall!
                                               .copyWith(

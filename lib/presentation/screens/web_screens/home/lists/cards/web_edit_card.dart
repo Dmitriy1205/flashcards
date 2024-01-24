@@ -28,44 +28,36 @@ class WebEditCard extends StatefulWidget {
 }
 
 class _WebEditCardState extends State<WebEditCard> {
-  late QuillEditorController controller;
-  bool _hasFocus = false;
+  late QuillEditorController frontController;
+  late QuillEditorController backController;
 
-  void unFocusEditor() => controller.unFocus();
-  final customToolBarList = [];
+  bool _frontHasFocus = false;
+  bool _backHasFocus = false;
 
-  final _toolbarColor = Colors.grey.shade200;
-  final _backgroundColor = Colors.white70;
+  String frontText = '';
+  String backText = '';
 
-  final _editorTextStyle = const TextStyle(
-      fontSize: 18,
-      color: Colors.black,
-      fontWeight: FontWeight.normal,
-      fontFamily: 'Roboto');
-  final _hintTextStyle = const TextStyle(
-      fontSize: 18, color: Colors.black38, fontWeight: FontWeight.normal);
+  Color frontPickedColor = Colors.black;
+  Color backPickedColor = Colors.black;
 
-  final TextEditingController frontTextEditingController =
-      TextEditingController();
+  // void unFocusEditor() => frontController.unFocus();
+  //
+  // final TextEditingController frontTextEditingController =
+  //     TextEditingController();
+  //
+  // final TextEditingController backTextEditingController =
+  //     TextEditingController();
 
-  final TextEditingController backTextEditingController =
-      TextEditingController();
-  String textLengthFirst = '0';
-  String textLengthSecond = '0';
+  String textLengthFront = '0';
+  String textLengthBack = '0';
+
   TextFormat currentTextFormat = TextFormat.normal;
   ParagraphFormat currentParagraphFormat = ParagraphFormat.normal;
 
   @override
   void initState() {
-    controller = QuillEditorController();
-    controller.onTextChanged((text) {
-      debugPrint('listening to $text');
-    });
-    controller.onEditorLoaded(() {
-      debugPrint('Editor Loaded :)');
-    });
-    frontTextEditingController.text = widget.card.front;
-    backTextEditingController.text = widget.card.back;
+    frontController = QuillEditorController();
+    backController = QuillEditorController();
     super.initState();
   }
 
@@ -112,67 +104,14 @@ class _WebEditCardState extends State<WebEditCard> {
                     borderRadius: BorderRadius.circular(10)),
                 child: Column(
                   children: [
-                    // ToolBar(
-                    //   toolBarColor: _toolbarColor,
-                    //   padding: const EdgeInsets.all(8),
-                    //   iconSize: 25,
-                    //   iconColor: Colors.black,
-                    //   activeIconColor: Colors.greenAccent.shade400,
-                    //   controller: controller,
-                    //   crossAxisAlignment: WrapCrossAlignment.start,
-                    //   direction: Axis.horizontal,
-                    //   toolBarConfig: const [
-                    //     ToolBarStyle.bold,
-                    //     ToolBarStyle.italic,
-                    //     ToolBarStyle.underline,
-                    //     ToolBarStyle.listOrdered,
-                    //     ToolBarStyle.listBullet,
-                    //   ],
-                    // ),
-                    // QuillHtmlEditor(text: "<h1>Hello</h1>This is a quill html editor example 😊",
-                    //   hintText: 'Hint text goes here',
-                    //   controller: controller,
-                    //   isEnabled: true,
-                    //   ensureVisible: false,
-                    //   minHeight: 100,
-                    //   autoFocus: false,
-                    //   textStyle: _editorTextStyle,
-                    //   hintTextStyle: _hintTextStyle,
-                    //   hintTextAlign: TextAlign.start,
-                    //   padding: const EdgeInsets.only(left: 10, top: 10),
-                    //   hintTextPadding: const EdgeInsets.only(left: 20),
-                    //   backgroundColor: _backgroundColor,
-                    //   inputAction: InputAction.newline,
-                    //   onEditingComplete: (s) => debugPrint('Editing completed $s'),
-                    //   loadingBuilder: (context) {
-                    //     return const Center(
-                    //         child: CircularProgressIndicator(
-                    //           strokeWidth: 1,
-                    //           color: Colors.red,
-                    //         ));
-                    //   },
-                    //   onFocusChanged: (focus) {
-                    //     debugPrint('has focus $focus');
-                    //     setState(() {
-                    //       _hasFocus = focus;
-                    //     });
-                    //   },
-                    //   onTextChanged: (text) => debugPrint('widget text change $text'),
-                    //   onEditorCreated: () {
-                    //     debugPrint('Editor has been loaded');
-                    //   },
-                    //   onEditorResized: (height) =>
-                    //       debugPrint('Editor resized $height'),
-                    //   onSelectionChanged: (sel) =>
-                    //       debugPrint('index ${sel.index}, range ${sel.length}'),),
-                    buildInputField(
-                        header: AppStrings.front,
-                        controller: frontTextEditingController,
-                        textLength: textLengthFirst),
-                    buildInputField(
-                        header: AppStrings.back,
-                        controller: backTextEditingController,
-                        textLength: textLengthSecond),
+                    Padding(
+                      padding: const EdgeInsets.only(top: 24.0),
+                      child: frontEditor(context),
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.only(top: 30.0),
+                      child: backEditor(context),
+                    ),
                     Padding(
                       padding: const EdgeInsets.only(
                           right: 37.0, bottom: 25, top: 12),
@@ -184,21 +123,19 @@ class _WebEditCardState extends State<WebEditCard> {
                                 borderRadius: 36,
                                 text: AppStrings.done,
                                 onPressed: () {
-                                  if (frontTextEditingController
-                                          .text.isNotEmpty &&
-                                      backTextEditingController
-                                          .text.isNotEmpty) {
+                                  if (frontText.isNotEmpty &&
+                                      backText.isNotEmpty) {
                                     EditCardParam card = EditCardParam(
-                                        front: frontTextEditingController.text,
-                                        back: backTextEditingController.text,
-                                        collectionId: widget.card.collectionId,
-                                        id: widget.card.id);
+                                        front: frontText.toString(),
+                                        back: backText.toString(),
+                                        collectionId: widget.card.collectionId!,
+                                        id: widget.card.id!);
                                     router.pop();
                                     context.read<CardsBloc>().add(
                                         CardsEvent.editCard(
                                             cardParam: card,
                                             collectionId:
-                                                widget.card.collectionId));
+                                                widget.card.collectionId!));
                                   }
                                 },
                               ))),
@@ -213,34 +150,225 @@ class _WebEditCardState extends State<WebEditCard> {
     );
   }
 
-  @override
-  void dispose() {
-    frontTextEditingController.dispose();
-    backTextEditingController.dispose();
-    super.dispose();
+  Column backEditor(BuildContext context) {
+    return Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Padding(
+                        padding: const EdgeInsets.only(left: 35.0),
+                        child: Text(
+                          AppStrings.back,
+                          style: AppTheme.themeData.textTheme.titleMedium,
+                        ),
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.only(
+                            bottom: 0, top: 26, left: 24, right: 24),
+                        child: Container(
+                          decoration: BoxDecoration(
+                            border: Border.all(color: AppColors.borderGrey),
+                            borderRadius: BorderRadius.circular(20),
+                            color: Colors.white,
+                          ),
+                          child: Column(
+                            mainAxisSize: MainAxisSize.min,
+                            children: [
+                              Padding(
+                                padding: const EdgeInsets.only(left: 20),
+                                child: ClipRRect(
+                                  borderRadius: BorderRadius.circular(20),
+                                  child: ToolBar(
+                                    mainAxisSize: MainAxisSize.min,
+                                    toolBarColor: Colors.white,
+                                    padding: const EdgeInsets.all(8),
+                                    iconSize: 21,
+                                    iconColor: AppColors.veryLightGrey,
+                                    activeIconColor: Colors.black,
+                                    controller: backController,
+                                    crossAxisAlignment:
+                                        WrapCrossAlignment.start,
+                                    direction: Axis.horizontal,
+                                    toolBarConfig: const [
+                                      ToolBarStyle.bold,
+                                      ToolBarStyle.italic,
+                                      ToolBarStyle.underline,
+                                      ToolBarStyle.listOrdered,
+                                      ToolBarStyle.listBullet,
+                                    ],
+                                    customButtons: [
+                                      ///color picker
+                                      // Padding(
+                                      //   padding:
+                                      //       const EdgeInsets.only(top: 3.0),
+                                      //   child: InkWell(
+                                      //     child: Container(
+                                      //       decoration: BoxDecoration(
+                                      //           color: backPickedColor,
+                                      //           borderRadius:
+                                      //               BorderRadius.circular(4)),
+                                      //       height: 17,
+                                      //       width: 17,
+                                      //     ),
+                                      //     onTap: () {
+                                      //       showBackColorPicker(context);
+                                      //     },
+                                      //   ),
+                                      // )
+                                    ],
+                                  ),
+                                ),
+                              ),
+                              Container(
+                                height: 1.0,
+                                color: AppColors.borderGrey,
+                              ),
+                              Padding(
+                                padding: const EdgeInsets.symmetric(
+                                    vertical: 8.0, horizontal: 10),
+                                child: QuillHtmlEditor(
+                                  text: widget.card.back,
+                                  controller: backController,
+                                  isEnabled: true,
+                                  ensureVisible: false,
+                                  minHeight: 130,
+                                  autoFocus: false,
+                                  textStyle: AppTheme
+                                      .themeData.textTheme.titleMedium!
+                                      .copyWith(
+                                          color: backPickedColor,
+                                          fontWeight: FontWeight.w300,
+                                          fontSize: 17),
+                                  hintTextAlign: TextAlign.start,
+                                  padding: const EdgeInsets.only(
+                                      left: 10, top: 10),
+                                  hintTextPadding:
+                                      const EdgeInsets.only(left: 20),
+                                  backgroundColor: Colors.white,
+                                  inputAction: InputAction.newline,
+                                  // loadingBuilder: (context) {
+                                  //   return const Center(
+                                  //       child: CircularProgressIndicator(
+                                  //     strokeWidth: 1,
+                                  //     color: Colors.red,
+                                  //   ));
+                                  // },
+                                  onFocusChanged: (focus) {
+                                    debugPrint('has focus $focus');
+                                    setState(() {
+                                      _backHasFocus = focus;
+                                    });
+                                  },
+                                  onTextChanged: (text) {
+                                    setState(() {
+                                      backText = text;
+                                      textLengthBack =
+                                          text.replaceAll(RegExp(r'<[^>]*>'), '').length.toString();
+                                    });
+                                  },
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.only(right: 24),
+                        child: Align(
+                          alignment: Alignment.bottomRight,
+                          child: Padding(
+                            padding: const EdgeInsets.all(8.0),
+                            child: Text('$textLengthBack/400'),
+                          ),
+                        ),
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.only(left: 25.0),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.start,
+                          children: [
+                            InkWell(
+                              onTap: () {},
+                              child: Container(
+                                height: 65,
+                                width: 65,
+                                decoration: BoxDecoration(
+                                    color: AppColors.background,
+                                    borderRadius: BorderRadius.circular(65)),
+                                child: Stack(
+                                  children: [
+                                    Center(
+                                      child: SvgPicture.asset(
+                                        AppIcons.imageIcon,
+                                        height: 22,
+                                        width: 22,
+                                      ),
+                                    ),
+                                    Positioned(
+                                      bottom: 15,
+                                      right: 15,
+                                      child: SvgPicture.asset(
+                                        AppIcons.miniPlus,
+                                        height: 12,
+                                        width: 12,
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                              ),
+                            ),
+                            const SizedBox(width: 25),
+                            InkWell(
+                              onTap: () {},
+                              child: Container(
+                                height: 65,
+                                width: 65,
+                                decoration: BoxDecoration(
+                                    color: AppColors.background,
+                                    borderRadius: BorderRadius.circular(65)),
+                                child: Stack(
+                                  children: [
+                                    Center(
+                                      child: SvgPicture.asset(
+                                        AppIcons.editIcon,
+                                        height: 22,
+                                        width: 22,
+                                      ),
+                                    ),
+                                    Positioned(
+                                      bottom: 15,
+                                      right: 15,
+                                      child: SvgPicture.asset(
+                                        AppIcons.miniPlus,
+                                        height: 12,
+                                        width: 12,
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                    ],
+                  );
   }
 
-  Padding buildInputField({
-    required String header,
-    required TextEditingController controller,
-    required String textLength,
-  }) {
-    return Padding(
-      padding: const EdgeInsets.only(bottom: 0, top: 26, left: 24, right: 24),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Padding(
-            padding: const EdgeInsets.only(left: 15.0),
-            child: Text(
-              header,
-              style: AppTheme.themeData.textTheme.titleMedium,
-            ),
+  Column frontEditor(BuildContext context) {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Padding(
+          padding: const EdgeInsets.only(left: 35.0),
+          child: Text(
+            AppStrings.front,
+            style: AppTheme.themeData.textTheme.titleMedium,
           ),
-          const SizedBox(
-            height: 12,
-          ),
-          Container(
+        ),
+        Padding(
+          padding:
+              const EdgeInsets.only(bottom: 0, top: 26, left: 24, right: 24),
+          child: Container(
             decoration: BoxDecoration(
               border: Border.all(color: AppColors.borderGrey),
               borderRadius: BorderRadius.circular(20),
@@ -251,97 +379,44 @@ class _WebEditCardState extends State<WebEditCard> {
               children: [
                 Padding(
                   padding: const EdgeInsets.only(left: 20),
-                  child: Row(
-                    children: [
-                      AppIconButton(
-                        svgIcon: AppIcons.big,
-                        color: currentTextFormat == TextFormat.bold
-                            ? Colors.black
-                            : AppColors.veryLightGrey,
-                        height: 22,
-                        width: 22,
-                        onTap: () {
-                          setState(() {
-                            currentTextFormat == TextFormat.bold
-                                ? currentTextFormat = TextFormat.normal
-                                : currentTextFormat = TextFormat.bold;
-                          });
-                        },
-                      ),
-                      AppIconButton(
-                        svgIcon: AppIcons.italic,
-                        color: currentTextFormat == TextFormat.italic
-                            ? Colors.black
-                            : AppColors.veryLightGrey,
-                        height: 22,
-                        width: 22,
-                        onTap: () {
-                          setState(() {
-                            currentTextFormat == TextFormat.italic
-                                ? currentTextFormat = TextFormat.normal
-                                : currentTextFormat = TextFormat.italic;
-                          });
-                        },
-                      ),
-                      AppIconButton(
-                        svgIcon: AppIcons.underscore,
-                        color: currentTextFormat == TextFormat.underscore
-                            ? Colors.black
-                            : AppColors.veryLightGrey,
-                        height: 22,
-                        width: 22,
-                        onTap: () {
-                          setState(() {
-                            currentTextFormat == TextFormat.underscore
-                                ? currentTextFormat = TextFormat.normal
-                                : currentTextFormat = TextFormat.underscore;
-                          });
-                        },
-                      ),
-                      AppIconButton(
-                        svgIcon: AppIcons.numerated,
-                        color: currentParagraphFormat == ParagraphFormat.number
-                            ? Colors.black
-                            : AppColors.veryLightGrey,
-                        height: 22,
-                        width: 22,
-                        onTap: () {
-                          setState(() {
-                            currentParagraphFormat == ParagraphFormat.number
-                                ? currentParagraphFormat =
-                                    ParagraphFormat.normal
-                                : currentParagraphFormat =
-                                    ParagraphFormat.number;
-                          });
-                        },
-                      ),
-                      AppIconButton(
-                        svgIcon: AppIcons.sorted,
-                        color: currentParagraphFormat == ParagraphFormat.bullet
-                            ? Colors.black
-                            : AppColors.veryLightGrey,
-                        height: 24,
-                        width: 22,
-                        onTap: () {
-                          setState(() {
-                            currentParagraphFormat == ParagraphFormat.bullet
-                                ? currentParagraphFormat =
-                                    ParagraphFormat.normal
-                                : currentParagraphFormat =
-                                    ParagraphFormat.bullet;
-                          });
-                        },
-                      ),
-                      const SizedBox(
-                        width: 10,
-                      ),
-                      // BlockPicker(
-                      //   pickerColor: Colors.red, //default color
-                      //   onColorChanged: (Color color){ //on the color picked
-                      //     print(color);
-                      //   },
-                      // )
-                    ],
+                  child: ClipRRect(
+                    borderRadius: BorderRadius.circular(20),
+                    child: ToolBar(
+                      mainAxisSize: MainAxisSize.min,
+                      toolBarColor: Colors.white,
+                      padding: const EdgeInsets.all(8),
+                      iconSize: 21,
+                      iconColor: AppColors.veryLightGrey,
+                      activeIconColor: Colors.black,
+                      controller: frontController,
+                      crossAxisAlignment: WrapCrossAlignment.start,
+                      direction: Axis.horizontal,
+                      toolBarConfig: const [
+                        ToolBarStyle.bold,
+                        ToolBarStyle.italic,
+                        ToolBarStyle.underline,
+                        ToolBarStyle.listOrdered,
+                        ToolBarStyle.listBullet,
+                      ],
+                      customButtons: [
+                        ///color picker
+                        // Padding(
+                        //   padding: const EdgeInsets.only(top: 3.0),
+                        //   child: InkWell(
+                        //     child: Container(
+                        //       decoration: BoxDecoration(
+                        //           color: frontPickedColor,
+                        //           borderRadius: BorderRadius.circular(4)),
+                        //       height: 17,
+                        //       width: 17,
+                        //     ),
+                        //     onTap: () {
+                        //       showFrontColorPicker(context);
+                        //     },
+                        //   ),
+                        // )
+                      ],
+                    ),
                   ),
                 ),
                 Container(
@@ -350,30 +425,41 @@ class _WebEditCardState extends State<WebEditCard> {
                 ),
                 Padding(
                   padding:
-                      const EdgeInsets.symmetric(vertical: 8.0, horizontal: 19),
-                  child: TextField(
-                    controller: controller,
-                    maxLines: 5,
-                    style: TextStyle(
-                        fontStyle: currentTextFormat == TextFormat.italic
-                            ? FontStyle.italic
-                            : FontStyle.normal,
-                        fontWeight: currentTextFormat == TextFormat.bold
-                            ? FontWeight.bold
-                            : FontWeight.normal,
-                        decoration: currentTextFormat == TextFormat.underscore
-                            ? TextDecoration.underline
-                            : TextDecoration.none),
-                    decoration: const InputDecoration(
-                      errorBorder: InputBorder.none,
-                      focusedBorder: InputBorder.none,
-                      enabledBorder: InputBorder.none,
-                      border: InputBorder.none,
-                    ),
-                    onChanged: (text) {
+                      const EdgeInsets.symmetric(vertical: 8.0, horizontal: 10),
+                  child: QuillHtmlEditor(
+                    text: widget.card.front,
+                    controller: frontController,
+                    isEnabled: true,
+                    ensureVisible: false,
+                    minHeight: 130,
+                    autoFocus: false,
+                    textStyle: AppTheme.themeData.textTheme.titleMedium!
+                        .copyWith(
+                            color: frontPickedColor,
+                            fontWeight: FontWeight.w300,
+                            fontSize: 17),
+                    hintTextAlign: TextAlign.start,
+                    padding: const EdgeInsets.only(left: 10, top: 10),
+                    hintTextPadding: const EdgeInsets.only(left: 20),
+                    backgroundColor: Colors.white,
+                    inputAction: InputAction.newline,
+                    // loadingBuilder: (context) {
+                    //   return const Center(
+                    //       child: CircularProgressIndicator(
+                    //     strokeWidth: 1,
+                    //     color: Colors.red,
+                    //   ));
+                    // },
+                    onFocusChanged: (focus) {
+                      debugPrint('has focus $focus');
                       setState(() {
-                        textLength =
-                            frontTextEditingController.text.length.toString();
+                        _frontHasFocus = focus;
+                      });
+                    },
+                    onTextChanged: (text) {
+                      setState(() {
+                        frontText = text;
+                        textLengthFront = text.replaceAll(RegExp(r'<[^>]*>'), '').length.toString();
                       });
                     },
                   ),
@@ -381,84 +467,171 @@ class _WebEditCardState extends State<WebEditCard> {
               ],
             ),
           ),
-          Align(
+        ),
+        Padding(
+          padding: const EdgeInsets.only(right: 24),
+          child: Align(
             alignment: Alignment.bottomRight,
             child: Padding(
               padding: const EdgeInsets.all(8.0),
-              child: Text('$textLength/400'),
+              child: Text('$textLengthFront/400'),
             ),
           ),
-          Padding(
-            padding: const EdgeInsets.only(left: 25.0),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.start,
-              children: [
-                InkWell(
-                  onTap: () {},
-                  child: Container(
-                    height: 65,
-                    width: 65,
-                    decoration: BoxDecoration(
-                        color: AppColors.background,
-                        borderRadius: BorderRadius.circular(65)),
-                    child: Stack(
-                      children: [
-                        Center(
-                          child: SvgPicture.asset(
-                            AppIcons.imageIcon,
-                            height: 22,
-                            width: 22,
-                          ),
+        ),
+        Padding(
+          padding: const EdgeInsets.only(left: 25.0),
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.start,
+            children: [
+              InkWell(
+                onTap: () {},
+                child: Container(
+                  height: 65,
+                  width: 65,
+                  decoration: BoxDecoration(
+                      color: AppColors.background,
+                      borderRadius: BorderRadius.circular(65)),
+                  child: Stack(
+                    children: [
+                      Center(
+                        child: SvgPicture.asset(
+                          AppIcons.imageIcon,
+                          height: 22,
+                          width: 22,
                         ),
-                        Positioned(
-                          bottom: 15,
-                          right: 15,
-                          child: SvgPicture.asset(
-                            AppIcons.miniPlus,
-                            height: 12,
-                            width: 12,
-                          ),
+                      ),
+                      Positioned(
+                        bottom: 15,
+                        right: 15,
+                        child: SvgPicture.asset(
+                          AppIcons.miniPlus,
+                          height: 12,
+                          width: 12,
                         ),
-                      ],
-                    ),
+                      ),
+                    ],
                   ),
                 ),
-                const SizedBox(width: 25),
-                InkWell(
-                  onTap: () {},
-                  child: Container(
-                    height: 65,
-                    width: 65,
-                    decoration: BoxDecoration(
-                        color: AppColors.background,
-                        borderRadius: BorderRadius.circular(65)),
-                    child: Stack(
-                      children: [
-                        Center(
-                          child: SvgPicture.asset(
-                            AppIcons.editIcon,
-                            height: 22,
-                            width: 22,
-                          ),
+              ),
+              const SizedBox(width: 25),
+              InkWell(
+                onTap: () {},
+                child: Container(
+                  height: 65,
+                  width: 65,
+                  decoration: BoxDecoration(
+                      color: AppColors.background,
+                      borderRadius: BorderRadius.circular(65)),
+                  child: Stack(
+                    children: [
+                      Center(
+                        child: SvgPicture.asset(
+                          AppIcons.editIcon,
+                          height: 22,
+                          width: 22,
                         ),
-                        Positioned(
-                          bottom: 15,
-                          right: 15,
-                          child: SvgPicture.asset(
-                            AppIcons.miniPlus,
-                            height: 12,
-                            width: 12,
-                          ),
+                      ),
+                      Positioned(
+                        bottom: 15,
+                        right: 15,
+                        child: SvgPicture.asset(
+                          AppIcons.miniPlus,
+                          height: 12,
+                          width: 12,
                         ),
-                      ],
-                    ),
+                      ),
+                    ],
                   ),
                 ),
-              ],
-            ),
+              ),
+            ],
           ),
-        ],
-      ),
+        ),
+      ],
     );
+  }
+
+  Future<dynamic> showFrontColorPicker(BuildContext context) {
+    return showDialog(
+        context: context,
+        builder: (_) {
+          return Dialog(
+            shape: const RoundedRectangleBorder(
+                borderRadius: BorderRadius.all(Radius.circular(15.0))),
+            surfaceTintColor: Colors.white,
+            backgroundColor: Colors.white,
+            child: Padding(
+              padding: const EdgeInsets.all(15.0),
+              child: SizedBox(
+                height: 180,
+                width: MediaQuery.of(context).size.width / 5,
+                child: SingleChildScrollView(
+                  child: Column(
+                    children: [
+                      BlockPicker(
+                        pickerColor: frontPickedColor,
+                        onColorChanged: (value) {
+                          setState(() {
+                            frontPickedColor = value;
+                          });
+                        },
+                      ),
+                      InkWell(
+                          onTap: () {
+                            router.pop();
+                          },
+                          child: const Text('OK')),
+                    ],
+                  ),
+                ),
+              ),
+            ),
+          );
+        });
+  }
+  Future<dynamic> showBackColorPicker(BuildContext context) {
+    return showDialog(
+        context: context,
+        builder: (_) {
+          return Dialog(
+            shape: const RoundedRectangleBorder(
+                borderRadius: BorderRadius.all(Radius.circular(15.0))),
+            surfaceTintColor: Colors.white,
+            backgroundColor: Colors.white,
+            child: Padding(
+              padding: const EdgeInsets.all(15.0),
+              child: SizedBox(
+                height: 180,
+                width: MediaQuery.of(context).size.width / 5,
+                child: SingleChildScrollView(
+                  child: Column(
+                    children: [
+                      BlockPicker(
+                        pickerColor: backPickedColor,
+                        onColorChanged: (value) {
+                          setState(() {
+                            backPickedColor = value;
+                          });
+                        },
+                      ),
+                      InkWell(
+                          onTap: () {
+                            router.pop();
+                          },
+                          child: const Text('OK')),
+                    ],
+                  ),
+                ),
+              ),
+            ),
+          );
+        });
+  }
+
+  @override
+  void dispose() {
+    frontController.dispose();
+    backController.dispose();
+    super.dispose();
   }
 }

@@ -8,7 +8,7 @@ class FirebaseTimestampConverters {
     } else if (timestamp is Timestamp) {
       return timestamp.toDate();
     } else if(timestamp is String){
-     return DateTime.parse(timestamp);
+      return DateTime.parse(timestamp);
     }else if (timestamp == null) {
       return DateTime.now();
     } else {

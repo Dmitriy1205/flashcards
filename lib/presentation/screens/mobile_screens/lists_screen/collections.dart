@@ -21,7 +21,6 @@ class Collections extends StatelessWidget {
     return Container(
       color: AppColors.background,
       child: ListView.builder(
-          physics: const BouncingScrollPhysics(),
           itemBuilder: (context, i) {
             return Padding(
               padding: const EdgeInsets.only(
@@ -44,7 +43,7 @@ class Collections extends StatelessWidget {
                               context
                                   .read<ListsBloc>()
                                   .listIdToDelete
-                                  .add(collectionsList[i].id);
+                                  .add(collectionsList[i].id!);
                             }
                             context.read<ListsBloc>().add(ListsEvent.started(
                                   isEditMode: isEditMode,
@@ -86,14 +85,21 @@ class Collections extends StatelessWidget {
                         borderRadius: BorderRadius.all(Radius.circular(10))),
                     child: ListTile(
                       onTap: () {
-                        context
-                            .read<ListsBloc>()
-                            .add(ListsEvent.selectCollection(
-                              collection: collectionsList[i],
-                            ));
+                        if(isEditMode){
+                          CreateEditCollectionDialog().dialog(context,
+                              collectionName:
+                              collectionsList[i].collectionName,
+                              collectionId: collectionsList[i].id);
+                        }else{
+                          context
+                              .read<ListsBloc>()
+                              .add(ListsEvent.selectCollection(
+                            collection: collectionsList[i],
+                          ));
+                        }
                       },
                       title: Text(
-                        collectionsList[i].collectionName,
+                        collectionsList[i].collectionName!,
                         style: AppTheme.themeData.textTheme.titleMedium!
                             .copyWith(fontSize: 18),
                       ),
@@ -105,19 +111,11 @@ class Collections extends StatelessWidget {
                         ),
                       ),
                       trailing: isEditMode
-                          ? InkWell(
-                              onTap: () {
-                                CreateEditCollectionDialog().dialog(context,
-                                    collectionName:
-                                        collectionsList[i].collectionName,
-                                    collectionId: collectionsList[i].id);
-                              },
-                              child: SvgPicture.asset(
-                                AppIcons.editGreen,
-                                height: 18,
-                                width: 9,
-                              ),
-                            )
+                          ? SvgPicture.asset(
+                            AppIcons.editGreen,
+                            height: 18,
+                            width: 9,
+                          )
                           : SvgPicture.asset(
                               AppIcons.rightArrow,
                               height: 18,

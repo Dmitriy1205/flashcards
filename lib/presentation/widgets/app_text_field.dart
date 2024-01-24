@@ -57,7 +57,7 @@ class AppTextField extends StatelessWidget {
           hintText: hintText ?? '' ,
           isDense: true,
           suffixIcon: suffixIcon ?? const SizedBox(),
-          constraints: const BoxConstraints(maxHeight: 70, minHeight: 45),
+          constraints: const BoxConstraints(minHeight: 45),
           contentPadding: const EdgeInsets.symmetric(vertical: 12, horizontal: 14),
         ),
       ),
