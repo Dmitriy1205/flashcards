@@ -8,7 +8,6 @@ import 'package:flashcards/presentation/widgets/app_icon_button.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_colorpicker/flutter_colorpicker.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
@@ -76,122 +75,83 @@ class _WebCreateCardState extends State<WebCreateCard> {
                   : '${AppStrings.edit} ${AppStrings.card.toLowerCase()}',
               style: AppTheme.themeData.textTheme.headlineLarge,
             ),
-            // TextButton(
-            //   onPressed: () {
-            //     if (frontTextEditingController.text.isNotEmpty &&
-            //         backTextEditingController.text.isNotEmpty) {
-            //       if (widget.card == null) {
-            //         Navigator.pop(context);
-            //         context.read<CardsBloc>().add(CardsEvent.createNewCard(
-            //             front: frontTextEditingController.text,
-            //             back: backTextEditingController.text));
-            //       } else {
-            //         Navigator.pushReplacement(
-            //             context,
-            //             MaterialPageRoute(
-            //                 builder: (context) => ViewFlashCard(
-            //                   card: CardEntity(
-            //                       id: widget.card!.id,
-            //                       front: frontTextEditingController.text,
-            //                       back: backTextEditingController.text),
-            //                 )));
-            //         context.read<CardsBloc>().add(CardsEvent.editCard(
-            //             card: CardEntity(
-            //                 id: widget.card!.id,
-            //                 front: frontTextEditingController.text,
-            //                 back: backTextEditingController.text)));
-            //       }
-            //     }
-            //   },
-            //   child: Text(
-            //     AppStrings.done,
-            //     style: AppTheme.themeData.textTheme.titleLarge!.copyWith(
-            //       fontSize: 20,
-            //     ),
-            //   ),
-            // ),
           ],
         ),
       ),
-      body: ColoredBox(
+      body: Container(
         color: AppColors.background,
-        child: Center(
-          child: SingleChildScrollView(
-            child: Padding(
-              padding: const EdgeInsets.symmetric(vertical: 39.0),
-              child: Container(
-                width: 914,
-                // height: MediaQuery.of(context).size.height / 1.23,
-                decoration: BoxDecoration(
-                    color: Colors.white,
-                    borderRadius: BorderRadius.circular(10)),
-                child: Column(
-                  children: [
-                    buildInputField(
-                        header: AppStrings.front,
-                        controller: frontTextEditingController,
-                        textLength: textLengthFirst),
-                    buildInputField(
-                        header: AppStrings.back,
-                        controller: backTextEditingController,
-                        textLength: textLengthSecond),
-                    Padding(
-                      padding: const EdgeInsets.only(
-                          right: 37.0, bottom: 25, top: 12),
-                      child: Align(
-                          alignment: Alignment.centerRight,
-                          child: SizedBox(
-                              width: 86,
-                              child: AppElevatedButton(
-                                borderRadius: 36,
-                                text: AppStrings.done,
-                                onPressed: () {
-                                  if (frontTextEditingController
-                                          .text.isNotEmpty &&
-                                      backTextEditingController
-                                          .text.isNotEmpty) {
-                                    if (widget.card == null) {
-                                      CreateCardParam card = CreateCardParam(
-                                          front:
-                                              frontTextEditingController.text,
-                                          back: backTextEditingController.text,
-                                          collectionId: widget.collectionId);
-                                      Navigator.pop(context);
+        constraints:
+            BoxConstraints(minWidth: MediaQuery.of(context).size.width),
+        child: SingleChildScrollView(
+          child: Padding(
+            padding: EdgeInsets.symmetric(
+                vertical: 39.0,
+                horizontal: MediaQuery.of(context).size.width * 0.15),
+            child: Container(
+              width: 914,
+              // height: MediaQuery.of(context).size.height / 1.23,
+              decoration: BoxDecoration(
+                  color: Colors.white, borderRadius: BorderRadius.circular(10)),
+              child: Column(
+                children: [
+                  buildInputField(
+                      header: AppStrings.front,
+                      controller: frontTextEditingController,
+                      textLength: textLengthFirst),
+                  buildInputField(
+                      header: AppStrings.back,
+                      controller: backTextEditingController,
+                      textLength: textLengthSecond),
+                  Padding(
+                    padding:
+                        const EdgeInsets.only(right: 37.0, bottom: 25, top: 12),
+                    child: Align(
+                        alignment: Alignment.centerRight,
+                        child: SizedBox(
+                            width: 86,
+                            child: AppElevatedButton(
+                              borderRadius: 36,
+                              text: AppStrings.done,
+                              onPressed: () {
+                                if (frontTextEditingController
+                                        .text.isNotEmpty &&
+                                    backTextEditingController.text.isNotEmpty) {
+                                  if (widget.card == null) {
+                                    CreateCardParam card = CreateCardParam(
+                                        front: frontTextEditingController.text,
+                                        back: backTextEditingController.text,
+                                        collectionId: widget.collectionId);
+                                    Navigator.pop(context);
 
-                                      context.read<CardsBloc>().add(
-                                          CardsEvent.createNewCard(
-                                              cardParam: card,
-                                              collectionId:
-                                                  widget.collectionId));
-                                    } else {
-                                      EditCardParam card = EditCardParam(
-                                          front:
-                                              frontTextEditingController.text,
-                                          back: backTextEditingController.text,
-                                          collectionId: widget.collectionId,
-                                          id: widget.card!.id);
-                                      Navigator.pop(context);
-                                      Navigator.pushReplacement(
-                                          context,
-                                          MaterialPageRoute(
-                                              builder: (context) =>
-                                                  ViewFlashCard(
-                                                    card: widget.card!,
-                                                    collectionId:
-                                                        widget.collectionId,
-                                                  )));
-                                      context.read<CardsBloc>().add(
-                                          CardsEvent.editCard(
-                                              cardParam: card,
-                                              collectionId:
-                                                  widget.collectionId));
-                                    }
+                                    context.read<CardsBloc>().add(
+                                        CardsEvent.createNewCard(
+                                            cardParam: card,
+                                            collectionId: widget.collectionId));
+                                  } else {
+                                    EditCardParam card = EditCardParam(
+                                        front: frontTextEditingController.text,
+                                        back: backTextEditingController.text,
+                                        collectionId: widget.collectionId,
+                                        id: widget.card!.id);
+                                    Navigator.pop(context);
+                                    Navigator.pushReplacement(
+                                        context,
+                                        MaterialPageRoute(
+                                            builder: (context) => ViewFlashCard(
+                                                  card: widget.card!,
+                                                  collectionId:
+                                                      widget.collectionId,
+                                                )));
+                                    context.read<CardsBloc>().add(
+                                        CardsEvent.editCard(
+                                            cardParam: card,
+                                            collectionId: widget.collectionId));
                                   }
-                                },
-                              ))),
-                    ),
-                  ],
-                ),
+                                }
+                              },
+                            ))),
+                  ),
+                ],
               ),
             ),
           ),

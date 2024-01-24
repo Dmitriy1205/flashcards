@@ -194,7 +194,7 @@ class _WebCardsState extends State<WebCards> {
                                   height: 23,
                                   width: 23,
                                 ),
-                                SizedBox(width: 23),
+                                const SizedBox(width: 23),
                                 Text(
                                   'Learn Now',
                                   style:
@@ -264,175 +264,186 @@ class _WebCardsState extends State<WebCards> {
                                   ]),
                             ),
                             Expanded(
-                              child: Padding(
+                              child: ListView.builder(
                                 padding: EdgeInsets.only(
                                     top: 19.0,
                                     left: context.read<CardsBloc>().isEditMode
                                         ? 25
                                         : 25,
                                     bottom: 100,
-                                    right: context.read<CardsBloc>().isEditMode
+                                    right:
+                                    context.read<CardsBloc>().isEditMode
                                         ? 25
                                         : 25),
-                                child: ListView.builder(
-                                  physics: const AlwaysScrollableScrollPhysics(),
-                                  itemCount: state.cardsList!.length,
-                                  itemBuilder: (context, i) {
-                                    CardEntity card = state.cardsList![i];
-                                    return Padding(
-                                      padding:
-                                          const EdgeInsets.only(bottom: 23.0),
-                                      child: Container(
-                                        padding: EdgeInsets.zero,
-                                        child: Row(
-                                          children: [
-                                            context.read<CardsBloc>().isEditMode
-                                                ? InkWell(
-                                                    onTap: () {
-                                                      setState(() {
-                                                        if (context
-                                                            .read<CardsBloc>()
+                                physics:
+                                    const AlwaysScrollableScrollPhysics(),
+                                itemCount: state.cardsList!.length,
+                                itemBuilder: (context, i) {
+                                  CardEntity card = state.cardsList![i];
+                                  return Padding(
+                                    padding:
+                                        const EdgeInsets.only(bottom: 23.0),
+                                    child: Container(
+                                      padding: EdgeInsets.zero,
+                                      child: Row(
+                                        children: [
+                                          context
+                                                  .read<CardsBloc>()
+                                                  .isEditMode
+                                              ? InkWell(
+                                                  onTap: () {
+                                                    setState(() {
+                                                      if (context
+                                                          .read<CardsBloc>()
+                                                          .cardsListToDelete
+                                                          .contains(context
+                                                              .read<
+                                                                  CardsBloc>()
+                                                              .state
+                                                              .cardsList![i]
+                                                              .id)) {
+                                                        context
+                                                            .read<
+                                                                CardsBloc>()
                                                             .cardsListToDelete
-                                                            .contains(context
+                                                            .remove(context
                                                                 .read<
                                                                     CardsBloc>()
                                                                 .state
-                                                                .cardsList![i]
-                                                                .id)) {
-                                                          context
-                                                              .read<CardsBloc>()
-                                                              .cardsListToDelete
-                                                              .remove(context
-                                                                  .read<
-                                                                      CardsBloc>()
-                                                                  .state
-                                                                  .cardsList![i]
-                                                                  .id);
-                                                        } else {
-                                                          context
-                                                              .read<CardsBloc>()
-                                                              .cardsListToDelete
-                                                              .add(context
-                                                                  .read<
-                                                                      CardsBloc>()
-                                                                  .state
-                                                                  .cardsList![i]
-                                                                  .id);
-                                                        }
-                                                      });
-                                                    },
-                                                    child: Container(
-                                                      decoration:
-                                                          const BoxDecoration(
-                                                        shape: BoxShape.circle,
-                                                      ),
-                                                      child: Padding(
-                                                        padding:
-                                                            const EdgeInsets
-                                                                .all(10.0),
-                                                        child: context
-                                                                .watch<
+                                                                .cardsList![
+                                                                    i]
+                                                                .id);
+                                                      } else {
+                                                        context
+                                                            .read<
+                                                                CardsBloc>()
+                                                            .cardsListToDelete
+                                                            .add(context
+                                                                .read<
                                                                     CardsBloc>()
-                                                                .cardsListToDelete
-                                                                .contains(state
-                                                                    .cardsList![
-                                                                        i]
-                                                                    .id)
-                                                            ? const Icon(
-                                                                Icons
-                                                                    .check_circle,
-                                                                size: 23.0,
-                                                                color: AppColors
-                                                                    .mainAccent,
-                                                              )
-                                                            : const Icon(
-                                                                Icons
-                                                                    .radio_button_unchecked,
-                                                                size: 23.0,
-                                                                color: AppColors
-                                                                    .mainAccent,
-                                                              ),
-                                                      ),
+                                                                .state
+                                                                .cardsList![
+                                                                    i]
+                                                                .id);
+                                                      }
+                                                    });
+                                                  },
+                                                  child: Container(
+                                                    decoration:
+                                                        const BoxDecoration(
+                                                      shape:
+                                                          BoxShape.circle,
                                                     ),
-                                                  )
-                                                : const SizedBox(),
-                                            SizedBox(
-                                              width: context
-                                                      .read<CardsBloc>()
-                                                      .isEditMode
-                                                  ? 18
-                                                  : 0,
-                                            ),
-                                            Flexible(
-                                              child: InkWell(
-                                                onTap: () {
-                                                  Navigator.push(
-                                                      context,
-                                                      MaterialPageRoute(
-                                                          builder: (context) =>
-                                                              WebViewFlashCard(
-                                                                  card: card,
-                                                                  collectionId:
-                                                                      widget
-                                                                          .collectionId)));
-                                                },
-                                                child: Container(
-                                                  height: 76,
-                                                  width: MediaQuery.of(context)
-                                                      .size
-                                                      .width,
-                                                  decoration: BoxDecoration(
-                                                    color: Colors.white,
-                                                    borderRadius:
-                                                        BorderRadius.circular(
-                                                            10),
+                                                    child: Padding(
+                                                      padding:
+                                                          const EdgeInsets
+                                                              .all(10.0),
+                                                      child: context
+                                                              .watch<
+                                                                  CardsBloc>()
+                                                              .cardsListToDelete
+                                                              .contains(state
+                                                                  .cardsList![
+                                                                      i]
+                                                                  .id)
+                                                          ? const Icon(
+                                                              Icons
+                                                                  .check_circle,
+                                                              size: 23.0,
+                                                              color: AppColors
+                                                                  .mainAccent,
+                                                            )
+                                                          : const Icon(
+                                                              Icons
+                                                                  .radio_button_unchecked,
+                                                              size: 23.0,
+                                                              color: AppColors
+                                                                  .mainAccent,
+                                                            ),
+                                                    ),
                                                   ),
-                                                  child: Padding(
-                                                    padding: const EdgeInsets
-                                                        .symmetric(
-                                                        horizontal: 24.0,
-                                                        vertical: 15),
-                                                    child: Column(
-                                                      crossAxisAlignment:
-                                                          CrossAxisAlignment
-                                                              .start,
-                                                      children: [
-                                                        Text(
-                                                          overflow: TextOverflow
-                                                              .ellipsis,
-                                                          card.front,
-                                                          style: AppTheme
-                                                              .themeData
-                                                              .textTheme
-                                                              .titleSmall!
-                                                              .copyWith(
-                                                                  color: AppColors
-                                                                      .mainAccent),
+                                                )
+                                              : const SizedBox(),
+                                          SizedBox(
+                                            width: context
+                                                    .read<CardsBloc>()
+                                                    .isEditMode
+                                                ? 18
+                                                : 0,
+                                          ),
+                                          Flexible(
+                                            child: InkWell(
+                                              onTap: () {
+                                                Navigator.push(
+                                                    context,
+                                                    MaterialPageRoute(
+                                                        builder: (context) =>
+                                                            WebViewFlashCard(
+                                                                card: card,
+                                                                collectionId:
+                                                                    widget
+                                                                        .collectionId)));
+                                              },
+                                              child: Container(
+                                                height: 76,
+                                                width:
+                                                    MediaQuery.of(context)
+                                                        .size
+                                                        .width,
+                                                decoration: BoxDecoration(
+                                                  color: Colors.white,
+                                                  borderRadius:
+                                                      BorderRadius.circular(
+                                                          10),
+                                                ),
+                                                child: Padding(
+                                                  padding: const EdgeInsets
+                                                      .symmetric(
+                                                      horizontal: 24.0,
+                                                      vertical: 15),
+                                                  child: Column(
+                                                    crossAxisAlignment:
+                                                        CrossAxisAlignment
+                                                            .start,
+                                                    children: [
+                                                      Text(
+                                                        overflow:
+                                                            TextOverflow
+                                                                .ellipsis,
+                                                        card.front,
+                                                        style: AppTheme
+                                                            .themeData
+                                                            .textTheme
+                                                            .titleSmall!
+                                                            .copyWith(
+                                                                color: AppColors
+                                                                    .mainAccent),
+                                                      ),
+                                                      Text(
+                                                        overflow:
+                                                            TextOverflow
+                                                                .ellipsis,
+                                                        card.back,
+                                                        style: AppTheme
+                                                            .themeData
+                                                            .textTheme
+                                                            .labelSmall!
+                                                            .copyWith(
+                                                          color:
+                                                              Colors.black,
                                                         ),
-                                                        Text(
-                                                          overflow: TextOverflow
-                                                              .ellipsis,
-                                                          card.back,
-                                                          style: AppTheme
-                                                              .themeData
-                                                              .textTheme
-                                                              .labelSmall!
-                                                              .copyWith(
-                                                            color: Colors.black,
-                                                          ),
-                                                        ),
-                                                      ],
-                                                    ),
+                                                      ),
+                                                    ],
                                                   ),
                                                 ),
                                               ),
                                             ),
-                                          ],
-                                        ),
+                                          ),
+                                        ],
                                       ),
-                                    );
-                                  },
-                                ),
+                                    ),
+                                  );
+                                },
                               ),
                             ),
                           ],
@@ -506,7 +517,7 @@ class _WebCardsState extends State<WebCards> {
                         onTap: () {
                           context
                               .read<ListsBloc>()
-                              .add(ListsEvent.started(isEditMode: false));
+                              .add(const ListsEvent.started(isEditMode: false));
                           Navigator.of(context).pop();
                         },
                         child: const FaIcon(
@@ -637,7 +648,7 @@ class _WebCardsState extends State<WebCards> {
                                 height: 23,
                                 width: 23,
                               ),
-                              SizedBox(width: 23),
+                              const SizedBox(width: 23),
                               Text(
                                 'Learn Now',
                                 style: AppTheme.themeData.textTheme.labelMedium,
@@ -706,7 +717,7 @@ class _WebCardsState extends State<WebCards> {
                                 ]),
                           ),
                           Expanded(
-                            child: Padding(
+                            child: GridView.builder(
                               padding: EdgeInsets.only(
                                   top: 26.0,
                                   left: context.read<CardsBloc>().isEditMode
@@ -716,158 +727,153 @@ class _WebCardsState extends State<WebCards> {
                                   right: context.read<CardsBloc>().isEditMode
                                       ? 120
                                       : 141),
-                              child: GridView.builder(
-                                gridDelegate:
-                                    SliverGridDelegateWithMaxCrossAxisExtent(
-                                        maxCrossAxisExtent: 440.0,
-                                        // Maximum width of each item
-                                        crossAxisSpacing:
-                                            context.read<CardsBloc>().isEditMode
-                                                ? 18
-                                                : 36.0,
-                                        // Horizontal spacing between items
-                                        mainAxisSpacing: 30.0,
-                                        mainAxisExtent: 140),
-                                itemCount: state.cardsList!.length,
-                                itemBuilder: (context, i) {
-                                  CardEntity card = state.cardsList![i];
-                                  return Container(
-                                    padding: EdgeInsets.zero,
-                                    child: Row(
-                                      children: [
-                                        context.read<CardsBloc>().isEditMode
-                                            ? InkWell(
-                                                onTap: () {
-                                                  setState(() {
-                                                    if (context
+                              physics: const AlwaysScrollableScrollPhysics(),
+                              gridDelegate:
+                                  SliverGridDelegateWithMaxCrossAxisExtent(
+                                      maxCrossAxisExtent: 440.0,
+                                      // Maximum width of each item
+                                      crossAxisSpacing:
+                                          context.read<CardsBloc>().isEditMode
+                                              ? 18
+                                              : 36.0,
+                                      // Horizontal spacing between items
+                                      mainAxisSpacing: 30.0,
+                                      mainAxisExtent: 140),
+                              itemCount: state.cardsList!.length,
+                              itemBuilder: (context, i) {
+                                CardEntity card = state.cardsList![i];
+                                return Container(
+                                  padding: EdgeInsets.zero,
+                                  child: Row(
+                                    children: [
+                                      context.read<CardsBloc>().isEditMode
+                                          ? InkWell(
+                                              onTap: () {
+                                                setState(() {
+                                                  if (context
+                                                      .read<CardsBloc>()
+                                                      .cardsListToDelete
+                                                      .contains(context
+                                                          .read<CardsBloc>()
+                                                          .state
+                                                          .cardsList![i]
+                                                          .id)) {
+                                                    context
                                                         .read<CardsBloc>()
                                                         .cardsListToDelete
-                                                        .contains(context
+                                                        .remove(context
                                                             .read<CardsBloc>()
                                                             .state
                                                             .cardsList![i]
-                                                            .id)) {
-                                                      context
-                                                          .read<CardsBloc>()
-                                                          .cardsListToDelete
-                                                          .remove(context
-                                                              .read<CardsBloc>()
-                                                              .state
-                                                              .cardsList![i]
-                                                              .id);
-                                                    } else {
-                                                      context
-                                                          .read<CardsBloc>()
-                                                          .cardsListToDelete
-                                                          .add(context
-                                                              .read<CardsBloc>()
-                                                              .state
-                                                              .cardsList![i]
-                                                              .id);
-                                                    }
-                                                  });
-                                                },
-                                                child: Container(
-                                                  decoration:
-                                                      const BoxDecoration(
-                                                    shape: BoxShape.circle,
-                                                  ),
-                                                  child: Padding(
-                                                    padding:
-                                                        const EdgeInsets.all(
-                                                            10.0),
-                                                    child: context
-                                                            .watch<CardsBloc>()
-                                                            .cardsListToDelete
-                                                            .contains(state
-                                                                .cardsList![i]
-                                                                .id)
-                                                        ? const Icon(
-                                                            Icons.check_circle,
-                                                            size: 23.0,
-                                                            color: AppColors
-                                                                .mainAccent,
-                                                          )
-                                                        : const Icon(
-                                                            Icons
-                                                                .radio_button_unchecked,
-                                                            size: 23.0,
-                                                            color: AppColors
-                                                                .mainAccent,
-                                                          ),
-                                                  ),
+                                                            .id);
+                                                  } else {
+                                                    context
+                                                        .read<CardsBloc>()
+                                                        .cardsListToDelete
+                                                        .add(context
+                                                            .read<CardsBloc>()
+                                                            .state
+                                                            .cardsList![i]
+                                                            .id);
+                                                  }
+                                                });
+                                              },
+                                              child: Container(
+                                                decoration: const BoxDecoration(
+                                                  shape: BoxShape.circle,
                                                 ),
-                                              )
-                                            : const SizedBox(),
-                                        SizedBox(
-                                          width: context
-                                                  .read<CardsBloc>()
-                                                  .isEditMode
-                                              ? 18
-                                              : 0,
-                                        ),
-                                        Flexible(
-                                          child: InkWell(
-                                            onTap: () {
-                                              Navigator.push(
-                                                  context,
-                                                  MaterialPageRoute(
-                                                      builder: (context) =>
-                                                          WebViewFlashCard(
-                                                              card: card,
-                                                              collectionId: widget
-                                                                  .collectionId)));
-                                            },
-                                            child: Container(
-                                              height: 148,
-                                              width: 380,
-                                              decoration: BoxDecoration(
-                                                color: Colors.white,
-                                                borderRadius:
-                                                    BorderRadius.circular(10),
+                                                child: Padding(
+                                                  padding: const EdgeInsets.all(
+                                                      10.0),
+                                                  child: context
+                                                          .watch<CardsBloc>()
+                                                          .cardsListToDelete
+                                                          .contains(state
+                                                              .cardsList![i].id)
+                                                      ? const Icon(
+                                                          Icons.check_circle,
+                                                          size: 23.0,
+                                                          color: AppColors
+                                                              .mainAccent,
+                                                        )
+                                                      : const Icon(
+                                                          Icons
+                                                              .radio_button_unchecked,
+                                                          size: 23.0,
+                                                          color: AppColors
+                                                              .mainAccent,
+                                                        ),
+                                                ),
                                               ),
-                                              child: Padding(
-                                                padding:
-                                                    const EdgeInsets.symmetric(
-                                                        horizontal: 24.0,
-                                                        vertical: 19),
-                                                child: Column(
-                                                  crossAxisAlignment:
-                                                      CrossAxisAlignment.start,
-                                                  children: [
-                                                    Text(
-                                                      overflow:
-                                                          TextOverflow.ellipsis,
-                                                      maxLines: 2,
-                                                      card.front,
-                                                      style: AppTheme.themeData
-                                                          .textTheme.titleSmall!
-                                                          .copyWith(
-                                                              color: AppColors
-                                                                  .mainAccent),
+                                            )
+                                          : const SizedBox(),
+                                      SizedBox(
+                                        width:
+                                            context.read<CardsBloc>().isEditMode
+                                                ? 18
+                                                : 0,
+                                      ),
+                                      Flexible(
+                                        child: InkWell(
+                                          onTap: () {
+                                            Navigator.push(
+                                                context,
+                                                MaterialPageRoute(
+                                                    builder: (context) =>
+                                                        WebViewFlashCard(
+                                                            card: card,
+                                                            collectionId: widget
+                                                                .collectionId)));
+                                          },
+                                          child: Container(
+                                            height: 148,
+                                            width: 380,
+                                            decoration: BoxDecoration(
+                                              color: Colors.white,
+                                              borderRadius:
+                                                  BorderRadius.circular(10),
+                                            ),
+                                            child: Padding(
+                                              padding:
+                                                  const EdgeInsets.symmetric(
+                                                      horizontal: 24.0,
+                                                      vertical: 19),
+                                              child: Column(
+                                                crossAxisAlignment:
+                                                    CrossAxisAlignment.start,
+                                                children: [
+                                                  Text(
+                                                    overflow:
+                                                        TextOverflow.ellipsis,
+                                                    maxLines: 2,
+                                                    card.front,
+                                                    style: AppTheme.themeData
+                                                        .textTheme.titleSmall!
+                                                        .copyWith(
+                                                            color: AppColors
+                                                                .mainAccent),
+                                                  ),
+                                                  Text(
+                                                    overflow:
+                                                        TextOverflow.ellipsis,
+                                                    maxLines: 2,
+                                                    card.back,
+                                                    style: AppTheme.themeData
+                                                        .textTheme.labelSmall!
+                                                        .copyWith(
+                                                      color: Colors.black,
                                                     ),
-                                                    Text(
-                                                      overflow:
-                                                          TextOverflow.ellipsis,
-                                                      maxLines: 2,
-                                                      card.back,
-                                                      style: AppTheme.themeData
-                                                          .textTheme.labelSmall!
-                                                          .copyWith(
-                                                        color: Colors.black,
-                                                      ),
-                                                    ),
-                                                  ],
-                                                ),
+                                                  ),
+                                                ],
                                               ),
                                             ),
                                           ),
                                         ),
-                                      ],
-                                    ),
-                                  );
-                                },
-                              ),
+                                      ),
+                                    ],
+                                  ),
+                                );
+                              },
                             ),
                           ),
                         ],
