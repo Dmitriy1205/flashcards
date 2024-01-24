@@ -147,12 +147,15 @@ class _CreateEditCardState extends State<CreateEditCard> {
       ),
       body: GestureDetector(
         onTap: () {
-          FocusScope.of(context).unfocus() ;
+          FocusScope.of(context).unfocus();
+          frontController.unFocus();
+          backController.unFocus();
 
-          setState(() {
-
-            _showKeyboardBack = false;
-            _showKeyboardFront = false;
+          WidgetsBinding.instance.addPostFrameCallback((_) {
+            setState(() {
+              _showKeyboardBack = false;
+              _showKeyboardFront = false;
+            });
           });
         },
         child: Stack(
@@ -165,70 +168,72 @@ class _CreateEditCardState extends State<CreateEditCard> {
                 ],
               ),
             ),
-            if (_showKeyboardFront)
-              Positioned(
-                left: 0,
-                right: 0,
-                bottom: 0,
-                child: Material(
-                  child: Container(
-                    color: Colors.white,
-                    child: Padding(
-                      padding: const EdgeInsets.only(left: 20),
-                      child: ToolBar(
-                        mainAxisSize: MainAxisSize.min,
-                        padding: const EdgeInsets.all(8),
-                        toolBarColor: Colors.white,
-                        iconSize: 21,
-                        iconColor: AppColors.veryLightGrey,
-                        activeIconColor: Colors.black,
-                        controller: frontController,
-                        crossAxisAlignment: WrapCrossAlignment.start,
-                        direction: Axis.horizontal,
-                        toolBarConfig: const [
-                          ToolBarStyle.bold,
-                          ToolBarStyle.italic,
-                          ToolBarStyle.underline,
-                          ToolBarStyle.listOrdered,
-                          ToolBarStyle.listBullet,
-                        ],
+            _showKeyboardFront
+                ? Positioned(
+                    left: 0,
+                    right: 0,
+                    bottom: 0,
+                    child: Material(
+                      child: Container(
+                        color: Colors.white,
+                        child: Padding(
+                          padding: const EdgeInsets.only(left: 20),
+                          child: ToolBar(
+                            mainAxisSize: MainAxisSize.min,
+                            padding: const EdgeInsets.all(8),
+                            toolBarColor: Colors.white,
+                            iconSize: 21,
+                            iconColor: AppColors.veryLightGrey,
+                            activeIconColor: Colors.black,
+                            controller: frontController,
+                            crossAxisAlignment: WrapCrossAlignment.start,
+                            direction: Axis.horizontal,
+                            toolBarConfig: const [
+                              ToolBarStyle.bold,
+                              ToolBarStyle.italic,
+                              ToolBarStyle.underline,
+                              ToolBarStyle.listOrdered,
+                              ToolBarStyle.listBullet,
+                            ],
+                          ),
+                        ),
                       ),
                     ),
-                  ),
-                ),
-              ),
-            if (_showKeyboardBack)
-              Positioned(
-                left: 0,
-                right: 0,
-                bottom: 0,
-                child: Material(
-                  child: Container(
-                    color: Colors.white,
-                    child: Padding(
-                      padding: const EdgeInsets.only(left: 20),
-                      child: ToolBar(
-                        mainAxisSize: MainAxisSize.min,
-                        toolBarColor: Colors.white,
-                        padding: const EdgeInsets.all(8),
-                        iconSize: 21,
-                        iconColor: AppColors.veryLightGrey,
-                        activeIconColor: Colors.black,
-                        controller: backController,
-                        crossAxisAlignment: WrapCrossAlignment.start,
-                        direction: Axis.horizontal,
-                        toolBarConfig: const [
-                          ToolBarStyle.bold,
-                          ToolBarStyle.italic,
-                          ToolBarStyle.underline,
-                          ToolBarStyle.listOrdered,
-                          ToolBarStyle.listBullet,
-                        ],
+                  )
+                : SizedBox(),
+            _showKeyboardBack
+                ? Positioned(
+                    left: 0,
+                    right: 0,
+                    bottom: 0,
+                    child: Material(
+                      child: Container(
+                        color: Colors.white,
+                        child: Padding(
+                          padding: const EdgeInsets.only(left: 20),
+                          child: ToolBar(
+                            mainAxisSize: MainAxisSize.min,
+                            toolBarColor: Colors.white,
+                            padding: const EdgeInsets.all(8),
+                            iconSize: 21,
+                            iconColor: AppColors.veryLightGrey,
+                            activeIconColor: Colors.black,
+                            controller: backController,
+                            crossAxisAlignment: WrapCrossAlignment.start,
+                            direction: Axis.horizontal,
+                            toolBarConfig: const [
+                              ToolBarStyle.bold,
+                              ToolBarStyle.italic,
+                              ToolBarStyle.underline,
+                              ToolBarStyle.listOrdered,
+                              ToolBarStyle.listBullet,
+                            ],
+                          ),
+                        ),
                       ),
                     ),
-                  ),
-                ),
-              ),
+                  )
+                : SizedBox(),
           ],
         ),
       ),
@@ -275,16 +280,13 @@ class _CreateEditCardState extends State<CreateEditCard> {
                 backgroundColor: Colors.white,
                 inputAction: InputAction.newline,
                 onFocusChanged: (focus) {
-
                   setState(() {
                     _frontHasFocus = focus;
-                    if (MediaQuery.of(context).viewInsets.bottom > 0.0) {
 
+                    // if (MediaQuery.of(context).viewInsets.bottom > 0.0) {
                       _showKeyboardBack = false;
                       _showKeyboardFront = true;
-
-                    }
-
+                    // }
                   });
                 },
                 // onSelectionChanged: (_) {
@@ -384,14 +386,9 @@ class _CreateEditCardState extends State<CreateEditCard> {
                 onFocusChanged: (focus) {
                   setState(() {
                     _backHasFocus = focus;
-                    if (MediaQuery.of(context).viewInsets.bottom > 0.0) {
 
-                      _showKeyboardFront = false;
-                      _showKeyboardBack = true;
-
-                    }
-
-
+                    _showKeyboardFront = false;
+                    _showKeyboardBack = true;
                   });
                 },
                 // onSelectionChanged: (_) {
