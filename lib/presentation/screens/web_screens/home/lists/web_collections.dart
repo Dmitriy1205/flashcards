@@ -28,6 +28,7 @@ class _WebCollectionsState extends State<WebCollections> {
     return Container(
       color: AppColors.background,
       child: ListView.builder(
+          physics: const AlwaysScrollableScrollPhysics(),
           itemBuilder: (context, i) {
             return Padding(
               padding: const EdgeInsets.only(

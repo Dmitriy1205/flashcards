@@ -22,10 +22,7 @@ class UserServiceImpl extends UserServiceContract {
 
   @override
   Future<void> createUser({required String email}) async {
-    print('createUser in service');
     final String id = _firebaseAuth.currentUser!.uid;
-    print('createUser in service $id');
-
     final doc = _fireStore.collection(FirestoreCollections.users).doc(id);
     final userExists = (await _fireStore
                 .collection(FirestoreCollections.users)

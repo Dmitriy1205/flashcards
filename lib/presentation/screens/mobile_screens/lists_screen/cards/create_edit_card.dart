@@ -145,6 +145,7 @@ class _CreateEditCardState extends State<CreateEditCard> {
         ),
       ),
       body: SingleChildScrollView(
+        physics: const BouncingScrollPhysics(),
         child: Column(
           children: [
             Padding(

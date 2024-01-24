@@ -275,6 +275,7 @@ class _WebCardsState extends State<WebCards> {
                                         ? 25
                                         : 25),
                                 child: ListView.builder(
+                                  physics: const AlwaysScrollableScrollPhysics(),
                                   itemCount: state.cardsList!.length,
                                   itemBuilder: (context, i) {
                                     CardEntity card = state.cardsList![i];
