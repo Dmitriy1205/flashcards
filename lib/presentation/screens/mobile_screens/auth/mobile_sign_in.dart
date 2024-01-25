@@ -3,6 +3,7 @@ import 'dart:io';
 import 'package:flashcards/core/const/images.dart';
 import 'package:flashcards/core/validator/field_validator.dart';
 import 'package:flashcards/presentation/screens/mobile_screens/auth/mobile_forgot_password.dart';
+import 'package:flashcards/presentation/widgets/android_google_sign_in_button.dart';
 import 'package:flashcards/presentation/widgets/app_text_field.dart';
 import 'package:flashcards/presentation/widgets/apple_signin_button.dart';
 import 'package:flashcards/presentation/widgets/google_signin_button.dart';
@@ -255,7 +256,7 @@ class _MobileSignInScreenState extends State<MobileSignInScreen> {
                               ),
                               GoogleSignInButton(),
                             ],
-                          ) : SizedBox(child: GoogleSignInButton()),
+                          ) : SizedBox(child: AndroidGoogleSignInButton()),
 
                         ],
                       ),

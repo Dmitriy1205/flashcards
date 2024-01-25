@@ -34,70 +34,72 @@ class GoogleSignInButton extends StatelessWidget {
             orElse: () {});
       },
       builder: (context, state) {
-        return Material(
-          shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(14),
-          ),
-          child: InkWell(
-            customBorder: RoundedRectangleBorder(
+        return Expanded(
+          child: Material(
+            shape: RoundedRectangleBorder(
               borderRadius: BorderRadius.circular(14),
             ),
-            onTap:  () {
-                    state.maybeMap(
-                        loading: (_) => null,
-                        initial: (_) => _bloc
-                            .add(const GoogleSigninEvent.signInWithGoogle()),
-                        orElse: () => _bloc
-                            .add(const GoogleSigninEvent.signInWithGoogle()));
-                  },
-            child: Ink(
-              decoration: BoxDecoration(
-                  border: Border.all(color: AppColors.greyLight),
-                  borderRadius: BorderRadius.circular(14),
-                  color: Colors.white),
-              child: SizedBox(
-                // width: MediaQuery.of(context).size.width,
-                height: 41,
-                child: state.maybeMap(
-                  initial: (_) => Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceAround,
-                    children: [
-                      SvgPicture.asset(
-                        AppIcons.google,
-                      ),
+            child: InkWell(
+              customBorder: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(14),
+              ),
+              onTap:  () {
+                      state.maybeMap(
+                          loading: (_) => null,
+                          initial: (_) => _bloc
+                              .add(const GoogleSigninEvent.signInWithGoogle()),
+                          orElse: () => _bloc
+                              .add(const GoogleSigninEvent.signInWithGoogle()));
+                    },
+              child: Ink(
+                decoration: BoxDecoration(
+                    border: Border.all(color: AppColors.greyLight),
+                    borderRadius: BorderRadius.circular(14),
+                    color: Colors.white),
+                child: SizedBox(
+                  // width: MediaQuery.of(context).size.width,
+                  height: 41,
+                  child: state.maybeMap(
+                    initial: (_) => Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceAround,
+                      children: [
+                        SvgPicture.asset(
+                          AppIcons.google,
+                        ),
 
-                      Text(
-                        AppStrings.google,
-                        style: AppTheme.themeData.textTheme.labelMedium!
-                            .copyWith(color: Colors.black),
-                      ),
-                      const SizedBox(
-                        width: 10,
-                      ),
-                    ],
-                  ),
-                  loading: (_) => const Center(
-                    child: SizedBox(
-                        height: 20,
-                        width: 20,
-                        child: CircularProgressIndicator(
-                          color: AppColors.mainAccent,
-                        )),
-                  ),
-                  orElse: () => Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceAround,
-                    children: [
-                      SvgPicture.asset(AppIcons.google),
+                        Text(
+                          AppStrings.google,
+                          style: AppTheme.themeData.textTheme.labelMedium!
+                              .copyWith(color: Colors.black),
+                        ),
+                        const SizedBox(
+                          width: 10,
+                        ),
+                      ],
+                    ),
+                    loading: (_) => const Center(
+                      child: SizedBox(
+                          height: 20,
+                          width: 20,
+                          child: CircularProgressIndicator(
+                            color: AppColors.mainAccent,
+                          )),
+                    ),
+                    orElse: () => Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceAround,
+                      children: [
+                        SvgPicture.asset(AppIcons.google),
 
-                      Text(
-                        AppStrings.google,
-                        style: AppTheme.themeData.textTheme.labelMedium,
-                      ),
-                      const SizedBox(
-                        width: 10,
-                      ),
-                    ],
-                    // ),
+                        Text(
+                          AppStrings.google,
+                          style: AppTheme.themeData.textTheme.labelMedium,
+                        ),
+                        const SizedBox(
+                          width: 10,
+                        ),
+                      ],
+                      // ),
+                    ),
                   ),
                 ),
               ),
