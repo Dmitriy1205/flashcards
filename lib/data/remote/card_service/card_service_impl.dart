@@ -92,6 +92,8 @@ class CardServiceImpl extends CardService {
   @override
   Future<void> shareCollection(
       {required String collectionId, required String collectionName}) async {
+    collectionName = collectionName.replaceAll(' ', '%20');
+
     print(
       'https://flashcards-5984c.web.app/collection_share?sender=${_firebaseAuth.currentUser!.uid}&collectionId=${collectionId}&collectionName=${collectionName}',
     );
