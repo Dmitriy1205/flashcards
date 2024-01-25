@@ -153,11 +153,7 @@ class _WebListsScreenState extends State<WebListsScreen> {
             body: state.maybeMap(
               error: (e) => Center(child: Text(e.error)),
               loading: (_) => const LoadingIndicator(),
-              orElse: () => const Padding(
-                padding: EdgeInsets.only(
-                    left: 65.0, top: 40, right: 65.0, bottom: 200),
-                child: WebCollections(),
-              ),
+              orElse: () => const WebCollections(),
             ),
             floatingActionButton: state.isEdit
                 ? Padding(

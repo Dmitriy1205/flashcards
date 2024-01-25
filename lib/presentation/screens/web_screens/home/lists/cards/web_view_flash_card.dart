@@ -38,13 +38,15 @@ class _WebViewFlashCardState extends State<WebViewFlashCard> {
         collectionId: widget.card.collectionId,
         front: widget.card.front,
         back: widget.card.back,
-        createdAt: widget.card.createdAt, collectionName: widget.card.collectionName);
+        createdAt: widget.card.createdAt,
+        collectionName: widget.card.collectionName);
     super.initState();
   }
 
   @override
   Widget build(BuildContext context) {
-    return LayoutBuilder(builder: (BuildContext context, BoxConstraints constraints){
+    return LayoutBuilder(
+        builder: (BuildContext context, BoxConstraints constraints) {
       if (constraints.maxWidth < 700) {
         return Scaffold(
             appBar: AppBar(
@@ -108,66 +110,78 @@ class _WebViewFlashCardState extends State<WebViewFlashCard> {
                                 ),
                                 child: value >= 90
                                     ? RotationY(
-                                  rotationY: value >= 90 ? 180 : 0,
-                                  child: Padding(
-                                    padding: const EdgeInsets.only(
-                                        bottom: 38.0, right: 43),
-                                    child: Column(
-                                      children: [
-                                        const SizedBox(
-                                          height: 140,
-                                        ),
-                                        const Spacer(),
-                                        Align(
-                                          alignment: Alignment.center,
-                                          child: FractionallySizedBox(
-                                            widthFactor: 0.3, // Adjust the width factor as needed
-                                            child: Html(data: pickedCard.front,style: {
-                                              'html': Style(textAlign: TextAlign.center),
-                                            },),
+                                        rotationY: value >= 90 ? 180 : 0,
+                                        child: Padding(
+                                          padding: const EdgeInsets.only(
+                                              bottom: 38.0, right: 43),
+                                          child: Column(
+                                            children: [
+                                              const SizedBox(
+                                                height: 140,
+                                              ),
+                                              const Spacer(),
+                                              Align(
+                                                alignment: Alignment.center,
+                                                child: FractionallySizedBox(
+                                                  widthFactor: 0.3,
+                                                  // Adjust the width factor as needed
+                                                  child: Html(
+                                                    data: pickedCard.front,
+                                                    style: {
+                                                      'html': Style(
+                                                          textAlign:
+                                                              TextAlign.center),
+                                                    },
+                                                  ),
+                                                ),
+                                              ),
+                                              const Spacer(),
+                                              Align(
+                                                alignment:
+                                                    Alignment.centerRight,
+                                                child: AppRoundButton(
+                                                  onTap: () {
+                                                    router.push('/edit_card',
+                                                        extra: pickedCard);
+                                                  },
+                                                  color: Colors.white,
+                                                  svgIcon: AppIcons.pen,
+                                                  showBorder: true,
+                                                ),
+                                              )
+                                            ],
                                           ),
                                         ),
-                                        const Spacer(),
-                                        Align(
-                                          alignment:
-                                          Alignment.centerRight,
-                                          child: AppRoundButton(
-                                            onTap: () {
-                                              router.push('/edit_card',
-                                                  extra: pickedCard);
-                                            },
-                                            color: Colors.white,
-                                            svgIcon: AppIcons.pen,
-                                            showBorder: true,
-                                          ),
-                                        )
-                                      ],
-                                    ),
-                                  ),
-                                )
+                                      )
                                     : Padding(
-                                  padding: const EdgeInsets.only(
-                                      bottom: 38.0, right: 43),
-                                  child: Column(
-                                    children: [
-                                      const SizedBox(
-                                        height: 80,
-                                      ),
-                                      const Spacer(),
-                                      Align(
-                                        alignment: Alignment.center,
-                                        child: FractionallySizedBox(
-                                          widthFactor: 0.3, // Adjust the width factor as needed
-                                          child: Html(data: pickedCard.back,style: {
-                                            'html': Style(textAlign: TextAlign.center),
-                                          },),
+                                        padding: const EdgeInsets.only(
+                                            bottom: 38.0, right: 43),
+                                        child: Column(
+                                          children: [
+                                            const SizedBox(
+                                              height: 80,
+                                            ),
+                                            const Spacer(),
+                                            Align(
+                                              alignment: Alignment.center,
+                                              child: FractionallySizedBox(
+                                                widthFactor: 0.3,
+                                                // Adjust the width factor as needed
+                                                child: Html(
+                                                  data: pickedCard.back,
+                                                  style: {
+                                                    'html': Style(
+                                                        textAlign:
+                                                            TextAlign.center),
+                                                  },
+                                                ),
+                                              ),
+                                            ),
+                                            const Spacer(),
+                                            const SizedBox(),
+                                          ],
                                         ),
                                       ),
-                                      const Spacer(),
-                                      const SizedBox(),
-                                    ],
-                                  ),
-                                ),
                               ),
                             ),
                           );
@@ -215,7 +229,8 @@ class _WebViewFlashCardState extends State<WebViewFlashCard> {
                   listener: (context, state) {
                     state.maybeMap(
                       // initial: (_)=> ,
-                      orElse: (){},);
+                      orElse: () {},
+                    );
                   },
                   builder: (context, state) {
                     return state.maybeMap(
@@ -238,8 +253,8 @@ class _WebViewFlashCardState extends State<WebViewFlashCard> {
                                     .state
                                     .cardsList![index];
                                 return Padding(
-                                  padding:
-                                  const EdgeInsets.only(bottom: 36, left: 43),
+                                  padding: const EdgeInsets.only(
+                                      bottom: 36, left: 43),
                                   child: InkWell(
                                     onTap: () {
                                       setState(() {
@@ -252,31 +267,37 @@ class _WebViewFlashCardState extends State<WebViewFlashCard> {
                                       decoration: BoxDecoration(
                                           color: Colors.white,
                                           borderRadius:
-                                          BorderRadius.circular(10)),
+                                              BorderRadius.circular(10)),
                                       child: Padding(
                                         padding: const EdgeInsets.symmetric(
                                             horizontal: 13.0),
                                         child: Column(
                                           mainAxisAlignment:
-                                          MainAxisAlignment.center,
+                                              MainAxisAlignment.center,
                                           crossAxisAlignment:
-                                          CrossAxisAlignment.center,
+                                              CrossAxisAlignment.center,
                                           children: [
                                             Text(
-                                              card.front!.replaceAll(RegExp(r'<[^>]*>'), ''),
+                                              overflow: TextOverflow.ellipsis,
+                                              maxLines: 3,
+                                              card.front!.replaceAll(
+                                                  RegExp(r'<[^>]*>'), ''),
                                               textAlign: TextAlign.center,
-                                              style: AppTheme.themeData.textTheme
-                                                  .labelMedium!
+                                              style: AppTheme.themeData
+                                                  .textTheme.labelMedium!
                                                   .copyWith(
-                                                color: AppColors.mainAccent,),
+                                                color: AppColors.mainAccent,
+                                              ),
                                             ),
                                             Text(
-                                              card.back!.replaceAll(RegExp(r'<[^>]*>'), ''),
-                                              style: AppTheme
-                                                  .themeData.textTheme.labelSmall!
+                                              overflow: TextOverflow.ellipsis,
+                                              maxLines: 2,
+                                              card.back!.replaceAll(
+                                                  RegExp(r'<[^>]*>'), ''),
+                                              style: AppTheme.themeData
+                                                  .textTheme.labelSmall!
                                                   .copyWith(
                                                 color: Colors.black,
-
                                               ),
                                             ),
                                           ],
@@ -321,67 +342,80 @@ class _WebViewFlashCardState extends State<WebViewFlashCard> {
                                   ),
                                   child: value >= 90
                                       ? RotationY(
-                                    rotationY: value >= 90 ? 180 : 0,
-                                    child: Padding(
-                                      padding: const EdgeInsets.only(
-                                          bottom: 38.0, right: 43),
-                                      child: Column(
-                                        crossAxisAlignment: CrossAxisAlignment.center,
-                                        children: [
-                                          const SizedBox(
-                                            height: 140,
-                                          ),
-                                          const Spacer(),
-                                          Align(
-                                            alignment: Alignment.center,
-                                            child: FractionallySizedBox(
-                                              widthFactor: 0.5, // Adjust the width factor as needed
-                                              child: Html(data: pickedCard.front,style: {
-                                                'html': Style(textAlign: TextAlign.center),
-                                              },),
+                                          rotationY: value >= 90 ? 180 : 0,
+                                          child: Padding(
+                                            padding: const EdgeInsets.only(
+                                                bottom: 38.0, right: 43),
+                                            child: Column(
+                                              crossAxisAlignment:
+                                                  CrossAxisAlignment.center,
+                                              children: [
+                                                const SizedBox(
+                                                  height: 140,
+                                                ),
+                                                const Spacer(),
+                                                Align(
+                                                  alignment: Alignment.center,
+                                                  child: FractionallySizedBox(
+                                                    widthFactor: 0.5,
+                                                    // Adjust the width factor as needed
+                                                    child: Html(
+                                                      data: pickedCard.front,
+                                                      style: {
+                                                        'html': Style(
+                                                            textAlign: TextAlign
+                                                                .center),
+                                                      },
+                                                    ),
+                                                  ),
+                                                ),
+                                                const Spacer(),
+                                                Align(
+                                                  alignment:
+                                                      Alignment.centerRight,
+                                                  child: AppRoundButton(
+                                                    onTap: () {
+                                                      router.push('/edit_card',
+                                                          extra: pickedCard);
+                                                    },
+                                                    color: Colors.white,
+                                                    svgIcon: AppIcons.pen,
+                                                    showBorder: true,
+                                                  ),
+                                                )
+                                              ],
                                             ),
                                           ),
-                                          const Spacer(),
-                                          Align(
-                                            alignment:
-                                            Alignment.centerRight,
-                                            child: AppRoundButton(
-                                              onTap: () {
-                                                router.push('/edit_card',
-                                                    extra: pickedCard);
-                                              },
-                                              color: Colors.white,
-                                              svgIcon: AppIcons.pen,
-                                              showBorder: true,
-                                            ),
-                                          )
-                                        ],
-                                      ),
-                                    ),
-                                  )
+                                        )
                                       : Padding(
-                                    padding: const EdgeInsets.only(
-                                        bottom: 38.0, right: 43),
-                                    child: Column(
-                                      children: [
-                                        const SizedBox(
-                                          height: 80,
-                                        ),
-                                        const Spacer(),
-                                        Align(
-                                          alignment: Alignment.center,
-                                          child: FractionallySizedBox(
-                                            widthFactor: 0.3, // Adjust the width factor as needed
-                                            child: Html(data: pickedCard.back,style: {
-                                              'html': Style(textAlign: TextAlign.center),
-                                            },),
+                                          padding: const EdgeInsets.only(
+                                              bottom: 38.0, right: 43),
+                                          child: Column(
+                                            children: [
+                                              const SizedBox(
+                                                height: 80,
+                                              ),
+                                              const Spacer(),
+                                              Align(
+                                                alignment: Alignment.center,
+                                                child: FractionallySizedBox(
+                                                  widthFactor: 0.3,
+                                                  // Adjust the width factor as needed
+                                                  child: Html(
+                                                    data: pickedCard.back,
+                                                    style: {
+                                                      'html': Style(
+                                                          textAlign:
+                                                              TextAlign.center),
+                                                    },
+                                                  ),
+                                                ),
+                                              ),
+                                              const Spacer(),
+                                              const SizedBox(),
+                                            ],
                                           ),
                                         ),
-                                        const Spacer(),
-                                        const SizedBox(),
-                                      ],
-                                    ),
-                                  ),
                                 ),
                               ),
                             );
