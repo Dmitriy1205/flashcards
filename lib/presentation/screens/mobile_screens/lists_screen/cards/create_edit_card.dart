@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:flashcards/core/const/colors.dart';
 import 'package:flashcards/core/const/icons.dart';
 import 'package:flashcards/core/const/strings.dart';
@@ -8,8 +10,6 @@ import 'package:flashcards/domain/params/card_param/create_card_param.dart';
 import 'package:flashcards/domain/params/card_param/edit_card_param.dart';
 import 'package:flashcards/presentation/blocs/cards/cards_bloc.dart';
 import 'package:flashcards/presentation/blocs/lists/lists_bloc.dart';
-import 'package:flashcards/presentation/screens/mobile_screens/lists_screen/cards/view_flash_card.dart';
-import 'package:flashcards/presentation/widgets/custom_text_input.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/svg.dart';
@@ -40,6 +40,7 @@ class _CreateEditCardState extends State<CreateEditCard> {
 
   String textLengthFront = '0';
   String textLengthBack = '0';
+
 
   @override
   Widget build(BuildContext context) {
@@ -146,10 +147,13 @@ class _CreateEditCardState extends State<CreateEditCard> {
         ),
       ),
       body: GestureDetector(
-        onTap: () {
+        onTap:() {
           FocusScope.of(context).unfocus();
-          frontController.unFocus();
-          backController.unFocus();
+
+            frontController.unFocus();
+            backController.unFocus();
+
+
 
           WidgetsBinding.instance.addPostFrameCallback((_) {
             setState(() {
@@ -282,11 +286,17 @@ class _CreateEditCardState extends State<CreateEditCard> {
                 onFocusChanged: (focus) {
                   setState(() {
                     _frontHasFocus = focus;
-
-                    // if (MediaQuery.of(context).viewInsets.bottom > 0.0) {
+                    if(Platform.isIOS){
+                      if (MediaQuery.of(context).viewInsets.bottom > 0.0) {
+                        _showKeyboardBack = false;
+                        _showKeyboardFront = true;
+                      }
+                    }else{
                       _showKeyboardBack = false;
                       _showKeyboardFront = true;
-                    // }
+                    }
+
+
                   });
                 },
                 // onSelectionChanged: (_) {
@@ -387,8 +397,17 @@ class _CreateEditCardState extends State<CreateEditCard> {
                   setState(() {
                     _backHasFocus = focus;
 
-                    _showKeyboardFront = false;
-                    _showKeyboardBack = true;
+                    if(Platform.isIOS){
+                      if (MediaQuery.of(context).viewInsets.bottom > 0.0) {
+                        _showKeyboardFront = false;
+                        _showKeyboardBack = true;
+                      }
+                    }else{
+                      _showKeyboardFront = false;
+                      _showKeyboardBack = true;
+                    }
+
+
                   });
                 },
                 // onSelectionChanged: (_) {
