@@ -14,9 +14,9 @@ import 'create_edit_card.dart';
 class Cards extends StatefulWidget {
   const Cards(
       {Key? key,
-        required this.collectionId,
-        required this.collectionName,
-        this.sender})
+      required this.collectionId,
+      required this.collectionName,
+      this.sender})
       : super(key: key);
   final String collectionId;
   final String collectionName;
@@ -54,7 +54,7 @@ class _CardsState extends State<Cards> {
             mainAxisSize: MainAxisSize.max,
             children: [
               GestureDetector(
-                onTap: (){
+                onTap: () {
                   context
                       .read<ListsBloc>()
                       .add(const ListsEvent.started(isEditMode: false));
@@ -247,7 +247,8 @@ class _CardsState extends State<Cards> {
                           Text(
                             widget.collectionName,
                             style: AppTheme.themeData.textTheme.titleMedium!
-                                .copyWith(fontSize: 18, fontWeight: FontWeight.w600),
+                                .copyWith(
+                                    fontSize: 18, fontWeight: FontWeight.w600),
                           ),
                           Text(
                             '${data.cardsList!.length} cards',
@@ -290,7 +291,8 @@ class _CardsState extends State<Cards> {
                                                 context
                                                     .read<CardsBloc>()
                                                     .cardsListToDelete
-                                                    .add(data.cardsList![i].id!);
+                                                    .add(
+                                                        data.cardsList![i].id!);
                                               }
                                             });
                                           },
@@ -348,13 +350,15 @@ class _CardsState extends State<Cards> {
                                       },
                                       child: ListTile(
                                         title: Text(
-                                          card.front!.replaceAll(RegExp(r'<[^>]*>'), ''),
+                                          card.front!.replaceAll(
+                                              RegExp(r'<[^>]*>'), ''),
                                           style: AppTheme
                                               .themeData.textTheme.titleMedium!
                                               .copyWith(fontSize: 14),
                                         ),
                                         subtitle: Text(
-                                          card.back!.replaceAll(RegExp(r'<[^>]*>'), ''),
+                                          card.back!.replaceAll(
+                                              RegExp(r'<[^>]*>'), ''),
                                           style: AppTheme
                                               .themeData.textTheme.labelSmall!
                                               .copyWith(
@@ -388,75 +392,69 @@ class _CardsState extends State<Cards> {
       ),
       floatingActionButton: context.watch<CardsBloc>().isEditMode
           ? Padding(
-        padding: const EdgeInsets.only(bottom: 60, right: 20),
-        child: Stack(
-          children: [
-            SizedBox(
-              height: 76,
-              width: 76,
-              child: SvgPicture.asset(
-                AppIcons.redBucket,
-                height: 18,
-                width: 9,
+              padding: const EdgeInsets.only(bottom: 60, right: 20),
+              child: Stack(
+                children: [
+                  SizedBox(
+                    height: 76,
+                    width: 76,
+                    child: SvgPicture.asset(
+                      AppIcons.redBucket,
+                      height: 18,
+                      width: 9,
+                    ),
+                  ),
+                  Material(
+                    color: Colors.transparent,
+                    borderRadius: BorderRadius.circular(32),
+                    child: InkWell(
+                        borderRadius: BorderRadius.circular(32),
+                        onTap: () {
+                          context.read<CardsBloc>().add(
+                              CardsEvent.deleteSelectedCards(
+                                  cardsIdToDelete: context
+                                      .read<CardsBloc>()
+                                      .cardsListToDelete,
+                                  collectionId: widget.collectionId));
+                          context.read<CardsBloc>().isEditMode = false;
+                        },
+                        child: Container(
+                            width: 76, height: 76, color: Colors.transparent)),
+                  ),
+                ],
               ),
-            ),
-            Material(
-              color: Colors.transparent,
-              borderRadius: BorderRadius.circular(32),
-              child: InkWell(
-                  borderRadius: BorderRadius.circular(32),
-                  onTap: () {
-                    context.read<CardsBloc>().add(CardsEvent.deleteSelectedCards(
-                        cardsIdToDelete:
-                        context.read<CardsBloc>().cardsListToDelete,
-                        collectionId: widget.collectionId));
-                    context.read<CardsBloc>().isEditMode = false;
-                  },
-                  child: Container(
-                      width: 76,
-                      height: 76,
-                      color: Colors.transparent
-                  )
-              ),
-            ),
-          ],
-        ),
-      )
+            )
           : Padding(
-        padding: const EdgeInsets.only(bottom: 60, right: 20),
-        child: Stack(
-          children: [
-            SizedBox(
-              height: 76,
-              width: 76,
-              child: SvgPicture.asset(
-                AppIcons.addCard,
-                height: 18,
-                width: 9,
+              padding: const EdgeInsets.only(bottom: 60, right: 20),
+              child: Stack(
+                children: [
+                  SizedBox(
+                    height: 76,
+                    width: 76,
+                    child: SvgPicture.asset(
+                      AppIcons.addCard,
+                      height: 18,
+                      width: 9,
+                    ),
+                  ),
+                  Material(
+                    color: Colors.transparent,
+                    borderRadius: BorderRadius.circular(32),
+                    child: InkWell(
+                        borderRadius: BorderRadius.circular(32),
+                        onTap: () {
+                          Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) => CreateEditCard(
+                                      collectionId: widget.collectionId)));
+                        },
+                        child: Container(
+                            width: 76, height: 76, color: Colors.transparent)),
+                  ),
+                ],
               ),
             ),
-            Material(
-              color: Colors.transparent,
-              borderRadius: BorderRadius.circular(32),
-              child: InkWell(
-                  borderRadius: BorderRadius.circular(32),
-                  onTap: () {
-                    Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                            builder: (context) => CreateEditCard(
-                                collectionId: widget.collectionId)));
-                  },
-                  child: Container(
-                      width: 76,
-                      height: 76,
-                      color: Colors.transparent
-                  )
-              ),
-            ),
-          ],
-        ),
-      ),
     );
   }
 }

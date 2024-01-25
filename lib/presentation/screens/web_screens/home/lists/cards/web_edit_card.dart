@@ -100,6 +100,7 @@ class _WebEditCardState extends State<WebEditCard> {
         color: AppColors.background,
         child: Center(
           child: SingleChildScrollView(
+            physics: const AlwaysScrollableScrollPhysics(),
             child: Padding(
               padding: const EdgeInsets.symmetric(vertical: 39.0),
               child: Container(

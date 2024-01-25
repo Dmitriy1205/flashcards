@@ -31,8 +31,103 @@ class _WebListsScreenState extends State<WebListsScreen> {
   @override
   Widget build(BuildContext context) {
     return BlocBuilder<WebListBloc, WebListState>(builder: (context, state) {
-      return LayoutBuilder(builder: (BuildContext context, BoxConstraints constraints) {
-        if (constraints.maxWidth < 700) {
+      return LayoutBuilder(
+        builder: (BuildContext context, BoxConstraints constraints) {
+          if (constraints.maxWidth < 700) {
+            return Scaffold(
+              appBar: AppBar(
+                automaticallyImplyLeading: false,
+                title: Column(
+                  children: [
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.start,
+                      mainAxisSize: MainAxisSize.max,
+                      children: [
+                        const SizedBox(
+                          width: 64,
+                        ),
+                        Text(
+                          AppStrings.collections,
+                          style: AppTheme.themeData.textTheme.headlineLarge,
+                        ),
+                      ],
+                    ),
+                  ],
+                ),
+              ),
+              backgroundColor: AppColors.background,
+              body: state.maybeMap(
+                error: (e) => Center(child: Text(e.error)),
+                loading: (_) => const LoadingIndicator(),
+                orElse: () => WebCollections(),
+              ),
+              floatingActionButton: state.isEdit
+                  ? Padding(
+                      padding: const EdgeInsets.only(right: 18.0, bottom: 18),
+                      child: Row(
+                        mainAxisSize: MainAxisSize.min,
+                        children: [
+                          AppRoundButton(
+                            onTap: () {
+                              context.read<WebListBloc>().add(
+                                  const WebListEvent.deleteCollection(
+                                      collectionsList: []));
+                              // context.read<WebListBloc>().add(WebListEvent.editCollection(
+                              //     isEdit: !state.isEdit));
+                            },
+                            svgIcon: AppIcons.trash,
+                            showBorder: false,
+                            color: AppColors.red,
+                          ),
+                          const SizedBox(
+                            width: 19,
+                          ),
+                          AppRoundButton(
+                            onTap: () {
+                              // context.read<ListsBloc>().add(
+                              //     const ListsEvent.deleteSelectedCollection(
+                              //         collectionsList: []));
+                              context.read<WebListBloc>().add(
+                                  WebListEvent.editCollection(
+                                      isEdit: !state.isEdit));
+                            },
+                            svgIcon: AppIcons.close,
+                            showBorder: false,
+                            color: AppColors.greyLight,
+                          ),
+                        ],
+                      ),
+                    )
+                  : Padding(
+                      padding: const EdgeInsets.only(right: 18.0, bottom: 18),
+                      child: Row(
+                        mainAxisSize: MainAxisSize.min,
+                        children: [
+                          AppRoundButton(
+                            onTap: () {
+                              buildShowDialog(context);
+                            },
+                            svgIcon: AppIcons.stackPlus,
+                            showBorder: false,
+                          ),
+                          const SizedBox(
+                            width: 19,
+                          ),
+                          AppRoundButton(
+                            color: Colors.white,
+                            onTap: () {
+                              context.read<WebListBloc>().add(
+                                  WebListEvent.editCollection(
+                                      isEdit: !state.isEdit));
+                            },
+                            svgIcon: AppIcons.pen,
+                            showBorder: true,
+                          ),
+                        ],
+                      ),
+                    ),
+            );
+          }
           return Scaffold(
             appBar: AppBar(
               automaticallyImplyLeading: false,
@@ -55,173 +150,82 @@ class _WebListsScreenState extends State<WebListsScreen> {
               ),
             ),
             backgroundColor: AppColors.background,
-            body: state.maybeMap(error: (e)=>Center(child: Text(e.error)),
-
+            body: state.maybeMap(
+              error: (e) => Center(child: Text(e.error)),
               loading: (_) => const LoadingIndicator(),
-              orElse: () => WebCollections(),
+              orElse: () => const Padding(
+                padding: EdgeInsets.only(
+                    left: 65.0, top: 40, right: 65.0, bottom: 200),
+                child: WebCollections(),
+              ),
             ),
             floatingActionButton: state.isEdit
                 ? Padding(
-              padding: const EdgeInsets.only(right: 18.0, bottom: 18),
-              child: Row(
-                mainAxisSize: MainAxisSize.min,
-                children: [
-                  AppRoundButton(
-                    onTap: () {
-                      context.read<WebListBloc>().add(
-                          const WebListEvent.deleteCollection(
-                              collectionsList: []));
-                      // context.read<WebListBloc>().add(WebListEvent.editCollection(
-                      //     isEdit: !state.isEdit));
-                    },
-                    svgIcon: AppIcons.trash,
-                    showBorder: false,
-                    color: AppColors.red,
-                  ),
-                  const SizedBox(
-                    width: 19,
-                  ),
-                  AppRoundButton(
-                    onTap: () {
-                      // context.read<ListsBloc>().add(
-                      //     const ListsEvent.deleteSelectedCollection(
-                      //         collectionsList: []));
-                      context.read<WebListBloc>().add(WebListEvent.editCollection(
-                          isEdit: !state.isEdit));
-                    },
-                    svgIcon: AppIcons.close,
-                    showBorder: false,
-                    color: AppColors.greyLight,
-                  ),
-                ],
-              ),
-            )
+                    padding: const EdgeInsets.only(right: 80.0, bottom: 30),
+                    child: Row(
+                      mainAxisSize: MainAxisSize.min,
+                      children: [
+                        AppRoundButton(
+                          onTap: () {
+                            context.read<WebListBloc>().add(
+                                const WebListEvent.deleteCollection(
+                                    collectionsList: []));
+                            // context.read<WebListBloc>().add(WebListEvent.editCollection(
+                            //     isEdit: !state.isEdit));
+                          },
+                          svgIcon: AppIcons.trash,
+                          showBorder: false,
+                          color: AppColors.red,
+                        ),
+                        const SizedBox(
+                          width: 19,
+                        ),
+                        AppRoundButton(
+                          onTap: () {
+                            // context.read<ListsBloc>().add(
+                            //     const ListsEvent.deleteSelectedCollection(
+                            //         collectionsList: []));
+                            context.read<WebListBloc>().add(
+                                WebListEvent.editCollection(
+                                    isEdit: !state.isEdit));
+                          },
+                          svgIcon: AppIcons.close,
+                          showBorder: false,
+                          color: AppColors.greyLight,
+                        ),
+                      ],
+                    ),
+                  )
                 : Padding(
-              padding: const EdgeInsets.only(right: 18.0, bottom: 18),
-              child: Row(
-                mainAxisSize: MainAxisSize.min,
-                children: [
-                  AppRoundButton(
-                    onTap: () {
-                      buildShowDialog(context);
-                    },
-                    svgIcon: AppIcons.stackPlus,
-                    showBorder: false,
+                    padding: const EdgeInsets.only(right: 80.0, bottom: 30),
+                    child: Row(
+                      mainAxisSize: MainAxisSize.min,
+                      children: [
+                        AppRoundButton(
+                          onTap: () {
+                            buildShowDialog(context);
+                          },
+                          svgIcon: AppIcons.stackPlus,
+                          showBorder: false,
+                        ),
+                        const SizedBox(
+                          width: 19,
+                        ),
+                        AppRoundButton(
+                          color: Colors.white,
+                          onTap: () {
+                            context.read<WebListBloc>().add(
+                                WebListEvent.editCollection(
+                                    isEdit: !state.isEdit));
+                          },
+                          svgIcon: AppIcons.pen,
+                          showBorder: true,
+                        ),
+                      ],
+                    ),
                   ),
-                  const SizedBox(
-                    width: 19,
-                  ),
-                  AppRoundButton(
-                    color: Colors.white,
-                    onTap: () {
-                      context.read<WebListBloc>().add(WebListEvent.editCollection(
-                          isEdit: !state.isEdit));
-                    },
-                    svgIcon: AppIcons.pen,
-                    showBorder: true,
-                  ),
-                ],
-              ),
-            ),
           );
-        }
-        return Scaffold(
-          appBar: AppBar(
-            automaticallyImplyLeading: false,
-            title: Column(
-              children: [
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.start,
-                  mainAxisSize: MainAxisSize.max,
-                  children: [
-                    const SizedBox(
-                      width: 64,
-                    ),
-                    Text(
-                      AppStrings.collections,
-                      style: AppTheme.themeData.textTheme.headlineLarge,
-                    ),
-                  ],
-                ),
-              ],
-            ),
-          ),
-          backgroundColor: AppColors.background,
-          body: state.maybeMap(
-            error: (e)=>Center(child: Text(e.error)),
-            loading: (_) => const LoadingIndicator(),
-            orElse: () => const Padding(
-              padding:
-              EdgeInsets.only(left: 65.0, top: 40, right: 65.0, bottom: 200),
-              child: WebCollections(),
-            ),
-          ),
-          floatingActionButton: state.isEdit
-              ? Padding(
-            padding: const EdgeInsets.only(right: 80.0, bottom: 30),
-            child: Row(
-              mainAxisSize: MainAxisSize.min,
-              children: [
-                AppRoundButton(
-                  onTap: () {
-                    context.read<WebListBloc>().add(
-                        const WebListEvent.deleteCollection(
-                            collectionsList: []));
-                    // context.read<WebListBloc>().add(WebListEvent.editCollection(
-                    //     isEdit: !state.isEdit));
-                  },
-                  svgIcon: AppIcons.trash,
-                  showBorder: false,
-                  color: AppColors.red,
-                ),
-                const SizedBox(
-                  width: 19,
-                ),
-                AppRoundButton(
-                  onTap: () {
-                    // context.read<ListsBloc>().add(
-                    //     const ListsEvent.deleteSelectedCollection(
-                    //         collectionsList: []));
-                    context.read<WebListBloc>().add(WebListEvent.editCollection(
-                        isEdit: !state.isEdit));
-                  },
-                  svgIcon: AppIcons.close,
-                  showBorder: false,
-                  color: AppColors.greyLight,
-                ),
-              ],
-            ),
-          )
-              : Padding(
-            padding: const EdgeInsets.only(right: 80.0, bottom: 30),
-            child: Row(
-              mainAxisSize: MainAxisSize.min,
-              children: [
-                AppRoundButton(
-                  onTap: () {
-                    buildShowDialog(context);
-                  },
-                  svgIcon: AppIcons.stackPlus,
-                  showBorder: false,
-                ),
-                const SizedBox(
-                  width: 19,
-                ),
-                AppRoundButton(
-                  color: Colors.white,
-                  onTap: () {
-                    context.read<WebListBloc>().add(WebListEvent.editCollection(
-                        isEdit: !state.isEdit));
-                  },
-                  svgIcon: AppIcons.pen,
-                  showBorder: true,
-                ),
-              ],
-            ),
-          ),
-        );
-      },
-
+        },
       );
     });
   }
@@ -288,11 +292,15 @@ class _WebListsScreenState extends State<WebListsScreen> {
                             filled: true,
                             focusColor: AppColors.mainAccent,
                             enabledBorder: OutlineInputBorder(
-                                borderSide: BorderSide(color: AppColors.mainAccent.withOpacity(0.15)),
+                                borderSide: BorderSide(
+                                    color:
+                                        AppColors.mainAccent.withOpacity(0.15)),
                                 borderRadius:
-                                BorderRadius.all(Radius.circular(15))),
+                                    BorderRadius.all(Radius.circular(15))),
                             border: OutlineInputBorder(
-                                borderSide: BorderSide(color: AppColors.mainAccent.withOpacity(0.15)),
+                                borderSide: BorderSide(
+                                    color:
+                                        AppColors.mainAccent.withOpacity(0.15)),
                                 borderRadius:
                                     BorderRadius.all(Radius.circular(15)))),
                       ),
