@@ -13,10 +13,14 @@ import 'create_edit_card.dart';
 
 class Cards extends StatefulWidget {
   const Cards(
-      {Key? key, required this.collectionId, required this.collectionName})
+      {Key? key,
+        required this.collectionId,
+        required this.collectionName,
+        this.sender})
       : super(key: key);
   final String collectionId;
   final String collectionName;
+  final String? sender;
 
   @override
   State<Cards> createState() => _CardsState();
@@ -28,6 +32,12 @@ class _CardsState extends State<Cards> {
   @override
   void initState() {
     super.initState();
+
+    if (widget.sender != null) {
+      print('sender ${widget.sender}');
+      context.read<CardsBloc>().add(CardsEvent.createSharedCards(
+          collectionId: widget.collectionId, sender: widget.sender!));
+    }
     context
         .read<CardsBloc>()
         .add(CardsEvent.initCard(collectionId: widget.collectionId));
