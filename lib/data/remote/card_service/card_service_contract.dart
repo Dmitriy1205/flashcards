@@ -13,5 +13,9 @@ abstract class CardService {
   Future<void> shareCollection({required  String collectionId,
     required String collectionName});
 
+  Future<void> createSharedCards(
+      {required String collectionId, required String sender});
+
+
   Future<List<CardEntity>> fetchCards({required String collectionId});
 }

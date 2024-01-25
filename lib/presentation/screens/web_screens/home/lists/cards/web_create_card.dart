@@ -43,10 +43,8 @@ class _WebCreateCardState extends State<WebCreateCard> {
   Color frontPickedColor = Colors.black;
   Color backPickedColor = Colors.black;
 
-
   String textLengthFront = '0';
   String textLengthBack = '0';
-
 
   TextFormat currentTextFormat = TextFormat.normal;
   ParagraphFormat currentParagraphFormat = ParagraphFormat.normal;
@@ -88,81 +86,80 @@ class _WebCreateCardState extends State<WebCreateCard> {
           ],
         ),
       ),
-      body: ColoredBox(
+      body: Container(
         color: AppColors.background,
-        child: Center(
-          child: SingleChildScrollView(
-            child: Padding(
-              padding: const EdgeInsets.symmetric(vertical: 39.0),
-              child: Container(
-                width: 914,
-                // height: MediaQuery.of(context).size.height / 1.23,
-                decoration: BoxDecoration(
-                    color: Colors.white,
-                    borderRadius: BorderRadius.circular(10)),
-                child: Column(
-                  children: [
-                    Padding(
-                      padding: const EdgeInsets.only(top: 24.0),
-                      child: frontEditor(context),
-                    ),
-                    Padding(
-                      padding: const EdgeInsets.only(top: 30.0),
-                      child: backEditor(context),
-                    ),
-                    Padding(
-                      padding: const EdgeInsets.only(
-                          right: 37.0, bottom: 25, top: 12),
-                      child: Align(
-                          alignment: Alignment.centerRight,
-                          child: SizedBox(
-                              width: 86,
-                              child: AppElevatedButton(
-                                borderRadius: 36,
-                                text: AppStrings.done,
-                                onPressed: () {
-                                  if (frontText.isNotEmpty &&
-                                      backText.isNotEmpty) {
-                                    if (widget.card == null) {
-                                      CreateCardParam card = CreateCardParam(
-                                          front: frontText.toString(),
-                                          back: backText.toString(),
-                                          collectionId: widget.collectionId);
-                                      Navigator.pop(context);
+        constraints:
+            BoxConstraints(minWidth: MediaQuery.of(context).size.width),
+        child: SingleChildScrollView(
+          physics: const AlwaysScrollableScrollPhysics(),
+          child: Padding(
+            padding: EdgeInsets.symmetric(
+                vertical: 39.0,
+                horizontal: MediaQuery.of(context).size.width * 0.15),
+            child: Container(
+              width: 914,
+              // height: MediaQuery.of(context).size.height / 1.23,
+              decoration: BoxDecoration(
+                  color: Colors.white, borderRadius: BorderRadius.circular(10)),
+              child: Column(
+                children: [
+                  Padding(
+                    padding: const EdgeInsets.only(top: 24.0),
+                    child: frontEditor(context),
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.only(top: 30.0),
+                    child: backEditor(context),
+                  ),
+                  Padding(
+                    padding:
+                        const EdgeInsets.only(right: 37.0, bottom: 25, top: 12),
+                    child: Align(
+                        alignment: Alignment.centerRight,
+                        child: SizedBox(
+                            width: 86,
+                            child: AppElevatedButton(
+                              borderRadius: 36,
+                              text: AppStrings.done,
+                              onPressed: () {
+                                if (frontText.isNotEmpty &&
+                                    backText.isNotEmpty) {
+                                  if (widget.card == null) {
+                                    CreateCardParam card = CreateCardParam(
+                                        front: frontText.toString(),
+                                        back: backText.toString(),
+                                        collectionId: widget.collectionId);
+                                    Navigator.pop(context);
 
-                                      context.read<CardsBloc>().add(
-                                          CardsEvent.createNewCard(
-                                              cardParam: card,
-                                              collectionId:
-                                                  widget.collectionId));
-                                    } else {
-                                      EditCardParam card = EditCardParam(
-                                          front: frontText.toString(),
-                                          back: backText.toString(),
-                                          collectionId: widget.collectionId,
-                                          id: widget.card!.id!);
-                                      Navigator.pop(context);
-                                      Navigator.pushReplacement(
-                                          context,
-                                          MaterialPageRoute(
-                                              builder: (context) =>
-                                                  ViewFlashCard(
-                                                    card: widget.card!,
-                                                    collectionId:
-                                                        widget.collectionId,
-                                                  )));
-                                      context.read<CardsBloc>().add(
-                                          CardsEvent.editCard(
-                                              cardParam: card,
-                                              collectionId:
-                                                  widget.collectionId));
-                                    }
+                                    context.read<CardsBloc>().add(
+                                        CardsEvent.createNewCard(
+                                            cardParam: card,
+                                            collectionId: widget.collectionId));
+                                  } else {
+                                    EditCardParam card = EditCardParam(
+                                        front: frontText.toString(),
+                                        back: backText.toString(),
+                                        collectionId: widget.collectionId,
+                                        id: widget.card!.id!);
+                                    Navigator.pop(context);
+                                    Navigator.pushReplacement(
+                                        context,
+                                        MaterialPageRoute(
+                                            builder: (context) => ViewFlashCard(
+                                                  card: widget.card!,
+                                                  collectionId:
+                                                      widget.collectionId,
+                                                )));
+                                    context.read<CardsBloc>().add(
+                                        CardsEvent.editCard(
+                                            cardParam: card,
+                                            collectionId: widget.collectionId));
                                   }
-                                },
-                              ))),
-                    ),
-                  ],
-                ),
+                                }
+                              },
+                            ))),
+                  ),
+                ],
               ),
             ),
           ),
@@ -183,8 +180,8 @@ class _WebCreateCardState extends State<WebCreateCard> {
           ),
         ),
         Padding(
-          padding: const EdgeInsets.only(
-              bottom: 0, top: 26, left: 24, right: 24),
+          padding:
+              const EdgeInsets.only(bottom: 0, top: 26, left: 24, right: 24),
           child: Container(
             decoration: BoxDecoration(
               border: Border.all(color: AppColors.borderGrey),
@@ -206,8 +203,7 @@ class _WebCreateCardState extends State<WebCreateCard> {
                       iconColor: AppColors.veryLightGrey,
                       activeIconColor: Colors.black,
                       controller: backController,
-                      crossAxisAlignment:
-                      WrapCrossAlignment.start,
+                      crossAxisAlignment: WrapCrossAlignment.start,
                       direction: Axis.horizontal,
                       toolBarConfig: const [
                         ToolBarStyle.bold,
@@ -244,26 +240,22 @@ class _WebCreateCardState extends State<WebCreateCard> {
                   color: AppColors.borderGrey,
                 ),
                 Padding(
-                  padding: const EdgeInsets.symmetric(
-                      vertical: 8.0, horizontal: 10),
+                  padding:
+                      const EdgeInsets.symmetric(vertical: 8.0, horizontal: 10),
                   child: QuillHtmlEditor(
-
                     controller: backController,
                     isEnabled: true,
                     ensureVisible: false,
                     minHeight: 130,
                     autoFocus: false,
-                    textStyle: AppTheme
-                        .themeData.textTheme.titleMedium!
+                    textStyle: AppTheme.themeData.textTheme.titleMedium!
                         .copyWith(
-                        color: backPickedColor,
-                        fontWeight: FontWeight.w300,
-                        fontSize: 17),
+                            color: backPickedColor,
+                            fontWeight: FontWeight.w300,
+                            fontSize: 17),
                     hintTextAlign: TextAlign.start,
-                    padding: const EdgeInsets.only(
-                        left: 10, top: 10),
-                    hintTextPadding:
-                    const EdgeInsets.only(left: 20),
+                    padding: const EdgeInsets.only(left: 10, top: 10),
+                    hintTextPadding: const EdgeInsets.only(left: 20),
                     backgroundColor: Colors.white,
                     inputAction: InputAction.newline,
                     // loadingBuilder: (context) {
@@ -282,8 +274,10 @@ class _WebCreateCardState extends State<WebCreateCard> {
                     onTextChanged: (text) {
                       setState(() {
                         backText = text;
-                        textLengthBack =
-                            text.replaceAll(RegExp(r'<[^>]*>'), '').length.toString();
+                        textLengthBack = text
+                            .replaceAll(RegExp(r'<[^>]*>'), '')
+                            .length
+                            .toString();
                       });
                     },
                   ),
@@ -388,7 +382,7 @@ class _WebCreateCardState extends State<WebCreateCard> {
         ),
         Padding(
           padding:
-          const EdgeInsets.only(bottom: 0, top: 26, left: 24, right: 24),
+              const EdgeInsets.only(bottom: 0, top: 26, left: 24, right: 24),
           child: Container(
             decoration: BoxDecoration(
               border: Border.all(color: AppColors.borderGrey),
@@ -446,9 +440,8 @@ class _WebCreateCardState extends State<WebCreateCard> {
                 ),
                 Padding(
                   padding:
-                  const EdgeInsets.symmetric(vertical: 8.0, horizontal: 10),
+                      const EdgeInsets.symmetric(vertical: 8.0, horizontal: 10),
                   child: QuillHtmlEditor(
-
                     controller: frontController,
                     isEnabled: true,
                     ensureVisible: false,
@@ -456,9 +449,9 @@ class _WebCreateCardState extends State<WebCreateCard> {
                     autoFocus: false,
                     textStyle: AppTheme.themeData.textTheme.titleMedium!
                         .copyWith(
-                        color: frontPickedColor,
-                        fontWeight: FontWeight.w300,
-                        fontSize: 17),
+                            color: frontPickedColor,
+                            fontWeight: FontWeight.w300,
+                            fontSize: 17),
                     hintTextAlign: TextAlign.start,
                     padding: const EdgeInsets.only(left: 10, top: 10),
                     hintTextPadding: const EdgeInsets.only(left: 20),
@@ -480,7 +473,10 @@ class _WebCreateCardState extends State<WebCreateCard> {
                     onTextChanged: (text) {
                       setState(() {
                         frontText = text;
-                        textLengthFront = text.replaceAll(RegExp(r'<[^>]*>'), '').length.toString();
+                        textLengthFront = text
+                            .replaceAll(RegExp(r'<[^>]*>'), '')
+                            .length
+                            .toString();
                       });
                     },
                   ),
@@ -610,6 +606,7 @@ class _WebCreateCardState extends State<WebCreateCard> {
           );
         });
   }
+
   Future<dynamic> showBackColorPicker(BuildContext context) {
     return showDialog(
         context: context,

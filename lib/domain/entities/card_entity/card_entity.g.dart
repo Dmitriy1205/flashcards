@@ -8,11 +8,11 @@ part of 'card_entity.dart';
 
 _$CardEntityImpl _$$CardEntityImplFromJson(Map<String, dynamic> json) =>
     _$CardEntityImpl(
-      id: json['id'] as String?,
-      collectionId: json['collectionId'] as String?,
-      collectionName: json['collectionName'] as String?,
-      front: json['front'] as String?,
-      back: json['back'] as String?,
+      id: json['id'] as String,
+      collectionId: json['collectionId'] as String,
+      collectionName: json['collectionName'] as String,
+      front: json['front'] as String,
+      back: json['back'] as String,
       createdAt: FirebaseTimestampConverters.fromTimestamp(json['createdAt']),
       sharedFrom: json['sharedFrom'] as String?,
       shareWithId: (json['shareWithId'] as List<dynamic>?)

@@ -9,8 +9,8 @@ part 'collection_entity.g.dart';
 @freezed
 class CollectionEntity with _$CollectionEntity {
   factory CollectionEntity({
-    required String? id,
-    required String? collectionName,
+    required String id,
+    required String collectionName,
     List<CardEntity>? cards,
     @JsonKey(
         fromJson: FirebaseTimestampConverters.fromTimestamp)

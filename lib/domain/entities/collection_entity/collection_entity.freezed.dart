@@ -20,8 +20,8 @@ CollectionEntity _$CollectionEntityFromJson(Map<String, dynamic> json) {
 
 /// @nodoc
 mixin _$CollectionEntity {
-  String? get id => throw _privateConstructorUsedError;
-  String? get collectionName => throw _privateConstructorUsedError;
+  String get id => throw _privateConstructorUsedError;
+  String get collectionName => throw _privateConstructorUsedError;
   List<CardEntity>? get cards => throw _privateConstructorUsedError;
   @JsonKey(fromJson: FirebaseTimestampConverters.fromTimestamp)
   DateTime? get createdAt => throw _privateConstructorUsedError;
@@ -39,8 +39,8 @@ abstract class $CollectionEntityCopyWith<$Res> {
       _$CollectionEntityCopyWithImpl<$Res, CollectionEntity>;
   @useResult
   $Res call(
-      {String? id,
-      String? collectionName,
+      {String id,
+      String collectionName,
       List<CardEntity>? cards,
       @JsonKey(fromJson: FirebaseTimestampConverters.fromTimestamp)
       DateTime? createdAt});
@@ -59,20 +59,20 @@ class _$CollectionEntityCopyWithImpl<$Res, $Val extends CollectionEntity>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? id = freezed,
-    Object? collectionName = freezed,
+    Object? id = null,
+    Object? collectionName = null,
     Object? cards = freezed,
     Object? createdAt = freezed,
   }) {
     return _then(_value.copyWith(
-      id: freezed == id
+      id: null == id
           ? _value.id
           : id // ignore: cast_nullable_to_non_nullable
-              as String?,
-      collectionName: freezed == collectionName
+              as String,
+      collectionName: null == collectionName
           ? _value.collectionName
           : collectionName // ignore: cast_nullable_to_non_nullable
-              as String?,
+              as String,
       cards: freezed == cards
           ? _value.cards
           : cards // ignore: cast_nullable_to_non_nullable
@@ -94,8 +94,8 @@ abstract class _$$CollectionEntityImplCopyWith<$Res>
   @override
   @useResult
   $Res call(
-      {String? id,
-      String? collectionName,
+      {String id,
+      String collectionName,
       List<CardEntity>? cards,
       @JsonKey(fromJson: FirebaseTimestampConverters.fromTimestamp)
       DateTime? createdAt});
@@ -112,20 +112,20 @@ class __$$CollectionEntityImplCopyWithImpl<$Res>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? id = freezed,
-    Object? collectionName = freezed,
+    Object? id = null,
+    Object? collectionName = null,
     Object? cards = freezed,
     Object? createdAt = freezed,
   }) {
     return _then(_$CollectionEntityImpl(
-      id: freezed == id
+      id: null == id
           ? _value.id
           : id // ignore: cast_nullable_to_non_nullable
-              as String?,
-      collectionName: freezed == collectionName
+              as String,
+      collectionName: null == collectionName
           ? _value.collectionName
           : collectionName // ignore: cast_nullable_to_non_nullable
-              as String?,
+              as String,
       cards: freezed == cards
           ? _value._cards
           : cards // ignore: cast_nullable_to_non_nullable
@@ -153,9 +153,9 @@ class _$CollectionEntityImpl implements _CollectionEntity {
       _$$CollectionEntityImplFromJson(json);
 
   @override
-  final String? id;
+  final String id;
   @override
-  final String? collectionName;
+  final String collectionName;
   final List<CardEntity>? _cards;
   @override
   List<CardEntity>? get cards {
@@ -210,8 +210,8 @@ class _$CollectionEntityImpl implements _CollectionEntity {
 
 abstract class _CollectionEntity implements CollectionEntity {
   factory _CollectionEntity(
-      {required final String? id,
-      required final String? collectionName,
+      {required final String id,
+      required final String collectionName,
       final List<CardEntity>? cards,
       @JsonKey(fromJson: FirebaseTimestampConverters.fromTimestamp)
       required final DateTime? createdAt}) = _$CollectionEntityImpl;
@@ -220,9 +220,9 @@ abstract class _CollectionEntity implements CollectionEntity {
       _$CollectionEntityImpl.fromJson;
 
   @override
-  String? get id;
+  String get id;
   @override
-  String? get collectionName;
+  String get collectionName;
   @override
   List<CardEntity>? get cards;
   @override
