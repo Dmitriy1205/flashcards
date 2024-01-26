@@ -6,6 +6,7 @@ import 'package:flashcards/core/themes/theme.dart';
 import 'package:flashcards/domain/entities/card_entity/card_entity.dart';
 import 'package:flashcards/presentation/blocs/cards/cards_bloc.dart';
 import 'package:flashcards/presentation/blocs/lists/lists_bloc.dart';
+import 'package:flashcards/presentation/widgets/loading_indicator.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/svg.dart';
@@ -232,7 +233,9 @@ class _CardsState extends State<Cards> {
         },
         builder: (context, state) {
           return state.maybeMap(loading: (_) {
-            return const Center(child: CircularProgressIndicator());
+            return Container(
+                color: AppColors.background,
+                child: LoadingIndicator());
           }, loaded: (data) {
             return Column(
               children: [

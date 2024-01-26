@@ -93,44 +93,54 @@ class _CustomNavigationBarState extends State<CustomNavigationBar> {
               ? Positioned(
                   right: 28,
                   bottom: 10,
-                  child: context.watch<ListsBloc>().isEditMode
-                      ? Padding(
-                          padding: const EdgeInsets.only(bottom: 20.0),
-                          child: GestureDetector(
-                            onTap: () {
-                              context.read<ListsBloc>().add(
-                                  const ListsEvent.deleteSelectedCollection(
-                                      collectionsList: []));
-                              context.read<ListsBloc>().isEditMode = false;
-                            },
-                            child: SizedBox(
-                              height: 76,
-                              width: 76,
-                              child: SvgPicture.asset(
-                                AppIcons.redBucket,
-                                height: 18,
-                                width: 9,
-                              ),
-                            ),
-                          ),
-                        )
-                      : Padding(
-                          padding: const EdgeInsets.only(bottom: 20.0),
-                          child: GestureDetector(
-                            onTap: () {
-                              dialog();
-                            },
-                            child: SizedBox(
-                              height: 76,
-                              width: 76,
-                              child: SvgPicture.asset(
-                                AppIcons.addCollection,
-                                height: 18,
-                                width: 9,
-                              ),
-                            ),
+                  child:
+                  Stack(
+                    children: [
+                      context.watch<ListsBloc>().isEditMode
+                          ? Padding(
+                        padding: const EdgeInsets.only(bottom: 20.0),
+                        child: SizedBox(
+                          height: 76,
+                          width: 76,
+                          child: SvgPicture.asset(
+                            AppIcons.redBucket,
+                            height: 18,
+                            width: 9,
                           ),
                         ),
+                      )
+                          : Padding(
+                        padding: const EdgeInsets.only(bottom: 20.0),
+                        child: SizedBox(
+                          height: 76,
+                          width: 76,
+                          child: SvgPicture.asset(
+                            AppIcons.addCollection,
+                            height: 18,
+                            width: 9,
+                          ),
+                        ),
+                      ),
+                      Material(
+                        color: Colors.transparent,
+                        borderRadius: BorderRadius.circular(32),
+                        child: InkWell(
+                            borderRadius: BorderRadius.circular(32),
+                            onTap: () {
+                              if(context.read<ListsBloc>().isEditMode){
+                                context.read<ListsBloc>().add(
+                                    const ListsEvent.deleteSelectedCollection(
+                                        collectionsList: []));
+                                context.read<ListsBloc>().isEditMode = false;
+                              }else{
+                                dialog();
+                              }
+                            },
+                            child: Container(
+                                width: 76, height: 76, color: Colors.transparent)),
+                      ),
+                    ],
+                  )
                 )
               : const SizedBox()
         ],

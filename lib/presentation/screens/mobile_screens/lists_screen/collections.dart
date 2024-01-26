@@ -28,52 +28,52 @@ class Collections extends StatelessWidget {
                   left: 24, right: 24, bottom: 11, top: 11),
               child: Row(children: [
                 isEditMode
-                    ? Flexible(
-                        flex: 1,
-                        child: InkWell(
-                          onTap: () {
-                            if (context
+                    ? Container(
+                      color: Colors.transparent,
+                      child: InkWell(
+                        onTap: () {
+                          if (context
+                              .read<ListsBloc>()
+                              .listIdToDelete
+                              .contains(collectionsList[i].id)) {
+                            context
                                 .read<ListsBloc>()
                                 .listIdToDelete
-                                .contains(collectionsList[i].id)) {
-                              context
-                                  .read<ListsBloc>()
-                                  .listIdToDelete
-                                  .remove(collectionsList[i].id);
-                            } else {
-                              context
-                                  .read<ListsBloc>()
-                                  .listIdToDelete
-                                  .add(collectionsList[i].id!);
-                            }
-                            context.read<ListsBloc>().add(ListsEvent.started(
-                                  isEditMode: isEditMode,
-                                ));
-                          },
-                          child: Container(
-                            decoration: const BoxDecoration(
-                              shape: BoxShape.circle,
-                            ),
-                            child: Padding(
-                              padding: const EdgeInsets.all(10.0),
-                              child: context
-                                      .read<ListsBloc>()
-                                      .listIdToDelete
-                                      .contains(collectionsList[i].id)
-                                  ? const Icon(
-                                      Icons.check_circle,
-                                      size: 23.0,
-                                      color: AppColors.mainAccent,
-                                    )
-                                  : const Icon(
-                                      Icons.radio_button_unchecked,
-                                      size: 23.0,
-                                      color: AppColors.mainAccent,
-                                    ),
-                            ),
+                                .remove(collectionsList[i].id);
+                          } else {
+                            context
+                                .read<ListsBloc>()
+                                .listIdToDelete
+                                .add(collectionsList[i].id!);
+                          }
+                          context.read<ListsBloc>().add(ListsEvent.started(
+                                isEditMode: isEditMode,
+                              ));
+                        },
+                        child: Container(
+                          decoration: const BoxDecoration(
+                            shape: BoxShape.circle,
+                          ),
+                          child: Padding(
+                            padding: const EdgeInsets.all(10.0),
+                            child: context
+                                    .read<ListsBloc>()
+                                    .listIdToDelete
+                                    .contains(collectionsList[i].id)
+                                ? const Icon(
+                                    Icons.check_circle,
+                                    size: 23.0,
+                                    color: AppColors.mainAccent,
+                                  )
+                                : const Icon(
+                                    Icons.radio_button_unchecked,
+                                    size: 23.0,
+                                    color: AppColors.mainAccent,
+                                  ),
                           ),
                         ),
-                      )
+                      ),
+                    )
                     : const SizedBox(),
                 SizedBox(
                   width: isEditMode ? 22 : 0,

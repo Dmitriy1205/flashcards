@@ -12,6 +12,7 @@ class App extends StatelessWidget {
   Widget build(BuildContext context) {
     return Providers(
       child: MaterialApp.router(
+        scrollBehavior: const AppScrollBehavior(),
         routeInformationProvider: router.routeInformationProvider,
         routeInformationParser: router.routeInformationParser,
         routerDelegate: router.routerDelegate,
@@ -22,5 +23,11 @@ class App extends StatelessWidget {
       ),
     );
   }
+}
+
+class AppScrollBehavior extends ScrollBehavior {
+  const AppScrollBehavior();
+  @override
+  ScrollPhysics getScrollPhysics(BuildContext context) => const BouncingScrollPhysics();
 }
 
