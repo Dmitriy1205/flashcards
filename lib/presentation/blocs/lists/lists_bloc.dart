@@ -37,46 +37,73 @@ class ListsBloc extends Bloc<ListsEvent, ListsState> {
 
   Future<void> _createNewList(
       _CreateNewList event, Emitter<ListsState> emit) async {
-    await collectionRepo.createCollection(collectionName: event.name);
-    final List<CollectionEntity> data = await collectionRepo.fetchCollections();
     emit(const ListsState.loading());
-    emit(ListsState.viewCollections(
-        collectionsList: data, isEditMode: false, listToDelete: []));
+    try {
+      await collectionRepo.createCollection(collectionName: event.name);
+      final List<CollectionEntity> data =
+          await collectionRepo.fetchCollections();
+      emit(const ListsState.loading());
+      emit(ListsState.viewCollections(
+          collectionsList: data, isEditMode: false, listToDelete: []));
+    } catch (e) {
+      emit(ListsState.error(error: e.toString()));
+    }
   }
 
   Future<void> _editListName(
       _EditListName event, Emitter<ListsState> emit) async {
-    await collectionRepo.editCollection(
-        collectionName: event.name, collectionId: event.id);
-    final List<CollectionEntity> data = await collectionRepo.fetchCollections();
     emit(const ListsState.loading());
-    emit(ListsState.viewCollections(
-        collectionsList: data, isEditMode: false, listToDelete: []));
+    try {
+      await collectionRepo.editCollection(
+          collectionName: event.name, collectionId: event.id);
+      final List<CollectionEntity> data =
+          await collectionRepo.fetchCollections();
+      emit(ListsState.viewCollections(
+          collectionsList: data, isEditMode: false, listToDelete: []));
+    } catch (e) {
+      emit(ListsState.error(error: e.toString()));
+    }
   }
 
   Future<void> _selectCollection(
       _SelectCollection event, Emitter<ListsState> emit) async {
-    emit(ListsState.viewCards(
-      collection: event.collection,
-    ));
+    emit(const ListsState.loading());
+
+    try {
+      emit(ListsState.viewCards(
+        collection: event.collection,
+      ));
+    } catch (e) {
+      emit(ListsState.error(error: e.toString()));
+    }
   }
 
   Future<void> _deleteSelectedCollection(
       _DeleteSelecteCollection event, Emitter<ListsState> emit) async {
-    await collectionRepo.deleteCollections(collections: listIdToDelete);
-    final data = await collectionRepo.fetchCollections();
     emit(const ListsState.loading());
-    emit(ListsState.viewCollections(
-        collectionsList: data, isEditMode: false, listToDelete: []));
+    try {
+      await collectionRepo.deleteCollections(collections: listIdToDelete);
+      final data = await collectionRepo.fetchCollections();
+      emit(const ListsState.loading());
+      emit(ListsState.viewCollections(
+          collectionsList: data, isEditMode: false, listToDelete: []));
+    } catch (e) {
+      emit(ListsState.error(error: e.toString()));
+    }
   }
 
   Future<void> _started(_Started event, Emitter<ListsState> emit) async {
-    final data = await collectionRepo.fetchCollections();
     emit(const ListsState.loading());
-    isEditMode = event.isEditMode;
-    emit(ListsState.viewCollections(
-        collectionsList: data,
-        isEditMode: event.isEditMode,
-        listToDelete: listIdToDelete));
+    try {
+      final data = await collectionRepo.fetchCollections();
+      emit(const ListsState.loading());
+      isEditMode = event.isEditMode;
+      emit(ListsState.viewCollections(
+          collectionsList: data,
+          isEditMode: event.isEditMode,
+          listToDelete: listIdToDelete));
+    } catch (e) {
+      emit(ListsState.error(error: e.toString()));
+    }
   }
 }

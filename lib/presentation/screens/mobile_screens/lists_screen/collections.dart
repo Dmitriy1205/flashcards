@@ -86,21 +86,20 @@ class Collections extends StatelessWidget {
                         borderRadius: BorderRadius.all(Radius.circular(10))),
                     child: ListTile(
                       onTap: () {
-                        if(isEditMode){
+                        if (isEditMode) {
                           CreateEditCollectionDialog().dialog(context,
-                              collectionName:
-                              collectionsList[i].collectionName,
+                              collectionName: collectionsList[i].collectionName,
                               collectionId: collectionsList[i].id);
-                        }else{
+                        } else {
                           context
                               .read<ListsBloc>()
                               .add(ListsEvent.selectCollection(
-                            collection: collectionsList[i],
-                          ));
+                                collection: collectionsList[i],
+                              ));
                         }
                       },
                       title: Text(
-                        collectionsList[i].collectionName!,
+                        collectionsList[i].collectionName,
                         style: AppTheme.themeData.textTheme.titleMedium!
                             .copyWith(fontSize: 18),
                       ),
@@ -113,10 +112,10 @@ class Collections extends StatelessWidget {
                       ),
                       trailing: isEditMode
                           ? SvgPicture.asset(
-                            AppIcons.editGreen,
-                            height: 18,
-                            width: 9,
-                          )
+                              AppIcons.editGreen,
+                              height: 18,
+                              width: 9,
+                            )
                           : SvgPicture.asset(
                               AppIcons.rightArrow,
                               height: 18,
