@@ -29,9 +29,6 @@ class _CreateEditCardState extends State<CreateEditCard> {
   final frontController = QuillEditorController();
   final backController = QuillEditorController();
 
-  bool _frontHasFocus = false;
-  bool _backHasFocus = false;
-
   bool _showKeyboardFront = false;
   bool _showKeyboardBack = false;
 
@@ -42,127 +39,114 @@ class _CreateEditCardState extends State<CreateEditCard> {
   String textLengthBack = '0';
 
 
+
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: AppColors.background,
-      appBar: AppBar(
-        automaticallyImplyLeading: false,
-        title: GestureDetector(
-          onTap: () {
-            Navigator.of(context).pop();
-          },
-          child: Container(
-            color: Colors.transparent,
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              mainAxisSize: MainAxisSize.max,
-              children: [
-                Row(children: [
-                  SvgPicture.asset(
-                    AppIcons.leftArrow,
-                    color: Colors.black,
-                    height: 21,
-                    width: 19,
-                  ),
-                  const SizedBox(
-                    width: 19,
-                  ),
-                  Text(
-                    widget.cardEntity == null
-                        ? '${AppStrings.create} ${AppStrings.card.toLowerCase()}'
-                        : '${AppStrings.edit} ${AppStrings.card.toLowerCase()}',
-                    style: AppTheme.themeData.textTheme.headlineLarge,
-                  ),
-                ]),
-                TextButton(
-                  onPressed: () {
-                    if (frontText.isNotEmpty && backText.isNotEmpty) {
-                      if (widget.cardEntity == null) {
-                        CreateCardParam card = CreateCardParam(
-                            front: frontText,
-                            back: backText,
-                            collectionId: widget.collectionId);
-                        Navigator.pop(context);
-
-                        context.read<CardsBloc>().add(CardsEvent.createNewCard(
-                            cardParam: card,
-                            collectionId: widget.collectionId));
-                        context
-                            .read<ListsBloc>()
-                            .add(const ListsEvent.started(isEditMode: false));
-                      } else {
-                        EditCardParam card = EditCardParam(
-                            front: frontText,
-                            back: backText,
-                            collectionId: widget.collectionId,
-                            id: widget.cardEntity!.id!);
-
-                        router.push(
-                          '/view_card_mobile',
-                          extra: {
-                            "card": widget.cardEntity!.copyWith(
-                              front: frontText,
-                              back: backText,
-                            ),
-                            "collectionId": widget.collectionId,
-                          },
-                        );
-
-                        // Navigator.pushReplacement(
-                        //     context,
-                        //     MaterialPageRoute(
-                        //         builder: (context) => ViewFlashCard(
-                        card:
-                        // widget.cardEntity!.copyWith(
-                        //     front: frontTextEditingController.text,
-                        //     back: backTextEditingController.text,
-                        //                   ),
-                        //               collectionId: widget.collectionId,
-                        //             )));
-
-                        // Navigator.pushReplacement(
-                        //     context,
-                        //     MaterialPageRoute(
-                        //         builder: (context) => ViewFlashCard(
-                        //               card: widget.cardEntity!,
-                        //               collectionId: widget.collectionId,
-                        //             )));
-                        context.read<CardsBloc>().add(CardsEvent.editCard(
-                            cardParam: card,
-                            collectionId: widget.collectionId));
-                      }
-                    }
-                  },
-                  child: Text(
-                    AppStrings.done,
-                    style: AppTheme.themeData.textTheme.titleLarge!.copyWith(
-                      fontSize: 20,
-                    ),
-                  ),
-                ),
-              ],
-            ),
-          ),
-        ),
-      ),
-      body: GestureDetector(
-        onTap:() {
-          FocusScope.of(context).unfocus();
-
-            frontController.unFocus();
-            backController.unFocus();
+    return GestureDetector(
+      onTap: (){
+        //
+        frontController.enableEditor(false);
+        backController.enableEditor(false);
+        frontController.unFocus();
+        backController.unFocus();
+        setState(() {});
+        frontController.enableEditor(true);
+        backController.enableEditor(true);
+        //frontController.unFocus();
+        //backController.unFocus();
 
 
 
-          WidgetsBinding.instance.addPostFrameCallback((_) {
+        /*WidgetsBinding.instance.addPostFrameCallback((_) {
             setState(() {
               _showKeyboardBack = false;
               _showKeyboardFront = false;
             });
-          });
-        },
-        child: Stack(
+          });*/
+      },
+      child: Scaffold(
+        backgroundColor: AppColors.background,
+        appBar: AppBar(
+          automaticallyImplyLeading: false,
+          title: GestureDetector(
+            onTap: () {
+              Navigator.of(context).pop();
+            },
+            child: Container(
+              color: Colors.transparent,
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                mainAxisSize: MainAxisSize.max,
+                children: [
+                  Row(children: [
+                    SvgPicture.asset(
+                      AppIcons.leftArrow,
+                      color: Colors.black,
+                      height: 21,
+                      width: 19,
+                    ),
+                    const SizedBox(
+                      width: 19,
+                    ),
+                    Text(
+                      widget.cardEntity == null
+                          ? '${AppStrings.create} ${AppStrings.card.toLowerCase()}'
+                          : '${AppStrings.edit} ${AppStrings.card.toLowerCase()}',
+                      style: AppTheme.themeData.textTheme.headlineLarge,
+                    ),
+                  ]),
+                  TextButton(
+                    onPressed: () {
+                      if (frontText.isNotEmpty && backText.isNotEmpty) {
+                        if (widget.cardEntity == null) {
+                          CreateCardParam card = CreateCardParam(
+                              front: frontText,
+                              back: backText,
+                              collectionId: widget.collectionId);
+                          Navigator.pop(context);
+
+                          context.read<CardsBloc>().add(CardsEvent.createNewCard(
+                              cardParam: card,
+                              collectionId: widget.collectionId));
+                          context
+                              .read<ListsBloc>()
+                              .add(const ListsEvent.started(isEditMode: false));
+                        } else {
+                          EditCardParam card = EditCardParam(
+                              front: frontText,
+                              back: backText,
+                              collectionId: widget.collectionId,
+                              id: widget.cardEntity!.id!);
+
+                          router.push(
+                            '/view_card_mobile',
+                            extra: {
+                              "card": widget.cardEntity!.copyWith(
+                                front: frontText,
+                                back: backText,
+                              ),
+                              "collectionId": widget.collectionId,
+                            },
+                          );
+                          context.read<CardsBloc>().add(CardsEvent.editCard(
+                              cardParam: card,
+                              collectionId: widget.collectionId));
+                        }
+                      }
+                    },
+                    child: Text(
+                      AppStrings.done,
+                      style: AppTheme.themeData.textTheme.titleLarge!.copyWith(
+                        fontSize: 20,
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+            ),
+          ),
+        ),
+        body: Stack(
           children: [
             SingleChildScrollView(
               child: Column(
@@ -285,18 +269,7 @@ class _CreateEditCardState extends State<CreateEditCard> {
                 inputAction: InputAction.newline,
                 onFocusChanged: (focus) {
                   setState(() {
-                    _frontHasFocus = focus;
-                    if(Platform.isIOS){
-                      if (MediaQuery.of(context).viewInsets.bottom > 0.0) {
-                        _showKeyboardBack = false;
-                        _showKeyboardFront = true;
-                      }
-                    }else{
-                      _showKeyboardBack = false;
-                      _showKeyboardFront = true;
-                    }
-
-
+                    _showKeyboardFront = focus;
                   });
                 },
                 // onSelectionChanged: (_) {
@@ -395,17 +368,9 @@ class _CreateEditCardState extends State<CreateEditCard> {
                 inputAction: InputAction.newline,
                 onFocusChanged: (focus) {
                   setState(() {
-                    _backHasFocus = focus;
-
-                    if(Platform.isIOS){
-                      if (MediaQuery.of(context).viewInsets.bottom > 0.0) {
-                        _showKeyboardFront = false;
-                        _showKeyboardBack = true;
-                      }
-                    }else{
-                      _showKeyboardFront = false;
-                      _showKeyboardBack = true;
-                    }
+                    setState(() {
+                      _showKeyboardBack = focus;
+                    });
 
 
                   });
