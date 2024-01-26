@@ -62,8 +62,7 @@ class _CreateEditCardState extends State<CreateEditCard> {
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
-      onTap: (){
-        //
+      onTap: () {
         frontController.enableEditor(false);
         backController.enableEditor(false);
         frontController.unFocus();
@@ -78,7 +77,20 @@ class _CreateEditCardState extends State<CreateEditCard> {
           automaticallyImplyLeading: false,
           title: GestureDetector(
             onTap: () {
-              Navigator.of(context).pop();
+              if (widget.cardEntity != null) {
+                router.pushReplacement(
+                  '/view_card_mobile',
+                  extra: {
+                    "card": widget.cardEntity!.copyWith(
+                      front: frontText,
+                      back: backText,
+                    ),
+                    "collectionId": widget.collectionId,
+                  },
+                );
+              } else {
+                Navigator.of(context).pop();
+              }
             },
             child: Container(
               color: Colors.transparent,
@@ -113,9 +125,10 @@ class _CreateEditCardState extends State<CreateEditCard> {
                               collectionId: widget.collectionId);
                           Navigator.pop(context);
 
-                          context.read<CardsBloc>().add(CardsEvent.createNewCard(
-                              cardParam: card,
-                              collectionId: widget.collectionId));
+                          context.read<CardsBloc>().add(
+                              CardsEvent.createNewCard(
+                                  cardParam: card,
+                                  collectionId: widget.collectionId));
                           context
                               .read<ListsBloc>()
                               .add(const ListsEvent.started(isEditMode: false));
@@ -126,7 +139,7 @@ class _CreateEditCardState extends State<CreateEditCard> {
                               collectionId: widget.collectionId,
                               id: widget.cardEntity!.id!);
 
-                          router.push(
+                          router.pushReplacement(
                             '/view_card_mobile',
                             extra: {
                               "card": widget.cardEntity!.copyWith(
@@ -377,8 +390,6 @@ class _CreateEditCardState extends State<CreateEditCard> {
                     setState(() {
                       _showKeyboardBack = focus;
                     });
-
-
                   });
                 },
                 onTextChanged: (text) {

@@ -386,8 +386,13 @@ class _CardsState extends State<Cards> {
                 ),
               ],
             );
-          }, error: (_) {
-            return const Center(child: Text('Error'));
+          }, error: (e) {
+            return Center(
+                child: Text(
+              'Error $e',
+              style: AppTheme.themeData.textTheme.titleMedium!
+                  .copyWith(fontSize: 18),
+            ));
           }, orElse: () {
             return const Center(child: Text('No cards found'));
           });
@@ -446,6 +451,7 @@ class _CardsState extends State<Cards> {
                     child: InkWell(
                         borderRadius: BorderRadius.circular(32),
                         onTap: () {
+
                           Navigator.push(
                               context,
                               MaterialPageRoute(
