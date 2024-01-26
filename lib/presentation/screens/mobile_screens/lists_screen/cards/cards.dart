@@ -448,6 +448,7 @@ class _CardsState extends State<Cards> {
                     child: InkWell(
                         borderRadius: BorderRadius.circular(32),
                         onTap: () {
+
                           Navigator.push(
                               context,
                               MaterialPageRoute(

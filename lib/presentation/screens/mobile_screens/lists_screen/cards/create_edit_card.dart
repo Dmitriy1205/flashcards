@@ -118,7 +118,7 @@ class _CreateEditCardState extends State<CreateEditCard> {
                               collectionId: widget.collectionId,
                               id: widget.cardEntity!.id!);
 
-                          router.push(
+                          router.pushReplacement(
                             '/view_card_mobile',
                             extra: {
                               "card": widget.cardEntity!.copyWith(
