@@ -38,12 +38,10 @@ class _CreateEditCardState extends State<CreateEditCard> {
   String textLengthFront = '0';
   String textLengthBack = '0';
 
-
-
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
-      onTap: (){
+      onTap: () {
         //
         frontController.enableEditor(false);
         backController.enableEditor(false);
@@ -54,8 +52,6 @@ class _CreateEditCardState extends State<CreateEditCard> {
         backController.enableEditor(true);
         //frontController.unFocus();
         //backController.unFocus();
-
-
 
         /*WidgetsBinding.instance.addPostFrameCallback((_) {
             setState(() {
@@ -70,7 +66,20 @@ class _CreateEditCardState extends State<CreateEditCard> {
           automaticallyImplyLeading: false,
           title: GestureDetector(
             onTap: () {
-              Navigator.of(context).pop();
+              if (widget.cardEntity != null) {
+                router.pushReplacement(
+                  '/view_card_mobile',
+                  extra: {
+                    "card": widget.cardEntity!.copyWith(
+                      front: frontText,
+                      back: backText,
+                    ),
+                    "collectionId": widget.collectionId,
+                  },
+                );
+              } else {
+                Navigator.of(context).pop();
+              }
             },
             child: Container(
               color: Colors.transparent,
@@ -105,9 +114,10 @@ class _CreateEditCardState extends State<CreateEditCard> {
                               collectionId: widget.collectionId);
                           Navigator.pop(context);
 
-                          context.read<CardsBloc>().add(CardsEvent.createNewCard(
-                              cardParam: card,
-                              collectionId: widget.collectionId));
+                          context.read<CardsBloc>().add(
+                              CardsEvent.createNewCard(
+                                  cardParam: card,
+                                  collectionId: widget.collectionId));
                           context
                               .read<ListsBloc>()
                               .add(const ListsEvent.started(isEditMode: false));
@@ -371,8 +381,6 @@ class _CreateEditCardState extends State<CreateEditCard> {
                     setState(() {
                       _showKeyboardBack = focus;
                     });
-
-
                   });
                 },
                 // onSelectionChanged: (_) {
