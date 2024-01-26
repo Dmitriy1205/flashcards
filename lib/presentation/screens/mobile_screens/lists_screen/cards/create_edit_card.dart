@@ -10,6 +10,7 @@ import 'package:flashcards/domain/params/card_param/create_card_param.dart';
 import 'package:flashcards/domain/params/card_param/edit_card_param.dart';
 import 'package:flashcards/presentation/blocs/cards/cards_bloc.dart';
 import 'package:flashcards/presentation/blocs/lists/lists_bloc.dart';
+import 'package:flashcards/presentation/widgets/loading_indicator.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/svg.dart';
@@ -38,7 +39,25 @@ class _CreateEditCardState extends State<CreateEditCard> {
   String textLengthFront = '0';
   String textLengthBack = '0';
 
+  bool frontControllerLoaded = false;
+  bool backControllerLoaded = false;
 
+  bool get editorReady => frontControllerLoaded && backControllerLoaded;
+
+  @override
+  void initState() {
+    super.initState();
+    frontController.onEditorLoaded(() {
+      setState(() {
+        frontControllerLoaded = true;
+      });
+    });
+    backController.onEditorLoaded(() {
+      setState(() {
+        backControllerLoaded = true;
+      });
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -52,17 +71,6 @@ class _CreateEditCardState extends State<CreateEditCard> {
         setState(() {});
         frontController.enableEditor(true);
         backController.enableEditor(true);
-        //frontController.unFocus();
-        //backController.unFocus();
-
-
-
-        /*WidgetsBinding.instance.addPostFrameCallback((_) {
-            setState(() {
-              _showKeyboardBack = false;
-              _showKeyboardFront = false;
-            });
-          });*/
       },
       child: Scaffold(
         backgroundColor: AppColors.background,
@@ -188,7 +196,7 @@ class _CreateEditCardState extends State<CreateEditCard> {
                       ),
                     ),
                   )
-                : SizedBox(),
+                : const SizedBox(),
             _showKeyboardBack
                 ? Positioned(
                     left: 0,
@@ -221,7 +229,13 @@ class _CreateEditCardState extends State<CreateEditCard> {
                       ),
                     ),
                   )
-                : SizedBox(),
+                : const SizedBox(),
+            editorReady ? SizedBox.shrink() : Container(
+              width: double.infinity,
+              height: double.infinity,
+              color: AppColors.background,
+              child: LoadingIndicator(),
+            ),
           ],
         ),
       ),
@@ -272,14 +286,6 @@ class _CreateEditCardState extends State<CreateEditCard> {
                     _showKeyboardFront = focus;
                   });
                 },
-                // onSelectionChanged: (_) {
-                //   if (MediaQuery.of(context).viewInsets.bottom > 0.0) {
-                //
-                //       _showKeyboardBack = false;
-                //       _showKeyboardFront = true;
-                //
-                //   }
-                // },
                 onTextChanged: (text) {
                   setState(() {
                     frontText = text;
@@ -375,14 +381,6 @@ class _CreateEditCardState extends State<CreateEditCard> {
 
                   });
                 },
-                // onSelectionChanged: (_) {
-                //   if (MediaQuery.of(context).viewInsets.bottom > 0.0) {
-                //
-                //       _showKeyboardFront = false;
-                //       _showKeyboardBack = true;
-                //
-                //   }
-                // },
                 onTextChanged: (text) {
                   setState(() {
                     backText = text;
