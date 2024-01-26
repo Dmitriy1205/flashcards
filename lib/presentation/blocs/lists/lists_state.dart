@@ -33,4 +33,7 @@ class ListsState with _$ListsState {
       {required List<CollectionEntity> collectionsList,
       required bool isEditMode,
       required List<String> listToDelete}) = _ViewCollections;
+
+  const factory ListsState.error({required String error}) = _Error;
+
 }

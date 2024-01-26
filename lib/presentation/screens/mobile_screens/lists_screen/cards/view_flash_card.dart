@@ -65,7 +65,7 @@ class _ViewFlashCardState extends State<ViewFlashCard> {
               ),
               TextButton(
                 onPressed: () {
-                  router.push('/create_edit_card_mobile', extra: {
+                  router.pushReplacement('/create_edit_card_mobile', extra: {
                     'collectionId': widget.collectionId,
                     "card": widget.card,
                   });

@@ -1,5 +1,6 @@
 import 'package:flashcards/core/const/strings.dart';
 import 'package:flashcards/core/router/router.dart';
+import 'package:flashcards/core/themes/theme.dart';
 import 'package:flashcards/presentation/blocs/lists/lists_bloc.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -55,6 +56,13 @@ class _ListsState extends State<Lists> {
       builder: (context, state) {
         return Container(
           child: state.maybeMap(
+            loading: (_) => const CircularProgressIndicator(),
+            error: (e) => Center(
+                child: Text(
+              'Error $e',
+              style: AppTheme.themeData.textTheme.titleMedium!
+                  .copyWith(fontSize: 18),
+            )),
             viewCollections: (collections) {
               return Collections(
                   collectionsList: collections.collectionsList,
