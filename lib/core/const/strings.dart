@@ -46,6 +46,5 @@ class AppStrings {
   static const String language = 'Language';
   static const String english = 'English';
 
-
-
+  static const String errorEmptyCard = "Card front and back must be filled";
 }

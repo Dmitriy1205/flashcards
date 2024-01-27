@@ -67,8 +67,6 @@ class _CreateEditCardState extends State<CreateEditCard> {
         backController.enableEditor(false);
         frontController.unFocus();
         backController.unFocus();
-        _showKeyboardBack = false;
-        _showKeyboardFront = false;
         setState(() {});
         frontController.enableEditor(true);
         backController.enableEditor(true);
@@ -155,6 +153,17 @@ class _CreateEditCardState extends State<CreateEditCard> {
                               cardParam: card,
                               collectionId: widget.collectionId));
                         }
+                      }else{
+                        ScaffoldMessenger.of(context).showSnackBar(
+                          SnackBar(
+                            backgroundColor: AppColors.red,
+                            duration: const Duration(seconds: 5),
+                            content: Text(
+                              AppStrings.errorEmptyCard,
+                              textAlign: TextAlign.center,
+                            ),
+                          ),
+                        );
                       }
                     },
                     child: Text(

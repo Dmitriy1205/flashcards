@@ -52,8 +52,7 @@ class CardsBloc extends Bloc<CardsEvent, CardsState> {
 
   Future<void> _shareCard(_ShareCard event, Emitter<CardsState> emit) async {
     try {
-      emit(const CardsState.loading());
-      cardRepo.shareCollection(
+      await cardRepo.shareCollection(
           collectionId: event.collectionId,
           collectionName: event.collectionName);
     } catch (e) {
