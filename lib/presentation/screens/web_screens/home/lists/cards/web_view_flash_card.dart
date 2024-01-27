@@ -6,7 +6,6 @@ import 'package:flashcards/core/const/strings.dart';
 import 'package:flashcards/core/router/router.dart';
 import 'package:flashcards/core/themes/theme.dart';
 import 'package:flashcards/domain/entities/card_entity/card_entity.dart';
-import 'package:flashcards/domain/entities/collection_entity/collection_entity.dart';
 import 'package:flashcards/presentation/widgets/app_round_button.dart';
 import 'package:flashcards/presentation/widgets/loading_indicator.dart';
 import 'package:flutter/material.dart';

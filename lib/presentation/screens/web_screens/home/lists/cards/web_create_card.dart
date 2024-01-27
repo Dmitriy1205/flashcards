@@ -4,7 +4,6 @@ import 'package:flashcards/core/const/strings.dart';
 import 'package:flashcards/core/themes/theme.dart';
 import 'package:flashcards/domain/entities/card_entity/card_entity.dart';
 import 'package:flashcards/presentation/widgets/app_elevated_button.dart';
-import 'package:flashcards/presentation/widgets/app_icon_button.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -59,110 +58,128 @@ class _WebCreateCardState extends State<WebCreateCard> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        automaticallyImplyLeading: false,
-        title: Row(
-          mainAxisAlignment: MainAxisAlignment.start,
-          mainAxisSize: MainAxisSize.max,
-          children: [
-            const SizedBox(
-              width: 64,
-            ),
-            InkWell(
-              onTap: () {
-                router.pop();
-              },
-              child: const FaIcon(FontAwesomeIcons.chevronLeft),
-            ),
-            const SizedBox(
-              width: 19,
-            ),
-            Text(
-              widget.card == null
-                  ? '${AppStrings.create} ${AppStrings.card.toLowerCase()}'
-                  : '${AppStrings.edit} ${AppStrings.card.toLowerCase()}',
-              style: AppTheme.themeData.textTheme.headlineLarge,
-            ),
-          ],
-        ),
-      ),
-      body: Container(
-        color: AppColors.background,
-        constraints:
-            BoxConstraints(minWidth: MediaQuery.of(context).size.width),
-        child: SingleChildScrollView(
-          physics: const AlwaysScrollableScrollPhysics(),
-          child: Padding(
-            padding: EdgeInsets.symmetric(
-                vertical: 39.0,
-                horizontal: MediaQuery.of(context).size.width * 0.15),
-            child: Container(
-              width: 914,
-              // height: MediaQuery.of(context).size.height / 1.23,
-              decoration: BoxDecoration(
-                  color: Colors.white, borderRadius: BorderRadius.circular(10)),
-              child: Column(
-                children: [
-                  Padding(
-                    padding: const EdgeInsets.only(top: 24.0),
-                    child: frontEditor(context),
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.only(top: 30.0),
-                    child: backEditor(context),
-                  ),
-                  Padding(
-                    padding:
-                        const EdgeInsets.only(right: 37.0, bottom: 25, top: 12),
-                    child: Align(
-                        alignment: Alignment.centerRight,
-                        child: SizedBox(
-                            width: 86,
-                            child: AppElevatedButton(
-                              borderRadius: 36,
-                              text: AppStrings.done,
-                              onPressed: () {
-                                if (frontText.isNotEmpty &&
-                                    backText.isNotEmpty) {
-                                  if (widget.card == null) {
-                                    CreateCardParam card = CreateCardParam(
-                                        front: frontText.toString(),
-                                        back: backText.toString(),
-                                        collectionId: widget.collectionId);
-                                    Navigator.pop(context);
+    return BlocListener<CardsBloc,CardsState>(
+      listener: (context,state){
+        state.maybeMap(
+            loaded: (state){
+              if(widget.card == null){
+                AppToast.showSuccess(context, "Success");
+                Navigator.pop(context);
+              }else{
+                AppToast.showSuccess(context, "Success");
+                Navigator.pop(context);
+                Navigator.pushReplacement(
+                    context,
+                    MaterialPageRoute(
+                        builder: (context) => ViewFlashCard(
+                          card: widget.card!,
+                          collectionId:
+                          widget.collectionId,
+                        )));
+              }
+            },
+            error: (e){
+              AppToast.showError(context, e.error);
+            },
+            orElse: (){
 
-                                    context.read<CardsBloc>().add(
-                                        CardsEvent.createNewCard(
-                                            cardParam: card,
-                                            collectionId: widget.collectionId));
-                                  } else {
-                                    EditCardParam card = EditCardParam(
-                                        front: frontText.toString(),
-                                        back: backText.toString(),
-                                        collectionId: widget.collectionId,
-                                        id: widget.card!.id!);
-                                    Navigator.pop(context);
-                                    Navigator.pushReplacement(
-                                        context,
-                                        MaterialPageRoute(
-                                            builder: (context) => ViewFlashCard(
-                                                  card: widget.card!,
-                                                  collectionId:
-                                                      widget.collectionId,
-                                                )));
-                                    context.read<CardsBloc>().add(
-                                        CardsEvent.editCard(
-                                            cardParam: card,
-                                            collectionId: widget.collectionId));
+        });
+      },
+      child: Scaffold(
+        appBar: AppBar(
+          automaticallyImplyLeading: false,
+          title: Row(
+            mainAxisAlignment: MainAxisAlignment.start,
+            mainAxisSize: MainAxisSize.max,
+            children: [
+              const SizedBox(
+                width: 64,
+              ),
+              InkWell(
+                onTap: () {
+                  router.pop();
+                },
+                child: const FaIcon(FontAwesomeIcons.chevronLeft),
+              ),
+              const SizedBox(
+                width: 19,
+              ),
+              Text(
+                widget.card == null
+                    ? '${AppStrings.create} ${AppStrings.card.toLowerCase()}'
+                    : '${AppStrings.edit} ${AppStrings.card.toLowerCase()}',
+                style: AppTheme.themeData.textTheme.headlineLarge,
+              ),
+            ],
+          ),
+        ),
+        body: Container(
+          color: AppColors.background,
+          constraints:
+              BoxConstraints(minWidth: MediaQuery.of(context).size.width),
+          child: SingleChildScrollView(
+            physics: const AlwaysScrollableScrollPhysics(),
+            child: Padding(
+              padding: EdgeInsets.symmetric(
+                  vertical: 39.0,
+                  horizontal: MediaQuery.of(context).size.width * 0.15),
+              child: Container(
+                width: 914,
+                // height: MediaQuery.of(context).size.height / 1.23,
+                decoration: BoxDecoration(
+                    color: Colors.white, borderRadius: BorderRadius.circular(10)),
+                child: Column(
+                  children: [
+                    Padding(
+                      padding: const EdgeInsets.only(top: 24.0),
+                      child: frontEditor(context),
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.only(top: 30.0),
+                      child: backEditor(context),
+                    ),
+                    Padding(
+                      padding:
+                          const EdgeInsets.only(right: 37.0, bottom: 25, top: 12),
+                      child: Align(
+                          alignment: Alignment.centerRight,
+                          child: SizedBox(
+                              width: 86,
+                              child: AppElevatedButton(
+                                borderRadius: 36,
+                                text: AppStrings.done,
+                                onPressed: () {
+                                  if (frontText.isNotEmpty &&
+                                      backText.isNotEmpty) {
+                                    if (widget.card == null) {
+                                      CreateCardParam card = CreateCardParam(
+                                          front: frontText.toString(),
+                                          back: backText.toString(),
+                                          collectionId: widget.collectionId);
+
+                                      context.read<CardsBloc>().add(
+                                          CardsEvent.createNewCard(
+                                              cardParam: card,
+                                              collectionId: widget.collectionId));
+                                    } else {
+                                      EditCardParam card = EditCardParam(
+                                          front: frontText.toString(),
+                                          back: backText.toString(),
+                                          collectionId: widget.collectionId,
+                                          id: widget.card!.id);
+                                      context.read<CardsBloc>().add(
+                                          CardsEvent.editCard(
+                                              cardParam: card,
+                                              collectionId: widget.collectionId));
+                                    }
+                                  }else{
+                                    AppToast.showError(context, AppStrings.errorEmptyCard);
                                   }
-                                }else{
-                                  AppToast.showError(context, AppStrings.errorEmptyCard);
-                                }
-                              },
-                            ))),
-                  ),
-                ],
+                                },
+                              ))),
+                    ),
+                  ],
+                ),
               ),
             ),
           ),

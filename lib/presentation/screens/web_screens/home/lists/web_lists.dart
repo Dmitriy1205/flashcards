@@ -11,6 +11,7 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import '../../../../../core/const/colors.dart';
 import '../../../../../core/const/strings.dart';
 import '../../../../../core/themes/theme.dart';
+import '../../../../../core/utils/app_toast.dart';
 
 class WebListsScreen extends StatefulWidget {
   const WebListsScreen({super.key});
@@ -30,7 +31,20 @@ class _WebListsScreenState extends State<WebListsScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return BlocBuilder<WebListBloc, WebListState>(builder: (context, state) {
+    return BlocConsumer<WebListBloc, WebListState>(
+        listener: (context,state){
+          state.maybeMap(
+              loaded: (_){
+                AppToast.showSuccess(context, "Success");
+              },
+              orElse: (){});
+        },
+        listenWhen: (prev,state){
+          return prev.maybeMap(
+              loading: (state) => true,
+              orElse: () => false);
+        },
+        builder: (context, state) {
       return LayoutBuilder(
         builder: (BuildContext context, BoxConstraints constraints) {
           if (constraints.maxWidth < 700) {
@@ -72,8 +86,6 @@ class _WebListsScreenState extends State<WebListsScreen> {
                               context.read<WebListBloc>().add(
                                   const WebListEvent.deleteCollection(
                                       collectionsList: []));
-                              // context.read<WebListBloc>().add(WebListEvent.editCollection(
-                              //     isEdit: !state.isEdit));
                             },
                             svgIcon: AppIcons.trash,
                             showBorder: false,
@@ -84,9 +96,6 @@ class _WebListsScreenState extends State<WebListsScreen> {
                           ),
                           AppRoundButton(
                             onTap: () {
-                              // context.read<ListsBloc>().add(
-                              //     const ListsEvent.deleteSelectedCollection(
-                              //         collectionsList: []));
                               context.read<WebListBloc>().add(
                                   WebListEvent.editCollection(
                                       isEdit: !state.isEdit));
@@ -167,8 +176,6 @@ class _WebListsScreenState extends State<WebListsScreen> {
                             context.read<WebListBloc>().add(
                                 const WebListEvent.deleteCollection(
                                     collectionsList: []));
-                            // context.read<WebListBloc>().add(WebListEvent.editCollection(
-                            //     isEdit: !state.isEdit));
                           },
                           svgIcon: AppIcons.trash,
                           showBorder: false,

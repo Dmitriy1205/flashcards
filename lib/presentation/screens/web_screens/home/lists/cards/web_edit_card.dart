@@ -18,6 +18,7 @@ import 'package:quill_html_editor/quill_html_editor.dart';
 
 import '../../../../../../core/enum/enum.dart';
 import '../../../../../../core/router/router.dart';
+import '../../../../../../core/utils/app_toast.dart';
 import '../../../../../../domain/params/card_param/create_card_param.dart';
 import '../../../../../../domain/params/card_param/edit_card_param.dart';
 import '../../../../../blocs/cards/cards_bloc.dart';
@@ -47,14 +48,6 @@ class _WebEditCardState extends State<WebEditCard> {
   Color frontPickedColor = Colors.black;
   Color backPickedColor = Colors.black;
 
-  // void unFocusEditor() => frontController.unFocus();
-  //
-  // final TextEditingController frontTextEditingController =
-  //     TextEditingController();
-  //
-  // final TextEditingController backTextEditingController =
-  //     TextEditingController();
-
   String textLengthFront = '0';
   String textLengthBack = '0';
 
@@ -70,86 +63,100 @@ class _WebEditCardState extends State<WebEditCard> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        automaticallyImplyLeading: false,
-        title: Row(
-          mainAxisAlignment: MainAxisAlignment.start,
-          mainAxisSize: MainAxisSize.max,
-          children: [
-            const SizedBox(
-              width: 64,
-            ),
-            InkWell(
-              onTap: () {
-                router.pop();
-              },
-              child: const FaIcon(FontAwesomeIcons.chevronLeft),
-            ),
-            const SizedBox(
-              width: 19,
-            ),
-            Text(
-              '${AppStrings.edit} ${AppStrings.card.toLowerCase()}',
-              style: AppTheme.themeData.textTheme.headlineLarge,
-            ),
-          ],
+    return BlocListener<CardsBloc,CardsState>(
+      listener: (context,state){
+        state.maybeMap(
+            loaded: (_){
+              AppToast.showSuccess(context, "Success");
+              router.pop();
+            },
+            error: (e){
+              AppToast.showError(context, e.error);
+            },
+            orElse: (){});
+      },
+      child: Scaffold(
+        appBar: AppBar(
+          automaticallyImplyLeading: false,
+          title: Row(
+            mainAxisAlignment: MainAxisAlignment.start,
+            mainAxisSize: MainAxisSize.max,
+            children: [
+              const SizedBox(
+                width: 64,
+              ),
+              InkWell(
+                onTap: () {
+                  router.pop();
+                },
+                child: const FaIcon(FontAwesomeIcons.chevronLeft),
+              ),
+              const SizedBox(
+                width: 19,
+              ),
+              Text(
+                '${AppStrings.edit} ${AppStrings.card.toLowerCase()}',
+                style: AppTheme.themeData.textTheme.headlineLarge,
+              ),
+            ],
+          ),
         ),
-      ),
-      body: Container(
-        color: AppColors.background,
-        constraints:
-            BoxConstraints(minWidth: MediaQuery.of(context).size.width),
-        child: SingleChildScrollView(
-          physics: const AlwaysScrollableScrollPhysics(),
-          child: Padding(
-            padding: EdgeInsets.symmetric(
-                vertical: 39.0,
-                horizontal: MediaQuery.of(context).size.width * 0.15),
-            child: Container(
-              width: 914,
-              // height: MediaQuery.of(context).size.height / 1.23,
-              decoration: BoxDecoration(
-                  color: Colors.white, borderRadius: BorderRadius.circular(10)),
-              child: Column(
-                children: [
-                  Padding(
-                    padding: const EdgeInsets.only(top: 24.0),
-                    child: frontEditor(context),
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.only(top: 30.0),
-                    child: backEditor(context),
-                  ),
-                  Padding(
-                    padding:
-                        const EdgeInsets.only(right: 37.0, bottom: 25, top: 12),
-                    child: Align(
-                        alignment: Alignment.centerRight,
-                        child: SizedBox(
-                            width: 86,
-                            child: AppElevatedButton(
-                              borderRadius: 36,
-                              text: AppStrings.done,
-                              onPressed: () {
-                                if (frontText.isNotEmpty &&
-                                    backText.isNotEmpty) {
-                                  EditCardParam card = EditCardParam(
-                                      front: frontText.toString(),
-                                      back: backText.toString(),
-                                      collectionId: widget.card.collectionId!,
-                                      id: widget.card.id!);
-                                  router.pop();
-                                  context.read<CardsBloc>().add(
-                                      CardsEvent.editCard(
-                                          cardParam: card,
-                                          collectionId:
-                                              widget.card.collectionId!));
-                                }
-                              },
-                            ))),
-                  ),
-                ],
+        body: Container(
+          color: AppColors.background,
+          constraints:
+              BoxConstraints(minWidth: MediaQuery.of(context).size.width),
+          child: SingleChildScrollView(
+            physics: const AlwaysScrollableScrollPhysics(),
+            child: Padding(
+              padding: EdgeInsets.symmetric(
+                  vertical: 39.0,
+                  horizontal: MediaQuery.of(context).size.width * 0.15),
+              child: Container(
+                width: 914,
+                // height: MediaQuery.of(context).size.height / 1.23,
+                decoration: BoxDecoration(
+                    color: Colors.white, borderRadius: BorderRadius.circular(10)),
+                child: Column(
+                  children: [
+                    Padding(
+                      padding: const EdgeInsets.only(top: 24.0),
+                      child: frontEditor(context),
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.only(top: 30.0),
+                      child: backEditor(context),
+                    ),
+                    Padding(
+                      padding:
+                          const EdgeInsets.only(right: 37.0, bottom: 25, top: 12),
+                      child: Align(
+                          alignment: Alignment.centerRight,
+                          child: SizedBox(
+                              width: 86,
+                              child: AppElevatedButton(
+                                borderRadius: 36,
+                                text: AppStrings.done,
+                                onPressed: () {
+                                  if (frontText.isNotEmpty &&
+                                      backText.isNotEmpty) {
+                                    EditCardParam card = EditCardParam(
+                                        front: frontText.toString(),
+                                        back: backText.toString(),
+                                        collectionId: widget.card.collectionId,
+                                        id: widget.card.id);
+                                    context.read<CardsBloc>().add(
+                                        CardsEvent.editCard(
+                                            cardParam: card,
+                                            collectionId:
+                                                widget.card.collectionId));
+                                  }else{
+                                    AppToast.showError(context, AppStrings.errorEmptyCard);
+                                  }
+                                },
+                              ))),
+                    ),
+                  ],
+                ),
               ),
             ),
           ),

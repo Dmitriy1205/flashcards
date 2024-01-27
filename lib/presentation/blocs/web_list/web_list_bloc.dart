@@ -35,7 +35,6 @@ class WebListBloc extends Bloc<WebListEvent, WebListState> {
   Future<void> _fetchAllCollection(
       _FetchAllCollection event, Emitter<WebListState> emit) async {
     try {
-      emit(const WebListState.loading());
       List<CollectionEntity> collection =
           await collectionRepo.fetchCollections();
       emit(WebListState.loaded(collectionsList: collection, isEdit: false));
@@ -87,6 +86,7 @@ class WebListBloc extends Bloc<WebListEvent, WebListState> {
   Future<void> _updateCollection(
       _UpdateCollection event, Emitter<WebListState> emit) async {
     try {
+      emit(WebListState.loading());
       await collectionRepo.updateExistingCollection(collectionId: event.collectionId, name: event.name);
       List<CollectionEntity> collection =
           await collectionRepo.fetchCollections();
