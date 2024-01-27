@@ -29,6 +29,8 @@ class ListsState with _$ListsState {
 
   const factory ListsState.loading() = _Loading;
 
+  const factory ListsState.operationSucceeded() = _OperationSucceeded;
+
   const factory ListsState.viewCollections(
       {required List<CollectionEntity> collectionsList,
       required bool isEditMode,

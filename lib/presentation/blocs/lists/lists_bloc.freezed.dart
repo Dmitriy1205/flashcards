@@ -918,6 +918,7 @@ mixin _$ListsState {
     required TResult Function() initial,
     required TResult Function(CollectionEntity collection) viewCards,
     required TResult Function() loading,
+    required TResult Function() operationSucceeded,
     required TResult Function(List<CollectionEntity> collectionsList,
             bool isEditMode, List<String> listToDelete)
         viewCollections,
@@ -929,6 +930,7 @@ mixin _$ListsState {
     TResult? Function()? initial,
     TResult? Function(CollectionEntity collection)? viewCards,
     TResult? Function()? loading,
+    TResult? Function()? operationSucceeded,
     TResult? Function(List<CollectionEntity> collectionsList, bool isEditMode,
             List<String> listToDelete)?
         viewCollections,
@@ -940,6 +942,7 @@ mixin _$ListsState {
     TResult Function()? initial,
     TResult Function(CollectionEntity collection)? viewCards,
     TResult Function()? loading,
+    TResult Function()? operationSucceeded,
     TResult Function(List<CollectionEntity> collectionsList, bool isEditMode,
             List<String> listToDelete)?
         viewCollections,
@@ -952,6 +955,7 @@ mixin _$ListsState {
     required TResult Function(_Initial value) initial,
     required TResult Function(_ViewCards value) viewCards,
     required TResult Function(_Loading value) loading,
+    required TResult Function(_OperationSucceeded value) operationSucceeded,
     required TResult Function(_ViewCollections value) viewCollections,
     required TResult Function(_Error value) error,
   }) =>
@@ -961,6 +965,7 @@ mixin _$ListsState {
     TResult? Function(_Initial value)? initial,
     TResult? Function(_ViewCards value)? viewCards,
     TResult? Function(_Loading value)? loading,
+    TResult? Function(_OperationSucceeded value)? operationSucceeded,
     TResult? Function(_ViewCollections value)? viewCollections,
     TResult? Function(_Error value)? error,
   }) =>
@@ -970,6 +975,7 @@ mixin _$ListsState {
     TResult Function(_Initial value)? initial,
     TResult Function(_ViewCards value)? viewCards,
     TResult Function(_Loading value)? loading,
+    TResult Function(_OperationSucceeded value)? operationSucceeded,
     TResult Function(_ViewCollections value)? viewCollections,
     TResult Function(_Error value)? error,
     required TResult orElse(),
@@ -1036,6 +1042,7 @@ class _$InitialImpl extends _Initial {
     required TResult Function() initial,
     required TResult Function(CollectionEntity collection) viewCards,
     required TResult Function() loading,
+    required TResult Function() operationSucceeded,
     required TResult Function(List<CollectionEntity> collectionsList,
             bool isEditMode, List<String> listToDelete)
         viewCollections,
@@ -1050,6 +1057,7 @@ class _$InitialImpl extends _Initial {
     TResult? Function()? initial,
     TResult? Function(CollectionEntity collection)? viewCards,
     TResult? Function()? loading,
+    TResult? Function()? operationSucceeded,
     TResult? Function(List<CollectionEntity> collectionsList, bool isEditMode,
             List<String> listToDelete)?
         viewCollections,
@@ -1064,6 +1072,7 @@ class _$InitialImpl extends _Initial {
     TResult Function()? initial,
     TResult Function(CollectionEntity collection)? viewCards,
     TResult Function()? loading,
+    TResult Function()? operationSucceeded,
     TResult Function(List<CollectionEntity> collectionsList, bool isEditMode,
             List<String> listToDelete)?
         viewCollections,
@@ -1082,6 +1091,7 @@ class _$InitialImpl extends _Initial {
     required TResult Function(_Initial value) initial,
     required TResult Function(_ViewCards value) viewCards,
     required TResult Function(_Loading value) loading,
+    required TResult Function(_OperationSucceeded value) operationSucceeded,
     required TResult Function(_ViewCollections value) viewCollections,
     required TResult Function(_Error value) error,
   }) {
@@ -1094,6 +1104,7 @@ class _$InitialImpl extends _Initial {
     TResult? Function(_Initial value)? initial,
     TResult? Function(_ViewCards value)? viewCards,
     TResult? Function(_Loading value)? loading,
+    TResult? Function(_OperationSucceeded value)? operationSucceeded,
     TResult? Function(_ViewCollections value)? viewCollections,
     TResult? Function(_Error value)? error,
   }) {
@@ -1106,6 +1117,7 @@ class _$InitialImpl extends _Initial {
     TResult Function(_Initial value)? initial,
     TResult Function(_ViewCards value)? viewCards,
     TResult Function(_Loading value)? loading,
+    TResult Function(_OperationSucceeded value)? operationSucceeded,
     TResult Function(_ViewCollections value)? viewCollections,
     TResult Function(_Error value)? error,
     required TResult orElse(),
@@ -1200,6 +1212,7 @@ class _$ViewCardsImpl extends _ViewCards {
     required TResult Function() initial,
     required TResult Function(CollectionEntity collection) viewCards,
     required TResult Function() loading,
+    required TResult Function() operationSucceeded,
     required TResult Function(List<CollectionEntity> collectionsList,
             bool isEditMode, List<String> listToDelete)
         viewCollections,
@@ -1214,6 +1227,7 @@ class _$ViewCardsImpl extends _ViewCards {
     TResult? Function()? initial,
     TResult? Function(CollectionEntity collection)? viewCards,
     TResult? Function()? loading,
+    TResult? Function()? operationSucceeded,
     TResult? Function(List<CollectionEntity> collectionsList, bool isEditMode,
             List<String> listToDelete)?
         viewCollections,
@@ -1228,6 +1242,7 @@ class _$ViewCardsImpl extends _ViewCards {
     TResult Function()? initial,
     TResult Function(CollectionEntity collection)? viewCards,
     TResult Function()? loading,
+    TResult Function()? operationSucceeded,
     TResult Function(List<CollectionEntity> collectionsList, bool isEditMode,
             List<String> listToDelete)?
         viewCollections,
@@ -1246,6 +1261,7 @@ class _$ViewCardsImpl extends _ViewCards {
     required TResult Function(_Initial value) initial,
     required TResult Function(_ViewCards value) viewCards,
     required TResult Function(_Loading value) loading,
+    required TResult Function(_OperationSucceeded value) operationSucceeded,
     required TResult Function(_ViewCollections value) viewCollections,
     required TResult Function(_Error value) error,
   }) {
@@ -1258,6 +1274,7 @@ class _$ViewCardsImpl extends _ViewCards {
     TResult? Function(_Initial value)? initial,
     TResult? Function(_ViewCards value)? viewCards,
     TResult? Function(_Loading value)? loading,
+    TResult? Function(_OperationSucceeded value)? operationSucceeded,
     TResult? Function(_ViewCollections value)? viewCollections,
     TResult? Function(_Error value)? error,
   }) {
@@ -1270,6 +1287,7 @@ class _$ViewCardsImpl extends _ViewCards {
     TResult Function(_Initial value)? initial,
     TResult Function(_ViewCards value)? viewCards,
     TResult Function(_Loading value)? loading,
+    TResult Function(_OperationSucceeded value)? operationSucceeded,
     TResult Function(_ViewCollections value)? viewCollections,
     TResult Function(_Error value)? error,
     required TResult orElse(),
@@ -1333,6 +1351,7 @@ class _$LoadingImpl extends _Loading {
     required TResult Function() initial,
     required TResult Function(CollectionEntity collection) viewCards,
     required TResult Function() loading,
+    required TResult Function() operationSucceeded,
     required TResult Function(List<CollectionEntity> collectionsList,
             bool isEditMode, List<String> listToDelete)
         viewCollections,
@@ -1347,6 +1366,7 @@ class _$LoadingImpl extends _Loading {
     TResult? Function()? initial,
     TResult? Function(CollectionEntity collection)? viewCards,
     TResult? Function()? loading,
+    TResult? Function()? operationSucceeded,
     TResult? Function(List<CollectionEntity> collectionsList, bool isEditMode,
             List<String> listToDelete)?
         viewCollections,
@@ -1361,6 +1381,7 @@ class _$LoadingImpl extends _Loading {
     TResult Function()? initial,
     TResult Function(CollectionEntity collection)? viewCards,
     TResult Function()? loading,
+    TResult Function()? operationSucceeded,
     TResult Function(List<CollectionEntity> collectionsList, bool isEditMode,
             List<String> listToDelete)?
         viewCollections,
@@ -1379,6 +1400,7 @@ class _$LoadingImpl extends _Loading {
     required TResult Function(_Initial value) initial,
     required TResult Function(_ViewCards value) viewCards,
     required TResult Function(_Loading value) loading,
+    required TResult Function(_OperationSucceeded value) operationSucceeded,
     required TResult Function(_ViewCollections value) viewCollections,
     required TResult Function(_Error value) error,
   }) {
@@ -1391,6 +1413,7 @@ class _$LoadingImpl extends _Loading {
     TResult? Function(_Initial value)? initial,
     TResult? Function(_ViewCards value)? viewCards,
     TResult? Function(_Loading value)? loading,
+    TResult? Function(_OperationSucceeded value)? operationSucceeded,
     TResult? Function(_ViewCollections value)? viewCollections,
     TResult? Function(_Error value)? error,
   }) {
@@ -1403,6 +1426,7 @@ class _$LoadingImpl extends _Loading {
     TResult Function(_Initial value)? initial,
     TResult Function(_ViewCards value)? viewCards,
     TResult Function(_Loading value)? loading,
+    TResult Function(_OperationSucceeded value)? operationSucceeded,
     TResult Function(_ViewCollections value)? viewCollections,
     TResult Function(_Error value)? error,
     required TResult orElse(),
@@ -1417,6 +1441,139 @@ class _$LoadingImpl extends _Loading {
 abstract class _Loading extends ListsState {
   const factory _Loading() = _$LoadingImpl;
   const _Loading._() : super._();
+}
+
+/// @nodoc
+abstract class _$$OperationSucceededImplCopyWith<$Res> {
+  factory _$$OperationSucceededImplCopyWith(_$OperationSucceededImpl value,
+          $Res Function(_$OperationSucceededImpl) then) =
+      __$$OperationSucceededImplCopyWithImpl<$Res>;
+}
+
+/// @nodoc
+class __$$OperationSucceededImplCopyWithImpl<$Res>
+    extends _$ListsStateCopyWithImpl<$Res, _$OperationSucceededImpl>
+    implements _$$OperationSucceededImplCopyWith<$Res> {
+  __$$OperationSucceededImplCopyWithImpl(_$OperationSucceededImpl _value,
+      $Res Function(_$OperationSucceededImpl) _then)
+      : super(_value, _then);
+}
+
+/// @nodoc
+
+class _$OperationSucceededImpl extends _OperationSucceeded {
+  const _$OperationSucceededImpl() : super._();
+
+  @override
+  String toString() {
+    return 'ListsState.operationSucceeded()';
+  }
+
+  @override
+  bool operator ==(Object other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType && other is _$OperationSucceededImpl);
+  }
+
+  @override
+  int get hashCode => runtimeType.hashCode;
+
+  @override
+  @optionalTypeArgs
+  TResult when<TResult extends Object?>({
+    required TResult Function() initial,
+    required TResult Function(CollectionEntity collection) viewCards,
+    required TResult Function() loading,
+    required TResult Function() operationSucceeded,
+    required TResult Function(List<CollectionEntity> collectionsList,
+            bool isEditMode, List<String> listToDelete)
+        viewCollections,
+    required TResult Function(String error) error,
+  }) {
+    return operationSucceeded();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? whenOrNull<TResult extends Object?>({
+    TResult? Function()? initial,
+    TResult? Function(CollectionEntity collection)? viewCards,
+    TResult? Function()? loading,
+    TResult? Function()? operationSucceeded,
+    TResult? Function(List<CollectionEntity> collectionsList, bool isEditMode,
+            List<String> listToDelete)?
+        viewCollections,
+    TResult? Function(String error)? error,
+  }) {
+    return operationSucceeded?.call();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeWhen<TResult extends Object?>({
+    TResult Function()? initial,
+    TResult Function(CollectionEntity collection)? viewCards,
+    TResult Function()? loading,
+    TResult Function()? operationSucceeded,
+    TResult Function(List<CollectionEntity> collectionsList, bool isEditMode,
+            List<String> listToDelete)?
+        viewCollections,
+    TResult Function(String error)? error,
+    required TResult orElse(),
+  }) {
+    if (operationSucceeded != null) {
+      return operationSucceeded();
+    }
+    return orElse();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult map<TResult extends Object?>({
+    required TResult Function(_Initial value) initial,
+    required TResult Function(_ViewCards value) viewCards,
+    required TResult Function(_Loading value) loading,
+    required TResult Function(_OperationSucceeded value) operationSucceeded,
+    required TResult Function(_ViewCollections value) viewCollections,
+    required TResult Function(_Error value) error,
+  }) {
+    return operationSucceeded(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? mapOrNull<TResult extends Object?>({
+    TResult? Function(_Initial value)? initial,
+    TResult? Function(_ViewCards value)? viewCards,
+    TResult? Function(_Loading value)? loading,
+    TResult? Function(_OperationSucceeded value)? operationSucceeded,
+    TResult? Function(_ViewCollections value)? viewCollections,
+    TResult? Function(_Error value)? error,
+  }) {
+    return operationSucceeded?.call(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeMap<TResult extends Object?>({
+    TResult Function(_Initial value)? initial,
+    TResult Function(_ViewCards value)? viewCards,
+    TResult Function(_Loading value)? loading,
+    TResult Function(_OperationSucceeded value)? operationSucceeded,
+    TResult Function(_ViewCollections value)? viewCollections,
+    TResult Function(_Error value)? error,
+    required TResult orElse(),
+  }) {
+    if (operationSucceeded != null) {
+      return operationSucceeded(this);
+    }
+    return orElse();
+  }
+}
+
+abstract class _OperationSucceeded extends ListsState {
+  const factory _OperationSucceeded() = _$OperationSucceededImpl;
+  const _OperationSucceeded._() : super._();
 }
 
 /// @nodoc
@@ -1530,6 +1687,7 @@ class _$ViewCollectionsImpl extends _ViewCollections {
     required TResult Function() initial,
     required TResult Function(CollectionEntity collection) viewCards,
     required TResult Function() loading,
+    required TResult Function() operationSucceeded,
     required TResult Function(List<CollectionEntity> collectionsList,
             bool isEditMode, List<String> listToDelete)
         viewCollections,
@@ -1544,6 +1702,7 @@ class _$ViewCollectionsImpl extends _ViewCollections {
     TResult? Function()? initial,
     TResult? Function(CollectionEntity collection)? viewCards,
     TResult? Function()? loading,
+    TResult? Function()? operationSucceeded,
     TResult? Function(List<CollectionEntity> collectionsList, bool isEditMode,
             List<String> listToDelete)?
         viewCollections,
@@ -1558,6 +1717,7 @@ class _$ViewCollectionsImpl extends _ViewCollections {
     TResult Function()? initial,
     TResult Function(CollectionEntity collection)? viewCards,
     TResult Function()? loading,
+    TResult Function()? operationSucceeded,
     TResult Function(List<CollectionEntity> collectionsList, bool isEditMode,
             List<String> listToDelete)?
         viewCollections,
@@ -1576,6 +1736,7 @@ class _$ViewCollectionsImpl extends _ViewCollections {
     required TResult Function(_Initial value) initial,
     required TResult Function(_ViewCards value) viewCards,
     required TResult Function(_Loading value) loading,
+    required TResult Function(_OperationSucceeded value) operationSucceeded,
     required TResult Function(_ViewCollections value) viewCollections,
     required TResult Function(_Error value) error,
   }) {
@@ -1588,6 +1749,7 @@ class _$ViewCollectionsImpl extends _ViewCollections {
     TResult? Function(_Initial value)? initial,
     TResult? Function(_ViewCards value)? viewCards,
     TResult? Function(_Loading value)? loading,
+    TResult? Function(_OperationSucceeded value)? operationSucceeded,
     TResult? Function(_ViewCollections value)? viewCollections,
     TResult? Function(_Error value)? error,
   }) {
@@ -1600,6 +1762,7 @@ class _$ViewCollectionsImpl extends _ViewCollections {
     TResult Function(_Initial value)? initial,
     TResult Function(_ViewCards value)? viewCards,
     TResult Function(_Loading value)? loading,
+    TResult Function(_OperationSucceeded value)? operationSucceeded,
     TResult Function(_ViewCollections value)? viewCollections,
     TResult Function(_Error value)? error,
     required TResult orElse(),
@@ -1693,6 +1856,7 @@ class _$ErrorImpl extends _Error {
     required TResult Function() initial,
     required TResult Function(CollectionEntity collection) viewCards,
     required TResult Function() loading,
+    required TResult Function() operationSucceeded,
     required TResult Function(List<CollectionEntity> collectionsList,
             bool isEditMode, List<String> listToDelete)
         viewCollections,
@@ -1707,6 +1871,7 @@ class _$ErrorImpl extends _Error {
     TResult? Function()? initial,
     TResult? Function(CollectionEntity collection)? viewCards,
     TResult? Function()? loading,
+    TResult? Function()? operationSucceeded,
     TResult? Function(List<CollectionEntity> collectionsList, bool isEditMode,
             List<String> listToDelete)?
         viewCollections,
@@ -1721,6 +1886,7 @@ class _$ErrorImpl extends _Error {
     TResult Function()? initial,
     TResult Function(CollectionEntity collection)? viewCards,
     TResult Function()? loading,
+    TResult Function()? operationSucceeded,
     TResult Function(List<CollectionEntity> collectionsList, bool isEditMode,
             List<String> listToDelete)?
         viewCollections,
@@ -1739,6 +1905,7 @@ class _$ErrorImpl extends _Error {
     required TResult Function(_Initial value) initial,
     required TResult Function(_ViewCards value) viewCards,
     required TResult Function(_Loading value) loading,
+    required TResult Function(_OperationSucceeded value) operationSucceeded,
     required TResult Function(_ViewCollections value) viewCollections,
     required TResult Function(_Error value) error,
   }) {
@@ -1751,6 +1918,7 @@ class _$ErrorImpl extends _Error {
     TResult? Function(_Initial value)? initial,
     TResult? Function(_ViewCards value)? viewCards,
     TResult? Function(_Loading value)? loading,
+    TResult? Function(_OperationSucceeded value)? operationSucceeded,
     TResult? Function(_ViewCollections value)? viewCollections,
     TResult? Function(_Error value)? error,
   }) {
@@ -1763,6 +1931,7 @@ class _$ErrorImpl extends _Error {
     TResult Function(_Initial value)? initial,
     TResult Function(_ViewCards value)? viewCards,
     TResult Function(_Loading value)? loading,
+    TResult Function(_OperationSucceeded value)? operationSucceeded,
     TResult Function(_ViewCollections value)? viewCollections,
     TResult Function(_Error value)? error,
     required TResult orElse(),

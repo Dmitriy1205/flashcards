@@ -62,23 +62,12 @@ class _CreateEditCardState extends State<CreateEditCard> {
 
   @override
   Widget build(BuildContext context) {
-    return GestureDetector(
-      onTap: () {
-        frontController.enableEditor(false);
-        backController.enableEditor(false);
-        frontController.unFocus();
-        backController.unFocus();
-        setState(() {});
-        frontController.enableEditor(true);
-        backController.enableEditor(true);
-      },
-      child: Scaffold(
-        backgroundColor: AppColors.background,
-        appBar: AppBar(
-          automaticallyImplyLeading: false,
-          title: GestureDetector(
-            onTap: () {
-              if (widget.cardEntity != null) {
+    return BlocListener<CardsBloc,CardsState>(
+      listener: (context,state){
+        state.maybeMap(
+            loaded: (state){
+              AppToast.showSuccess(context, "Success");
+              if(widget.cardEntity != null){
                 router.pushReplacement(
                   '/view_card_mobile',
                   extra: {
@@ -89,170 +78,194 @@ class _CreateEditCardState extends State<CreateEditCard> {
                     "collectionId": widget.collectionId,
                   },
                 );
-              } else {
-                Navigator.of(context).pop();
+              }else{
+                Navigator.pop(context);
+                context
+                    .read<ListsBloc>()
+                    .add(const ListsEvent.started(isEditMode: false));
               }
             },
-            child: Container(
-              color: Colors.transparent,
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                mainAxisSize: MainAxisSize.max,
-                children: [
-                  Row(children: [
-                    SvgPicture.asset(
-                      AppIcons.leftArrow,
-                      color: Colors.black,
-                      height: 21,
-                      width: 19,
-                    ),
-                    const SizedBox(
-                      width: 19,
-                    ),
-                    Text(
-                      widget.cardEntity == null
-                          ? '${AppStrings.create} ${AppStrings.card.toLowerCase()}'
-                          : '${AppStrings.edit} ${AppStrings.card.toLowerCase()}',
-                      style: AppTheme.themeData.textTheme.headlineLarge,
-                    ),
-                  ]),
-                  TextButton(
-                    onPressed: () {
-                      if (frontText.isNotEmpty && backText.isNotEmpty) {
-                        if (widget.cardEntity == null) {
-                          CreateCardParam card = CreateCardParam(
-                              front: frontText,
-                              back: backText,
-                              collectionId: widget.collectionId);
-                          Navigator.pop(context);
-
-                          context.read<CardsBloc>().add(
-                              CardsEvent.createNewCard(
-                                  cardParam: card,
-                                  collectionId: widget.collectionId));
-                          context
-                              .read<ListsBloc>()
-                              .add(const ListsEvent.started(isEditMode: false));
-                        } else {
-                          EditCardParam card = EditCardParam(
-                              front: frontText,
-                              back: backText,
-                              collectionId: widget.collectionId,
-                              id: widget.cardEntity!.id!);
-
-                          router.pushReplacement(
-                            '/view_card_mobile',
-                            extra: {
-                              "card": widget.cardEntity!.copyWith(
+            error: (e){
+              AppToast.showError(context, e.error);
+            },
+            orElse: (){});
+      },
+      child: GestureDetector(
+        onTap: () {
+          frontController.enableEditor(false);
+          backController.enableEditor(false);
+          frontController.unFocus();
+          backController.unFocus();
+          setState(() {});
+          frontController.enableEditor(true);
+          backController.enableEditor(true);
+        },
+        child: Scaffold(
+          backgroundColor: AppColors.background,
+          appBar: AppBar(
+            automaticallyImplyLeading: false,
+            title: GestureDetector(
+              onTap: () {
+                if (widget.cardEntity != null) {
+                  router.pushReplacement(
+                    '/view_card_mobile',
+                    extra: {
+                      "card": widget.cardEntity!.copyWith(
+                        front: frontText,
+                        back: backText,
+                      ),
+                      "collectionId": widget.collectionId,
+                    },
+                  );
+                } else {
+                  Navigator.of(context).pop();
+                }
+              },
+              child: Container(
+                color: Colors.transparent,
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  mainAxisSize: MainAxisSize.max,
+                  children: [
+                    Row(children: [
+                      SvgPicture.asset(
+                        AppIcons.leftArrow,
+                        color: Colors.black,
+                        height: 21,
+                        width: 19,
+                      ),
+                      const SizedBox(
+                        width: 19,
+                      ),
+                      Text(
+                        widget.cardEntity == null
+                            ? '${AppStrings.create} ${AppStrings.card.toLowerCase()}'
+                            : '${AppStrings.edit} ${AppStrings.card.toLowerCase()}',
+                        style: AppTheme.themeData.textTheme.headlineLarge,
+                      ),
+                    ]),
+                    TextButton(
+                      onPressed: () {
+                        if (frontText.isNotEmpty && backText.isNotEmpty) {
+                          if (widget.cardEntity == null) {
+                            CreateCardParam card = CreateCardParam(
                                 front: frontText,
                                 back: backText,
-                              ),
-                              "collectionId": widget.collectionId,
-                            },
-                          );
-                          context.read<CardsBloc>().add(CardsEvent.editCard(
-                              cardParam: card,
-                              collectionId: widget.collectionId));
+                                collectionId: widget.collectionId);
+                            context.read<CardsBloc>().add(
+                                CardsEvent.createNewCard(
+                                    cardParam: card,
+                                    collectionId: widget.collectionId));
+                          } else {
+                            EditCardParam card = EditCardParam(
+                                front: frontText,
+                                back: backText,
+                                collectionId: widget.collectionId,
+                                id: widget.cardEntity!.id);
+                            context.read<CardsBloc>().add(CardsEvent.editCard(
+                                cardParam: card,
+                                collectionId: widget.collectionId));
+                          }
+                        }else{
+                          AppToast.showError(context, AppStrings.errorEmptyCard);
                         }
-                      }else{
-                        AppToast.showError(context, AppStrings.errorEmptyCard);
-                      }
-                    },
-                    child: Text(
-                      AppStrings.done,
-                      style: AppTheme.themeData.textTheme.titleLarge!.copyWith(
-                        fontSize: 20,
+                      },
+                      child: Text(
+                        AppStrings.done,
+                        style: AppTheme.themeData.textTheme.titleLarge!.copyWith(
+                          fontSize: 20,
+                        ),
                       ),
                     ),
-                  ),
-                ],
+                  ],
+                ),
               ),
             ),
           ),
-        ),
-        body: Stack(
-          children: [
-            SingleChildScrollView(
-              child: Column(
-                children: [
-                  frontEditor(),
-                  backEditor(),
-                ],
+          body: Stack(
+            children: [
+              SingleChildScrollView(
+                child: Column(
+                  children: [
+                    frontEditor(),
+                    backEditor(),
+                  ],
+                ),
               ),
-            ),
-            _showKeyboardFront
-                ? Positioned(
-                    left: 0,
-                    right: 0,
-                    bottom: 0,
-                    child: Material(
-                      child: Container(
-                        color: Colors.white,
-                        child: Padding(
-                          padding: const EdgeInsets.only(left: 20),
-                          child: ToolBar(
-                            mainAxisSize: MainAxisSize.min,
-                            padding: const EdgeInsets.all(8),
-                            toolBarColor: Colors.white,
-                            iconSize: 21,
-                            iconColor: AppColors.veryLightGrey,
-                            activeIconColor: Colors.black,
-                            controller: frontController,
-                            crossAxisAlignment: WrapCrossAlignment.start,
-                            direction: Axis.horizontal,
-                            toolBarConfig: const [
-                              ToolBarStyle.bold,
-                              ToolBarStyle.italic,
-                              ToolBarStyle.underline,
-                              ToolBarStyle.listOrdered,
-                              ToolBarStyle.listBullet,
-                            ],
+              _showKeyboardFront
+                  ? Positioned(
+                      left: 0,
+                      right: 0,
+                      bottom: 0,
+                      child: Material(
+                        child: Container(
+                          color: Colors.white,
+                          child: Padding(
+                            padding: const EdgeInsets.only(left: 20),
+                            child: ToolBar(
+                              mainAxisSize: MainAxisSize.min,
+                              padding: const EdgeInsets.all(8),
+                              toolBarColor: Colors.white,
+                              iconSize: 21,
+                              iconColor: AppColors.veryLightGrey,
+                              activeIconColor: Colors.black,
+                              controller: frontController,
+                              crossAxisAlignment: WrapCrossAlignment.start,
+                              direction: Axis.horizontal,
+                              toolBarConfig: const [
+                                ToolBarStyle.bold,
+                                ToolBarStyle.italic,
+                                ToolBarStyle.underline,
+                                ToolBarStyle.listOrdered,
+                                ToolBarStyle.listBullet,
+                              ],
+                            ),
                           ),
                         ),
                       ),
-                    ),
-                  )
-                : const SizedBox(),
-            _showKeyboardBack
-                ? Positioned(
-                    left: 0,
-                    right: 0,
-                    bottom: 0,
-                    child: Material(
-                      child: Container(
-                        color: Colors.white,
-                        child: Padding(
-                          padding: const EdgeInsets.only(left: 20),
-                          child: ToolBar(
-                            mainAxisSize: MainAxisSize.min,
-                            toolBarColor: Colors.white,
-                            padding: const EdgeInsets.all(8),
-                            iconSize: 21,
-                            iconColor: AppColors.veryLightGrey,
-                            activeIconColor: Colors.black,
-                            controller: backController,
-                            crossAxisAlignment: WrapCrossAlignment.start,
-                            direction: Axis.horizontal,
-                            toolBarConfig: const [
-                              ToolBarStyle.bold,
-                              ToolBarStyle.italic,
-                              ToolBarStyle.underline,
-                              ToolBarStyle.listOrdered,
-                              ToolBarStyle.listBullet,
-                            ],
+                    )
+                  : const SizedBox(),
+              _showKeyboardBack
+                  ? Positioned(
+                      left: 0,
+                      right: 0,
+                      bottom: 0,
+                      child: Material(
+                        child: Container(
+                          color: Colors.white,
+                          child: Padding(
+                            padding: const EdgeInsets.only(left: 20),
+                            child: ToolBar(
+                              mainAxisSize: MainAxisSize.min,
+                              toolBarColor: Colors.white,
+                              padding: const EdgeInsets.all(8),
+                              iconSize: 21,
+                              iconColor: AppColors.veryLightGrey,
+                              activeIconColor: Colors.black,
+                              controller: backController,
+                              crossAxisAlignment: WrapCrossAlignment.start,
+                              direction: Axis.horizontal,
+                              toolBarConfig: const [
+                                ToolBarStyle.bold,
+                                ToolBarStyle.italic,
+                                ToolBarStyle.underline,
+                                ToolBarStyle.listOrdered,
+                                ToolBarStyle.listBullet,
+                              ],
+                            ),
                           ),
                         ),
                       ),
-                    ),
-                  )
-                : const SizedBox(),
-            editorReady ? SizedBox.shrink() : Container(
-              width: double.infinity,
-              height: double.infinity,
-              color: AppColors.background,
-              child: LoadingIndicator(),
-            ),
-          ],
+                    )
+                  : const SizedBox(),
+              editorReady ? SizedBox.shrink() : Container(
+                width: double.infinity,
+                height: double.infinity,
+                color: AppColors.background,
+                child: LoadingIndicator(),
+              ),
+            ],
+          ),
         ),
       ),
     );

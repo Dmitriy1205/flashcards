@@ -42,7 +42,7 @@ class ListsBloc extends Bloc<ListsEvent, ListsState> {
       await collectionRepo.createCollection(collectionName: event.name);
       final List<CollectionEntity> data =
           await collectionRepo.fetchCollections();
-      emit(const ListsState.loading());
+      emit(const ListsState.operationSucceeded());
       emit(ListsState.viewCollections(
           collectionsList: data, isEditMode: false, listToDelete: []));
     } catch (e) {
@@ -58,6 +58,7 @@ class ListsBloc extends Bloc<ListsEvent, ListsState> {
           collectionName: event.name, collectionId: event.id);
       final List<CollectionEntity> data =
           await collectionRepo.fetchCollections();
+      emit(const ListsState.operationSucceeded());
       emit(ListsState.viewCollections(
           collectionsList: data, isEditMode: false, listToDelete: []));
     } catch (e) {
@@ -84,7 +85,7 @@ class ListsBloc extends Bloc<ListsEvent, ListsState> {
     try {
       await collectionRepo.deleteCollections(collections: listIdToDelete);
       final data = await collectionRepo.fetchCollections();
-      emit(const ListsState.loading());
+      emit(const ListsState.operationSucceeded());
       emit(ListsState.viewCollections(
           collectionsList: data, isEditMode: false, listToDelete: []));
     } catch (e) {
@@ -96,7 +97,6 @@ class ListsBloc extends Bloc<ListsEvent, ListsState> {
     emit(const ListsState.loading());
     try {
       final data = await collectionRepo.fetchCollections();
-      emit(const ListsState.loading());
       isEditMode = event.isEditMode;
       emit(ListsState.viewCollections(
           collectionsList: data,

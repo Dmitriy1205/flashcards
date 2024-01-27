@@ -1,6 +1,7 @@
 import 'package:flashcards/core/const/strings.dart';
 import 'package:flashcards/core/router/router.dart';
 import 'package:flashcards/core/themes/theme.dart';
+import 'package:flashcards/core/utils/app_toast.dart';
 import 'package:flashcards/presentation/blocs/lists/lists_bloc.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -18,11 +19,16 @@ class _ListsState extends State<Lists> {
   Widget build(BuildContext context) {
     return BlocConsumer<ListsBloc, ListsState>(
       listenWhen: (previousState, state) {
-        return state.maybeWhen(
-            orElse: () => false, viewCards: (selectedCollection) => true);
+        return state.maybeMap(
+            orElse: () => false,
+            operationSucceeded: (_) => true,
+            viewCards: (_) => true);
       },
       listener: (context, state) {
         state.maybeMap(
+          operationSucceeded: (_){
+            AppToast.showSuccess(context, "Success");
+          },
           viewCards: (selectedCollection) {
             router.push(
               '/cards',
@@ -31,20 +37,8 @@ class _ListsState extends State<Lists> {
                 "collectionId": selectedCollection.collection.id,
               },
             );
-
-            // Navigator.push(
-            //   context,
-            //   MaterialPageRoute(
-            //     builder: (context) => Cards(
-            //       collectionId: selectedCollection.collection.id,
-            //       collectionName: selectedCollection.collection.collectionName,
-            //     ),
-            //   ),
-            // );
           },
-          orElse: () {
-            print('Error in lists bloclistener');
-          },
+          orElse: () {},
         );
       },
       buildWhen: (previousState, state) {
