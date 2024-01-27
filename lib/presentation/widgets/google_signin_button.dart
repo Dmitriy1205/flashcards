@@ -1,3 +1,4 @@
+import 'package:flashcards/core/utils/app_toast.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/svg.dart';
@@ -20,16 +21,7 @@ class GoogleSignInButton extends StatelessWidget {
       listener: (context, state) {
         state.maybeMap(
             error: (e) {
-              ScaffoldMessenger.of(context).showSnackBar(
-                SnackBar(
-                  backgroundColor: AppColors.red,
-                  duration: const Duration(seconds: 5),
-                  content: Text(
-                    e.error,
-                    textAlign: TextAlign.center,
-                  ),
-                ),
-              );
+              AppToast.showError(context, e.error);
             },
             orElse: () {});
       },

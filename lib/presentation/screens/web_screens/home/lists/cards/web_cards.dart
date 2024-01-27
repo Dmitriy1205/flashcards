@@ -1,6 +1,7 @@
 import 'package:flashcards/core/const/colors.dart';
 import 'package:flashcards/core/const/strings.dart';
 import 'package:flashcards/core/themes/theme.dart';
+import 'package:flashcards/core/utils/app_toast.dart';
 import 'package:flashcards/domain/entities/card_entity/card_entity.dart';
 import 'package:flashcards/presentation/blocs/cards/cards_bloc.dart';
 import 'package:flashcards/presentation/blocs/lists/lists_bloc.dart';
@@ -102,12 +103,7 @@ class _WebCardsState extends State<WebCards> {
                                   CardsEvent.shareCollection(
                                       collectionId: widget.collectionId,
                                       collectionName: widget.collectionName));
-                              ScaffoldMessenger.of(context).showSnackBar(
-                                const SnackBar(
-                                  content:
-                                      Text('The link is copied to clipboard'),
-                                ),
-                              );
+                              AppToast.showSuccess(context, "The link is copied to clipboard");
                             },
                             child: Row(
                               children: [
@@ -546,12 +542,7 @@ class _WebCardsState extends State<WebCards> {
                                 CardsEvent.shareCollection(
                                     collectionId: widget.collectionId,
                                     collectionName: widget.collectionName));
-                            ScaffoldMessenger.of(context).showSnackBar(
-                              const SnackBar(
-                                content:
-                                    Text('The link is copied to clipboard'),
-                              ),
-                            );
+                            AppToast.showSuccess(context, "The link is copied to clipboard");
                           },
                           value: 'false',
                           child: Row(

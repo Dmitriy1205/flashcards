@@ -28,12 +28,12 @@ class _WebCollectionsState extends State<WebCollections> {
       physics: const AlwaysScrollableScrollPhysics(),
       child: Padding(
         padding: const EdgeInsets.only(
-            left: 65.0, top: 40, right: 65.0, bottom: 200),
+            left: 65.0, top: 40, right: 65.0, bottom: 80),
         child: Container(
           color: AppColors.background,
           child: Padding(
             padding: const EdgeInsets.only(
-                left: 65.0, top: 40, right: 65.0, bottom: 200),
+                left: 65.0, top: 40, right: 65.0, bottom: 80),
             child: ListView.builder(
                 shrinkWrap: true,
                 physics: const NeverScrollableScrollPhysics(),

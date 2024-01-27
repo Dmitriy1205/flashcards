@@ -1,6 +1,7 @@
 import 'dart:io';
 
 import 'package:flashcards/core/const/images.dart';
+import 'package:flashcards/core/utils/app_toast.dart';
 import 'package:flashcards/core/validator/field_validator.dart';
 import 'package:flashcards/presentation/screens/mobile_screens/auth/mobile_forgot_password.dart';
 import 'package:flashcards/presentation/widgets/android_google_sign_in_button.dart';
@@ -53,16 +54,7 @@ class _MobileSignInScreenState extends State<MobileSignInScreen> {
             listener: (context, state) {
               state.maybeMap(
                   error: (e) {
-                    ScaffoldMessenger.of(context).showSnackBar(
-                      SnackBar(
-                        backgroundColor: AppColors.red,
-                        duration: const Duration(seconds: 5),
-                        content: Text(
-                          e.error,
-                          textAlign: TextAlign.center,
-                        ),
-                      ),
-                    );
+                    AppToast.showError(context, e.error);
                   },
                   orElse: () {});
             },

@@ -15,6 +15,7 @@ import 'package:quill_html_editor/quill_html_editor.dart';
 
 import '../../../../../../core/enum/enum.dart';
 import '../../../../../../core/router/router.dart';
+import '../../../../../../core/utils/app_toast.dart';
 import '../../../../../../domain/params/card_param/create_card_param.dart';
 import '../../../../../../domain/params/card_param/edit_card_param.dart';
 import '../../../../../blocs/cards/cards_bloc.dart';
@@ -155,6 +156,8 @@ class _WebCreateCardState extends State<WebCreateCard> {
                                             cardParam: card,
                                             collectionId: widget.collectionId));
                                   }
+                                }else{
+                                  AppToast.showError(context, AppStrings.errorEmptyCard);
                                 }
                               },
                             ))),

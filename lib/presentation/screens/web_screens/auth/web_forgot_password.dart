@@ -8,6 +8,7 @@ import '../../../../core/const/images.dart';
 import '../../../../core/const/strings.dart';
 import '../../../../core/services/service_locator.dart';
 import '../../../../core/themes/theme.dart';
+import '../../../../core/utils/app_toast.dart';
 import '../../../../core/validator/field_validator.dart';
 import '../../../blocs/forgot_password/forgot_password_bloc.dart';
 import '../../../widgets/app_elevated_button.dart';
@@ -39,29 +40,11 @@ class _WebForgotPasswordScreenState extends State<WebForgotPasswordScreen> {
           listener: (context, state) {
             state.maybeMap(
                 error: (e) {
-                  ScaffoldMessenger.of(context).showSnackBar(
-                    SnackBar(
-                      backgroundColor: Colors.red,
-                      duration: const Duration(seconds: 5),
-                      content: Text(
-                        e.error,
-                        textAlign: TextAlign.center,
-                      ),
-                    ),
-                  );
+                  AppToast.showError(context, e.error);
                 },
                 success: (_) {
                   router.pop();
-                  ScaffoldMessenger.of(context).showSnackBar(
-                    const SnackBar(
-                      backgroundColor: AppColors.green,
-                      duration: Duration(seconds: 5),
-                      content: Text(
-                        'Check your Email',
-                        textAlign: TextAlign.center,
-                      ),
-                    ),
-                  );
+                  AppToast.showSuccess(context, "Check your Email");
                 },
                 orElse: () {});
           },

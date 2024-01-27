@@ -1,5 +1,6 @@
 import 'package:flashcards/core/const/strings.dart';
 import 'package:flashcards/core/themes/theme.dart';
+import 'package:flashcards/core/utils/app_toast.dart';
 import 'package:flashcards/presentation/widgets/app_elevated_button.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
@@ -45,16 +46,7 @@ class _MobileSignUpScreenState extends State<MobileSignUpScreen> {
             listener: (context, state) {
               state.maybeMap(
                   error: (e) {
-                    ScaffoldMessenger.of(context).showSnackBar(
-                      SnackBar(
-                        backgroundColor: AppColors.red,
-                        duration: const Duration(seconds: 5),
-                        content: Text(
-                          e.error,
-                          textAlign: TextAlign.center,
-                        ),
-                      ),
-                    );
+                    AppToast.showError(context, e.error);
                   },
                   orElse: () {});
             },

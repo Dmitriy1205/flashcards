@@ -1,3 +1,4 @@
+import 'package:flashcards/core/utils/app_toast.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -40,29 +41,11 @@ class _MobileForgotPasswordScreenState
             listener: (context, state) {
               state.maybeMap(
                   error: (e) {
-                    ScaffoldMessenger.of(context).showSnackBar(
-                      SnackBar(
-                        backgroundColor: Colors.red,
-                        duration: const Duration(seconds: 5),
-                        content: Text(
-                          e.error,
-                          textAlign: TextAlign.center,
-                        ),
-                      ),
-                    );
+                    AppToast.showError(context, e.error);
                   },
                   success: (_) {
                     Navigator.pop(context);
-                    ScaffoldMessenger.of(context).showSnackBar(
-                      const SnackBar(
-                        backgroundColor: AppColors.green,
-                        duration: Duration(seconds: 5),
-                        content: Text(
-                          'Check your Email',
-                          textAlign: TextAlign.center,
-                        ),
-                      ),
-                    );
+                    AppToast.showSuccess(context, "Check your Email");
                   },
                   orElse: () {});
             },

@@ -5,6 +5,7 @@ import 'package:flashcards/core/const/icons.dart';
 import 'package:flashcards/core/const/strings.dart';
 import 'package:flashcards/core/router/router.dart';
 import 'package:flashcards/core/themes/theme.dart';
+import 'package:flashcards/core/utils/app_toast.dart';
 import 'package:flashcards/domain/entities/card_entity/card_entity.dart';
 import 'package:flashcards/domain/params/card_param/create_card_param.dart';
 import 'package:flashcards/domain/params/card_param/edit_card_param.dart';
@@ -154,16 +155,7 @@ class _CreateEditCardState extends State<CreateEditCard> {
                               collectionId: widget.collectionId));
                         }
                       }else{
-                        ScaffoldMessenger.of(context).showSnackBar(
-                          SnackBar(
-                            backgroundColor: AppColors.red,
-                            duration: const Duration(seconds: 5),
-                            content: Text(
-                              AppStrings.errorEmptyCard,
-                              textAlign: TextAlign.center,
-                            ),
-                          ),
-                        );
+                        AppToast.showError(context, AppStrings.errorEmptyCard);
                       }
                     },
                     child: Text(
