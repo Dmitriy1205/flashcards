@@ -67,6 +67,8 @@ class _CreateEditCardState extends State<CreateEditCard> {
         backController.enableEditor(false);
         frontController.unFocus();
         backController.unFocus();
+        _showKeyboardBack = false;
+        _showKeyboardFront = false;
         setState(() {});
         frontController.enableEditor(true);
         backController.enableEditor(true);
