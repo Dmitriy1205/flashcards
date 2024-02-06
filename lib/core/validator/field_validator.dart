@@ -13,11 +13,27 @@ class Validator {
     return !emailValid ? 'Enter a Valid Email Address' : null;
   }
 
-  static String? validate(String? value) {
-    if (value == null || value.isEmpty) {
-      return "Field can't be empty";
-    } else {
-      return null;
+  static String? validatePassword(String? value){
+    if(value == null || value.isEmpty) return "Password cannot be empty";
+
+    String error = "";
+    if(value.length < 8){
+      error += "● Password length must be greater than 8\n";
     }
+
+    if (!value.contains(RegExp(r'[A-Z]'))) {
+      error += "● At least one uppercase letter\n";
+    }
+
+    if (!value.contains(RegExp(r'[0-9]'))) {
+      error += "● At least one digit\n";
+    }
+
+    return error.isEmpty ? null : error;
+  }
+
+  static String? validatePasswordEmpty(String? value) {
+    if(value == null || value.isEmpty) return "Password cannot be empty";
+    return null;
   }
 }

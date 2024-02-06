@@ -122,7 +122,7 @@ class _MobileSignInScreenState extends State<MobileSignInScreen> {
                                   ? SvgPicture.asset(AppIcons.closedEye)
                                   : SvgPicture.asset(AppIcons.openEye),
                             ),
-                            validator: Validator.validate,
+                            validator: Validator.validatePasswordEmpty,
                           ),
                           const SizedBox(
                             height: 7,

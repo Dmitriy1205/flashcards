@@ -7,6 +7,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/svg.dart';
 
+import '../../core/utils/confirm_dialog.dart';
+
 class CustomNavigationBar extends StatefulWidget {
   const CustomNavigationBar({Key? key, required this.pageController})
       : super(key: key);
@@ -37,7 +39,7 @@ class _CustomNavigationBarState extends State<CustomNavigationBar> {
                 child: Row(
                   children: [
                     Container(
-                      margin: EdgeInsets.only(left: 34, right: 22),
+                      margin: const EdgeInsets.only(left: 34, right: 22),
                       child: SvgPicture.asset(
                         pageIndex == 0
                             ? AppIcons.selectedHamburger
@@ -126,8 +128,10 @@ class _CustomNavigationBarState extends State<CustomNavigationBar> {
                         borderRadius: BorderRadius.circular(32),
                         child: InkWell(
                             borderRadius: BorderRadius.circular(32),
-                            onTap: () {
+                            onTap: () async{
                               if(context.read<ListsBloc>().isEditMode){
+                                final confirmed = await confirmOperation(context, title: "Confirm deleting", message: "Are you sure that you want to delete selected collections?", action: "Delete", cancel: "Cancel");
+                                if(!confirmed) return;
                                 context.read<ListsBloc>().add(
                                     const ListsEvent.deleteSelectedCollection(
                                         collectionsList: []));
@@ -207,16 +211,16 @@ class _CustomNavigationBarState extends State<CustomNavigationBar> {
                             filled: true,
                             enabledBorder: OutlineInputBorder(
                                 borderSide: BorderSide(
-                                    color: Color(0xFF2B635A).withOpacity(0.15)
+                                    color: const Color(0xFF2B635A).withOpacity(0.15)
                                 ),
                                 borderRadius:
-                                BorderRadius.all(Radius.circular(15))),
+                                const BorderRadius.all(Radius.circular(15))),
                             border: OutlineInputBorder(
                                 borderSide: BorderSide(
-                                  color: Color(0xFF2B635A).withOpacity(0.15)
+                                  color: const Color(0xFF2B635A).withOpacity(0.15)
                                 ),
                                 borderRadius:
-                                    BorderRadius.all(Radius.circular(15)))),
+                                    const BorderRadius.all(Radius.circular(15)))),
                       ),
                     ),
                     SizedBox(

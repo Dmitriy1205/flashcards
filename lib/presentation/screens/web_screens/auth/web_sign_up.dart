@@ -112,7 +112,7 @@ class _WebSignUpScreenState extends State<WebSignUpScreen> {
                                       ? SvgPicture.asset(AppIcons.closedEye)
                                       : SvgPicture.asset(AppIcons.openEye),
                                 ),
-                                validator: Validator.validate,
+                                validator: Validator.validatePassword,
                               ),
                               const SizedBox(
                                 height: 27,
@@ -261,7 +261,7 @@ class _WebSignUpScreenState extends State<WebSignUpScreen> {
                                           ? SvgPicture.asset(AppIcons.closedEye)
                                           : SvgPicture.asset(AppIcons.openEye),
                                     ),
-                                    validator: Validator.validate,
+                                    validator: Validator.validatePassword,
                                   ),
                                   const SizedBox(
                                     height: 27,
