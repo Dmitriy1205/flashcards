@@ -94,6 +94,8 @@ class AuthRepositoryImpl implements AuthRepository {
     try {
       await _auth.createUserWithEmailAndPassword(
           email: email, password: password);
+      await _auth.currentUser?.sendEmailVerification();
+
     } on FirebaseAuthException catch (e) {
       if (e.code == 'weak-password') {
         throw BadRequestException(

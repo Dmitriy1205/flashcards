@@ -21,7 +21,7 @@ class AppToast{
     ScaffoldMessenger.of(context).showSnackBar(
       SnackBar(
         backgroundColor: AppColors.green,
-        duration: const Duration(seconds: 4),
+        duration: const Duration(seconds: 7),
         content: Text(
           msg,
           textAlign: TextAlign.center,

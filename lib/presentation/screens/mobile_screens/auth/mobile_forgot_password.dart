@@ -2,7 +2,6 @@ import 'package:flashcards/core/utils/app_toast.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-import '../../../../core/const/colors.dart';
 import '../../../../core/const/strings.dart';
 import '../../../../core/services/service_locator.dart';
 import '../../../../core/themes/theme.dart';
@@ -45,7 +44,7 @@ class _MobileForgotPasswordScreenState
                   },
                   success: (_) {
                     Navigator.pop(context);
-                    AppToast.showSuccess(context, "Check your Email");
+                    AppToast.showSuccess(context, "If an account exists to that email address, please check your inbox including spam and follow the instructions");
                   },
                   orElse: () {});
             },

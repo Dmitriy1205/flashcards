@@ -36,7 +36,14 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
     if (event.user == null) {
       emit(const AuthState.unauthenticated());
     } else {
-      emit(AuthState.authenticated(user: event.user!));
+      if (event.user!.emailVerified ||
+          event.user!.providerData[0].providerId == 'apple.com' ||
+          event.user!.providerData[0].providerId == 'google.com') {
+        emit(AuthState.authenticated(user: event.user!));
+      } else {
+        // add(const AuthEvent.logout());
+        emit(AuthState.userNotVerified(user: event.user!));
+      }
     }
   }
 }

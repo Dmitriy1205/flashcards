@@ -44,7 +44,7 @@ class _WebForgotPasswordScreenState extends State<WebForgotPasswordScreen> {
                 },
                 success: (_) {
                   router.pop();
-                  AppToast.showSuccess(context, "Check your Email");
+                  AppToast.showSuccess(context, "If an account exists to that email address, please check your inbox including spam and follow the instructions");
                 },
                 orElse: () {});
           },

@@ -5,7 +5,9 @@ class AuthState with _$AuthState {
   const AuthState._();
 
   User? get user =>
-      maybeMap(authenticated: (state) => state.user, orElse: () => null);
+      maybeMap(
+          userNotVerified: (state)=>state.user,
+          authenticated: (state) => state.user, orElse: () => null);
 
   const factory AuthState.initial() = _Initial;
 
@@ -15,4 +17,6 @@ class AuthState with _$AuthState {
       _AuthenticatedState;
 
   const factory AuthState.undefined() = _UndefinedState;
+
+  const factory AuthState.userNotVerified({required User user}) = _UserNotVerified;
 }

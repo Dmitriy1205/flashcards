@@ -13,6 +13,7 @@ import '../../../../core/const/icons.dart';
 import '../../../../core/const/images.dart';
 import '../../../../core/services/service_locator.dart';
 import '../../../../core/validator/field_validator.dart';
+import '../../../blocs/auth/auth_bloc.dart';
 import '../../../blocs/sign_up/signup_bloc.dart';
 import '../../../widgets/app_text_field.dart';
 import '../../../widgets/loading_indicator.dart';
@@ -43,7 +44,14 @@ class _WebSignUpScreenState extends State<WebSignUpScreen> {
         child: BlocConsumer<SignupBloc, SignupState>(
           bloc: _signUpBloc,
           listener: (context, state) {
+
             state.maybeMap(
+                success: (_) {
+                  context.read<AuthBloc>().add(const AuthEvent.logout());
+                  router.pop();
+                  AppToast.showSuccess(context,
+                      'account is created,to verify your email please check your inbox including spam and follow the instructions');
+                },
                 error: (e) {
                   AppToast.showError(context, e.error);
                 },

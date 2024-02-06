@@ -81,6 +81,7 @@ final GoRouter router = GoRouter(
               return st.maybeMap(
                   authenticated: (_) => '/mobile_home',
                   unauthenticated: (_) => '/',
+                  userNotVerified: (_)=>'/',
                   orElse: () => null);
             },
           ),

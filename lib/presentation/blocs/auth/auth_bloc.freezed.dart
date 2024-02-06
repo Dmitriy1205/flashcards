@@ -317,6 +317,7 @@ mixin _$AuthState {
     required TResult Function() unauthenticated,
     required TResult Function(User user) authenticated,
     required TResult Function() undefined,
+    required TResult Function(User user) userNotVerified,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
@@ -325,6 +326,7 @@ mixin _$AuthState {
     TResult? Function()? unauthenticated,
     TResult? Function(User user)? authenticated,
     TResult? Function()? undefined,
+    TResult? Function(User user)? userNotVerified,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
@@ -333,6 +335,7 @@ mixin _$AuthState {
     TResult Function()? unauthenticated,
     TResult Function(User user)? authenticated,
     TResult Function()? undefined,
+    TResult Function(User user)? userNotVerified,
     required TResult orElse(),
   }) =>
       throw _privateConstructorUsedError;
@@ -342,6 +345,7 @@ mixin _$AuthState {
     required TResult Function(_UnauthenticaredState value) unauthenticated,
     required TResult Function(_AuthenticatedState value) authenticated,
     required TResult Function(_UndefinedState value) undefined,
+    required TResult Function(_UserNotVerified value) userNotVerified,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
@@ -350,6 +354,7 @@ mixin _$AuthState {
     TResult? Function(_UnauthenticaredState value)? unauthenticated,
     TResult? Function(_AuthenticatedState value)? authenticated,
     TResult? Function(_UndefinedState value)? undefined,
+    TResult? Function(_UserNotVerified value)? userNotVerified,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
@@ -358,6 +363,7 @@ mixin _$AuthState {
     TResult Function(_UnauthenticaredState value)? unauthenticated,
     TResult Function(_AuthenticatedState value)? authenticated,
     TResult Function(_UndefinedState value)? undefined,
+    TResult Function(_UserNotVerified value)? userNotVerified,
     required TResult orElse(),
   }) =>
       throw _privateConstructorUsedError;
@@ -422,6 +428,7 @@ class _$InitialImpl extends _Initial {
     required TResult Function() unauthenticated,
     required TResult Function(User user) authenticated,
     required TResult Function() undefined,
+    required TResult Function(User user) userNotVerified,
   }) {
     return initial();
   }
@@ -433,6 +440,7 @@ class _$InitialImpl extends _Initial {
     TResult? Function()? unauthenticated,
     TResult? Function(User user)? authenticated,
     TResult? Function()? undefined,
+    TResult? Function(User user)? userNotVerified,
   }) {
     return initial?.call();
   }
@@ -444,6 +452,7 @@ class _$InitialImpl extends _Initial {
     TResult Function()? unauthenticated,
     TResult Function(User user)? authenticated,
     TResult Function()? undefined,
+    TResult Function(User user)? userNotVerified,
     required TResult orElse(),
   }) {
     if (initial != null) {
@@ -459,6 +468,7 @@ class _$InitialImpl extends _Initial {
     required TResult Function(_UnauthenticaredState value) unauthenticated,
     required TResult Function(_AuthenticatedState value) authenticated,
     required TResult Function(_UndefinedState value) undefined,
+    required TResult Function(_UserNotVerified value) userNotVerified,
   }) {
     return initial(this);
   }
@@ -470,6 +480,7 @@ class _$InitialImpl extends _Initial {
     TResult? Function(_UnauthenticaredState value)? unauthenticated,
     TResult? Function(_AuthenticatedState value)? authenticated,
     TResult? Function(_UndefinedState value)? undefined,
+    TResult? Function(_UserNotVerified value)? userNotVerified,
   }) {
     return initial?.call(this);
   }
@@ -481,6 +492,7 @@ class _$InitialImpl extends _Initial {
     TResult Function(_UnauthenticaredState value)? unauthenticated,
     TResult Function(_AuthenticatedState value)? authenticated,
     TResult Function(_UndefinedState value)? undefined,
+    TResult Function(_UserNotVerified value)? userNotVerified,
     required TResult orElse(),
   }) {
     if (initial != null) {
@@ -538,6 +550,7 @@ class _$UnauthenticaredStateImpl extends _UnauthenticaredState {
     required TResult Function() unauthenticated,
     required TResult Function(User user) authenticated,
     required TResult Function() undefined,
+    required TResult Function(User user) userNotVerified,
   }) {
     return unauthenticated();
   }
@@ -549,6 +562,7 @@ class _$UnauthenticaredStateImpl extends _UnauthenticaredState {
     TResult? Function()? unauthenticated,
     TResult? Function(User user)? authenticated,
     TResult? Function()? undefined,
+    TResult? Function(User user)? userNotVerified,
   }) {
     return unauthenticated?.call();
   }
@@ -560,6 +574,7 @@ class _$UnauthenticaredStateImpl extends _UnauthenticaredState {
     TResult Function()? unauthenticated,
     TResult Function(User user)? authenticated,
     TResult Function()? undefined,
+    TResult Function(User user)? userNotVerified,
     required TResult orElse(),
   }) {
     if (unauthenticated != null) {
@@ -575,6 +590,7 @@ class _$UnauthenticaredStateImpl extends _UnauthenticaredState {
     required TResult Function(_UnauthenticaredState value) unauthenticated,
     required TResult Function(_AuthenticatedState value) authenticated,
     required TResult Function(_UndefinedState value) undefined,
+    required TResult Function(_UserNotVerified value) userNotVerified,
   }) {
     return unauthenticated(this);
   }
@@ -586,6 +602,7 @@ class _$UnauthenticaredStateImpl extends _UnauthenticaredState {
     TResult? Function(_UnauthenticaredState value)? unauthenticated,
     TResult? Function(_AuthenticatedState value)? authenticated,
     TResult? Function(_UndefinedState value)? undefined,
+    TResult? Function(_UserNotVerified value)? userNotVerified,
   }) {
     return unauthenticated?.call(this);
   }
@@ -597,6 +614,7 @@ class _$UnauthenticaredStateImpl extends _UnauthenticaredState {
     TResult Function(_UnauthenticaredState value)? unauthenticated,
     TResult Function(_AuthenticatedState value)? authenticated,
     TResult Function(_UndefinedState value)? undefined,
+    TResult Function(_UserNotVerified value)? userNotVerified,
     required TResult orElse(),
   }) {
     if (unauthenticated != null) {
@@ -680,6 +698,7 @@ class _$AuthenticatedStateImpl extends _AuthenticatedState {
     required TResult Function() unauthenticated,
     required TResult Function(User user) authenticated,
     required TResult Function() undefined,
+    required TResult Function(User user) userNotVerified,
   }) {
     return authenticated(user);
   }
@@ -691,6 +710,7 @@ class _$AuthenticatedStateImpl extends _AuthenticatedState {
     TResult? Function()? unauthenticated,
     TResult? Function(User user)? authenticated,
     TResult? Function()? undefined,
+    TResult? Function(User user)? userNotVerified,
   }) {
     return authenticated?.call(user);
   }
@@ -702,6 +722,7 @@ class _$AuthenticatedStateImpl extends _AuthenticatedState {
     TResult Function()? unauthenticated,
     TResult Function(User user)? authenticated,
     TResult Function()? undefined,
+    TResult Function(User user)? userNotVerified,
     required TResult orElse(),
   }) {
     if (authenticated != null) {
@@ -717,6 +738,7 @@ class _$AuthenticatedStateImpl extends _AuthenticatedState {
     required TResult Function(_UnauthenticaredState value) unauthenticated,
     required TResult Function(_AuthenticatedState value) authenticated,
     required TResult Function(_UndefinedState value) undefined,
+    required TResult Function(_UserNotVerified value) userNotVerified,
   }) {
     return authenticated(this);
   }
@@ -728,6 +750,7 @@ class _$AuthenticatedStateImpl extends _AuthenticatedState {
     TResult? Function(_UnauthenticaredState value)? unauthenticated,
     TResult? Function(_AuthenticatedState value)? authenticated,
     TResult? Function(_UndefinedState value)? undefined,
+    TResult? Function(_UserNotVerified value)? userNotVerified,
   }) {
     return authenticated?.call(this);
   }
@@ -739,6 +762,7 @@ class _$AuthenticatedStateImpl extends _AuthenticatedState {
     TResult Function(_UnauthenticaredState value)? unauthenticated,
     TResult Function(_AuthenticatedState value)? authenticated,
     TResult Function(_UndefinedState value)? undefined,
+    TResult Function(_UserNotVerified value)? userNotVerified,
     required TResult orElse(),
   }) {
     if (authenticated != null) {
@@ -801,6 +825,7 @@ class _$UndefinedStateImpl extends _UndefinedState {
     required TResult Function() unauthenticated,
     required TResult Function(User user) authenticated,
     required TResult Function() undefined,
+    required TResult Function(User user) userNotVerified,
   }) {
     return undefined();
   }
@@ -812,6 +837,7 @@ class _$UndefinedStateImpl extends _UndefinedState {
     TResult? Function()? unauthenticated,
     TResult? Function(User user)? authenticated,
     TResult? Function()? undefined,
+    TResult? Function(User user)? userNotVerified,
   }) {
     return undefined?.call();
   }
@@ -823,6 +849,7 @@ class _$UndefinedStateImpl extends _UndefinedState {
     TResult Function()? unauthenticated,
     TResult Function(User user)? authenticated,
     TResult Function()? undefined,
+    TResult Function(User user)? userNotVerified,
     required TResult orElse(),
   }) {
     if (undefined != null) {
@@ -838,6 +865,7 @@ class _$UndefinedStateImpl extends _UndefinedState {
     required TResult Function(_UnauthenticaredState value) unauthenticated,
     required TResult Function(_AuthenticatedState value) authenticated,
     required TResult Function(_UndefinedState value) undefined,
+    required TResult Function(_UserNotVerified value) userNotVerified,
   }) {
     return undefined(this);
   }
@@ -849,6 +877,7 @@ class _$UndefinedStateImpl extends _UndefinedState {
     TResult? Function(_UnauthenticaredState value)? unauthenticated,
     TResult? Function(_AuthenticatedState value)? authenticated,
     TResult? Function(_UndefinedState value)? undefined,
+    TResult? Function(_UserNotVerified value)? userNotVerified,
   }) {
     return undefined?.call(this);
   }
@@ -860,6 +889,7 @@ class _$UndefinedStateImpl extends _UndefinedState {
     TResult Function(_UnauthenticaredState value)? unauthenticated,
     TResult Function(_AuthenticatedState value)? authenticated,
     TResult Function(_UndefinedState value)? undefined,
+    TResult Function(_UserNotVerified value)? userNotVerified,
     required TResult orElse(),
   }) {
     if (undefined != null) {
@@ -872,4 +902,158 @@ class _$UndefinedStateImpl extends _UndefinedState {
 abstract class _UndefinedState extends AuthState {
   const factory _UndefinedState() = _$UndefinedStateImpl;
   const _UndefinedState._() : super._();
+}
+
+/// @nodoc
+abstract class _$$UserNotVerifiedImplCopyWith<$Res> {
+  factory _$$UserNotVerifiedImplCopyWith(_$UserNotVerifiedImpl value,
+          $Res Function(_$UserNotVerifiedImpl) then) =
+      __$$UserNotVerifiedImplCopyWithImpl<$Res>;
+  @useResult
+  $Res call({User user});
+}
+
+/// @nodoc
+class __$$UserNotVerifiedImplCopyWithImpl<$Res>
+    extends _$AuthStateCopyWithImpl<$Res, _$UserNotVerifiedImpl>
+    implements _$$UserNotVerifiedImplCopyWith<$Res> {
+  __$$UserNotVerifiedImplCopyWithImpl(
+      _$UserNotVerifiedImpl _value, $Res Function(_$UserNotVerifiedImpl) _then)
+      : super(_value, _then);
+
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? user = null,
+  }) {
+    return _then(_$UserNotVerifiedImpl(
+      user: null == user
+          ? _value.user
+          : user // ignore: cast_nullable_to_non_nullable
+              as User,
+    ));
+  }
+}
+
+/// @nodoc
+
+class _$UserNotVerifiedImpl extends _UserNotVerified {
+  const _$UserNotVerifiedImpl({required this.user}) : super._();
+
+  @override
+  final User user;
+
+  @override
+  String toString() {
+    return 'AuthState.userNotVerified(user: $user)';
+  }
+
+  @override
+  bool operator ==(Object other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType &&
+            other is _$UserNotVerifiedImpl &&
+            (identical(other.user, user) || other.user == user));
+  }
+
+  @override
+  int get hashCode => Object.hash(runtimeType, user);
+
+  @JsonKey(ignore: true)
+  @override
+  @pragma('vm:prefer-inline')
+  _$$UserNotVerifiedImplCopyWith<_$UserNotVerifiedImpl> get copyWith =>
+      __$$UserNotVerifiedImplCopyWithImpl<_$UserNotVerifiedImpl>(
+          this, _$identity);
+
+  @override
+  @optionalTypeArgs
+  TResult when<TResult extends Object?>({
+    required TResult Function() initial,
+    required TResult Function() unauthenticated,
+    required TResult Function(User user) authenticated,
+    required TResult Function() undefined,
+    required TResult Function(User user) userNotVerified,
+  }) {
+    return userNotVerified(user);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? whenOrNull<TResult extends Object?>({
+    TResult? Function()? initial,
+    TResult? Function()? unauthenticated,
+    TResult? Function(User user)? authenticated,
+    TResult? Function()? undefined,
+    TResult? Function(User user)? userNotVerified,
+  }) {
+    return userNotVerified?.call(user);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeWhen<TResult extends Object?>({
+    TResult Function()? initial,
+    TResult Function()? unauthenticated,
+    TResult Function(User user)? authenticated,
+    TResult Function()? undefined,
+    TResult Function(User user)? userNotVerified,
+    required TResult orElse(),
+  }) {
+    if (userNotVerified != null) {
+      return userNotVerified(user);
+    }
+    return orElse();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult map<TResult extends Object?>({
+    required TResult Function(_Initial value) initial,
+    required TResult Function(_UnauthenticaredState value) unauthenticated,
+    required TResult Function(_AuthenticatedState value) authenticated,
+    required TResult Function(_UndefinedState value) undefined,
+    required TResult Function(_UserNotVerified value) userNotVerified,
+  }) {
+    return userNotVerified(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? mapOrNull<TResult extends Object?>({
+    TResult? Function(_Initial value)? initial,
+    TResult? Function(_UnauthenticaredState value)? unauthenticated,
+    TResult? Function(_AuthenticatedState value)? authenticated,
+    TResult? Function(_UndefinedState value)? undefined,
+    TResult? Function(_UserNotVerified value)? userNotVerified,
+  }) {
+    return userNotVerified?.call(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeMap<TResult extends Object?>({
+    TResult Function(_Initial value)? initial,
+    TResult Function(_UnauthenticaredState value)? unauthenticated,
+    TResult Function(_AuthenticatedState value)? authenticated,
+    TResult Function(_UndefinedState value)? undefined,
+    TResult Function(_UserNotVerified value)? userNotVerified,
+    required TResult orElse(),
+  }) {
+    if (userNotVerified != null) {
+      return userNotVerified(this);
+    }
+    return orElse();
+  }
+}
+
+abstract class _UserNotVerified extends AuthState {
+  const factory _UserNotVerified({required final User user}) =
+      _$UserNotVerifiedImpl;
+  const _UserNotVerified._() : super._();
+
+  User get user;
+  @JsonKey(ignore: true)
+  _$$UserNotVerifiedImplCopyWith<_$UserNotVerifiedImpl> get copyWith =>
+      throw _privateConstructorUsedError;
 }
