@@ -134,7 +134,7 @@ class _MobileSignUpScreenState extends State<MobileSignUpScreen> {
                                 return;
                               }
                               _formKey.currentState!.save();
-                              _signUpBloc.add(
+                              context.read<SignupBloc>().add(
                                   SignupEvent.signUpWithEmailAndPassword(
                                       email: _emailController.text,
                                       password: _passwordController.text));

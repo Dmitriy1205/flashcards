@@ -202,12 +202,10 @@ class _MobileSignInScreenState extends State<MobileSignInScreen> {
                                               }),
                                       ],
                                     ),
-                                  ),
+                                  ),]
                                 ),
-                              ],
                             ),
                           ),
-                        ),
                         const SizedBox(
                           height: 51,
                         ),
@@ -247,14 +245,13 @@ class _MobileSignInScreenState extends State<MobileSignInScreen> {
                             GoogleSignInButton(),
                           ],
                         ) : SizedBox(child: AndroidGoogleSignInButton()),
-
                       ],
                     ),
-                  ),
                 ),
               ),
-            );
-          },
+            ));
+          }
+
         ),
       ),
     );
