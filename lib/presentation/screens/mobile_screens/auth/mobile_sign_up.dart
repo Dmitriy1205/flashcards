@@ -41,154 +41,145 @@ class _MobileSignUpScreenState extends State<MobileSignUpScreen> {
       },
       child: Container(
         color: Colors.white,
-        child: SafeArea(
-          child: BlocConsumer<SignupBloc, SignupState>(
-
-            listener: (context, state) {
-              state.maybeMap(
-                  success: (_) {
+        child: BlocConsumer<SignupBloc, SignupState>(
+          listener: (context, state) {
+            state.maybeMap(
+              success: (_) {
                     context.read<AuthBloc>().add(const AuthEvent.logout());
                     router.pop();
                     AppToast.showSuccess(context,
                         'account is created,to verify your email please check your inbox including spam and follow the instructions');
                   },
-                  error: (e) {
-                    AppToast.showError(context, e.error);
-                  },
-                  orElse: () {});
-            },
-            builder: (context, state) {
-              return Scaffold(
-                body: SingleChildScrollView(
-                  child: Padding(
-                    padding:
-                        const EdgeInsets.only(top: 110.0, left: 24, right: 24),
-                    child: Form(
-                      key: _formKey,
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Text(
-                            AppStrings.createAccount,
-                            style: AppTheme.themeData.textTheme.headlineLarge,
+                error: (e) {
+                  AppToast.showError(context, e.error);
+                },
+                orElse: () {});
+          },
+          builder: (context, state) {
+            return Scaffold(
+              body: SingleChildScrollView(
+                child: Padding(
+                  padding:
+                      const EdgeInsets.only(top: 110.0, left: 24, right: 24),
+                  child: Form(
+                    key: _formKey,
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(
+                          AppStrings.createAccount,
+                          style: AppTheme.themeData.textTheme.headlineLarge,
+                        ),
+                        Text(
+                          AppStrings.createAccountHeader,
+                          style: AppTheme.themeData.textTheme.headlineSmall,
+                        ),
+                        const SizedBox(
+                          height: 30,
+                        ),
+                        Text(
+                          AppStrings.email,
+                          style: AppTheme.themeData.textTheme.titleMedium,
+                        ),
+                        const SizedBox(
+                          height: 7,
+                        ),
+                        AppTextField(
+                          focusNode: _emailNode,
+                          textController: _emailController,
+                          hintText: AppStrings.enterEmail,
+                          validator: Validator.validateEmail,
+                        ),
+                        const SizedBox(
+                          height: 14,
+                        ),
+                        Text(
+                          AppStrings.password,
+                          style: AppTheme.themeData.textTheme.titleMedium,
+                        ),
+                        const SizedBox(
+                          height: 7,
+                        ),
+                        AppTextField(
+                          focusNode: _passwordNode,
+                          obscureText: isPassObscure,
+                          textController: _passwordController,
+                          hintText: AppStrings.enterPass,
+                          suffixIcon: IconButton(
+                            onPressed: () {
+                              setState(() {
+                                isPassObscure = !isPassObscure;
+                              });
+                            },
+                            icon: isPassObscure
+                                ? SvgPicture.asset(AppIcons.closedEye)
+                                : SvgPicture.asset(AppIcons.openEye),
                           ),
-                          Text(
-                            AppStrings.createAccountHeader,
-                            style: AppTheme.themeData.textTheme.headlineSmall,
-                          ),
-                          const SizedBox(
-                            height: 30,
-                          ),
-                          Text(
-                            AppStrings.email,
-                            style: AppTheme.themeData.textTheme.titleMedium,
-                          ),
-                          const SizedBox(
-                            height: 7,
-                          ),
-                          AppTextField(
-                            focusNode: _emailNode,
-                            textController: _emailController,
-                            hintText: AppStrings.enterEmail,
-                            validator: Validator.validateEmail,
-                          ),
-                          const SizedBox(
-                            height: 14,
-                          ),
-                          Text(
-                            AppStrings.password,
-                            style: AppTheme.themeData.textTheme.titleMedium,
-                          ),
-                          const SizedBox(
-                            height: 7,
-                          ),
-                          AppTextField(
-                            focusNode: _passwordNode,
-                            obscureText: isPassObscure,
-                            textController: _passwordController,
-                            hintText: AppStrings.enterPass,
-                            suffixIcon: IconButton(
-                              onPressed: () {
-                                setState(() {
-                                  isPassObscure = !isPassObscure;
-                                });
-                              },
-                              icon: isPassObscure
-                                  ? SvgPicture.asset(AppIcons.closedEye)
-                                  : SvgPicture.asset(AppIcons.openEye),
-                            ),
-                            validator: Validator.validate,
-                          ),
-                          const SizedBox(
-                            height: 27,
-                          ),
-                          AppElevatedButton(
-                              widget: state.maybeMap(
-                                  loading: (_) => const SizedBox(
-                                      width: 20,
-                                      height: 20,
-                                      child: LoadingIndicator(
-                                        color: Colors.white,
-                                      )),
-                                  orElse: () => Text(
-                                        AppStrings.createAccount,
-                                        style: AppTheme
-                                            .themeData.textTheme.titleSmall!
-                                            .copyWith(color: Colors.white),
-                                      )),
-                              text: AppStrings.createAccount,
-                              onPressed: () {
-                                if (!_formKey.currentState!.validate()) {
-                                  return;
-                                }
-                                _formKey.currentState!.save();
-                                context.read<SignupBloc>().add(
-                                    SignupEvent.signUpWithEmailAndPassword(
-                                        email: _emailController.text,
-                                        password: _passwordController.text));
-                              }),
-                          const SizedBox(
-                            height: 17,
-                          ),
-                          Center(
-                            child: Padding(
-                              padding: const EdgeInsets.fromLTRB(0, 0, 0, 0),
-                              child: Column(
-                                mainAxisAlignment: MainAxisAlignment.end,
-                                children: [
-                                  RichText(
-                                    text: TextSpan(
-                                      style: AppTheme
-                                          .themeData.textTheme.titleSmall,
-                                      children: [
-                                        const TextSpan(
-                                          text: '${AppStrings.haveAccount} ',
-                                        ),
-                                        TextSpan(
-                                            text: AppStrings.signIn,
-                                            style: const TextStyle(
-                                              color: AppColors.mainAccent,
-                                              fontWeight: FontWeight.w600,
-                                            ),
-                                            recognizer: TapGestureRecognizer()
-                                              ..onTap = () {
-                                                Navigator.pop(context);
-                                              }),
-                                      ],
-                                    ),
+                          validator: Validator.validatePassword,
+                        ),
+                        const SizedBox(
+                          height: 27,
+                        ),
+                        AppElevatedButton(
+                            widget: state.maybeMap(
+                                loading: (_)=> const SizedBox(width:20,height:20,child: LoadingIndicator(color: Colors.white,)),
+                                orElse: ()=>Text(
+                                  AppStrings.createAccount,
+                                  style: AppTheme.themeData.textTheme.titleSmall!
+                                      .copyWith(color: Colors.white),
+                                )),
+                            text: AppStrings.createAccount,
+                            onPressed: () {
+                              if (!_formKey.currentState!.validate()) {
+                                return;
+                              }
+                              _formKey.currentState!.save();
+                              _signUpBloc.add(
+                                  SignupEvent.signUpWithEmailAndPassword(
+                                      email: _emailController.text,
+                                      password: _passwordController.text));
+                            }),
+                        const SizedBox(
+                          height: 17,
+                        ),
+                        Center(
+                          child: Padding(
+                            padding: const EdgeInsets.fromLTRB(0, 0, 0, 0),
+                            child: Column(
+                              mainAxisAlignment: MainAxisAlignment.end,
+                              children: [
+                                RichText(
+                                  text: TextSpan(
+                                    style:
+                                        AppTheme.themeData.textTheme.titleSmall,
+                                    children: [
+                                      const TextSpan(
+                                        text: '${AppStrings.haveAccount} ',
+                                      ),
+                                      TextSpan(
+                                          text: AppStrings.signIn,
+                                          style: const TextStyle(
+                                            color: AppColors.mainAccent,
+                                            fontWeight: FontWeight.w600,
+                                          ),
+                                          recognizer: TapGestureRecognizer()
+                                            ..onTap = () {
+                                              Navigator.pop(context);
+                                            }),
+                                    ],
                                   ),
-                                ],
-                              ),
+                                ),
+                              ],
                             ),
                           ),
-                        ],
-                      ),
+                        ),
+                      ],
                     ),
                   ),
                 ),
-              );
-            },
-          ),
+              ),
+            );
+          },
         ),
       ),
     );

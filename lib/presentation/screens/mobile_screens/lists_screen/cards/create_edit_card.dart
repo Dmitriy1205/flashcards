@@ -37,8 +37,10 @@ class _CreateEditCardState extends State<CreateEditCard> {
   String frontText = '';
   String backText = '';
 
-  String textLengthFront = '0';
-  String textLengthBack = '0';
+  int textLengthFront = 0;
+  int textLengthBack = 0;
+
+  int maxLength = 400;
 
   bool frontControllerLoaded = false;
   bool backControllerLoaded = false;
@@ -320,8 +322,7 @@ class _CreateEditCardState extends State<CreateEditCard> {
                     frontText = text;
                     textLengthFront = text
                         .replaceAll(RegExp(r'<[^>]*>'), '')
-                        .length
-                        .toString();
+                        .length;
                   });
                 },
               ),
@@ -331,7 +332,7 @@ class _CreateEditCardState extends State<CreateEditCard> {
             alignment: Alignment.bottomRight,
             child: Padding(
               padding: const EdgeInsets.all(8.0),
-              child: Text('$textLengthFront/400'),
+              child: Text('$textLengthFront/$maxLength'),
             ),
           ),
           Row(
@@ -413,8 +414,7 @@ class _CreateEditCardState extends State<CreateEditCard> {
                     backText = text;
                     textLengthBack = text
                         .replaceAll(RegExp(r'<[^>]*>'), '')
-                        .length
-                        .toString();
+                        .length;
                   });
                 },
               ),
@@ -424,7 +424,7 @@ class _CreateEditCardState extends State<CreateEditCard> {
             alignment: Alignment.bottomRight,
             child: Padding(
               padding: const EdgeInsets.all(8.0),
-              child: Text('$textLengthBack/400'),
+              child: Text('$textLengthBack/$maxLength'),
             ),
           ),
           Row(

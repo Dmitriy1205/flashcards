@@ -47,120 +47,118 @@ class _MobileSignInScreenState extends State<MobileSignInScreen> {
       },
       child: Container(
         color: Colors.white,
-        child: SafeArea(
-          child: BlocConsumer<SigninBloc, SigninState>(
-            listener: (context, state) {
-              state.maybeMap(
+        child: BlocConsumer<SigninBloc, SigninState>(
+          listener: (context, state) {
+            state.maybeMap(
                 success: (_)=>context.read<AuthBloc>().add(AuthEvent.initUser(user: context.read<AuthBloc>().state.user)),
-                  error: (e) {
-                    AppToast.showError(context, e.error);
-                  },
-                  orElse: () {});
-            },
-            builder: (context, state) {
-              return Scaffold(
-                body: SingleChildScrollView(
-                  child: Padding(
-                    padding: const EdgeInsets.only(
-                        left: 24, right: 24,bottom: 50),
-                    child: Form(
-                      key: _formKey,
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Padding(
-                            padding: const EdgeInsets.symmetric(vertical: 52.0),
-                            child: Image.asset(AppImages.logo,scale: 1.5,),
+                error: (e) {
+                  AppToast.showError(context, e.error);
+                },
+                orElse: () {});
+          },
+          builder: (context, state) {
+            return Scaffold(
+              body: SingleChildScrollView(
+                child: Padding(
+                  padding: const EdgeInsets.only(
+                      left: 24, right: 24),
+                  child: Form(
+                    key: _formKey,
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Padding(
+                          padding: const EdgeInsets.symmetric(vertical: 52.0),
+                          child: Image.asset(AppImages.logo,scale: 1.5,),
+                        ),
+                        Text(
+                          AppStrings.login,
+                          style: AppTheme.themeData.textTheme.headlineLarge,
+                        ),
+                        Text(
+                          AppStrings.loginHead,
+                          style: AppTheme.themeData.textTheme.headlineSmall,
+                        ),
+                        const SizedBox(
+                          height: 30,
+                        ),
+                        Text(
+                          AppStrings.email,
+                          style: AppTheme.themeData.textTheme.titleMedium,
+                        ),
+                        const SizedBox(
+                          height: 7,
+                        ),
+                        AppTextField(
+                          focusNode: _emailNode,
+                          textController: _emailController,
+                          hintText: AppStrings.enterEmail,
+                          validator: Validator.validateEmail,
+                        ),
+                        const SizedBox(
+                          height: 14,
+                        ),
+                        Text(
+                          AppStrings.password,
+                          style: AppTheme.themeData.textTheme.titleMedium,
+                        ),
+                        const SizedBox(
+                          height: 7,
+                        ),
+                        AppTextField(
+                          focusNode: _passwordNode,
+                          obscureText: isPassObscure,
+                          textController: _passwordController,
+                          hintText: AppStrings.enterPass,
+                          suffixIcon: IconButton(
+                            onPressed: () {
+                              setState(() {
+                                isPassObscure = !isPassObscure;
+                              });
+                            },
+                            icon: isPassObscure
+                                ? SvgPicture.asset(AppIcons.closedEye)
+                                : SvgPicture.asset(AppIcons.openEye),
                           ),
-                          Text(
-                            AppStrings.login,
-                            style: AppTheme.themeData.textTheme.headlineLarge,
-                          ),
-                          Text(
-                            AppStrings.loginHead,
-                            style: AppTheme.themeData.textTheme.headlineSmall,
-                          ),
-                          const SizedBox(
-                            height: 30,
-                          ),
-                          Text(
-                            AppStrings.email,
-                            style: AppTheme.themeData.textTheme.titleMedium,
-                          ),
-                          const SizedBox(
-                            height: 7,
-                          ),
-                          AppTextField(
-                            focusNode: _emailNode,
-                            textController: _emailController,
-                            hintText: AppStrings.enterEmail,
-                            validator: Validator.validateEmail,
-                          ),
-                          const SizedBox(
-                            height: 14,
-                          ),
-                          Text(
-                            AppStrings.password,
-                            style: AppTheme.themeData.textTheme.titleMedium,
-                          ),
-                          const SizedBox(
-                            height: 7,
-                          ),
-                          AppTextField(
-                            focusNode: _passwordNode,
-                            obscureText: isPassObscure,
-                            textController: _passwordController,
-                            hintText: AppStrings.enterPass,
-                            suffixIcon: IconButton(
-                              onPressed: () {
-                                setState(() {
-                                  isPassObscure = !isPassObscure;
-                                });
+                          validator: Validator.validatePasswordEmpty,
+                        ),
+                        const SizedBox(
+                          height: 7,
+                        ),
+                        Align(
+                          alignment: Alignment.centerRight,
+                          child: GestureDetector(
+                              onTap: () {
+                                Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                    builder: (context) =>
+                                    const MobileForgotPasswordScreen(),
+                                  ),
+                                );
                               },
-                              icon: isPassObscure
-                                  ? SvgPicture.asset(AppIcons.closedEye)
-                                  : SvgPicture.asset(AppIcons.openEye),
-                            ),
-                            validator: Validator.validate,
-                          ),
-                          const SizedBox(
-                            height: 7,
-                          ),
-                          Align(
-                            alignment: Alignment.centerRight,
-                            child: GestureDetector(
-                                onTap: () {
-                                  Navigator.push(
-                                    context,
-                                    MaterialPageRoute(
-                                      builder: (context) =>
-                                      const MobileForgotPasswordScreen(),
-                                    ),
-                                  );
-                                },
-                                child: Text(
-                                  '${AppStrings.forgotPass}?',
-                                  style: AppTheme.themeData.textTheme.titleSmall,
-                                )),
-                          ),
-                          const SizedBox(
-                            height: 24,
-                          ),
-                          AppElevatedButton(
-                            widget: state.maybeMap(
-                              loading: (_)=> const SizedBox(width:20,height:20,child: LoadingIndicator(color: Colors.white,)),
-                                orElse: ()=>Text(
-                              AppStrings.buttonLogin,
-                              style: AppTheme.themeData.textTheme.titleSmall!
-                                      .copyWith(color: Colors.white),
-                            )),
-                              text: AppStrings.buttonLogin, onPressed: () {
-                            if (!_formKey.currentState!
-                                .validate()) {
-                              return;
-                            }
-                            _formKey.currentState!.save();
-
+                              child: Text(
+                                '${AppStrings.forgotPass}?',
+                                style: AppTheme.themeData.textTheme.titleSmall,
+                              )),
+                        ),
+                        const SizedBox(
+                          height: 24,
+                        ),
+                        AppElevatedButton(
+                          widget: state.maybeMap(
+                            loading: (_)=> const SizedBox(width:20,height:20,child: LoadingIndicator(color: Colors.white,)),
+                              orElse: ()=>Text(
+                            AppStrings.buttonLogin,
+                            style: AppTheme.themeData.textTheme.titleSmall!
+                                    .copyWith(color: Colors.white),
+                          )),
+                            text: AppStrings.buttonLogin, onPressed: () {
+                          if (!_formKey.currentState!
+                              .validate()) {
+                            return;
+                          }
+                          _formKey.currentState!.save();
                             context.read<SigninBloc>().add(
                               SigninEvent
                                   .signInWithEmailAndPassword(
@@ -205,58 +203,58 @@ class _MobileSignInScreenState extends State<MobileSignInScreen> {
                                       ],
                                     ),
                                   ),
-                                ],
-                              ),
+                                ),
+                              ],
                             ),
                           ),
-                          const SizedBox(
-                            height: 51,
-                          ),
-                          Row(
-                            children: [
-                              const Flexible(
-                                child: Divider(
-                                  color: AppColors.grey,
-                                  height: 1,
-                                ),
+                        ),
+                        const SizedBox(
+                          height: 51,
+                        ),
+                        Row(
+                          children: [
+                            const Flexible(
+                              child: Divider(
+                                color: AppColors.grey,
+                                height: 1,
                               ),
-                              Padding(
-                                padding: const EdgeInsets.symmetric(
-                                    horizontal: 10),
-                                child: Text(
-                                  AppStrings.orWith,
-                                  style: AppTheme.themeData.textTheme.titleSmall,
-                                ),
+                            ),
+                            Padding(
+                              padding: const EdgeInsets.symmetric(
+                                  horizontal: 10),
+                              child: Text(
+                                AppStrings.orWith,
+                                style: AppTheme.themeData.textTheme.titleSmall,
                               ),
-                              const Flexible(
-                                child: Divider(
-                                  color: AppColors.grey,
-                                  height: 1,
-                                ),
+                            ),
+                            const Flexible(
+                              child: Divider(
+                                color: AppColors.grey,
+                                height: 1,
                               ),
-                            ],
-                          ),
-                          const SizedBox(
-                            height: 39,
-                          ),
-                          Platform.isIOS ? Row(
-                            children: [
-                               AppleSignInButton(),
-                              const SizedBox(
-                                width: 24,
-                              ),
-                              GoogleSignInButton(),
-                            ],
-                          ) : SizedBox(child: AndroidGoogleSignInButton()),
+                            ),
+                          ],
+                        ),
+                        const SizedBox(
+                          height: 39,
+                        ),
+                        Platform.isIOS ? Row(
+                          children: [
+                             AppleSignInButton(),
+                            const SizedBox(
+                              width: 24,
+                            ),
+                            GoogleSignInButton(),
+                          ],
+                        ) : SizedBox(child: AndroidGoogleSignInButton()),
 
-                        ],
-                      ),
+                      ],
                     ),
                   ),
                 ),
-              );
-            },
-          ),
+              ),
+            );
+          },
         ),
       ),
     );

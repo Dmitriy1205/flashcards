@@ -1,7 +1,9 @@
+import 'package:dialog_alert/dialog_alert.dart';
 import 'package:flashcards/core/const/colors.dart';
 import 'package:flashcards/core/const/icons.dart';
 import 'package:flashcards/core/const/strings.dart';
 import 'package:flashcards/core/themes/theme.dart';
+import 'package:flashcards/core/utils/confirm_dialog.dart';
 import 'package:flashcards/domain/entities/collection_entity/collection_entity.dart';
 import 'package:flashcards/presentation/blocs/lists/lists_bloc.dart';
 import 'package:flashcards/presentation/widgets/create_edit_collection.dart';
@@ -31,7 +33,7 @@ class Collections extends StatelessWidget {
                     ? Container(
                       color: Colors.transparent,
                       child: InkWell(
-                        onTap: () {
+                        onTap: () async{
                           if (context
                               .read<ListsBloc>()
                               .listIdToDelete

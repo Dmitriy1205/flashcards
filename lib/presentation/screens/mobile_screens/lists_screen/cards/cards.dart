@@ -3,6 +3,7 @@ import 'package:flashcards/core/const/icons.dart';
 import 'package:flashcards/core/const/strings.dart';
 import 'package:flashcards/core/router/router.dart';
 import 'package:flashcards/core/themes/theme.dart';
+import 'package:flashcards/core/utils/confirm_dialog.dart';
 import 'package:flashcards/domain/entities/card_entity/card_entity.dart';
 import 'package:flashcards/presentation/blocs/cards/cards_bloc.dart';
 import 'package:flashcards/presentation/blocs/lists/lists_bloc.dart';
@@ -397,9 +398,10 @@ class _CardsState extends State<Cards> {
           });
         },
       ),
+
       floatingActionButton: context.watch<CardsBloc>().isEditMode
           ? Padding(
-              padding: const EdgeInsets.only(bottom: 60, right: 20),
+              padding: const EdgeInsets.only(bottom: 15, right: 13),
               child: Stack(
                 children: [
                   SizedBox(
@@ -416,7 +418,9 @@ class _CardsState extends State<Cards> {
                     borderRadius: BorderRadius.circular(32),
                     child: InkWell(
                         borderRadius: BorderRadius.circular(32),
-                        onTap: () {
+                        onTap: () async{
+                          final confirmed = await confirmOperation(context, title: "Confirm deleting", message: "Are you sure that you want to delete selected cards?", action: "Delete", cancel: "Cancel");
+                          if(!confirmed) return;
                           context.read<CardsBloc>().add(
                               CardsEvent.deleteSelectedCards(
                                   cardsIdToDelete: context
@@ -432,7 +436,7 @@ class _CardsState extends State<Cards> {
               ),
             )
           : Padding(
-              padding: const EdgeInsets.only(bottom: 60, right: 20),
+              padding: const EdgeInsets.only(bottom: 15, right: 13),
               child: Stack(
                 children: [
                   SizedBox(
