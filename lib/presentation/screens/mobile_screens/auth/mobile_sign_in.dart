@@ -3,6 +3,7 @@ import 'dart:io';
 import 'package:flashcards/core/const/images.dart';
 import 'package:flashcards/core/utils/app_toast.dart';
 import 'package:flashcards/core/validator/field_validator.dart';
+import 'package:flashcards/presentation/blocs/auth/auth_bloc.dart';
 import 'package:flashcards/presentation/screens/mobile_screens/auth/mobile_forgot_password.dart';
 import 'package:flashcards/presentation/widgets/android_google_sign_in_button.dart';
 import 'package:flashcards/presentation/widgets/app_text_field.dart';
@@ -17,7 +18,6 @@ import 'package:flutter_svg/svg.dart';
 import '../../../../core/const/colors.dart';
 import '../../../../core/const/icons.dart';
 import '../../../../core/const/strings.dart';
-import '../../../../core/services/service_locator.dart';
 import '../../../../core/themes/theme.dart';
 import '../../../blocs/sign_in/signin_bloc.dart';
 import '../../../widgets/app_elevated_button.dart';
@@ -31,7 +31,6 @@ class MobileSignInScreen extends StatefulWidget {
 }
 
 class _MobileSignInScreenState extends State<MobileSignInScreen> {
-  final SigninBloc _signInBloc = sl<SigninBloc>();
   final _formKey = GlobalKey<FormState>();
 
   final _emailController = TextEditingController();
@@ -49,9 +48,9 @@ class _MobileSignInScreenState extends State<MobileSignInScreen> {
       child: Container(
         color: Colors.white,
         child: BlocConsumer<SigninBloc, SigninState>(
-          bloc: _signInBloc,
           listener: (context, state) {
             state.maybeMap(
+                success: (_)=>context.read<AuthBloc>().add(AuthEvent.initUser(user: context.read<AuthBloc>().state.user)),
                 error: (e) {
                   AppToast.showError(context, e.error);
                 },
@@ -160,49 +159,49 @@ class _MobileSignInScreenState extends State<MobileSignInScreen> {
                             return;
                           }
                           _formKey.currentState!.save();
-
-                          _signInBloc.add(
-                            SigninEvent
-                                .signInWithEmailAndPassword(
-                              email: _emailController.text,
-                              password: _passwordController.text,
-                            ),
-                          );
-                        }),
-                        const SizedBox(
-                          height: 17,
-                        ),
-                        Center(
-                          child: Padding(
-                            padding: const EdgeInsets.fromLTRB(0, 0, 0, 0),
-                            child: Column(
-                              mainAxisAlignment: MainAxisAlignment.end,
-                              children: [
-                                RichText(
-                                  text: TextSpan(
-                                    style: AppTheme.themeData.textTheme
-                                        .titleSmall,
-                                    children: [
-                                      const TextSpan(
-                                        text: '${AppStrings.dontHaveAccount} ',
-                                      ),
-                                      TextSpan(
-                                          text: AppStrings.signUp,
-                                          style: const TextStyle(
-                                            color: AppColors.mainAccent,
-                                            fontWeight: FontWeight.w600,
-                                          ),
-                                          recognizer: TapGestureRecognizer()
-                                            ..onTap = () {
-                                              Navigator.push(
-                                                context,
-                                                MaterialPageRoute(
-                                                  builder: (context) =>
-                                                   MobileSignUpScreen(),
-                                                ),
-                                              );
-                                            }),
-                                    ],
+                            context.read<SigninBloc>().add(
+                              SigninEvent
+                                  .signInWithEmailAndPassword(
+                                email: _emailController.text,
+                                password: _passwordController.text,
+                              ),
+                            );
+                          }),
+                          const SizedBox(
+                            height: 17,
+                          ),
+                          Center(
+                            child: Padding(
+                              padding: const EdgeInsets.fromLTRB(0, 0, 0, 0),
+                              child: Column(
+                                mainAxisAlignment: MainAxisAlignment.end,
+                                children: [
+                                  RichText(
+                                    text: TextSpan(
+                                      style: AppTheme.themeData.textTheme
+                                          .titleSmall,
+                                      children: [
+                                        const TextSpan(
+                                          text: '${AppStrings.dontHaveAccount} ',
+                                        ),
+                                        TextSpan(
+                                            text: AppStrings.signUp,
+                                            style: const TextStyle(
+                                              color: AppColors.mainAccent,
+                                              fontWeight: FontWeight.w600,
+                                            ),
+                                            recognizer: TapGestureRecognizer()
+                                              ..onTap = () {
+                                                Navigator.push(
+                                                  context,
+                                                  MaterialPageRoute(
+                                                    builder: (context) =>
+                                                     MobileSignUpScreen(),
+                                                  ),
+                                                );
+                                              }),
+                                      ],
+                                    ),
                                   ),
                                 ),
                               ],
@@ -267,7 +266,6 @@ class _MobileSignInScreenState extends State<MobileSignInScreen> {
     _passwordController.dispose();
     _emailNode.dispose();
     _passwordNode.dispose();
-    _signInBloc.close();
     super.dispose();
   }
 }

@@ -2,6 +2,7 @@ import 'package:flashcards/core/const/colors.dart';
 import 'package:flashcards/core/const/icons.dart';
 import 'package:flashcards/core/const/strings.dart';
 import 'package:flashcards/core/themes/theme.dart';
+import 'package:flashcards/core/utils/app_toast.dart';
 import 'package:flashcards/presentation/blocs/lists/lists_bloc.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -21,6 +22,7 @@ class CustomNavigationBar extends StatefulWidget {
 class _CustomNavigationBarState extends State<CustomNavigationBar> {
   int pageIndex = 0;
   TextEditingController nameTextEditingController = TextEditingController();
+  bool showError = false;
 
   @override
   Widget build(BuildContext context) {
@@ -193,7 +195,7 @@ class _CustomNavigationBarState extends State<CustomNavigationBar> {
                     ),
                     Text(AppStrings.giveName,
                         style: AppTheme.themeData.textTheme.labelSmall!
-                            .copyWith(color: Colors.black)),
+                            .copyWith(color:Colors.black)),
                     const SizedBox(
                       height: 22,
                     ),
@@ -232,11 +234,18 @@ class _CustomNavigationBarState extends State<CustomNavigationBar> {
                                 .copyWith(color: AppColors.mainAccent)),
                         onPressed: () {
                           if (nameTextEditingController.text.isNotEmpty) {
-                            context.read<ListsBloc>().add(
-                                ListsEvent.createNewList(
-                                    name: nameTextEditingController.text));
-                            nameTextEditingController.clear();
+                            if(context.read<ListsBloc>().state.collectionsList!.any((element) => element.collectionName == nameTextEditingController.text )){
+                            AppToast.showError(context, 'Collection with same name is exist ');
                             Navigator.of(context).pop();
+
+                            }else{
+                              context.read<ListsBloc>().add(
+                                  ListsEvent.createNewList(
+                                      name: nameTextEditingController.text));
+                              nameTextEditingController.clear();
+                              Navigator.of(context).pop();
+                            }
+
                           }
                         },
                       ),

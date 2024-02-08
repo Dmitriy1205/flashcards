@@ -65,7 +65,6 @@ class _ToastState extends State<_Toast> with SingleTickerProviderStateMixin{
       });
     });
   }
-
   @override
   Widget build(BuildContext context) {
     return Positioned(

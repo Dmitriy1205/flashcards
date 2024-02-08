@@ -9,8 +9,9 @@ import 'package:flutter_svg/svg.dart';
 
 import '../../../../core/const/colors.dart';
 import '../../../../core/const/icons.dart';
-import '../../../../core/services/service_locator.dart';
+import '../../../../core/router/router.dart';
 import '../../../../core/validator/field_validator.dart';
+import '../../../blocs/auth/auth_bloc.dart';
 import '../../../blocs/sign_up/signup_bloc.dart';
 import '../../../widgets/app_text_field.dart';
 import '../../../widgets/loading_indicator.dart';
@@ -23,7 +24,7 @@ class MobileSignUpScreen extends StatefulWidget {
 }
 
 class _MobileSignUpScreenState extends State<MobileSignUpScreen> {
-  final SignupBloc _signUpBloc = sl<SignupBloc>();
+
   final _formKey = GlobalKey<FormState>();
 
   final _emailController = TextEditingController();
@@ -35,15 +36,20 @@ class _MobileSignUpScreenState extends State<MobileSignUpScreen> {
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
-      onTap: (){
+      onTap: () {
         FocusScope.of(context).unfocus();
       },
       child: Container(
         color: Colors.white,
         child: BlocConsumer<SignupBloc, SignupState>(
-          bloc: _signUpBloc,
           listener: (context, state) {
             state.maybeMap(
+              success: (_) {
+                    context.read<AuthBloc>().add(const AuthEvent.logout());
+                    router.pop();
+                    AppToast.showSuccess(context,
+                        'account is created,to verify your email please check your inbox including spam and follow the instructions');
+                  },
                 error: (e) {
                   AppToast.showError(context, e.error);
                 },
@@ -185,7 +191,6 @@ class _MobileSignUpScreenState extends State<MobileSignUpScreen> {
     _passwordController.dispose();
     _emailNode.dispose();
     _passwordNode.dispose();
-    _signUpBloc.close();
     super.dispose();
   }
 }

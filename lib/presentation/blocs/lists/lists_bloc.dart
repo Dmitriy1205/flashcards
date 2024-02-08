@@ -39,6 +39,8 @@ class ListsBloc extends Bloc<ListsEvent, ListsState> {
       _CreateNewList event, Emitter<ListsState> emit) async {
     emit(const ListsState.loading());
     try {
+
+
       await collectionRepo.createCollection(collectionName: event.name);
       final List<CollectionEntity> data =
           await collectionRepo.fetchCollections();
