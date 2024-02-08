@@ -318,11 +318,18 @@ class _WebListsScreenState extends State<WebListsScreen> {
                               .copyWith(color: AppColors.mainAccent)),
                       onPressed: () {
                         if (nameTextEditingController.text.isNotEmpty) {
-                          context.read<WebListBloc>().add(
-                              WebListEvent.createCollection(
-                                  name: nameTextEditingController.text));
-                          nameTextEditingController.clear();
-                          router.pop();
+                          if(context.read<WebListBloc>().state.collectionsList!.any((element) => element.collectionName == nameTextEditingController.text )){
+                            AppToast.showError(context, 'Collection with same name is exist ');
+                            router.pop();
+
+                          }else{
+                            context.read<WebListBloc>().add(
+                                WebListEvent.createCollection(
+                                    name: nameTextEditingController.text));
+                            nameTextEditingController.clear();
+                            router.pop();
+                          }
+
                         }
                       },
                     )
