@@ -11,8 +11,12 @@ _$CardEntityImpl _$$CardEntityImplFromJson(Map<String, dynamic> json) =>
       id: json['id'] as String,
       collectionId: json['collectionId'] as String,
       collectionName: json['collectionName'] as String,
-      front: json['front'] as String,
-      back: json['back'] as String,
+      front: (json['front'] as List<dynamic>)
+          .map((e) => e as Map<String, dynamic>)
+          .toList(),
+      back: (json['back'] as List<dynamic>)
+          .map((e) => e as Map<String, dynamic>)
+          .toList(),
       createdAt: FirebaseTimestampConverters.fromTimestamp(json['createdAt']),
       sharedFrom: json['sharedFrom'] as String?,
       shareWithId: (json['shareWithId'] as List<dynamic>?)

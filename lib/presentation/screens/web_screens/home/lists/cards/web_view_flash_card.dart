@@ -44,7 +44,8 @@ class _WebViewFlashCardState extends State<WebViewFlashCard> {
 
   @override
   Widget build(BuildContext context) {
-    return LayoutBuilder(
+    return SizedBox();
+    /*return LayoutBuilder(
         builder: (BuildContext context, BoxConstraints constraints) {
       if (constraints.maxWidth < 700) {
         return Scaffold(
@@ -425,7 +426,7 @@ class _WebViewFlashCardState extends State<WebViewFlashCard> {
               ],
             ),
           ));
-    });
+    });*/
   }
 }
 

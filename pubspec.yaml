@@ -42,8 +42,9 @@ dependencies:
   flutter_colorpicker: ^1.0.3
   dialog_alert: ^0.0.3
   share_plus: ^7.2.1
+  flutter_keyboard_visibility: ^6.0.0
 
-  quill_html_editor: any
+  flutter_quill: ^9.2.12
   flutter_html: any
 
 

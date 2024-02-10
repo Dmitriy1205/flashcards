@@ -7,6 +7,7 @@ import 'package:flashcards/presentation/blocs/cards/cards_bloc.dart';
 import 'package:flashcards/presentation/blocs/lists/lists_bloc.dart';
 import 'package:flashcards/presentation/screens/web_screens/home/lists/cards/web_view_flash_card.dart';
 import 'package:flashcards/presentation/widgets/loading_indicator.dart';
+import 'package:flashcards/presentation/widgets/quill_text.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/svg.dart';
@@ -387,34 +388,8 @@ class _WebCardsState extends State<WebCards> {
                                                         CrossAxisAlignment
                                                             .start,
                                                     children: [
-                                                      Text(
-                                                        overflow: TextOverflow
-                                                            .ellipsis,
-                                                        card.front!.replaceAll(
-                                                            RegExp(r'<[^>]*>'),
-                                                            ''),
-                                                        style: AppTheme
-                                                            .themeData
-                                                            .textTheme
-                                                            .titleSmall!
-                                                            .copyWith(
-                                                                color: AppColors
-                                                                    .mainAccent),
-                                                      ),
-                                                      Text(
-                                                        overflow: TextOverflow
-                                                            .ellipsis,
-                                                        card.back!.replaceAll(
-                                                            RegExp(r'<[^>]*>'),
-                                                            ''),
-                                                        style: AppTheme
-                                                            .themeData
-                                                            .textTheme
-                                                            .labelSmall!
-                                                            .copyWith(
-                                                          color: Colors.black,
-                                                        ),
-                                                      ),
+                                                      QuillText(content: card.front),
+                                                      QuillText(content: card.back),
                                                     ],
                                                   ),
                                                 ),
@@ -818,30 +793,8 @@ class _WebCardsState extends State<WebCards> {
                                                 crossAxisAlignment:
                                                     CrossAxisAlignment.start,
                                                 children: [
-                                                  Text(
-                                                    overflow:
-                                                        TextOverflow.ellipsis,
-                                                    maxLines: 2,
-                                                    card.front!.replaceAll(
-                                                        RegExp(r'<[^>]*>'), ''),
-                                                    style: AppTheme.themeData
-                                                        .textTheme.titleSmall!
-                                                        .copyWith(
-                                                            color: AppColors
-                                                                .mainAccent),
-                                                  ),
-                                                  Text(
-                                                    overflow:
-                                                        TextOverflow.ellipsis,
-                                                    maxLines: 2,
-                                                    card.back!.replaceAll(
-                                                        RegExp(r'<[^>]*>'), ''),
-                                                    style: AppTheme.themeData
-                                                        .textTheme.labelSmall!
-                                                        .copyWith(
-                                                      color: Colors.black,
-                                                    ),
-                                                  ),
+                                                  QuillText(content: card.front),
+                                                  QuillText(content: card.back)
                                                 ],
                                               ),
                                             ),

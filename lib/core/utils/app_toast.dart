@@ -96,7 +96,8 @@ class _ToastState extends State<_Toast> with SingleTickerProviderStateMixin{
                 const SizedBox(width: 21,),
                 CircleAvatar(radius: 6, backgroundColor: widget.circleColor,),
                 const SizedBox(width: 27,),
-                Expanded(child: Text(widget.msg, style: TextStyle(color: widget.textColor),))
+                Expanded(child: Text(widget.msg, style: TextStyle(color: widget.textColor), maxLines: 2, overflow: TextOverflow.ellipsis,)),
+                const SizedBox(width: 13,),
               ],
             ),
           ),

@@ -10,11 +10,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_colorpicker/flutter_colorpicker.dart';
+import 'package:flutter_quill/flutter_quill.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'package:quill_html_editor/quill_html_editor.dart';
-import 'package:quill_html_editor/quill_html_editor.dart';
-import 'package:quill_html_editor/quill_html_editor.dart';
 
 import '../../../../../../core/enum/enum.dart';
 import '../../../../../../core/router/router.dart';
@@ -36,8 +34,8 @@ class WebEditCard extends StatefulWidget {
 }
 
 class _WebEditCardState extends State<WebEditCard> {
-  late QuillEditorController frontController;
-  late QuillEditorController backController;
+  QuillController frontController = QuillController.basic();
+  QuillController backController = QuillController.basic();
 
   bool _frontHasFocus = false;
   bool _backHasFocus = false;
@@ -55,15 +53,9 @@ class _WebEditCardState extends State<WebEditCard> {
   ParagraphFormat currentParagraphFormat = ParagraphFormat.normal;
 
   @override
-  void initState() {
-    frontController = QuillEditorController();
-    backController = QuillEditorController();
-    super.initState();
-  }
-
-  @override
   Widget build(BuildContext context) {
-    return BlocListener<CardsBloc,CardsState>(
+    return SizedBox();
+    /*return BlocListener<CardsBloc,CardsState>(
       listener: (context,state){
         state.maybeMap(
             loaded: (_){
@@ -162,7 +154,7 @@ class _WebEditCardState extends State<WebEditCard> {
           ),
         ),
       ),
-    );
+    );*/
   }
 
   Column backEditor(BuildContext context) {
@@ -192,44 +184,7 @@ class _WebEditCardState extends State<WebEditCard> {
                   padding: const EdgeInsets.only(left: 20),
                   child: ClipRRect(
                     borderRadius: BorderRadius.circular(20),
-                    child: ToolBar(
-                      mainAxisSize: MainAxisSize.min,
-                      toolBarColor: Colors.white,
-                      padding: const EdgeInsets.all(8),
-                      iconSize: 21,
-                      iconColor: AppColors.veryLightGrey,
-                      activeIconColor: Colors.black,
-                      controller: backController,
-                      crossAxisAlignment: WrapCrossAlignment.start,
-                      direction: Axis.horizontal,
-                      toolBarConfig: const [
-                        ToolBarStyle.bold,
-                        ToolBarStyle.italic,
-                        ToolBarStyle.underline,
-                        ToolBarStyle.listOrdered,
-                        ToolBarStyle.listBullet,
-                      ],
-                      customButtons: [
-                        ///color picker
-                        // Padding(
-                        //   padding:
-                        //       const EdgeInsets.only(top: 3.0),
-                        //   child: InkWell(
-                        //     child: Container(
-                        //       decoration: BoxDecoration(
-                        //           color: backPickedColor,
-                        //           borderRadius:
-                        //               BorderRadius.circular(4)),
-                        //       height: 17,
-                        //       width: 17,
-                        //     ),
-                        //     onTap: () {
-                        //       showBackColorPicker(context);
-                        //     },
-                        //   ),
-                        // )
-                      ],
-                    ),
+                    child: QuillToolbar.simple(configurations: QuillSimpleToolbarConfigurations(controller: frontController))
                   ),
                 ),
                 Container(
@@ -239,46 +194,7 @@ class _WebEditCardState extends State<WebEditCard> {
                 Padding(
                   padding:
                       const EdgeInsets.symmetric(vertical: 8.0, horizontal: 10),
-                  child: QuillHtmlEditor(
-                    text: widget.card.back,
-                    controller: backController,
-                    isEnabled: true,
-                    ensureVisible: false,
-                    minHeight: 130,
-                    autoFocus: false,
-                    textStyle: AppTheme.themeData.textTheme.titleMedium!
-                        .copyWith(
-                            color: backPickedColor,
-                            fontWeight: FontWeight.w300,
-                            fontSize: 17),
-                    hintTextAlign: TextAlign.start,
-                    padding: const EdgeInsets.only(left: 10, top: 10),
-                    hintTextPadding: const EdgeInsets.only(left: 20),
-                    backgroundColor: Colors.white,
-                    inputAction: InputAction.newline,
-                    // loadingBuilder: (context) {
-                    //   return const Center(
-                    //       child: CircularProgressIndicator(
-                    //     strokeWidth: 1,
-                    //     color: Colors.red,
-                    //   ));
-                    // },
-                    onFocusChanged: (focus) {
-                      debugPrint('has focus $focus');
-                      setState(() {
-                        _backHasFocus = focus;
-                      });
-                    },
-                    onTextChanged: (text) {
-                      setState(() {
-                        backText = text;
-                        textLengthBack = text
-                            .replaceAll(RegExp(r'<[^>]*>'), '')
-                            .length
-                            .toString();
-                      });
-                    },
-                  ),
+                  child: QuillEditor.basic(configurations: QuillEditorConfigurations(controller: frontController))
                 ),
               ],
             ),
@@ -394,41 +310,8 @@ class _WebEditCardState extends State<WebEditCard> {
                   padding: const EdgeInsets.only(left: 20),
                   child: ClipRRect(
                     borderRadius: BorderRadius.circular(20),
-                    child: ToolBar(
-                      mainAxisSize: MainAxisSize.min,
-                      toolBarColor: Colors.white,
-                      padding: const EdgeInsets.all(8),
-                      iconSize: 21,
-                      iconColor: AppColors.veryLightGrey,
-                      activeIconColor: Colors.black,
-                      controller: frontController,
-                      crossAxisAlignment: WrapCrossAlignment.start,
-                      direction: Axis.horizontal,
-                      toolBarConfig: const [
-                        ToolBarStyle.bold,
-                        ToolBarStyle.italic,
-                        ToolBarStyle.underline,
-                        ToolBarStyle.listOrdered,
-                        ToolBarStyle.listBullet,
-                      ],
-                      customButtons: [
-                        ///color picker
-                        // Padding(
-                        //   padding: const EdgeInsets.only(top: 3.0),
-                        //   child: InkWell(
-                        //     child: Container(
-                        //       decoration: BoxDecoration(
-                        //           color: frontPickedColor,
-                        //           borderRadius: BorderRadius.circular(4)),
-                        //       height: 17,
-                        //       width: 17,
-                        //     ),
-                        //     onTap: () {
-                        //       showFrontColorPicker(context);
-                        //     },
-                        //   ),
-                        // )
-                      ],
+                    child: QuillToolbar.simple(
+                      configurations: QuillSimpleToolbarConfigurations(controller: frontController)
                     ),
                   ),
                 ),
@@ -439,45 +322,8 @@ class _WebEditCardState extends State<WebEditCard> {
                 Padding(
                   padding:
                       const EdgeInsets.symmetric(vertical: 8.0, horizontal: 10),
-                  child: QuillHtmlEditor(
-                    text: widget.card.front,
-                    controller: frontController,
-                    isEnabled: true,
-                    ensureVisible: false,
-                    minHeight: 130,
-                    autoFocus: false,
-                    textStyle: AppTheme.themeData.textTheme.titleMedium!
-                        .copyWith(
-                            color: frontPickedColor,
-                            fontWeight: FontWeight.w300,
-                            fontSize: 17),
-                    hintTextAlign: TextAlign.start,
-                    padding: const EdgeInsets.only(left: 10, top: 10),
-                    hintTextPadding: const EdgeInsets.only(left: 20),
-                    backgroundColor: Colors.white,
-                    inputAction: InputAction.newline,
-                    // loadingBuilder: (context) {
-                    //   return const Center(
-                    //       child: CircularProgressIndicator(
-                    //     strokeWidth: 1,
-                    //     color: Colors.red,
-                    //   ));
-                    // },
-                    onFocusChanged: (focus) {
-                      debugPrint('has focus $focus');
-                      setState(() {
-                        _frontHasFocus = focus;
-                      });
-                    },
-                    onTextChanged: (text) {
-                      setState(() {
-                        frontText = text;
-                        textLengthFront = text
-                            .replaceAll(RegExp(r'<[^>]*>'), '')
-                            .length
-                            .toString();
-                      });
-                    },
+                  child: QuillEditor.basic(
+                      configurations: QuillEditorConfigurations(controller: frontController)
                   ),
                 ),
               ],

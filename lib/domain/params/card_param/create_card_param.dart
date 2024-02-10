@@ -8,8 +8,8 @@ class CreateCardParam {
       this.backImages,
       required this.collectionId,});
 
-  final String front;
-  final String back;
+  final List<Map<String,dynamic>> front;
+  final List<Map<String,dynamic>> back;
   final String collectionId;
   final List<File>? frontImages;
   final List<File>? backImages;

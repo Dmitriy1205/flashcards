@@ -6,6 +6,7 @@ import 'package:flashcards/core/const/strings.dart';
 import 'package:flashcards/core/router/router.dart';
 import 'package:flashcards/core/themes/theme.dart';
 import 'package:flashcards/domain/entities/card_entity/card_entity.dart';
+import 'package:flashcards/presentation/widgets/quill_text.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_html/flutter_html.dart';
 import 'package:flutter_svg/svg.dart';
@@ -135,14 +136,7 @@ class _ViewFlashCardState extends State<ViewFlashCard> {
                                                 child: FractionallySizedBox(
                                                   widthFactor: 1,
                                                   // Adjust the width factor as needed
-                                                  child: Html(
-                                                    data: widget.card.front,
-                                                    style: {
-                                                      'html': Style(
-                                                          textAlign:
-                                                              TextAlign.center),
-                                                    },
-                                                  ),
+                                                  child: QuillText(content: widget.card.front)
                                                 ),
                                               )
                                             : Align(
@@ -150,14 +144,7 @@ class _ViewFlashCardState extends State<ViewFlashCard> {
                                                 child: FractionallySizedBox(
                                                   widthFactor: 1,
                                                   // Adjust the width factor as needed
-                                                  child: Html(
-                                                    data: widget.card.back,
-                                                    style: {
-                                                      'html': Style(
-                                                          textAlign:
-                                                              TextAlign.center),
-                                                    },
-                                                  ),
+                                                  child: QuillText(content: widget.card.back)
                                                 ),
                                               ),
                                         // Text(

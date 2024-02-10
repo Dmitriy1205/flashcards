@@ -23,8 +23,8 @@ mixin _$CardEntity {
   String get id => throw _privateConstructorUsedError;
   String get collectionId => throw _privateConstructorUsedError;
   String get collectionName => throw _privateConstructorUsedError;
-  String get front => throw _privateConstructorUsedError;
-  String get back => throw _privateConstructorUsedError;
+  List<Map<String, dynamic>> get front => throw _privateConstructorUsedError;
+  List<Map<String, dynamic>> get back => throw _privateConstructorUsedError;
   @JsonKey(fromJson: FirebaseTimestampConverters.fromTimestamp)
   DateTime? get createdAt => throw _privateConstructorUsedError;
   String? get sharedFrom => throw _privateConstructorUsedError;
@@ -48,8 +48,8 @@ abstract class $CardEntityCopyWith<$Res> {
       {String id,
       String collectionId,
       String collectionName,
-      String front,
-      String back,
+      List<Map<String, dynamic>> front,
+      List<Map<String, dynamic>> back,
       @JsonKey(fromJson: FirebaseTimestampConverters.fromTimestamp)
       DateTime? createdAt,
       String? sharedFrom,
@@ -98,11 +98,11 @@ class _$CardEntityCopyWithImpl<$Res, $Val extends CardEntity>
       front: null == front
           ? _value.front
           : front // ignore: cast_nullable_to_non_nullable
-              as String,
+              as List<Map<String, dynamic>>,
       back: null == back
           ? _value.back
           : back // ignore: cast_nullable_to_non_nullable
-              as String,
+              as List<Map<String, dynamic>>,
       createdAt: freezed == createdAt
           ? _value.createdAt
           : createdAt // ignore: cast_nullable_to_non_nullable
@@ -139,8 +139,8 @@ abstract class _$$CardEntityImplCopyWith<$Res>
       {String id,
       String collectionId,
       String collectionName,
-      String front,
-      String back,
+      List<Map<String, dynamic>> front,
+      List<Map<String, dynamic>> back,
       @JsonKey(fromJson: FirebaseTimestampConverters.fromTimestamp)
       DateTime? createdAt,
       String? sharedFrom,
@@ -185,13 +185,13 @@ class __$$CardEntityImplCopyWithImpl<$Res>
           : collectionName // ignore: cast_nullable_to_non_nullable
               as String,
       front: null == front
-          ? _value.front
+          ? _value._front
           : front // ignore: cast_nullable_to_non_nullable
-              as String,
+              as List<Map<String, dynamic>>,
       back: null == back
-          ? _value.back
+          ? _value._back
           : back // ignore: cast_nullable_to_non_nullable
-              as String,
+              as List<Map<String, dynamic>>,
       createdAt: freezed == createdAt
           ? _value.createdAt
           : createdAt // ignore: cast_nullable_to_non_nullable
@@ -223,15 +223,17 @@ class _$CardEntityImpl implements _CardEntity {
       {required this.id,
       required this.collectionId,
       required this.collectionName,
-      required this.front,
-      required this.back,
+      required final List<Map<String, dynamic>> front,
+      required final List<Map<String, dynamic>> back,
       @JsonKey(fromJson: FirebaseTimestampConverters.fromTimestamp)
       required this.createdAt,
       this.sharedFrom,
       final List<String>? shareWithId,
       final List<String>? frontImages,
       final List<String>? backImages})
-      : _shareWithId = shareWithId,
+      : _front = front,
+        _back = back,
+        _shareWithId = shareWithId,
         _frontImages = frontImages,
         _backImages = backImages;
 
@@ -244,10 +246,22 @@ class _$CardEntityImpl implements _CardEntity {
   final String collectionId;
   @override
   final String collectionName;
+  final List<Map<String, dynamic>> _front;
   @override
-  final String front;
+  List<Map<String, dynamic>> get front {
+    if (_front is EqualUnmodifiableListView) return _front;
+    // ignore: implicit_dynamic_type
+    return EqualUnmodifiableListView(_front);
+  }
+
+  final List<Map<String, dynamic>> _back;
   @override
-  final String back;
+  List<Map<String, dynamic>> get back {
+    if (_back is EqualUnmodifiableListView) return _back;
+    // ignore: implicit_dynamic_type
+    return EqualUnmodifiableListView(_back);
+  }
+
   @override
   @JsonKey(fromJson: FirebaseTimestampConverters.fromTimestamp)
   final DateTime? createdAt;
@@ -298,8 +312,8 @@ class _$CardEntityImpl implements _CardEntity {
                 other.collectionId == collectionId) &&
             (identical(other.collectionName, collectionName) ||
                 other.collectionName == collectionName) &&
-            (identical(other.front, front) || other.front == front) &&
-            (identical(other.back, back) || other.back == back) &&
+            const DeepCollectionEquality().equals(other._front, _front) &&
+            const DeepCollectionEquality().equals(other._back, _back) &&
             (identical(other.createdAt, createdAt) ||
                 other.createdAt == createdAt) &&
             (identical(other.sharedFrom, sharedFrom) ||
@@ -319,8 +333,8 @@ class _$CardEntityImpl implements _CardEntity {
       id,
       collectionId,
       collectionName,
-      front,
-      back,
+      const DeepCollectionEquality().hash(_front),
+      const DeepCollectionEquality().hash(_back),
       createdAt,
       sharedFrom,
       const DeepCollectionEquality().hash(_shareWithId),
@@ -346,8 +360,8 @@ abstract class _CardEntity implements CardEntity {
       {required final String id,
       required final String collectionId,
       required final String collectionName,
-      required final String front,
-      required final String back,
+      required final List<Map<String, dynamic>> front,
+      required final List<Map<String, dynamic>> back,
       @JsonKey(fromJson: FirebaseTimestampConverters.fromTimestamp)
       required final DateTime? createdAt,
       final String? sharedFrom,
@@ -365,9 +379,9 @@ abstract class _CardEntity implements CardEntity {
   @override
   String get collectionName;
   @override
-  String get front;
+  List<Map<String, dynamic>> get front;
   @override
-  String get back;
+  List<Map<String, dynamic>> get back;
   @override
   @JsonKey(fromJson: FirebaseTimestampConverters.fromTimestamp)
   DateTime? get createdAt;

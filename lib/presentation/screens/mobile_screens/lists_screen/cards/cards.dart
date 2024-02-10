@@ -10,6 +10,7 @@ import 'package:flashcards/presentation/blocs/lists/lists_bloc.dart';
 import 'package:flashcards/presentation/widgets/loading_indicator.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flashcards/presentation/widgets/quill_text.dart';
 import 'package:flutter_svg/svg.dart';
 import 'create_edit_card.dart';
 
@@ -352,22 +353,8 @@ class _CardsState extends State<Cards> {
                                         );
                                       },
                                       child: ListTile(
-                                        title: Text(
-                                          card.front!.replaceAll(
-                                              RegExp(r'<[^>]*>'), ''),
-                                          style: AppTheme
-                                              .themeData.textTheme.titleMedium!
-                                              .copyWith(fontSize: 14),
-                                        ),
-                                        subtitle: Text(
-                                          card.back!.replaceAll(
-                                              RegExp(r'<[^>]*>'), ''),
-                                          style: AppTheme
-                                              .themeData.textTheme.labelSmall!
-                                              .copyWith(
-                                            color: Colors.black,
-                                          ),
-                                        ),
+                                        title: QuillText(content: card.front, style: TextStyle(fontWeight: FontWeight.w600, color: AppColors.mainAccent),),
+                                        subtitle: QuillText(content: card.back, style: TextStyle(fontWeight: FontWeight.w400, color: Colors.black),),
                                         trailing: SvgPicture.asset(
                                           AppIcons.rightArrow,
                                           height: 18,

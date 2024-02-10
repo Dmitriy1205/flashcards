@@ -13,8 +13,8 @@ class EditCardParam {
 
   final String id;
   final String collectionId;
-  final String front;
-  final String back;
+  final List<Map<String,dynamic>> front;
+  final List<Map<String,dynamic>> back;
   final String? sharedFrom;
   final List<String>? shareWithId;
   final List<File>? frontImages;

@@ -1,4 +1,5 @@
-import 'dart:io';
+import 'dart:async';
+import 'dart:developer';
 
 import 'package:flashcards/core/const/colors.dart';
 import 'package:flashcards/core/const/icons.dart';
@@ -11,11 +12,11 @@ import 'package:flashcards/domain/params/card_param/create_card_param.dart';
 import 'package:flashcards/domain/params/card_param/edit_card_param.dart';
 import 'package:flashcards/presentation/blocs/cards/cards_bloc.dart';
 import 'package:flashcards/presentation/blocs/lists/lists_bloc.dart';
-import 'package:flashcards/presentation/widgets/loading_indicator.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_keyboard_visibility/flutter_keyboard_visibility.dart';
+import 'package:flutter_quill/flutter_quill.dart';
 import 'package:flutter_svg/svg.dart';
-import 'package:quill_html_editor/quill_html_editor.dart';
 
 class CreateEditCard extends StatefulWidget {
   const CreateEditCard({Key? key, this.cardEntity, required this.collectionId})
@@ -28,79 +29,124 @@ class CreateEditCard extends StatefulWidget {
 }
 
 class _CreateEditCardState extends State<CreateEditCard> {
-  final frontController = QuillEditorController();
-  final backController = QuillEditorController();
+  late final _frontController = widget.cardEntity != null ? QuillController(document: Document.fromJson(widget.cardEntity!.front), selection: const TextSelection(baseOffset: 0, extentOffset: 0)) : QuillController.basic();
+  late final _backController = widget.cardEntity != null ? QuillController(document: Document.fromJson(widget.cardEntity!.back), selection: const TextSelection(baseOffset: 0, extentOffset: 0)) : QuillController.basic();
+
+  final _frontFocusNode = FocusNode();
+  final _backFocusNode = FocusNode();
+
+  late final StreamSubscription _frontControllerValueChanged;
+  late final StreamSubscription _backControllerValueChanged;
+
+  final KeyboardVisibilityController _keyboardVisibilityController =
+      KeyboardVisibilityController();
+  late final StreamSubscription<bool> _keyboardVisibilityStreamSubscription;
 
   bool _showKeyboardFront = false;
   bool _showKeyboardBack = false;
 
-  String frontText = '';
-  String backText = '';
+  List<Map<String,dynamic>> get frontText => _frontController.document.toDelta().toJson();
+
+  List<Map<String,dynamic>> get backText => _backController.document.toDelta().toJson();
 
   int textLengthFront = 0;
   int textLengthBack = 0;
 
   int maxLength = 400;
 
-  bool frontControllerLoaded = false;
-  bool backControllerLoaded = false;
+  void _frontControllerChanged(){
+    int length = _frontController.document.toPlainText().length - 1;
+    if(length > maxLength){
+      _frontController.replaceText(maxLength, length - maxLength, '', TextSelection.collapsed(offset: maxLength));
+    }else{
+      setState(() {
+        textLengthFront = length;
+      });
+    }
+  }
 
-  bool get editorReady => frontControllerLoaded && backControllerLoaded;
-
+  void _backControllerChanged(){
+    int length = _backController.document.toPlainText().length - 1;
+    if(length > maxLength){
+      _backController.replaceText(maxLength, length - maxLength, '', TextSelection.collapsed(offset: maxLength));
+    }else{
+      setState(() {
+        textLengthBack = length;
+      });
+    }
+  }
   @override
   void initState() {
     super.initState();
-    frontController.onEditorLoaded(() {
-      setState(() {
-        frontControllerLoaded = true;
-      });
+    _frontControllerValueChanged = _frontController.document.documentChangeObserver.stream.listen((e){
+      _frontControllerChanged();
     });
-    backController.onEditorLoaded(() {
-      setState(() {
-        backControllerLoaded = true;
-      });
+    _backControllerValueChanged = _backController.document.documentChangeObserver.stream.listen((e) {
+      _backControllerChanged();
+    });
+    _backController.addListener(_backControllerChanged);
+    _keyboardVisibilityStreamSubscription =
+        _keyboardVisibilityController.onChange.listen((visible) {
+      if (visible) {
+        _updateFocus();
+      } else {
+        _removeFocus();
+      }
+    });
+    _frontFocusNode.addListener(_updateFocus);
+    _backFocusNode.addListener(_updateFocus);
+  }
+
+  void _updateFocus() {
+    setState(() {
+      _showKeyboardFront = _frontFocusNode.hasFocus;
+      _showKeyboardBack = _backFocusNode.hasFocus;
+    });
+  }
+
+  void _removeFocus() {
+    setState(() {
+      _showKeyboardBack = false;
+      _showKeyboardFront = false;
     });
   }
 
   @override
   Widget build(BuildContext context) {
-    return BlocListener<CardsBloc,CardsState>(
-      listener: (context,state){
-        state.maybeMap(
-            loaded: (state){
-              AppToast.showSuccess(context, "Success");
-              if(widget.cardEntity != null){
-                router.pushReplacement(
-                  '/view_card_mobile',
-                  extra: {
-                    "card": widget.cardEntity!.copyWith(
-                      front: frontText,
-                      back: backText,
-                    ),
-                    "collectionId": widget.collectionId,
-                  },
-                );
-              }else{
-                Navigator.pop(context);
-                context
-                    .read<ListsBloc>()
-                    .add(const ListsEvent.started(isEditMode: false));
-              }
-            },
-            error: (e){
-              AppToast.showError(context, e.error);
-            },
-            orElse: (){});
+    return GestureDetector(
+      onTap: () {
+        setState(() {
+          _frontFocusNode.unfocus();
+          _backFocusNode.unfocus();
+        });
       },
-      child: GestureDetector(
-        onTap: () {
-          frontController.enableEditor(false);
-          backController.enableEditor(false);
-          frontController.unFocus();
-          backController.unFocus();
-          setState(() {});
-          frontController.enableEditor(true);
-          backController.enableEditor(true);
+      child: BlocListener<CardsBloc, CardsState>(
+        listener: (context, state) {
+          state.maybeMap(
+              loaded: (state) {
+                AppToast.showSuccess(context, "Success");
+                if (widget.cardEntity != null) {
+                  router.pushReplacement(
+                    '/view_card_mobile',
+                    extra: {
+                      "card": widget.cardEntity!.copyWith(
+                        front: frontText,
+                        back: backText,
+                      ),
+                      "collectionId": widget.collectionId,
+                    },
+                  );
+                } else {
+                  Navigator.pop(context);
+                  context
+                      .read<ListsBloc>()
+                      .add(const ListsEvent.started(isEditMode: false));
+                }
+              },
+              error: (e) {
+                AppToast.showError(context, e.error);
+              },
+              orElse: () {});
         },
         child: Scaffold(
           backgroundColor: AppColors.background,
@@ -168,13 +214,15 @@ class _CreateEditCardState extends State<CreateEditCard> {
                                 cardParam: card,
                                 collectionId: widget.collectionId));
                           }
-                        }else{
-                          AppToast.showError(context, AppStrings.errorEmptyCard);
+                        } else {
+                          AppToast.showError(
+                              context, AppStrings.errorEmptyCard);
                         }
                       },
                       child: Text(
                         AppStrings.done,
-                        style: AppTheme.themeData.textTheme.titleLarge!.copyWith(
+                        style:
+                            AppTheme.themeData.textTheme.titleLarge!.copyWith(
                           fontSize: 20,
                         ),
                       ),
@@ -204,23 +252,44 @@ class _CreateEditCardState extends State<CreateEditCard> {
                           color: Colors.white,
                           child: Padding(
                             padding: const EdgeInsets.only(left: 20),
-                            child: ToolBar(
-                              mainAxisSize: MainAxisSize.min,
-                              padding: const EdgeInsets.all(8),
-                              toolBarColor: Colors.white,
-                              iconSize: 21,
-                              iconColor: AppColors.veryLightGrey,
-                              activeIconColor: Colors.black,
-                              controller: frontController,
-                              crossAxisAlignment: WrapCrossAlignment.start,
-                              direction: Axis.horizontal,
-                              toolBarConfig: const [
-                                ToolBarStyle.bold,
-                                ToolBarStyle.italic,
-                                ToolBarStyle.underline,
-                                ToolBarStyle.listOrdered,
-                                ToolBarStyle.listBullet,
-                              ],
+                            child: QuillToolbar.simple(
+                              configurations: QuillSimpleToolbarConfigurations(
+                                  buttonOptions: const QuillSimpleToolbarButtonOptions(
+                                      base: QuillToolbarBaseButtonOptions(
+                                          iconTheme: QuillIconTheme(
+                                              iconButtonSelectedData: IconButtonData(
+                                                  style: ButtonStyle(
+                                                      backgroundColor:
+                                                      MaterialStatePropertyAll(
+                                                          AppColors
+                                                              .mainAccent)))))),
+                                  controller: _frontController,
+                                  toolbarIconAlignment: WrapAlignment.start,
+                                  showAlignmentButtons: false,
+                                  showCenterAlignment: false,
+                                  showBackgroundColorButton: false,
+                                  showClearFormat: false,
+                                  showDividers: false,
+                                  showFontSize: false,
+                                  showHeaderStyle: false,
+                                  showCodeBlock: false,
+                                  showColorButton: false,
+                                  showDirection: false,
+                                  showFontFamily: false,
+                                  showIndent: false,
+                                  showInlineCode: false,
+                                  showJustifyAlignment: false,
+                                  showLeftAlignment: false,
+                                  showLink: false,
+                                  showListCheck: false,
+                                  showRedo: false,
+                                  showUndo: false,
+                                  showRightAlignment: false,
+                                  showQuote: false,
+                                  showSearchButton: false,
+                                  showStrikeThrough: false,
+                                  showSubscript: false,
+                                  showSuperscript: false),
                             ),
                           ),
                         ),
@@ -237,35 +306,50 @@ class _CreateEditCardState extends State<CreateEditCard> {
                           color: Colors.white,
                           child: Padding(
                             padding: const EdgeInsets.only(left: 20),
-                            child: ToolBar(
-                              mainAxisSize: MainAxisSize.min,
-                              toolBarColor: Colors.white,
-                              padding: const EdgeInsets.all(8),
-                              iconSize: 21,
-                              iconColor: AppColors.veryLightGrey,
-                              activeIconColor: Colors.black,
-                              controller: backController,
-                              crossAxisAlignment: WrapCrossAlignment.start,
-                              direction: Axis.horizontal,
-                              toolBarConfig: const [
-                                ToolBarStyle.bold,
-                                ToolBarStyle.italic,
-                                ToolBarStyle.underline,
-                                ToolBarStyle.listOrdered,
-                                ToolBarStyle.listBullet,
-                              ],
+                            child: QuillToolbar.simple(
+                              configurations: QuillSimpleToolbarConfigurations(
+                                  controller: _backController,
+                                  buttonOptions: const QuillSimpleToolbarButtonOptions(
+                                      base: QuillToolbarBaseButtonOptions(
+                                          iconTheme: QuillIconTheme(
+                                              iconButtonSelectedData: IconButtonData(
+                                                  style: ButtonStyle(
+                                                      backgroundColor:
+                                                          MaterialStatePropertyAll(
+                                                              AppColors
+                                                                  .mainAccent)))))),
+                                  toolbarIconAlignment: WrapAlignment.start,
+                                  showAlignmentButtons: false,
+                                  showCenterAlignment: false,
+                                  showBackgroundColorButton: false,
+                                  showClearFormat: false,
+                                  showDividers: false,
+                                  showFontSize: false,
+                                  showHeaderStyle: false,
+                                  showCodeBlock: false,
+                                  showColorButton: false,
+                                  showDirection: false,
+                                  showFontFamily: false,
+                                  showIndent: false,
+                                  showInlineCode: false,
+                                  showJustifyAlignment: false,
+                                  showLeftAlignment: false,
+                                  showLink: false,
+                                  showListCheck: false,
+                                  showRedo: false,
+                                  showUndo: false,
+                                  showRightAlignment: false,
+                                  showQuote: false,
+                                  showSearchButton: false,
+                                  showStrikeThrough: false,
+                                  showSubscript: false,
+                                  showSuperscript: false),
                             ),
                           ),
                         ),
                       ),
                     )
                   : const SizedBox(),
-              editorReady ? SizedBox.shrink() : Container(
-                width: double.infinity,
-                height: double.infinity,
-                color: AppColors.background,
-                child: LoadingIndicator(),
-              ),
             ],
           ),
         ),
@@ -273,7 +357,7 @@ class _CreateEditCardState extends State<CreateEditCard> {
     );
   }
 
-  Padding frontEditor() {
+  Widget frontEditor() {
     return Padding(
       padding: const EdgeInsets.only(bottom: 12, top: 12, left: 24, right: 24),
       child: Column(
@@ -295,36 +379,12 @@ class _CreateEditCardState extends State<CreateEditCard> {
             child: Padding(
               padding:
                   const EdgeInsets.symmetric(vertical: 8.0, horizontal: 10),
-              child: QuillHtmlEditor(
-                text: widget.cardEntity != null ? widget.cardEntity!.front : '',
-                hintText: '',
-                controller: frontController,
-                isEnabled: true,
-                ensureVisible: false,
-                minHeight: 170,
-                autoFocus: false,
-                textStyle: AppTheme.themeData.textTheme.titleMedium!.copyWith(
-                    color: Colors.black,
-                    fontWeight: FontWeight.w300,
-                    fontSize: 17),
-                hintTextAlign: TextAlign.start,
-                padding: const EdgeInsets.only(left: 10, top: 10, right: 10),
-                hintTextPadding: const EdgeInsets.only(left: 20),
-                backgroundColor: Colors.white,
-                inputAction: InputAction.newline,
-                onFocusChanged: (focus) {
-                  setState(() {
-                    _showKeyboardFront = focus;
-                  });
-                },
-                onTextChanged: (text) {
-                  setState(() {
-                    frontText = text;
-                    textLengthFront = text
-                        .replaceAll(RegExp(r'<[^>]*>'), '')
-                        .length;
-                  });
-                },
+              child: QuillEditor.basic(
+                configurations: QuillEditorConfigurations(
+                    minHeight: 160,
+                    controller: _frontController,
+                    padding: const EdgeInsets.symmetric(horizontal: 4, vertical: 4)),
+                focusNode: _frontFocusNode,
               ),
             ),
           ),
@@ -385,38 +445,13 @@ class _CreateEditCardState extends State<CreateEditCard> {
             child: Padding(
               padding:
                   const EdgeInsets.symmetric(vertical: 8.0, horizontal: 10),
-              child: QuillHtmlEditor(
-                text: widget.cardEntity != null ? widget.cardEntity!.back : '',
-                controller: backController,
-                isEnabled: true,
-                ensureVisible: false,
-                hintText: '',
-                minHeight: 170,
-                autoFocus: false,
-                textStyle: AppTheme.themeData.textTheme.titleMedium!.copyWith(
-                    color: Colors.black,
-                    fontWeight: FontWeight.w300,
-                    fontSize: 17),
-                hintTextAlign: TextAlign.start,
-                padding: const EdgeInsets.only(left: 10, top: 10),
-                hintTextPadding: const EdgeInsets.only(left: 20),
-                backgroundColor: Colors.white,
-                inputAction: InputAction.newline,
-                onFocusChanged: (focus) {
-                  setState(() {
-                    setState(() {
-                      _showKeyboardBack = focus;
-                    });
-                  });
-                },
-                onTextChanged: (text) {
-                  setState(() {
-                    backText = text;
-                    textLengthBack = text
-                        .replaceAll(RegExp(r'<[^>]*>'), '')
-                        .length;
-                  });
-                },
+              child: QuillEditor.basic(
+                configurations: QuillEditorConfigurations(
+                  controller: _backController,
+                  padding: const EdgeInsets.symmetric(horizontal: 4, vertical: 4),
+                  minHeight: 160,
+                ),
+                focusNode: _backFocusNode,
               ),
             ),
           ),
@@ -448,8 +483,6 @@ class _CreateEditCardState extends State<CreateEditCard> {
               ),
             ],
           ),
-          // CustomTextInput(
-          //     textEditingController: backTextEditingController)
         ],
       ),
     );
@@ -457,8 +490,13 @@ class _CreateEditCardState extends State<CreateEditCard> {
 
   @override
   void dispose() {
-    frontController.dispose();
-    backController.dispose();
+    _frontController.removeListener(_updateFocus);
+    _backController.removeListener(_updateFocus);
+    _frontControllerValueChanged.cancel();
+    _backControllerValueChanged.cancel();
+    _frontController.dispose();
+    _backController.dispose();
+    _keyboardVisibilityStreamSubscription.cancel();
     super.dispose();
   }
 }

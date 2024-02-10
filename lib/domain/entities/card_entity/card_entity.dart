@@ -11,8 +11,8 @@ class CardEntity with _$CardEntity {
     required String id,
     required String collectionId,
     required String collectionName,
-    required String front,
-    required String back,
+    required List<Map<String, dynamic>> front,
+    required List<Map<String, dynamic>> back,
     @JsonKey(fromJson: FirebaseTimestampConverters.fromTimestamp)
     required DateTime? createdAt,
     final String? sharedFrom,
