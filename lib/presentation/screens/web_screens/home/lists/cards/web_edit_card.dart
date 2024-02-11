@@ -1,10 +1,11 @@
+import 'dart:async';
+
 import 'package:flashcards/core/const/colors.dart';
 import 'package:flashcards/core/const/icons.dart';
 import 'package:flashcards/core/const/strings.dart';
 import 'package:flashcards/core/themes/theme.dart';
 import 'package:flashcards/domain/entities/card_entity/card_entity.dart';
 import 'package:flashcards/presentation/widgets/app_elevated_button.dart';
-import 'package:flashcards/presentation/widgets/app_icon_button.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -14,13 +15,10 @@ import 'package:flutter_quill/flutter_quill.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
-import '../../../../../../core/enum/enum.dart';
 import '../../../../../../core/router/router.dart';
 import '../../../../../../core/utils/app_toast.dart';
-import '../../../../../../domain/params/card_param/create_card_param.dart';
 import '../../../../../../domain/params/card_param/edit_card_param.dart';
 import '../../../../../blocs/cards/cards_bloc.dart';
-import '../../../../mobile_screens/lists_screen/cards/view_flash_card.dart';
 
 class WebEditCard extends StatefulWidget {
   const WebEditCard({
@@ -34,28 +32,63 @@ class WebEditCard extends StatefulWidget {
 }
 
 class _WebEditCardState extends State<WebEditCard> {
-  QuillController frontController = QuillController.basic();
-  QuillController backController = QuillController.basic();
+  late final _frontController = QuillController(document: Document.fromJson(widget.card.front), selection: const TextSelection(baseOffset: 0, extentOffset: 0));
+  late final _backController = QuillController(document: Document.fromJson(widget.card.back), selection: const TextSelection(baseOffset: 0, extentOffset: 0));
 
-  bool _frontHasFocus = false;
-  bool _backHasFocus = false;
+  late final StreamSubscription _frontControllerValueChanged;
+  late final StreamSubscription _backControllerValueChanged;
 
-  String frontText = '';
-  String backText = '';
+  final _frontFocusNode = FocusNode();
+  final _backFocusNode = FocusNode();
+
+  List<Map<String,dynamic>> get frontText => _frontController.document.toDelta().toJson();
+
+  List<Map<String,dynamic>> get backText => _backController.document.toDelta().toJson();
 
   Color frontPickedColor = Colors.black;
   Color backPickedColor = Colors.black;
 
-  String textLengthFront = '0';
-  String textLengthBack = '0';
+  int textLengthFront = 0;
+  int textLengthBack = 0;
 
-  TextFormat currentTextFormat = TextFormat.normal;
-  ParagraphFormat currentParagraphFormat = ParagraphFormat.normal;
+  int maxLength = 400;
+
+  void _frontControllerChanged(){
+    int length = _frontController.document.toPlainText().length - 1;
+    if(length > maxLength){
+      _frontController.replaceText(maxLength, length - maxLength, '', TextSelection.collapsed(offset: maxLength));
+    }else{
+      setState(() {
+        textLengthFront = length;
+      });
+    }
+  }
+
+  void _backControllerChanged(){
+    int length = _backController.document.toPlainText().length - 1;
+    if(length > maxLength){
+      _backController.replaceText(maxLength, length - maxLength, '', TextSelection.collapsed(offset: maxLength));
+    }else{
+      setState(() {
+        textLengthBack = length;
+      });
+    }
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    _frontControllerValueChanged = _frontController.document.documentChangeObserver.stream.listen((e){
+      _frontControllerChanged();
+    });
+    _backControllerValueChanged = _backController.document.documentChangeObserver.stream.listen((e) {
+      _backControllerChanged();
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
-    return SizedBox();
-    /*return BlocListener<CardsBloc,CardsState>(
+    return BlocListener<CardsBloc,CardsState>(
       listener: (context,state){
         state.maybeMap(
             loaded: (_){
@@ -132,8 +165,8 @@ class _WebEditCardState extends State<WebEditCard> {
                                   if (frontText.isNotEmpty &&
                                       backText.isNotEmpty) {
                                     EditCardParam card = EditCardParam(
-                                        front: frontText.toString(),
-                                        back: backText.toString(),
+                                        front: frontText,
+                                        back: backText,
                                         collectionId: widget.card.collectionId,
                                         id: widget.card.id);
                                     context.read<CardsBloc>().add(
@@ -154,7 +187,7 @@ class _WebEditCardState extends State<WebEditCard> {
           ),
         ),
       ),
-    );*/
+    );
   }
 
   Column backEditor(BuildContext context) {
@@ -170,7 +203,7 @@ class _WebEditCardState extends State<WebEditCard> {
         ),
         Padding(
           padding:
-              const EdgeInsets.only(bottom: 0, top: 26, left: 24, right: 24),
+          const EdgeInsets.only(bottom: 0, top: 26, left: 24, right: 24),
           child: Container(
             decoration: BoxDecoration(
               border: Border.all(color: AppColors.borderGrey),
@@ -178,13 +211,51 @@ class _WebEditCardState extends State<WebEditCard> {
               color: Colors.white,
             ),
             child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
               mainAxisSize: MainAxisSize.min,
               children: [
                 Padding(
                   padding: const EdgeInsets.only(left: 20),
                   child: ClipRRect(
                     borderRadius: BorderRadius.circular(20),
-                    child: QuillToolbar.simple(configurations: QuillSimpleToolbarConfigurations(controller: frontController))
+                    child: QuillToolbar.simple(
+                      configurations: QuillSimpleToolbarConfigurations(controller: _backController,
+                          buttonOptions: const QuillSimpleToolbarButtonOptions(
+                              base: QuillToolbarBaseButtonOptions(
+                                  iconTheme: QuillIconTheme(
+                                      iconButtonSelectedData: IconButtonData(
+                                          style: ButtonStyle(
+                                              backgroundColor:
+                                              MaterialStatePropertyAll(
+                                                  AppColors
+                                                      .mainAccent)))))),
+                          toolbarIconAlignment: WrapAlignment.start,
+                          showAlignmentButtons: false,
+                          showCenterAlignment: false,
+                          showBackgroundColorButton: false,
+                          showClearFormat: false,
+                          showDividers: false,
+                          showFontSize: false,
+                          showHeaderStyle: false,
+                          showCodeBlock: false,
+                          showColorButton: false,
+                          showDirection: false,
+                          showFontFamily: false,
+                          showIndent: false,
+                          showInlineCode: false,
+                          showJustifyAlignment: false,
+                          showLeftAlignment: false,
+                          showLink: false,
+                          showListCheck: false,
+                          showRedo: false,
+                          showUndo: false,
+                          showRightAlignment: false,
+                          showQuote: false,
+                          showSearchButton: false,
+                          showStrikeThrough: false,
+                          showSubscript: false,
+                          showSuperscript: false),
+                    ),
                   ),
                 ),
                 Container(
@@ -192,9 +263,15 @@ class _WebEditCardState extends State<WebEditCard> {
                   color: AppColors.borderGrey,
                 ),
                 Padding(
-                  padding:
-                      const EdgeInsets.symmetric(vertical: 8.0, horizontal: 10),
-                  child: QuillEditor.basic(configurations: QuillEditorConfigurations(controller: frontController))
+                  padding: const EdgeInsets.only(left: 20),
+                  child: QuillEditor.basic(
+                    configurations: QuillEditorConfigurations(
+                        controller: _backController,
+                        padding: EdgeInsets.symmetric(vertical: 10),
+                        minHeight: 187
+                    ),
+                    focusNode: _backFocusNode,
+                  ),
                 ),
               ],
             ),
@@ -296,7 +373,7 @@ class _WebEditCardState extends State<WebEditCard> {
         ),
         Padding(
           padding:
-              const EdgeInsets.only(bottom: 0, top: 26, left: 24, right: 24),
+          const EdgeInsets.only(bottom: 0, top: 26, left: 24, right: 24),
           child: Container(
             decoration: BoxDecoration(
               border: Border.all(color: AppColors.borderGrey),
@@ -304,6 +381,7 @@ class _WebEditCardState extends State<WebEditCard> {
               color: Colors.white,
             ),
             child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
               mainAxisSize: MainAxisSize.min,
               children: [
                 Padding(
@@ -311,7 +389,43 @@ class _WebEditCardState extends State<WebEditCard> {
                   child: ClipRRect(
                     borderRadius: BorderRadius.circular(20),
                     child: QuillToolbar.simple(
-                      configurations: QuillSimpleToolbarConfigurations(controller: frontController)
+                      configurations: QuillSimpleToolbarConfigurations(
+                          buttonOptions: const QuillSimpleToolbarButtonOptions(
+                              base: QuillToolbarBaseButtonOptions(
+                                  iconTheme: QuillIconTheme(
+                                      iconButtonSelectedData: IconButtonData(
+                                          style: ButtonStyle(
+                                              backgroundColor:
+                                              MaterialStatePropertyAll(
+                                                  AppColors
+                                                      .mainAccent)))))),
+                          controller: _frontController,
+                          toolbarIconAlignment: WrapAlignment.start,
+                          showAlignmentButtons: false,
+                          showCenterAlignment: false,
+                          showBackgroundColorButton: false,
+                          showClearFormat: false,
+                          showDividers: false,
+                          showFontSize: false,
+                          showHeaderStyle: false,
+                          showCodeBlock: false,
+                          showColorButton: false,
+                          showDirection: false,
+                          showFontFamily: false,
+                          showIndent: false,
+                          showInlineCode: false,
+                          showJustifyAlignment: false,
+                          showLeftAlignment: false,
+                          showLink: false,
+                          showListCheck: false,
+                          showRedo: false,
+                          showUndo: false,
+                          showRightAlignment: false,
+                          showQuote: false,
+                          showSearchButton: false,
+                          showStrikeThrough: false,
+                          showSubscript: false,
+                          showSuperscript: false),
                     ),
                   ),
                 ),
@@ -320,10 +434,14 @@ class _WebEditCardState extends State<WebEditCard> {
                   color: AppColors.borderGrey,
                 ),
                 Padding(
-                  padding:
-                      const EdgeInsets.symmetric(vertical: 8.0, horizontal: 10),
+                  padding: const EdgeInsets.only(left: 20),
                   child: QuillEditor.basic(
-                      configurations: QuillEditorConfigurations(controller: frontController)
+                    configurations: QuillEditorConfigurations(
+                      controller: _frontController,
+                      padding: EdgeInsets.symmetric(vertical: 10),
+                      minHeight: 187,
+                    ),
+                    focusNode: _frontFocusNode,
                   ),
                 ),
               ],
@@ -493,8 +611,10 @@ class _WebEditCardState extends State<WebEditCard> {
 
   @override
   void dispose() {
-    frontController.dispose();
-    backController.dispose();
+    _frontControllerValueChanged.cancel();
+    _backControllerValueChanged.cancel();
+    _frontController.dispose();
+    _backController.dispose();
     super.dispose();
   }
 }

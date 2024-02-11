@@ -8,6 +8,7 @@ import 'package:flashcards/core/themes/theme.dart';
 import 'package:flashcards/domain/entities/card_entity/card_entity.dart';
 import 'package:flashcards/presentation/widgets/app_round_button.dart';
 import 'package:flashcards/presentation/widgets/loading_indicator.dart';
+import 'package:flashcards/presentation/widgets/quill_text.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_html/flutter_html.dart';
@@ -44,8 +45,7 @@ class _WebViewFlashCardState extends State<WebViewFlashCard> {
 
   @override
   Widget build(BuildContext context) {
-    return SizedBox();
-    /*return LayoutBuilder(
+    return LayoutBuilder(
         builder: (BuildContext context, BoxConstraints constraints) {
       if (constraints.maxWidth < 700) {
         return Scaffold(
@@ -125,14 +125,7 @@ class _WebViewFlashCardState extends State<WebViewFlashCard> {
                                                 child: FractionallySizedBox(
                                                   widthFactor: 0.3,
                                                   // Adjust the width factor as needed
-                                                  child: Html(
-                                                    data: pickedCard.front,
-                                                    style: {
-                                                      'html': Style(
-                                                          textAlign:
-                                                              TextAlign.center),
-                                                    },
-                                                  ),
+                                                  child: QuillText(content: widget.card.front,)
                                                 ),
                                               ),
                                               const Spacer(),
@@ -167,14 +160,7 @@ class _WebViewFlashCardState extends State<WebViewFlashCard> {
                                               child: FractionallySizedBox(
                                                 widthFactor: 0.3,
                                                 // Adjust the width factor as needed
-                                                child: Html(
-                                                  data: pickedCard.back,
-                                                  style: {
-                                                    'html': Style(
-                                                        textAlign:
-                                                            TextAlign.center),
-                                                  },
-                                                ),
+                                                child: QuillText(content: widget.card.back,)
                                               ),
                                             ),
                                             const Spacer(),
@@ -277,29 +263,8 @@ class _WebViewFlashCardState extends State<WebViewFlashCard> {
                                           crossAxisAlignment:
                                               CrossAxisAlignment.center,
                                           children: [
-                                            Text(
-                                              overflow: TextOverflow.ellipsis,
-                                              maxLines: 3,
-                                              card.front!.replaceAll(
-                                                  RegExp(r'<[^>]*>'), ''),
-                                              textAlign: TextAlign.center,
-                                              style: AppTheme.themeData
-                                                  .textTheme.labelMedium!
-                                                  .copyWith(
-                                                color: AppColors.mainAccent,
-                                              ),
-                                            ),
-                                            Text(
-                                              overflow: TextOverflow.ellipsis,
-                                              maxLines: 2,
-                                              card.back!.replaceAll(
-                                                  RegExp(r'<[^>]*>'), ''),
-                                              style: AppTheme.themeData
-                                                  .textTheme.labelSmall!
-                                                  .copyWith(
-                                                color: Colors.black,
-                                              ),
-                                            ),
+                                            QuillText(content: card.front, style: TextStyle(color: AppColors.mainAccent, fontWeight: FontWeight.w600),),
+                                            QuillText(content: card.back, style: TextStyle(color: Colors.black),)
                                           ],
                                         ),
                                       ),
@@ -359,14 +324,7 @@ class _WebViewFlashCardState extends State<WebViewFlashCard> {
                                                   child: FractionallySizedBox(
                                                     widthFactor: 0.5,
                                                     // Adjust the width factor as needed
-                                                    child: Html(
-                                                      data: pickedCard.front,
-                                                      style: {
-                                                        'html': Style(
-                                                            textAlign: TextAlign
-                                                                .center),
-                                                      },
-                                                    ),
+                                                    child: QuillText(content: pickedCard.front,)
                                                   ),
                                                 ),
                                                 const Spacer(),
@@ -401,14 +359,7 @@ class _WebViewFlashCardState extends State<WebViewFlashCard> {
                                                 child: FractionallySizedBox(
                                                   widthFactor: 0.3,
                                                   // Adjust the width factor as needed
-                                                  child: Html(
-                                                    data: pickedCard.back,
-                                                    style: {
-                                                      'html': Style(
-                                                          textAlign:
-                                                              TextAlign.center),
-                                                    },
-                                                  ),
+                                                  child: QuillText(content: pickedCard.back,)
                                                 ),
                                               ),
                                               const Spacer(),
@@ -426,7 +377,7 @@ class _WebViewFlashCardState extends State<WebViewFlashCard> {
               ],
             ),
           ));
-    });*/
+    });
   }
 }
 

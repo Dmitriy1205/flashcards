@@ -388,8 +388,8 @@ class _WebCardsState extends State<WebCards> {
                                                         CrossAxisAlignment
                                                             .start,
                                                     children: [
-                                                      QuillText(content: card.front),
-                                                      QuillText(content: card.back),
+                                                      QuillText(content: card.front, style: TextStyle(color: AppColors.mainAccent,fontWeight: FontWeight.w600),),
+                                                      QuillText(content: card.back, style: TextStyle(color: Colors.black),),
                                                     ],
                                                   ),
                                                 ),
@@ -793,8 +793,8 @@ class _WebCardsState extends State<WebCards> {
                                                 crossAxisAlignment:
                                                     CrossAxisAlignment.start,
                                                 children: [
-                                                  QuillText(content: card.front),
-                                                  QuillText(content: card.back)
+                                                  QuillText(content: card.front, style: TextStyle(color: AppColors.mainAccent,fontWeight: FontWeight.w600),),
+                                                  QuillText(content: card.back, style: TextStyle(color: Colors.black),),
                                                 ],
                                               ),
                                             ),

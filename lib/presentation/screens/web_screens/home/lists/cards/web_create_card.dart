@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flashcards/core/const/colors.dart';
 import 'package:flashcards/core/const/icons.dart';
 import 'package:flashcards/core/const/strings.dart';
@@ -31,28 +33,63 @@ class WebCreateCard extends StatefulWidget {
 }
 
 class _WebCreateCardState extends State<WebCreateCard> {
-  QuillController frontController = QuillController.basic();
-  QuillController backController = QuillController.basic();
+  QuillController _frontController = QuillController.basic();
+  QuillController _backController = QuillController.basic();
 
-  bool _frontHasFocus = false;
-  bool _backHasFocus = false;
+  late final StreamSubscription _frontControllerValueChanged;
+  late final StreamSubscription _backControllerValueChanged;
 
-  String frontText = '';
-  String backText = '';
+  final _frontFocusNode = FocusNode();
+  final _backFocusNode = FocusNode();
+
+  List<Map<String,dynamic>> get frontText => _frontController.document.toDelta().toJson();
+
+  List<Map<String,dynamic>> get backText => _backController.document.toDelta().toJson();
 
   Color frontPickedColor = Colors.black;
   Color backPickedColor = Colors.black;
 
-  String textLengthFront = '0';
-  String textLengthBack = '0';
+  int textLengthFront = 0;
+  int textLengthBack = 0;
 
-  TextFormat currentTextFormat = TextFormat.normal;
-  ParagraphFormat currentParagraphFormat = ParagraphFormat.normal;
+  int maxLength = 400;
+
+  void _frontControllerChanged(){
+    int length = _frontController.document.toPlainText().length - 1;
+    if(length > maxLength){
+      _frontController.replaceText(maxLength, length - maxLength, '', TextSelection.collapsed(offset: maxLength));
+    }else{
+      setState(() {
+        textLengthFront = length;
+      });
+    }
+  }
+
+  void _backControllerChanged(){
+    int length = _backController.document.toPlainText().length - 1;
+    if(length > maxLength){
+      _backController.replaceText(maxLength, length - maxLength, '', TextSelection.collapsed(offset: maxLength));
+    }else{
+      setState(() {
+        textLengthBack = length;
+      });
+    }
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    _frontControllerValueChanged = _frontController.document.documentChangeObserver.stream.listen((e){
+      _frontControllerChanged();
+    });
+    _backControllerValueChanged = _backController.document.documentChangeObserver.stream.listen((e) {
+      _backControllerChanged();
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
-    return SizedBox();
-    /*return BlocListener<CardsBloc,CardsState>(
+    return BlocListener<CardsBloc,CardsState>(
       listener: (context,state){
         state.maybeMap(
             loaded: (state){
@@ -147,8 +184,8 @@ class _WebCreateCardState extends State<WebCreateCard> {
                                       backText.isNotEmpty) {
                                     if (widget.card == null) {
                                       CreateCardParam card = CreateCardParam(
-                                          front: frontText.toString(),
-                                          back: backText.toString(),
+                                          front: frontText,
+                                          back: backText,
                                           collectionId: widget.collectionId);
 
                                       context.read<CardsBloc>().add(
@@ -157,8 +194,8 @@ class _WebCreateCardState extends State<WebCreateCard> {
                                               collectionId: widget.collectionId));
                                     } else {
                                       EditCardParam card = EditCardParam(
-                                          front: frontText.toString(),
-                                          back: backText.toString(),
+                                          front: frontText,
+                                          back: backText,
                                           collectionId: widget.collectionId,
                                           id: widget.card!.id);
                                       context.read<CardsBloc>().add(
@@ -179,7 +216,7 @@ class _WebCreateCardState extends State<WebCreateCard> {
           ),
         ),
       ),
-    );*/
+    );
   }
 
   Column backEditor(BuildContext context) {
@@ -203,16 +240,50 @@ class _WebCreateCardState extends State<WebCreateCard> {
               color: Colors.white,
             ),
             child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
               mainAxisSize: MainAxisSize.min,
               children: [
                 Padding(
                   padding: const EdgeInsets.only(left: 20),
                   child: ClipRRect(
                     borderRadius: BorderRadius.circular(20),
-                    child: QuillEditor.basic(
-                      configurations: QuillEditorConfigurations(
-                        controller: frontController
-                      ),
+                    child: QuillToolbar.simple(
+                      configurations: QuillSimpleToolbarConfigurations(controller: _backController,
+                          buttonOptions: const QuillSimpleToolbarButtonOptions(
+                              base: QuillToolbarBaseButtonOptions(
+                                  iconTheme: QuillIconTheme(
+                                      iconButtonSelectedData: IconButtonData(
+                                          style: ButtonStyle(
+                                              backgroundColor:
+                                              MaterialStatePropertyAll(
+                                                  AppColors
+                                                      .mainAccent)))))),
+                          toolbarIconAlignment: WrapAlignment.start,
+                          showAlignmentButtons: false,
+                          showCenterAlignment: false,
+                          showBackgroundColorButton: false,
+                          showClearFormat: false,
+                          showDividers: false,
+                          showFontSize: false,
+                          showHeaderStyle: false,
+                          showCodeBlock: false,
+                          showColorButton: false,
+                          showDirection: false,
+                          showFontFamily: false,
+                          showIndent: false,
+                          showInlineCode: false,
+                          showJustifyAlignment: false,
+                          showLeftAlignment: false,
+                          showLink: false,
+                          showListCheck: false,
+                          showRedo: false,
+                          showUndo: false,
+                          showRightAlignment: false,
+                          showQuote: false,
+                          showSearchButton: false,
+                          showStrikeThrough: false,
+                          showSubscript: false,
+                          showSuperscript: false),
                     ),
                   ),
                 ),
@@ -221,12 +292,14 @@ class _WebCreateCardState extends State<WebCreateCard> {
                   color: AppColors.borderGrey,
                 ),
                 Padding(
-                  padding:
-                      const EdgeInsets.symmetric(vertical: 8.0, horizontal: 10),
+                  padding: const EdgeInsets.only(left: 20),
                   child: QuillEditor.basic(
                     configurations: QuillEditorConfigurations(
-                        controller: backController
+                        controller: _backController,
+                        padding: EdgeInsets.symmetric(vertical: 10),
+                        minHeight: 187
                     ),
+                    focusNode: _backFocusNode,
                   ),
                 ),
               ],
@@ -337,6 +410,7 @@ class _WebCreateCardState extends State<WebCreateCard> {
               color: Colors.white,
             ),
             child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
               mainAxisSize: MainAxisSize.min,
               children: [
                 Padding(
@@ -344,7 +418,43 @@ class _WebCreateCardState extends State<WebCreateCard> {
                   child: ClipRRect(
                     borderRadius: BorderRadius.circular(20),
                     child: QuillToolbar.simple(
-                      configurations: QuillSimpleToolbarConfigurations(controller: frontController),
+                      configurations: QuillSimpleToolbarConfigurations(
+                          buttonOptions: const QuillSimpleToolbarButtonOptions(
+                              base: QuillToolbarBaseButtonOptions(
+                                  iconTheme: QuillIconTheme(
+                                      iconButtonSelectedData: IconButtonData(
+                                          style: ButtonStyle(
+                                              backgroundColor:
+                                              MaterialStatePropertyAll(
+                                                  AppColors
+                                                      .mainAccent)))))),
+                          controller: _frontController,
+                          toolbarIconAlignment: WrapAlignment.start,
+                          showAlignmentButtons: false,
+                          showCenterAlignment: false,
+                          showBackgroundColorButton: false,
+                          showClearFormat: false,
+                          showDividers: false,
+                          showFontSize: false,
+                          showHeaderStyle: false,
+                          showCodeBlock: false,
+                          showColorButton: false,
+                          showDirection: false,
+                          showFontFamily: false,
+                          showIndent: false,
+                          showInlineCode: false,
+                          showJustifyAlignment: false,
+                          showLeftAlignment: false,
+                          showLink: false,
+                          showListCheck: false,
+                          showRedo: false,
+                          showUndo: false,
+                          showRightAlignment: false,
+                          showQuote: false,
+                          showSearchButton: false,
+                          showStrikeThrough: false,
+                          showSubscript: false,
+                          showSuperscript: false),
                     ),
                   ),
                 ),
@@ -353,10 +463,14 @@ class _WebCreateCardState extends State<WebCreateCard> {
                   color: AppColors.borderGrey,
                 ),
                 Padding(
-                  padding:
-                      const EdgeInsets.symmetric(vertical: 8.0, horizontal: 10),
-                  child: QuillToolbar.simple(
-                    configurations: QuillSimpleToolbarConfigurations(controller: backController),
+                  padding: const EdgeInsets.only(left: 20),
+                  child: QuillEditor.basic(
+                    configurations: QuillEditorConfigurations(
+                        controller: _frontController,
+                        padding: EdgeInsets.symmetric(vertical: 10),
+                        minHeight: 187,
+                    ),
+                    focusNode: _frontFocusNode,
                   ),
                 ),
               ],
@@ -526,8 +640,10 @@ class _WebCreateCardState extends State<WebCreateCard> {
 
   @override
   void dispose() {
-    frontController.dispose();
-    backController.dispose();
+    _frontControllerValueChanged.cancel();
+    _backControllerValueChanged.cancel();
+    _frontController.dispose();
+    _backController.dispose();
     super.dispose();
   }
 }
