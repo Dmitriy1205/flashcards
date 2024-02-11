@@ -235,7 +235,7 @@ class _CustomNavigationBarState extends State<CustomNavigationBar> {
                         onPressed: () {
                           if (nameTextEditingController.text.isNotEmpty) {
                             if(context.read<ListsBloc>().state.collectionsList!.any((element) => element.collectionName == nameTextEditingController.text )){
-                            AppToast.showError(context, 'Collection with same name is exist ');
+                            AppToast.showError(context, 'Collection with same name exists ');
                             Navigator.of(context).pop();
 
                             }else{

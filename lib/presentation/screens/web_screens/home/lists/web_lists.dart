@@ -319,7 +319,7 @@ class _WebListsScreenState extends State<WebListsScreen> {
                       onPressed: () {
                         if (nameTextEditingController.text.isNotEmpty) {
                           if(context.read<WebListBloc>().state.collectionsList!.any((element) => element.collectionName == nameTextEditingController.text )){
-                            AppToast.showError(context, 'Collection with same name is exist ');
+                            AppToast.showError(context, 'Collection with same name exists');
                             router.pop();
 
                           }else{

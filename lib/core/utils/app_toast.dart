@@ -10,13 +10,13 @@ class AppToast{
   static void showError(BuildContext context, String error) async{
     _showOverlay(context, _Toast(msg: error,
       toastDuration: _delay,
-      circleColor: const Color(0xFFCD0000).withOpacity(0.4), leftBorderColor: const Color(0xFFCD0000), textColor: const Color(0xFFCD0000),));
+      leading: Text("🚨"), leftBorderColor: const Color(0xFFCD0000), textColor: const Color(0xFFCD0000),));
   }
 
   static void showSuccess(BuildContext context, String msg) async{
     _showOverlay(context, _Toast(msg: msg,
       toastDuration: _delay,
-      circleColor: AppColors.green.withOpacity(0.4), leftBorderColor: AppColors.green, textColor: AppColors.green,));
+      leading: Text("✅"), leftBorderColor: AppColors.green, textColor: AppColors.green,));
   }
 
   static _showOverlay(BuildContext context, Widget widget) async{
@@ -39,10 +39,10 @@ class AppToast{
 class _Toast extends StatefulWidget {
   final String msg;
   final Color leftBorderColor;
-  final Color circleColor;
   final Color textColor;
+  final Widget leading;
   final Duration toastDuration;
-  const _Toast({Key? key, required this.msg, required this.leftBorderColor, required this.circleColor, required this.textColor, required this.toastDuration}) : super(key: key);
+  const _Toast({Key? key, required this.msg, required this.leftBorderColor, required this.textColor, required this.toastDuration, required this.leading}) : super(key: key);
 
   @override
   State<_Toast> createState() => _ToastState();
@@ -68,7 +68,7 @@ class _ToastState extends State<_Toast> with SingleTickerProviderStateMixin{
   @override
   Widget build(BuildContext context) {
     return Positioned(
-      top: MediaQuery.of(context).padding.top,
+      bottom: MediaQuery.of(context).padding.bottom,
       left: 0,
       right: 0,
       child: Material(
@@ -94,7 +94,7 @@ class _ToastState extends State<_Toast> with SingleTickerProviderStateMixin{
               children: [
                 Container(width: 4, height: 48, color: widget.leftBorderColor,),
                 const SizedBox(width: 21,),
-                CircleAvatar(radius: 6, backgroundColor: widget.circleColor,),
+                widget.leading,
                 const SizedBox(width: 27,),
                 Expanded(child: Text(widget.msg, style: TextStyle(color: widget.textColor), maxLines: 2, overflow: TextOverflow.ellipsis,)),
                 const SizedBox(width: 13,),
