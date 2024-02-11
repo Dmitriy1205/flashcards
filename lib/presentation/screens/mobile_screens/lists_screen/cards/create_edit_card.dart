@@ -35,6 +35,9 @@ class _CreateEditCardState extends State<CreateEditCard> {
   final _frontFocusNode = FocusNode();
   final _backFocusNode = FocusNode();
 
+  final _backKey = GlobalKey();
+  final _frontKey = GlobalKey();
+
   late final StreamSubscription _frontControllerValueChanged;
   late final StreamSubscription _backControllerValueChanged;
 
@@ -101,6 +104,16 @@ class _CreateEditCardState extends State<CreateEditCard> {
     setState(() {
       _showKeyboardFront = _frontFocusNode.hasFocus;
       _showKeyboardBack = _backFocusNode.hasFocus;
+    });
+
+    Future.delayed(Duration(milliseconds: 200), (){
+      if(!mounted) return;
+
+      if(_showKeyboardFront){
+        Scrollable.ensureVisible(_frontKey.currentContext!);
+      }else if(_showKeyboardBack){
+        Scrollable.ensureVisible(_backKey.currentContext!);
+      }
     });
   }
 
@@ -376,6 +389,7 @@ class _CreateEditCardState extends State<CreateEditCard> {
               borderRadius: BorderRadius.circular(20),
               color: Colors.white,
             ),
+            key: _frontKey,
             child: Padding(
               padding:
                   const EdgeInsets.symmetric(vertical: 8.0, horizontal: 10),
@@ -442,6 +456,7 @@ class _CreateEditCardState extends State<CreateEditCard> {
               borderRadius: BorderRadius.circular(20),
               color: Colors.white,
             ),
+            key: _backKey,
             child: Padding(
               padding:
                   const EdgeInsets.symmetric(vertical: 8.0, horizontal: 10),
