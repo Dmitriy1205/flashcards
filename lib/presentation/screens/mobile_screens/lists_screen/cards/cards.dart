@@ -387,41 +387,43 @@ class _CardsState extends State<Cards> {
       ),
 
       floatingActionButton: context.watch<CardsBloc>().isEditMode
-          ? Padding(
-              padding: const EdgeInsets.only(bottom: 15, right: 13),
-              child: Stack(
-                children: [
-                  SizedBox(
-                    height: 76,
-                    width: 76,
-                    child: SvgPicture.asset(
-                      AppIcons.redBucket,
-                      height: 18,
-                      width: 9,
+          ? SafeArea(
+            child: Padding(
+                padding: const EdgeInsets.only(bottom: 15, right: 13),
+                child: Stack(
+                  children: [
+                    SizedBox(
+                      height: 76,
+                      width: 76,
+                      child: SvgPicture.asset(
+                        AppIcons.redBucket,
+                        height: 18,
+                        width: 9,
+                      ),
                     ),
-                  ),
-                  Material(
-                    color: Colors.transparent,
-                    borderRadius: BorderRadius.circular(32),
-                    child: InkWell(
-                        borderRadius: BorderRadius.circular(32),
-                        onTap: () async{
-                          final confirmed = await confirmOperation(context, title: "Confirm deleting", message: "Are you sure that you want to delete selected cards?", action: "Delete", cancel: "Cancel");
-                          if(!confirmed) return;
-                          context.read<CardsBloc>().add(
-                              CardsEvent.deleteSelectedCards(
-                                  cardsIdToDelete: context
-                                      .read<CardsBloc>()
-                                      .cardsListToDelete,
-                                  collectionId: widget.collectionId));
-                          context.read<CardsBloc>().isEditMode = false;
-                        },
-                        child: Container(
-                            width: 76, height: 76, color: Colors.transparent)),
-                  ),
-                ],
+                    Material(
+                      color: Colors.transparent,
+                      borderRadius: BorderRadius.circular(32),
+                      child: InkWell(
+                          borderRadius: BorderRadius.circular(32),
+                          onTap: () async{
+                            final confirmed = await confirmOperation(context, title: "Confirm deleting", message: "Are you sure that you want to delete selected cards?", action: "Delete", cancel: "Cancel");
+                            if(!confirmed) return;
+                            context.read<CardsBloc>().add(
+                                CardsEvent.deleteSelectedCards(
+                                    cardsIdToDelete: context
+                                        .read<CardsBloc>()
+                                        .cardsListToDelete,
+                                    collectionId: widget.collectionId));
+                            context.read<CardsBloc>().isEditMode = false;
+                          },
+                          child: Container(
+                              width: 76, height: 76, color: Colors.transparent)),
+                    ),
+                  ],
+                ),
               ),
-            )
+          )
           : Padding(
               padding: const EdgeInsets.only(bottom: 15, right: 13),
               child: Stack(

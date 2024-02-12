@@ -46,9 +46,9 @@ class _MobileSignUpScreenState extends State<MobileSignUpScreen> {
             state.maybeMap(
               success: (_) {
                     context.read<AuthBloc>().add(const AuthEvent.logout());
-                    router.pop();
                     AppToast.showSuccess(context,
-                        'account is created,to verify your email please check your inbox including spam and follow the instructions');
+                        'Verify your email, please check your inbox including spam and follow the instructions');
+                    router.pop();
                   },
                 error: (e) {
                   AppToast.showError(context, e.error);

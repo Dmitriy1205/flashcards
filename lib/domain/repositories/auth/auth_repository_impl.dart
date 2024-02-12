@@ -131,4 +131,9 @@ class AuthRepositoryImpl implements AuthRepository {
       throw BadRequestException(message: e.toString());
     }
   }
+
+  @override
+  Future<void> sendEmailVerification() {
+    return _auth.currentUser!.sendEmailVerification();
+  }
 }

@@ -8,4 +8,5 @@ abstract class AuthRepository{
   Future<void> signInWithApple();
   Future<void> signInWithGoogle();
   Future<void> logout();
+  Future<void> sendEmailVerification();
 }

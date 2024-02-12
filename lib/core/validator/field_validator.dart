@@ -10,15 +10,15 @@ class Validator {
       r"^[a-zA-Z0-9.a-zA-Z0-9.!#$%&'*+-/=?^_`{|}~]+@[a-zA-Z0-9]+\.[a-zA-Z]+",
     ).hasMatch(value);
 
-    return !emailValid ? 'Enter a Valid Email Address' : null;
+    return !emailValid ? 'Enter a valid email address' : null;
   }
 
   static String? validatePassword(String? value){
-    if(value == null || value.isEmpty) return "Password cannot be empty";
+    if(value == null || value.isEmpty) return "Enter your password";
 
     String error = "";
     if(value.length < 8){
-      error += "● Password length must be greater than 8\n";
+      error += "● Password length must be at least 8 characters\n";
     }
 
     if (!value.contains(RegExp(r'[A-Z]'))) {
@@ -33,7 +33,7 @@ class Validator {
   }
 
   static String? validatePasswordEmpty(String? value) {
-    if(value == null || value.isEmpty) return "Password cannot be empty";
+    if(value == null || value.isEmpty) return "Enter your password";
     return null;
   }
 }

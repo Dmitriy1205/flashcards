@@ -34,7 +34,6 @@ class SigninBloc extends Bloc<SigninEvent, SigninState> {
       );
       emit(const SigninState.success());
     } on BadRequestException catch (e) {
-
       emit(SigninState.error(error: e.message));
     }
   }

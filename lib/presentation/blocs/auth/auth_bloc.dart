@@ -41,8 +41,9 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
           event.user!.providerData[0].providerId == 'google.com') {
         emit(AuthState.authenticated(user: event.user!));
       } else {
-        // add(const AuthEvent.logout());
+        _authRepository.sendEmailVerification();
         emit(AuthState.userNotVerified(user: event.user!));
+        add(_LogoutEvent());
       }
     }
   }

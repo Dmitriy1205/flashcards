@@ -6,10 +6,11 @@ import '../const/colors.dart';
 class AppToast{
   static OverlayEntry? _currentOverlay;
   static const Duration _delay = Duration(seconds: 4);
+  static const Duration _errorDelay = Duration(seconds: 6);
 
   static void showError(BuildContext context, String error) async{
     _showOverlay(context, _Toast(msg: error,
-      toastDuration: _delay,
+      toastDuration: _errorDelay,
       leading: Text("🚨"), leftBorderColor: const Color(0xFFCD0000), textColor: const Color(0xFFCD0000),));
   }
 
@@ -68,7 +69,7 @@ class _ToastState extends State<_Toast> with SingleTickerProviderStateMixin{
   @override
   Widget build(BuildContext context) {
     return Positioned(
-      bottom: MediaQuery.of(context).padding.bottom,
+      bottom: MediaQuery.of(context).viewInsets.bottom,
       left: 0,
       right: 0,
       child: Material(
