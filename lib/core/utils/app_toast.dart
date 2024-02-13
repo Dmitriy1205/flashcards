@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
@@ -5,22 +7,22 @@ import '../const/colors.dart';
 
 class AppToast{
   static OverlayEntry? _currentOverlay;
-  static const Duration _delay = Duration(seconds: 4);
-  static const Duration _errorDelay = Duration(seconds: 6);
+  static const Duration _delay = Duration(seconds: 6);
+  static const Duration _errorDelay = Duration(seconds: 7);
 
   static void showError(BuildContext context, String error) async{
     _showOverlay(context, _Toast(msg: error,
       toastDuration: _errorDelay,
-      leading: Text("🚨"), leftBorderColor: const Color(0xFFCD0000), textColor: const Color(0xFFCD0000),));
+      leading: Text("🚨"), leftBorderColor: const Color(0xFFCD0000), textColor: const Color(0xFFCD0000)), _errorDelay);
   }
 
   static void showSuccess(BuildContext context, String msg) async{
     _showOverlay(context, _Toast(msg: msg,
       toastDuration: _delay,
-      leading: Text("✅"), leftBorderColor: AppColors.green, textColor: AppColors.green,));
+      leading: Text("✅"), leftBorderColor: AppColors.green, textColor: AppColors.green,), _delay);
   }
 
-  static _showOverlay(BuildContext context, Widget widget) async{
+  static _showOverlay(BuildContext context, Widget widget, Duration delay) async{
     _currentOverlay?.remove();
     _currentOverlay = null;
     OverlayState? overlayState = Overlay.of(context);
@@ -29,7 +31,7 @@ class AppToast{
     });
     overlayState.insert(overlayEntry);
     _currentOverlay = overlayEntry;
-    await Future.delayed(_delay);
+    await Future.delayed(delay);
     if(_currentOverlay != null){
       _currentOverlay!.remove();
       _currentOverlay = null;
@@ -61,6 +63,7 @@ class _ToastState extends State<_Toast> with SingleTickerProviderStateMixin{
       });
     });
     Future.delayed(Duration(seconds: widget.toastDuration.inSeconds - 1), (){
+      if(!mounted) return;
       setState(() {
         _opacity = 0;
       });

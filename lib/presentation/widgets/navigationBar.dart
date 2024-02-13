@@ -26,85 +26,82 @@ class _CustomNavigationBarState extends State<CustomNavigationBar> {
 
   @override
   Widget build(BuildContext context) {
-    return SafeArea(
-      child: SizedBox(
-        height: 113,
-        child: Stack(
-          children: [
-            Positioned(
-              left: 24,
-              bottom: 36,
-              child: ClipRRect(
-                borderRadius: BorderRadius.circular(50),
-                child: Container(
-                  height: 73,
-                  color: Colors.white,
-                  child: Row(
-                    children: [
-                      Container(
-                        margin: const EdgeInsets.only(left: 34, right: 22),
-                        child: SvgPicture.asset(
-                          pageIndex == 0
-                              ? AppIcons.selectedHamburger
-                              : AppIcons.defaultHamburger,
-                          height: 27.5,
-                          width: 30,
-                        ),
+    return SizedBox(
+      height: 113,
+      child: Stack(
+        children: [
+          Positioned(
+            left: 24,
+            bottom: 36,
+            child: ClipRRect(
+              borderRadius: BorderRadius.circular(50),
+              child: Container(
+                height: 73,
+                color: Colors.white,
+                child: Row(
+                  children: [
+                    Container(
+                      margin: const EdgeInsets.only(left: 34, right: 22),
+                      child: SvgPicture.asset(
+                        pageIndex == 0
+                            ? AppIcons.selectedHamburger
+                            : AppIcons.defaultHamburger,
+                        height: 27.5,
+                        width: 30,
                       ),
-                      Container(
-                        margin: const EdgeInsets.only(left: 22, right: 22),
-                        child: SvgPicture.asset(
-                          pageIndex == 1 ? AppIcons.selectedHat : AppIcons.hat,
-                          height: 27.5,
-                          width: 30,
-                        ),
+                    ),
+                    Container(
+                      margin: const EdgeInsets.only(left: 22, right: 22),
+                      child: SvgPicture.asset(
+                        pageIndex == 1 ? AppIcons.selectedHat : AppIcons.hat,
+                        height: 27.5,
+                        width: 30,
                       ),
-                      Container(
-                        margin: const EdgeInsets.only(left: 22, right: 33),
-                        child: SvgPicture.asset(
-                          pageIndex == 2
-                              ? AppIcons.selectedProfile
-                              : AppIcons.defaultProfile,
-                          height: 27.5,
-                          width: 30,
-                        ),
+                    ),
+                    Container(
+                      margin: const EdgeInsets.only(left: 22, right: 33),
+                      child: SvgPicture.asset(
+                        pageIndex == 2
+                            ? AppIcons.selectedProfile
+                            : AppIcons.defaultProfile,
+                        height: 27.5,
+                        width: 30,
                       ),
-                    ]
-                        .asMap()
-                        .entries
-                        .map((e) => SizedBox(
-                              height: double.infinity,
-                              child: Material(
-                                child: InkWell(
-                                  onTap: () {
-                                    setState(() {
-                                      pageIndex = e.key;
-                                      widget.pageController.animateToPage(e.key,
-                                          duration:
-                                              const Duration(milliseconds: 100),
-                                          curve: Curves.ease);
-                                    });
-                                  },
-                                  child: e.value,
-                                ),
+                    ),
+                  ]
+                      .asMap()
+                      .entries
+                      .map((e) => SizedBox(
+                            height: double.infinity,
+                            child: Material(
+                              child: InkWell(
+                                onTap: () {
+                                  setState(() {
+                                    pageIndex = e.key;
+                                    widget.pageController.animateToPage(e.key,
+                                        duration:
+                                            const Duration(milliseconds: 100),
+                                        curve: Curves.ease);
+                                  });
+                                },
+                                child: e.value,
                               ),
-                            ))
-                        .toList(),
-                  ),
+                            ),
+                          ))
+                      .toList(),
                 ),
               ),
             ),
-            pageIndex != 2
-                ? Positioned(
-                    right: 28,
-                    bottom: 10,
-                    child:
-                    Stack(
-                      children: [
-                        context.watch<ListsBloc>().isEditMode
-                            ? Padding(
-                          padding: const EdgeInsets.only(bottom: 20.0),
-                          child: SizedBox(
+          ),
+          pageIndex != 2
+              ? Positioned(
+                  right: 28,
+                  bottom: 30,
+                  child:
+                  Stack(
+                    children: [
+                      context.watch<ListsBloc>().isEditMode
+                          ? SizedBox(
                             height: 76,
                             width: 76,
                             child: SvgPicture.asset(
@@ -112,11 +109,8 @@ class _CustomNavigationBarState extends State<CustomNavigationBar> {
                               height: 18,
                               width: 9,
                             ),
-                          ),
-                        )
-                            : Padding(
-                          padding: const EdgeInsets.only(bottom: 20.0),
-                          child: SizedBox(
+                          )
+                          : SizedBox(
                             height: 76,
                             width: 76,
                             child: SvgPicture.asset(
@@ -125,33 +119,31 @@ class _CustomNavigationBarState extends State<CustomNavigationBar> {
                               width: 9,
                             ),
                           ),
-                        ),
-                        Material(
-                          color: Colors.transparent,
-                          borderRadius: BorderRadius.circular(32),
-                          child: InkWell(
-                              borderRadius: BorderRadius.circular(32),
-                              onTap: () async{
-                                if(context.read<ListsBloc>().isEditMode){
-                                  final confirmed = await confirmOperation(context, title: "Confirm deleting", message: "Are you sure that you want to delete selected collections?", action: "Delete", cancel: "Cancel");
-                                  if(!confirmed) return;
-                                  context.read<ListsBloc>().add(
-                                      const ListsEvent.deleteSelectedCollection(
-                                          collectionsList: []));
-                                  context.read<ListsBloc>().isEditMode = false;
-                                }else{
-                                  dialog();
-                                }
-                              },
-                              child: Container(
-                                  width: 76, height: 76, color: Colors.transparent)),
-                        ),
-                      ],
-                    )
+                      Material(
+                        color: Colors.transparent,
+                        borderRadius: BorderRadius.circular(32),
+                        child: InkWell(
+                            borderRadius: BorderRadius.circular(32),
+                            onTap: () async{
+                              if(context.read<ListsBloc>().isEditMode){
+                                final confirmed = await confirmOperation(context, title: "Confirm deleting", message: "Are you sure that you want to delete selected collections?", action: "Delete", cancel: "Cancel");
+                                if(!confirmed) return;
+                                context.read<ListsBloc>().add(
+                                    const ListsEvent.deleteSelectedCollection(
+                                        collectionsList: []));
+                                context.read<ListsBloc>().isEditMode = false;
+                              }else{
+                                dialog();
+                              }
+                            },
+                            child: Container(
+                                width: 76, height: 76, color: Colors.transparent)),
+                      ),
+                    ],
                   )
-                : const SizedBox()
-          ],
-        ),
+                )
+              : const SizedBox()
+        ],
       ),
     );
   }

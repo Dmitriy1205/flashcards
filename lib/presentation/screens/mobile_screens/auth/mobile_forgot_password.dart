@@ -44,7 +44,7 @@ class _MobileForgotPasswordScreenState
                   },
                   success: (_) {
                     Navigator.pop(context);
-                    AppToast.showSuccess(context, "If an account exists to that email address, please check your inbox including spam and follow the instructions");
+                    AppToast.showSuccess(context, "Email sent, please check your inbox including spam");
                   },
                   orElse: () {});
             },
