@@ -36,6 +36,25 @@ class _WebSignUpScreenState extends State<WebSignUpScreen> {
   bool isPassObscure = true;
   bool isHoveredButton = false;
 
+  bool _emailWasFocused = false;
+  bool _emailWasUnfocused = false;
+  bool get _validateEmail => _emailWasFocused && _emailWasUnfocused;
+
+  @override
+  void initState() {
+    _emailNode.addListener(_emailFocusChanged);
+    super.initState();
+  }
+
+  void _emailFocusChanged(){
+    if(_emailNode.hasFocus){
+      _emailWasFocused = true;
+    }else{
+      _emailWasUnfocused = true;
+    }
+    setState(() {});
+  }
+
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -120,7 +139,7 @@ class _WebSignUpScreenState extends State<WebSignUpScreen> {
                                       ? SvgPicture.asset(AppIcons.closedEye)
                                       : SvgPicture.asset(AppIcons.openEye),
                                 ),
-                                validator: Validator.validatePassword,
+                                validator: _validateEmail ? (_) => null : Validator.validatePassword,
                               ),
                               const SizedBox(
                                 height: 27,
@@ -363,6 +382,7 @@ class _WebSignUpScreenState extends State<WebSignUpScreen> {
 
   @override
   void dispose() {
+    _emailNode.removeListener(_emailFocusChanged);
     _emailController.dispose();
     _passwordController.dispose();
     _emailNode.dispose();

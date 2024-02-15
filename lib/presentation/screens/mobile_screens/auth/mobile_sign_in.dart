@@ -1,3 +1,4 @@
+import 'dart:developer';
 import 'dart:io';
 
 import 'package:flashcards/core/const/images.dart';
@@ -38,6 +39,25 @@ class _MobileSignInScreenState extends State<MobileSignInScreen> {
   final _emailNode = FocusNode();
   final _passwordNode = FocusNode();
   bool isPassObscure = true;
+
+  bool _emailWasFocused = false;
+  bool _emailWasUnfocused = false;
+  bool get _validateEmail => _emailWasFocused && _emailWasUnfocused;
+
+  @override
+  void initState() {
+    _emailNode.addListener(_emailFocusChanged);
+    super.initState();
+  }
+
+  void _emailFocusChanged(){
+    if(_emailNode.hasFocus){
+      _emailWasFocused = true;
+    }else{
+      _emailWasUnfocused = true;
+    }
+    setState(() {});
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -101,7 +121,7 @@ class _MobileSignInScreenState extends State<MobileSignInScreen> {
                             focusNode: _emailNode,
                             textController: _emailController,
                             hintText: AppStrings.enterEmail,
-                            validator: Validator.validateEmail,
+                            validator: !_validateEmail ? (_) => null : Validator.validateEmail,
                           ),
                           const SizedBox(
                             height: 14,
@@ -268,6 +288,7 @@ class _MobileSignInScreenState extends State<MobileSignInScreen> {
 
   @override
   void dispose() {
+    _emailNode.removeListener(_emailFocusChanged);
     _emailController.dispose();
     _passwordController.dispose();
     _emailNode.dispose();

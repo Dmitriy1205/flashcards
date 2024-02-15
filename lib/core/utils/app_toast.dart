@@ -72,7 +72,7 @@ class _ToastState extends State<_Toast> with SingleTickerProviderStateMixin{
   @override
   Widget build(BuildContext context) {
     return Positioned(
-      bottom: MediaQuery.of(context).viewInsets.bottom,
+      bottom: MediaQuery.of(context).viewInsets.bottom > 0 ? MediaQuery.of(context).viewInsets.bottom : (MediaQuery.of(context).padding.bottom == 0 ? 50 : 0),
       left: 0,
       right: 0,
       child: Material(
@@ -80,29 +80,31 @@ class _ToastState extends State<_Toast> with SingleTickerProviderStateMixin{
         child: AnimatedOpacity(
           opacity: _opacity,
           duration: const Duration(seconds: 1),
-          child: Container(
-            width: double.infinity,
-            height: 48,
-            decoration: BoxDecoration(
-                color: Colors.white,
-              boxShadow: [
-                BoxShadow(
-                  offset: Offset(2,3),
-                  color: Colors.black.withOpacity(0.2),
-                  blurRadius: 6
-                )
-              ]
-            ),
-            child: Row(
-              crossAxisAlignment: CrossAxisAlignment.center,
-              children: [
-                Container(width: 4, height: 48, color: widget.leftBorderColor,),
-                const SizedBox(width: 21,),
-                widget.leading,
-                const SizedBox(width: 27,),
-                Expanded(child: Text(widget.msg, style: TextStyle(color: widget.textColor), maxLines: 2, overflow: TextOverflow.ellipsis,)),
-                const SizedBox(width: 13,),
-              ],
+          child: SafeArea(
+            child: Container(
+              width: double.infinity,
+              height: 48,
+              decoration: BoxDecoration(
+                  color: Colors.white,
+                boxShadow: [
+                  BoxShadow(
+                    offset: Offset(2,3),
+                    color: Colors.black.withOpacity(0.2),
+                    blurRadius: 6
+                  )
+                ]
+              ),
+              child: Row(
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+                  Container(width: 4, height: 48, color: widget.leftBorderColor,),
+                  const SizedBox(width: 21,),
+                  widget.leading,
+                  const SizedBox(width: 27,),
+                  Expanded(child: Text(widget.msg, style: TextStyle(color: widget.textColor), maxLines: 2, overflow: TextOverflow.ellipsis,)),
+                  const SizedBox(width: 13,),
+                ],
+              ),
             ),
           ),
         ),
