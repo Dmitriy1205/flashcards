@@ -316,7 +316,14 @@ class _WebSignUpScreenState extends State<WebSignUpScreen> {
                                                   .copyWith(color: Colors.white),
                                             )),
                                         text: AppStrings.createAccount,
-                                        onPressed: () {
+                                        onPressed: () async{
+                                          if(!_validateEmail){
+                                            setState(() {
+                                              _emailWasFocused = true;
+                                              _emailWasUnfocused = true;
+                                            });
+                                            await Future.delayed(Duration(seconds: 1));
+                                          }
                                           if (!_formKey.currentState!.validate()) {
                                             return;
                                           }

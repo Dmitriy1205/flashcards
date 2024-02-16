@@ -11,7 +11,6 @@ import 'core/services/service_locator.dart' as sl;
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   Bloc.observer = GlobalObserver();
-  SystemChrome.setEnabledSystemUIMode(SystemUiMode.immersive, overlays: [SystemUiOverlay.top]);
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
     // const FirebaseOptions(

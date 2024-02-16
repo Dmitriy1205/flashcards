@@ -115,7 +115,14 @@ class _MobileForgotPasswordScreenState
                                   style: AppTheme.themeData.textTheme.titleSmall!
                                       .copyWith(color: Colors.white),
                                 )),
-                            text: AppStrings.buttonSend, onPressed: () {
+                            text: AppStrings.buttonSend, onPressed: () async{
+                          if(!_validateEmail){
+                            setState(() {
+                              _emailWasFocused = true;
+                              _emailWasUnfocused = true;
+                            });
+                            await Future.delayed(Duration(seconds: 1));
+                          }
                           if (!_formKey.currentState!.validate()) {
                             return;
                           }

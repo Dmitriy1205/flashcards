@@ -181,7 +181,14 @@ class _MobileSignInScreenState extends State<MobileSignInScreen> {
                               style: AppTheme.themeData.textTheme.titleSmall!
                                       .copyWith(color: Colors.white),
                             )),
-                              text: AppStrings.buttonLogin, onPressed: () {
+                              text: AppStrings.buttonLogin, onPressed: () async{
+                              if(!_validateEmail){
+                                setState(() {
+                                  _emailWasFocused = true;
+                                  _emailWasUnfocused = true;
+                                });
+                                await Future.delayed(Duration(seconds: 1));
+                              }
                             if (!_formKey.currentState!
                                 .validate()) {
                               return;
