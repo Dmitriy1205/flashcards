@@ -4,7 +4,8 @@ import 'package:flashcards/presentation/screens/mobile_screens/home.dart';
 import 'package:flashcards/presentation/screens/mobile_screens/lists_screen/cards/cards.dart';
 import 'package:flashcards/presentation/screens/mobile_screens/lists_screen/cards/create_edit_card.dart';
 import 'package:flashcards/presentation/screens/mobile_screens/lists_screen/cards/view_flash_card.dart';
-import 'package:flashcards/presentation/screens/mobile_screens/lists_screen/learn.dart';
+import 'package:flashcards/presentation/screens/mobile_screens/lists_screen/learning_mode/finish_learn_screen.dart';
+import 'package:flashcards/presentation/screens/mobile_screens/lists_screen/learning_mode/learn_cards.dart';
 import 'package:flashcards/presentation/screens/mobile_screens/lists_screen/lists_screen.dart';
 import 'package:flashcards/presentation/screens/mobile_screens/profile/profile.dart';
 import 'package:flashcards/presentation/screens/web_screens/auth/web_forgot_password.dart';
@@ -81,7 +82,7 @@ final GoRouter router = GoRouter(
               return st.maybeMap(
                   authenticated: (_) => '/mobile_home',
                   unauthenticated: (_) => '/',
-                  userNotVerified: (_)=>'/',
+                  userNotVerified: (_) => '/',
                   orElse: () => null);
             },
           ),
@@ -172,7 +173,7 @@ final GoRouter router = GoRouter(
         );
       },
     ),
-    GoRoute(path: '/learn', builder: (context, state) => const Learn()),
+    // GoRoute(path: '/learn', builder: (context, state) => const Learn()),
     GoRoute(path: '/lists', builder: (context, state) => const Lists()),
     GoRoute(path: '/profile', builder: (context, state) => const Profile()),
     GoRoute(
@@ -184,6 +185,29 @@ final GoRouter router = GoRouter(
           collectionName:
               (state.extra as Map<String, dynamic>?)?["collectionName"],
           collectionId: (state.extra as Map<String, dynamic>?)?['collectionId'],
+        ),
+      ),
+    ),
+    GoRoute(
+      path: '/learn_cards',
+      pageBuilder: (context, state) => slideAnimation<void>(
+        context: context,
+        state: state,
+        child: LearnCards(
+          collectionId: (state.extra as Map<String, dynamic>?)?['collectionId'],
+          cards: (state.extra as Map<String, dynamic>?)?['cards'],
+        ),
+      ),
+    ),
+    GoRoute(
+      path: '/finish_learn_screen',
+      pageBuilder: (context, state) => slideAnimation<void>(
+        context: context,
+        state: state,
+        child:  FinishLearningScreen(
+          collectionId: (state.extra as Map<String, dynamic>?)?['collectionId'],
+          known: (state.extra as Map<String, dynamic>?)?['known'],
+          learning: (state.extra as Map<String, dynamic>?)?['learning'],
         ),
       ),
     ),

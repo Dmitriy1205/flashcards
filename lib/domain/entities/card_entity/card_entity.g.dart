@@ -17,6 +17,7 @@ _$CardEntityImpl _$$CardEntityImplFromJson(Map<String, dynamic> json) =>
       back: (json['back'] as List<dynamic>)
           .map((e) => e as Map<String, dynamic>)
           .toList(),
+      isLearned: json['isLearned'] as bool? ?? false,
       createdAt: FirebaseTimestampConverters.fromTimestamp(json['createdAt']),
       sharedFrom: json['sharedFrom'] as String?,
       shareWithId: (json['shareWithId'] as List<dynamic>?)
@@ -37,6 +38,7 @@ Map<String, dynamic> _$$CardEntityImplToJson(_$CardEntityImpl instance) =>
       'collectionName': instance.collectionName,
       'front': instance.front,
       'back': instance.back,
+      'isLearned': instance.isLearned,
       'createdAt': instance.createdAt?.toIso8601String(),
       'sharedFrom': instance.sharedFrom,
       'shareWithId': instance.shareWithId,

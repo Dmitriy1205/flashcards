@@ -13,6 +13,7 @@ class CardEntity with _$CardEntity {
     required String collectionName,
     required List<Map<String, dynamic>> front,
     required List<Map<String, dynamic>> back,
+    @Default(false) bool isLearned,
     @JsonKey(fromJson: FirebaseTimestampConverters.fromTimestamp)
     required DateTime? createdAt,
     final String? sharedFrom,

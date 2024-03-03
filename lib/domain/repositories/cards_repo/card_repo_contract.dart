@@ -18,4 +18,6 @@ abstract class CardRepo {
 
   Future<void> deleteCards(
       {required List<String> cardsToDelete, required String collectionId});
+
+  Future<void> swipeCard({required CardEntity cardEntity});
 }

@@ -30,6 +30,8 @@ mixin _$CardsEvent {
     required TResult Function(String collectionId, String collectionName)
         shareCollection,
     required TResult Function() emptyCardsList,
+    required TResult Function(CardEntity cardEntity) swipeCard,
+    required TResult Function() finishLearn,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
@@ -44,6 +46,8 @@ mixin _$CardsEvent {
     TResult? Function(String collectionId, String collectionName)?
         shareCollection,
     TResult? Function()? emptyCardsList,
+    TResult? Function(CardEntity cardEntity)? swipeCard,
+    TResult? Function()? finishLearn,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
@@ -58,6 +62,8 @@ mixin _$CardsEvent {
     TResult Function(String collectionId, String collectionName)?
         shareCollection,
     TResult Function()? emptyCardsList,
+    TResult Function(CardEntity cardEntity)? swipeCard,
+    TResult Function()? finishLearn,
     required TResult orElse(),
   }) =>
       throw _privateConstructorUsedError;
@@ -70,6 +76,8 @@ mixin _$CardsEvent {
     required TResult Function(_CreateSharedCards value) createSharedCards,
     required TResult Function(_ShareCard value) shareCollection,
     required TResult Function(_EmptyCardsList value) emptyCardsList,
+    required TResult Function(_SwipeCard value) swipeCard,
+    required TResult Function(_FinishLearn value) finishLearn,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
@@ -81,6 +89,8 @@ mixin _$CardsEvent {
     TResult? Function(_CreateSharedCards value)? createSharedCards,
     TResult? Function(_ShareCard value)? shareCollection,
     TResult? Function(_EmptyCardsList value)? emptyCardsList,
+    TResult? Function(_SwipeCard value)? swipeCard,
+    TResult? Function(_FinishLearn value)? finishLearn,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
@@ -92,6 +102,8 @@ mixin _$CardsEvent {
     TResult Function(_CreateSharedCards value)? createSharedCards,
     TResult Function(_ShareCard value)? shareCollection,
     TResult Function(_EmptyCardsList value)? emptyCardsList,
+    TResult Function(_SwipeCard value)? swipeCard,
+    TResult Function(_FinishLearn value)? finishLearn,
     required TResult orElse(),
   }) =>
       throw _privateConstructorUsedError;
@@ -201,6 +213,8 @@ class _$EditCardImpl implements _EditCard {
     required TResult Function(String collectionId, String collectionName)
         shareCollection,
     required TResult Function() emptyCardsList,
+    required TResult Function(CardEntity cardEntity) swipeCard,
+    required TResult Function() finishLearn,
   }) {
     return editCard(cardParam, collectionId);
   }
@@ -218,6 +232,8 @@ class _$EditCardImpl implements _EditCard {
     TResult? Function(String collectionId, String collectionName)?
         shareCollection,
     TResult? Function()? emptyCardsList,
+    TResult? Function(CardEntity cardEntity)? swipeCard,
+    TResult? Function()? finishLearn,
   }) {
     return editCard?.call(cardParam, collectionId);
   }
@@ -235,6 +251,8 @@ class _$EditCardImpl implements _EditCard {
     TResult Function(String collectionId, String collectionName)?
         shareCollection,
     TResult Function()? emptyCardsList,
+    TResult Function(CardEntity cardEntity)? swipeCard,
+    TResult Function()? finishLearn,
     required TResult orElse(),
   }) {
     if (editCard != null) {
@@ -253,6 +271,8 @@ class _$EditCardImpl implements _EditCard {
     required TResult Function(_CreateSharedCards value) createSharedCards,
     required TResult Function(_ShareCard value) shareCollection,
     required TResult Function(_EmptyCardsList value) emptyCardsList,
+    required TResult Function(_SwipeCard value) swipeCard,
+    required TResult Function(_FinishLearn value) finishLearn,
   }) {
     return editCard(this);
   }
@@ -267,6 +287,8 @@ class _$EditCardImpl implements _EditCard {
     TResult? Function(_CreateSharedCards value)? createSharedCards,
     TResult? Function(_ShareCard value)? shareCollection,
     TResult? Function(_EmptyCardsList value)? emptyCardsList,
+    TResult? Function(_SwipeCard value)? swipeCard,
+    TResult? Function(_FinishLearn value)? finishLearn,
   }) {
     return editCard?.call(this);
   }
@@ -281,6 +303,8 @@ class _$EditCardImpl implements _EditCard {
     TResult Function(_CreateSharedCards value)? createSharedCards,
     TResult Function(_ShareCard value)? shareCollection,
     TResult Function(_EmptyCardsList value)? emptyCardsList,
+    TResult Function(_SwipeCard value)? swipeCard,
+    TResult Function(_FinishLearn value)? finishLearn,
     required TResult orElse(),
   }) {
     if (editCard != null) {
@@ -379,6 +403,8 @@ class _$InitCardImpl implements _InitCard {
     required TResult Function(String collectionId, String collectionName)
         shareCollection,
     required TResult Function() emptyCardsList,
+    required TResult Function(CardEntity cardEntity) swipeCard,
+    required TResult Function() finishLearn,
   }) {
     return initCard(collectionId);
   }
@@ -396,6 +422,8 @@ class _$InitCardImpl implements _InitCard {
     TResult? Function(String collectionId, String collectionName)?
         shareCollection,
     TResult? Function()? emptyCardsList,
+    TResult? Function(CardEntity cardEntity)? swipeCard,
+    TResult? Function()? finishLearn,
   }) {
     return initCard?.call(collectionId);
   }
@@ -413,6 +441,8 @@ class _$InitCardImpl implements _InitCard {
     TResult Function(String collectionId, String collectionName)?
         shareCollection,
     TResult Function()? emptyCardsList,
+    TResult Function(CardEntity cardEntity)? swipeCard,
+    TResult Function()? finishLearn,
     required TResult orElse(),
   }) {
     if (initCard != null) {
@@ -431,6 +461,8 @@ class _$InitCardImpl implements _InitCard {
     required TResult Function(_CreateSharedCards value) createSharedCards,
     required TResult Function(_ShareCard value) shareCollection,
     required TResult Function(_EmptyCardsList value) emptyCardsList,
+    required TResult Function(_SwipeCard value) swipeCard,
+    required TResult Function(_FinishLearn value) finishLearn,
   }) {
     return initCard(this);
   }
@@ -445,6 +477,8 @@ class _$InitCardImpl implements _InitCard {
     TResult? Function(_CreateSharedCards value)? createSharedCards,
     TResult? Function(_ShareCard value)? shareCollection,
     TResult? Function(_EmptyCardsList value)? emptyCardsList,
+    TResult? Function(_SwipeCard value)? swipeCard,
+    TResult? Function(_FinishLearn value)? finishLearn,
   }) {
     return initCard?.call(this);
   }
@@ -459,6 +493,8 @@ class _$InitCardImpl implements _InitCard {
     TResult Function(_CreateSharedCards value)? createSharedCards,
     TResult Function(_ShareCard value)? shareCollection,
     TResult Function(_EmptyCardsList value)? emptyCardsList,
+    TResult Function(_SwipeCard value)? swipeCard,
+    TResult Function(_FinishLearn value)? finishLearn,
     required TResult orElse(),
   }) {
     if (initCard != null) {
@@ -574,6 +610,8 @@ class _$DeleteSelectedCardsImpl implements _DeleteSelectedCards {
     required TResult Function(String collectionId, String collectionName)
         shareCollection,
     required TResult Function() emptyCardsList,
+    required TResult Function(CardEntity cardEntity) swipeCard,
+    required TResult Function() finishLearn,
   }) {
     return deleteSelectedCards(cardsIdToDelete, collectionId);
   }
@@ -591,6 +629,8 @@ class _$DeleteSelectedCardsImpl implements _DeleteSelectedCards {
     TResult? Function(String collectionId, String collectionName)?
         shareCollection,
     TResult? Function()? emptyCardsList,
+    TResult? Function(CardEntity cardEntity)? swipeCard,
+    TResult? Function()? finishLearn,
   }) {
     return deleteSelectedCards?.call(cardsIdToDelete, collectionId);
   }
@@ -608,6 +648,8 @@ class _$DeleteSelectedCardsImpl implements _DeleteSelectedCards {
     TResult Function(String collectionId, String collectionName)?
         shareCollection,
     TResult Function()? emptyCardsList,
+    TResult Function(CardEntity cardEntity)? swipeCard,
+    TResult Function()? finishLearn,
     required TResult orElse(),
   }) {
     if (deleteSelectedCards != null) {
@@ -626,6 +668,8 @@ class _$DeleteSelectedCardsImpl implements _DeleteSelectedCards {
     required TResult Function(_CreateSharedCards value) createSharedCards,
     required TResult Function(_ShareCard value) shareCollection,
     required TResult Function(_EmptyCardsList value) emptyCardsList,
+    required TResult Function(_SwipeCard value) swipeCard,
+    required TResult Function(_FinishLearn value) finishLearn,
   }) {
     return deleteSelectedCards(this);
   }
@@ -640,6 +684,8 @@ class _$DeleteSelectedCardsImpl implements _DeleteSelectedCards {
     TResult? Function(_CreateSharedCards value)? createSharedCards,
     TResult? Function(_ShareCard value)? shareCollection,
     TResult? Function(_EmptyCardsList value)? emptyCardsList,
+    TResult? Function(_SwipeCard value)? swipeCard,
+    TResult? Function(_FinishLearn value)? finishLearn,
   }) {
     return deleteSelectedCards?.call(this);
   }
@@ -654,6 +700,8 @@ class _$DeleteSelectedCardsImpl implements _DeleteSelectedCards {
     TResult Function(_CreateSharedCards value)? createSharedCards,
     TResult Function(_ShareCard value)? shareCollection,
     TResult Function(_EmptyCardsList value)? emptyCardsList,
+    TResult Function(_SwipeCard value)? swipeCard,
+    TResult Function(_FinishLearn value)? finishLearn,
     required TResult orElse(),
   }) {
     if (deleteSelectedCards != null) {
@@ -762,6 +810,8 @@ class _$CreateNewCardImpl implements _CreateNewCard {
     required TResult Function(String collectionId, String collectionName)
         shareCollection,
     required TResult Function() emptyCardsList,
+    required TResult Function(CardEntity cardEntity) swipeCard,
+    required TResult Function() finishLearn,
   }) {
     return createNewCard(cardParam, collectionId);
   }
@@ -779,6 +829,8 @@ class _$CreateNewCardImpl implements _CreateNewCard {
     TResult? Function(String collectionId, String collectionName)?
         shareCollection,
     TResult? Function()? emptyCardsList,
+    TResult? Function(CardEntity cardEntity)? swipeCard,
+    TResult? Function()? finishLearn,
   }) {
     return createNewCard?.call(cardParam, collectionId);
   }
@@ -796,6 +848,8 @@ class _$CreateNewCardImpl implements _CreateNewCard {
     TResult Function(String collectionId, String collectionName)?
         shareCollection,
     TResult Function()? emptyCardsList,
+    TResult Function(CardEntity cardEntity)? swipeCard,
+    TResult Function()? finishLearn,
     required TResult orElse(),
   }) {
     if (createNewCard != null) {
@@ -814,6 +868,8 @@ class _$CreateNewCardImpl implements _CreateNewCard {
     required TResult Function(_CreateSharedCards value) createSharedCards,
     required TResult Function(_ShareCard value) shareCollection,
     required TResult Function(_EmptyCardsList value) emptyCardsList,
+    required TResult Function(_SwipeCard value) swipeCard,
+    required TResult Function(_FinishLearn value) finishLearn,
   }) {
     return createNewCard(this);
   }
@@ -828,6 +884,8 @@ class _$CreateNewCardImpl implements _CreateNewCard {
     TResult? Function(_CreateSharedCards value)? createSharedCards,
     TResult? Function(_ShareCard value)? shareCollection,
     TResult? Function(_EmptyCardsList value)? emptyCardsList,
+    TResult? Function(_SwipeCard value)? swipeCard,
+    TResult? Function(_FinishLearn value)? finishLearn,
   }) {
     return createNewCard?.call(this);
   }
@@ -842,6 +900,8 @@ class _$CreateNewCardImpl implements _CreateNewCard {
     TResult Function(_CreateSharedCards value)? createSharedCards,
     TResult Function(_ShareCard value)? shareCollection,
     TResult Function(_EmptyCardsList value)? emptyCardsList,
+    TResult Function(_SwipeCard value)? swipeCard,
+    TResult Function(_FinishLearn value)? finishLearn,
     required TResult orElse(),
   }) {
     if (createNewCard != null) {
@@ -950,6 +1010,8 @@ class _$CreateSharedCardsImpl implements _CreateSharedCards {
     required TResult Function(String collectionId, String collectionName)
         shareCollection,
     required TResult Function() emptyCardsList,
+    required TResult Function(CardEntity cardEntity) swipeCard,
+    required TResult Function() finishLearn,
   }) {
     return createSharedCards(collectionId, sender);
   }
@@ -967,6 +1029,8 @@ class _$CreateSharedCardsImpl implements _CreateSharedCards {
     TResult? Function(String collectionId, String collectionName)?
         shareCollection,
     TResult? Function()? emptyCardsList,
+    TResult? Function(CardEntity cardEntity)? swipeCard,
+    TResult? Function()? finishLearn,
   }) {
     return createSharedCards?.call(collectionId, sender);
   }
@@ -984,6 +1048,8 @@ class _$CreateSharedCardsImpl implements _CreateSharedCards {
     TResult Function(String collectionId, String collectionName)?
         shareCollection,
     TResult Function()? emptyCardsList,
+    TResult Function(CardEntity cardEntity)? swipeCard,
+    TResult Function()? finishLearn,
     required TResult orElse(),
   }) {
     if (createSharedCards != null) {
@@ -1002,6 +1068,8 @@ class _$CreateSharedCardsImpl implements _CreateSharedCards {
     required TResult Function(_CreateSharedCards value) createSharedCards,
     required TResult Function(_ShareCard value) shareCollection,
     required TResult Function(_EmptyCardsList value) emptyCardsList,
+    required TResult Function(_SwipeCard value) swipeCard,
+    required TResult Function(_FinishLearn value) finishLearn,
   }) {
     return createSharedCards(this);
   }
@@ -1016,6 +1084,8 @@ class _$CreateSharedCardsImpl implements _CreateSharedCards {
     TResult? Function(_CreateSharedCards value)? createSharedCards,
     TResult? Function(_ShareCard value)? shareCollection,
     TResult? Function(_EmptyCardsList value)? emptyCardsList,
+    TResult? Function(_SwipeCard value)? swipeCard,
+    TResult? Function(_FinishLearn value)? finishLearn,
   }) {
     return createSharedCards?.call(this);
   }
@@ -1030,6 +1100,8 @@ class _$CreateSharedCardsImpl implements _CreateSharedCards {
     TResult Function(_CreateSharedCards value)? createSharedCards,
     TResult Function(_ShareCard value)? shareCollection,
     TResult Function(_EmptyCardsList value)? emptyCardsList,
+    TResult Function(_SwipeCard value)? swipeCard,
+    TResult Function(_FinishLearn value)? finishLearn,
     required TResult orElse(),
   }) {
     if (createSharedCards != null) {
@@ -1138,6 +1210,8 @@ class _$ShareCardImpl implements _ShareCard {
     required TResult Function(String collectionId, String collectionName)
         shareCollection,
     required TResult Function() emptyCardsList,
+    required TResult Function(CardEntity cardEntity) swipeCard,
+    required TResult Function() finishLearn,
   }) {
     return shareCollection(collectionId, collectionName);
   }
@@ -1155,6 +1229,8 @@ class _$ShareCardImpl implements _ShareCard {
     TResult? Function(String collectionId, String collectionName)?
         shareCollection,
     TResult? Function()? emptyCardsList,
+    TResult? Function(CardEntity cardEntity)? swipeCard,
+    TResult? Function()? finishLearn,
   }) {
     return shareCollection?.call(collectionId, collectionName);
   }
@@ -1172,6 +1248,8 @@ class _$ShareCardImpl implements _ShareCard {
     TResult Function(String collectionId, String collectionName)?
         shareCollection,
     TResult Function()? emptyCardsList,
+    TResult Function(CardEntity cardEntity)? swipeCard,
+    TResult Function()? finishLearn,
     required TResult orElse(),
   }) {
     if (shareCollection != null) {
@@ -1190,6 +1268,8 @@ class _$ShareCardImpl implements _ShareCard {
     required TResult Function(_CreateSharedCards value) createSharedCards,
     required TResult Function(_ShareCard value) shareCollection,
     required TResult Function(_EmptyCardsList value) emptyCardsList,
+    required TResult Function(_SwipeCard value) swipeCard,
+    required TResult Function(_FinishLearn value) finishLearn,
   }) {
     return shareCollection(this);
   }
@@ -1204,6 +1284,8 @@ class _$ShareCardImpl implements _ShareCard {
     TResult? Function(_CreateSharedCards value)? createSharedCards,
     TResult? Function(_ShareCard value)? shareCollection,
     TResult? Function(_EmptyCardsList value)? emptyCardsList,
+    TResult? Function(_SwipeCard value)? swipeCard,
+    TResult? Function(_FinishLearn value)? finishLearn,
   }) {
     return shareCollection?.call(this);
   }
@@ -1218,6 +1300,8 @@ class _$ShareCardImpl implements _ShareCard {
     TResult Function(_CreateSharedCards value)? createSharedCards,
     TResult Function(_ShareCard value)? shareCollection,
     TResult Function(_EmptyCardsList value)? emptyCardsList,
+    TResult Function(_SwipeCard value)? swipeCard,
+    TResult Function(_FinishLearn value)? finishLearn,
     required TResult orElse(),
   }) {
     if (shareCollection != null) {
@@ -1289,6 +1373,8 @@ class _$EmptyCardsListImpl implements _EmptyCardsList {
     required TResult Function(String collectionId, String collectionName)
         shareCollection,
     required TResult Function() emptyCardsList,
+    required TResult Function(CardEntity cardEntity) swipeCard,
+    required TResult Function() finishLearn,
   }) {
     return emptyCardsList();
   }
@@ -1306,6 +1392,8 @@ class _$EmptyCardsListImpl implements _EmptyCardsList {
     TResult? Function(String collectionId, String collectionName)?
         shareCollection,
     TResult? Function()? emptyCardsList,
+    TResult? Function(CardEntity cardEntity)? swipeCard,
+    TResult? Function()? finishLearn,
   }) {
     return emptyCardsList?.call();
   }
@@ -1323,6 +1411,8 @@ class _$EmptyCardsListImpl implements _EmptyCardsList {
     TResult Function(String collectionId, String collectionName)?
         shareCollection,
     TResult Function()? emptyCardsList,
+    TResult Function(CardEntity cardEntity)? swipeCard,
+    TResult Function()? finishLearn,
     required TResult orElse(),
   }) {
     if (emptyCardsList != null) {
@@ -1341,6 +1431,8 @@ class _$EmptyCardsListImpl implements _EmptyCardsList {
     required TResult Function(_CreateSharedCards value) createSharedCards,
     required TResult Function(_ShareCard value) shareCollection,
     required TResult Function(_EmptyCardsList value) emptyCardsList,
+    required TResult Function(_SwipeCard value) swipeCard,
+    required TResult Function(_FinishLearn value) finishLearn,
   }) {
     return emptyCardsList(this);
   }
@@ -1355,6 +1447,8 @@ class _$EmptyCardsListImpl implements _EmptyCardsList {
     TResult? Function(_CreateSharedCards value)? createSharedCards,
     TResult? Function(_ShareCard value)? shareCollection,
     TResult? Function(_EmptyCardsList value)? emptyCardsList,
+    TResult? Function(_SwipeCard value)? swipeCard,
+    TResult? Function(_FinishLearn value)? finishLearn,
   }) {
     return emptyCardsList?.call(this);
   }
@@ -1369,6 +1463,8 @@ class _$EmptyCardsListImpl implements _EmptyCardsList {
     TResult Function(_CreateSharedCards value)? createSharedCards,
     TResult Function(_ShareCard value)? shareCollection,
     TResult Function(_EmptyCardsList value)? emptyCardsList,
+    TResult Function(_SwipeCard value)? swipeCard,
+    TResult Function(_FinishLearn value)? finishLearn,
     required TResult orElse(),
   }) {
     if (emptyCardsList != null) {
@@ -1383,6 +1479,359 @@ abstract class _EmptyCardsList implements CardsEvent {
 }
 
 /// @nodoc
+abstract class _$$SwipeCardImplCopyWith<$Res> {
+  factory _$$SwipeCardImplCopyWith(
+          _$SwipeCardImpl value, $Res Function(_$SwipeCardImpl) then) =
+      __$$SwipeCardImplCopyWithImpl<$Res>;
+  @useResult
+  $Res call({CardEntity cardEntity});
+
+  $CardEntityCopyWith<$Res> get cardEntity;
+}
+
+/// @nodoc
+class __$$SwipeCardImplCopyWithImpl<$Res>
+    extends _$CardsEventCopyWithImpl<$Res, _$SwipeCardImpl>
+    implements _$$SwipeCardImplCopyWith<$Res> {
+  __$$SwipeCardImplCopyWithImpl(
+      _$SwipeCardImpl _value, $Res Function(_$SwipeCardImpl) _then)
+      : super(_value, _then);
+
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? cardEntity = null,
+  }) {
+    return _then(_$SwipeCardImpl(
+      cardEntity: null == cardEntity
+          ? _value.cardEntity
+          : cardEntity // ignore: cast_nullable_to_non_nullable
+              as CardEntity,
+    ));
+  }
+
+  @override
+  @pragma('vm:prefer-inline')
+  $CardEntityCopyWith<$Res> get cardEntity {
+    return $CardEntityCopyWith<$Res>(_value.cardEntity, (value) {
+      return _then(_value.copyWith(cardEntity: value));
+    });
+  }
+}
+
+/// @nodoc
+
+class _$SwipeCardImpl implements _SwipeCard {
+  const _$SwipeCardImpl({required this.cardEntity});
+
+  @override
+  final CardEntity cardEntity;
+
+  @override
+  String toString() {
+    return 'CardsEvent.swipeCard(cardEntity: $cardEntity)';
+  }
+
+  @override
+  bool operator ==(Object other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType &&
+            other is _$SwipeCardImpl &&
+            (identical(other.cardEntity, cardEntity) ||
+                other.cardEntity == cardEntity));
+  }
+
+  @override
+  int get hashCode => Object.hash(runtimeType, cardEntity);
+
+  @JsonKey(ignore: true)
+  @override
+  @pragma('vm:prefer-inline')
+  _$$SwipeCardImplCopyWith<_$SwipeCardImpl> get copyWith =>
+      __$$SwipeCardImplCopyWithImpl<_$SwipeCardImpl>(this, _$identity);
+
+  @override
+  @optionalTypeArgs
+  TResult when<TResult extends Object?>({
+    required TResult Function(EditCardParam cardParam, String collectionId)
+        editCard,
+    required TResult Function(String collectionId) initCard,
+    required TResult Function(List<String> cardsIdToDelete, String collectionId)
+        deleteSelectedCards,
+    required TResult Function(CreateCardParam cardParam, String collectionId)
+        createNewCard,
+    required TResult Function(String collectionId, String sender)
+        createSharedCards,
+    required TResult Function(String collectionId, String collectionName)
+        shareCollection,
+    required TResult Function() emptyCardsList,
+    required TResult Function(CardEntity cardEntity) swipeCard,
+    required TResult Function() finishLearn,
+  }) {
+    return swipeCard(cardEntity);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? whenOrNull<TResult extends Object?>({
+    TResult? Function(EditCardParam cardParam, String collectionId)? editCard,
+    TResult? Function(String collectionId)? initCard,
+    TResult? Function(List<String> cardsIdToDelete, String collectionId)?
+        deleteSelectedCards,
+    TResult? Function(CreateCardParam cardParam, String collectionId)?
+        createNewCard,
+    TResult? Function(String collectionId, String sender)? createSharedCards,
+    TResult? Function(String collectionId, String collectionName)?
+        shareCollection,
+    TResult? Function()? emptyCardsList,
+    TResult? Function(CardEntity cardEntity)? swipeCard,
+    TResult? Function()? finishLearn,
+  }) {
+    return swipeCard?.call(cardEntity);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeWhen<TResult extends Object?>({
+    TResult Function(EditCardParam cardParam, String collectionId)? editCard,
+    TResult Function(String collectionId)? initCard,
+    TResult Function(List<String> cardsIdToDelete, String collectionId)?
+        deleteSelectedCards,
+    TResult Function(CreateCardParam cardParam, String collectionId)?
+        createNewCard,
+    TResult Function(String collectionId, String sender)? createSharedCards,
+    TResult Function(String collectionId, String collectionName)?
+        shareCollection,
+    TResult Function()? emptyCardsList,
+    TResult Function(CardEntity cardEntity)? swipeCard,
+    TResult Function()? finishLearn,
+    required TResult orElse(),
+  }) {
+    if (swipeCard != null) {
+      return swipeCard(cardEntity);
+    }
+    return orElse();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult map<TResult extends Object?>({
+    required TResult Function(_EditCard value) editCard,
+    required TResult Function(_InitCard value) initCard,
+    required TResult Function(_DeleteSelectedCards value) deleteSelectedCards,
+    required TResult Function(_CreateNewCard value) createNewCard,
+    required TResult Function(_CreateSharedCards value) createSharedCards,
+    required TResult Function(_ShareCard value) shareCollection,
+    required TResult Function(_EmptyCardsList value) emptyCardsList,
+    required TResult Function(_SwipeCard value) swipeCard,
+    required TResult Function(_FinishLearn value) finishLearn,
+  }) {
+    return swipeCard(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? mapOrNull<TResult extends Object?>({
+    TResult? Function(_EditCard value)? editCard,
+    TResult? Function(_InitCard value)? initCard,
+    TResult? Function(_DeleteSelectedCards value)? deleteSelectedCards,
+    TResult? Function(_CreateNewCard value)? createNewCard,
+    TResult? Function(_CreateSharedCards value)? createSharedCards,
+    TResult? Function(_ShareCard value)? shareCollection,
+    TResult? Function(_EmptyCardsList value)? emptyCardsList,
+    TResult? Function(_SwipeCard value)? swipeCard,
+    TResult? Function(_FinishLearn value)? finishLearn,
+  }) {
+    return swipeCard?.call(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeMap<TResult extends Object?>({
+    TResult Function(_EditCard value)? editCard,
+    TResult Function(_InitCard value)? initCard,
+    TResult Function(_DeleteSelectedCards value)? deleteSelectedCards,
+    TResult Function(_CreateNewCard value)? createNewCard,
+    TResult Function(_CreateSharedCards value)? createSharedCards,
+    TResult Function(_ShareCard value)? shareCollection,
+    TResult Function(_EmptyCardsList value)? emptyCardsList,
+    TResult Function(_SwipeCard value)? swipeCard,
+    TResult Function(_FinishLearn value)? finishLearn,
+    required TResult orElse(),
+  }) {
+    if (swipeCard != null) {
+      return swipeCard(this);
+    }
+    return orElse();
+  }
+}
+
+abstract class _SwipeCard implements CardsEvent {
+  const factory _SwipeCard({required final CardEntity cardEntity}) =
+      _$SwipeCardImpl;
+
+  CardEntity get cardEntity;
+  @JsonKey(ignore: true)
+  _$$SwipeCardImplCopyWith<_$SwipeCardImpl> get copyWith =>
+      throw _privateConstructorUsedError;
+}
+
+/// @nodoc
+abstract class _$$FinishLearnImplCopyWith<$Res> {
+  factory _$$FinishLearnImplCopyWith(
+          _$FinishLearnImpl value, $Res Function(_$FinishLearnImpl) then) =
+      __$$FinishLearnImplCopyWithImpl<$Res>;
+}
+
+/// @nodoc
+class __$$FinishLearnImplCopyWithImpl<$Res>
+    extends _$CardsEventCopyWithImpl<$Res, _$FinishLearnImpl>
+    implements _$$FinishLearnImplCopyWith<$Res> {
+  __$$FinishLearnImplCopyWithImpl(
+      _$FinishLearnImpl _value, $Res Function(_$FinishLearnImpl) _then)
+      : super(_value, _then);
+}
+
+/// @nodoc
+
+class _$FinishLearnImpl implements _FinishLearn {
+  const _$FinishLearnImpl();
+
+  @override
+  String toString() {
+    return 'CardsEvent.finishLearn()';
+  }
+
+  @override
+  bool operator ==(Object other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType && other is _$FinishLearnImpl);
+  }
+
+  @override
+  int get hashCode => runtimeType.hashCode;
+
+  @override
+  @optionalTypeArgs
+  TResult when<TResult extends Object?>({
+    required TResult Function(EditCardParam cardParam, String collectionId)
+        editCard,
+    required TResult Function(String collectionId) initCard,
+    required TResult Function(List<String> cardsIdToDelete, String collectionId)
+        deleteSelectedCards,
+    required TResult Function(CreateCardParam cardParam, String collectionId)
+        createNewCard,
+    required TResult Function(String collectionId, String sender)
+        createSharedCards,
+    required TResult Function(String collectionId, String collectionName)
+        shareCollection,
+    required TResult Function() emptyCardsList,
+    required TResult Function(CardEntity cardEntity) swipeCard,
+    required TResult Function() finishLearn,
+  }) {
+    return finishLearn();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? whenOrNull<TResult extends Object?>({
+    TResult? Function(EditCardParam cardParam, String collectionId)? editCard,
+    TResult? Function(String collectionId)? initCard,
+    TResult? Function(List<String> cardsIdToDelete, String collectionId)?
+        deleteSelectedCards,
+    TResult? Function(CreateCardParam cardParam, String collectionId)?
+        createNewCard,
+    TResult? Function(String collectionId, String sender)? createSharedCards,
+    TResult? Function(String collectionId, String collectionName)?
+        shareCollection,
+    TResult? Function()? emptyCardsList,
+    TResult? Function(CardEntity cardEntity)? swipeCard,
+    TResult? Function()? finishLearn,
+  }) {
+    return finishLearn?.call();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeWhen<TResult extends Object?>({
+    TResult Function(EditCardParam cardParam, String collectionId)? editCard,
+    TResult Function(String collectionId)? initCard,
+    TResult Function(List<String> cardsIdToDelete, String collectionId)?
+        deleteSelectedCards,
+    TResult Function(CreateCardParam cardParam, String collectionId)?
+        createNewCard,
+    TResult Function(String collectionId, String sender)? createSharedCards,
+    TResult Function(String collectionId, String collectionName)?
+        shareCollection,
+    TResult Function()? emptyCardsList,
+    TResult Function(CardEntity cardEntity)? swipeCard,
+    TResult Function()? finishLearn,
+    required TResult orElse(),
+  }) {
+    if (finishLearn != null) {
+      return finishLearn();
+    }
+    return orElse();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult map<TResult extends Object?>({
+    required TResult Function(_EditCard value) editCard,
+    required TResult Function(_InitCard value) initCard,
+    required TResult Function(_DeleteSelectedCards value) deleteSelectedCards,
+    required TResult Function(_CreateNewCard value) createNewCard,
+    required TResult Function(_CreateSharedCards value) createSharedCards,
+    required TResult Function(_ShareCard value) shareCollection,
+    required TResult Function(_EmptyCardsList value) emptyCardsList,
+    required TResult Function(_SwipeCard value) swipeCard,
+    required TResult Function(_FinishLearn value) finishLearn,
+  }) {
+    return finishLearn(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? mapOrNull<TResult extends Object?>({
+    TResult? Function(_EditCard value)? editCard,
+    TResult? Function(_InitCard value)? initCard,
+    TResult? Function(_DeleteSelectedCards value)? deleteSelectedCards,
+    TResult? Function(_CreateNewCard value)? createNewCard,
+    TResult? Function(_CreateSharedCards value)? createSharedCards,
+    TResult? Function(_ShareCard value)? shareCollection,
+    TResult? Function(_EmptyCardsList value)? emptyCardsList,
+    TResult? Function(_SwipeCard value)? swipeCard,
+    TResult? Function(_FinishLearn value)? finishLearn,
+  }) {
+    return finishLearn?.call(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeMap<TResult extends Object?>({
+    TResult Function(_EditCard value)? editCard,
+    TResult Function(_InitCard value)? initCard,
+    TResult Function(_DeleteSelectedCards value)? deleteSelectedCards,
+    TResult Function(_CreateNewCard value)? createNewCard,
+    TResult Function(_CreateSharedCards value)? createSharedCards,
+    TResult Function(_ShareCard value)? shareCollection,
+    TResult Function(_EmptyCardsList value)? emptyCardsList,
+    TResult Function(_SwipeCard value)? swipeCard,
+    TResult Function(_FinishLearn value)? finishLearn,
+    required TResult orElse(),
+  }) {
+    if (finishLearn != null) {
+      return finishLearn(this);
+    }
+    return orElse();
+  }
+}
+
+abstract class _FinishLearn implements CardsEvent {
+  const factory _FinishLearn() = _$FinishLearnImpl;
+}
+
+/// @nodoc
 mixin _$CardsState {
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
@@ -1390,6 +1839,7 @@ mixin _$CardsState {
     required TResult Function() viewIndividualCard,
     required TResult Function() loading,
     required TResult Function(String error) error,
+    required TResult Function() finishLearning,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
@@ -1398,6 +1848,7 @@ mixin _$CardsState {
     TResult? Function()? viewIndividualCard,
     TResult? Function()? loading,
     TResult? Function(String error)? error,
+    TResult? Function()? finishLearning,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
@@ -1406,6 +1857,7 @@ mixin _$CardsState {
     TResult Function()? viewIndividualCard,
     TResult Function()? loading,
     TResult Function(String error)? error,
+    TResult Function()? finishLearning,
     required TResult orElse(),
   }) =>
       throw _privateConstructorUsedError;
@@ -1415,6 +1867,7 @@ mixin _$CardsState {
     required TResult Function(_ViewIndividualCard value) viewIndividualCard,
     required TResult Function(_Loading value) loading,
     required TResult Function(_Error value) error,
+    required TResult Function(_FinishLearning value) finishLearning,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
@@ -1423,6 +1876,7 @@ mixin _$CardsState {
     TResult? Function(_ViewIndividualCard value)? viewIndividualCard,
     TResult? Function(_Loading value)? loading,
     TResult? Function(_Error value)? error,
+    TResult? Function(_FinishLearning value)? finishLearning,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
@@ -1431,6 +1885,7 @@ mixin _$CardsState {
     TResult Function(_ViewIndividualCard value)? viewIndividualCard,
     TResult Function(_Loading value)? loading,
     TResult Function(_Error value)? error,
+    TResult Function(_FinishLearning value)? finishLearning,
     required TResult orElse(),
   }) =>
       throw _privateConstructorUsedError;
@@ -1533,6 +1988,7 @@ class _$LoadedImpl extends _Loaded {
     required TResult Function() viewIndividualCard,
     required TResult Function() loading,
     required TResult Function(String error) error,
+    required TResult Function() finishLearning,
   }) {
     return loaded(cardsList);
   }
@@ -1544,6 +2000,7 @@ class _$LoadedImpl extends _Loaded {
     TResult? Function()? viewIndividualCard,
     TResult? Function()? loading,
     TResult? Function(String error)? error,
+    TResult? Function()? finishLearning,
   }) {
     return loaded?.call(cardsList);
   }
@@ -1555,6 +2012,7 @@ class _$LoadedImpl extends _Loaded {
     TResult Function()? viewIndividualCard,
     TResult Function()? loading,
     TResult Function(String error)? error,
+    TResult Function()? finishLearning,
     required TResult orElse(),
   }) {
     if (loaded != null) {
@@ -1570,6 +2028,7 @@ class _$LoadedImpl extends _Loaded {
     required TResult Function(_ViewIndividualCard value) viewIndividualCard,
     required TResult Function(_Loading value) loading,
     required TResult Function(_Error value) error,
+    required TResult Function(_FinishLearning value) finishLearning,
   }) {
     return loaded(this);
   }
@@ -1581,6 +2040,7 @@ class _$LoadedImpl extends _Loaded {
     TResult? Function(_ViewIndividualCard value)? viewIndividualCard,
     TResult? Function(_Loading value)? loading,
     TResult? Function(_Error value)? error,
+    TResult? Function(_FinishLearning value)? finishLearning,
   }) {
     return loaded?.call(this);
   }
@@ -1592,6 +2052,7 @@ class _$LoadedImpl extends _Loaded {
     TResult Function(_ViewIndividualCard value)? viewIndividualCard,
     TResult Function(_Loading value)? loading,
     TResult Function(_Error value)? error,
+    TResult Function(_FinishLearning value)? finishLearning,
     required TResult orElse(),
   }) {
     if (loaded != null) {
@@ -1654,6 +2115,7 @@ class _$ViewIndividualCardImpl extends _ViewIndividualCard {
     required TResult Function() viewIndividualCard,
     required TResult Function() loading,
     required TResult Function(String error) error,
+    required TResult Function() finishLearning,
   }) {
     return viewIndividualCard();
   }
@@ -1665,6 +2127,7 @@ class _$ViewIndividualCardImpl extends _ViewIndividualCard {
     TResult? Function()? viewIndividualCard,
     TResult? Function()? loading,
     TResult? Function(String error)? error,
+    TResult? Function()? finishLearning,
   }) {
     return viewIndividualCard?.call();
   }
@@ -1676,6 +2139,7 @@ class _$ViewIndividualCardImpl extends _ViewIndividualCard {
     TResult Function()? viewIndividualCard,
     TResult Function()? loading,
     TResult Function(String error)? error,
+    TResult Function()? finishLearning,
     required TResult orElse(),
   }) {
     if (viewIndividualCard != null) {
@@ -1691,6 +2155,7 @@ class _$ViewIndividualCardImpl extends _ViewIndividualCard {
     required TResult Function(_ViewIndividualCard value) viewIndividualCard,
     required TResult Function(_Loading value) loading,
     required TResult Function(_Error value) error,
+    required TResult Function(_FinishLearning value) finishLearning,
   }) {
     return viewIndividualCard(this);
   }
@@ -1702,6 +2167,7 @@ class _$ViewIndividualCardImpl extends _ViewIndividualCard {
     TResult? Function(_ViewIndividualCard value)? viewIndividualCard,
     TResult? Function(_Loading value)? loading,
     TResult? Function(_Error value)? error,
+    TResult? Function(_FinishLearning value)? finishLearning,
   }) {
     return viewIndividualCard?.call(this);
   }
@@ -1713,6 +2179,7 @@ class _$ViewIndividualCardImpl extends _ViewIndividualCard {
     TResult Function(_ViewIndividualCard value)? viewIndividualCard,
     TResult Function(_Loading value)? loading,
     TResult Function(_Error value)? error,
+    TResult Function(_FinishLearning value)? finishLearning,
     required TResult orElse(),
   }) {
     if (viewIndividualCard != null) {
@@ -1769,6 +2236,7 @@ class _$LoadingImpl extends _Loading {
     required TResult Function() viewIndividualCard,
     required TResult Function() loading,
     required TResult Function(String error) error,
+    required TResult Function() finishLearning,
   }) {
     return loading();
   }
@@ -1780,6 +2248,7 @@ class _$LoadingImpl extends _Loading {
     TResult? Function()? viewIndividualCard,
     TResult? Function()? loading,
     TResult? Function(String error)? error,
+    TResult? Function()? finishLearning,
   }) {
     return loading?.call();
   }
@@ -1791,6 +2260,7 @@ class _$LoadingImpl extends _Loading {
     TResult Function()? viewIndividualCard,
     TResult Function()? loading,
     TResult Function(String error)? error,
+    TResult Function()? finishLearning,
     required TResult orElse(),
   }) {
     if (loading != null) {
@@ -1806,6 +2276,7 @@ class _$LoadingImpl extends _Loading {
     required TResult Function(_ViewIndividualCard value) viewIndividualCard,
     required TResult Function(_Loading value) loading,
     required TResult Function(_Error value) error,
+    required TResult Function(_FinishLearning value) finishLearning,
   }) {
     return loading(this);
   }
@@ -1817,6 +2288,7 @@ class _$LoadingImpl extends _Loading {
     TResult? Function(_ViewIndividualCard value)? viewIndividualCard,
     TResult? Function(_Loading value)? loading,
     TResult? Function(_Error value)? error,
+    TResult? Function(_FinishLearning value)? finishLearning,
   }) {
     return loading?.call(this);
   }
@@ -1828,6 +2300,7 @@ class _$LoadingImpl extends _Loading {
     TResult Function(_ViewIndividualCard value)? viewIndividualCard,
     TResult Function(_Loading value)? loading,
     TResult Function(_Error value)? error,
+    TResult Function(_FinishLearning value)? finishLearning,
     required TResult orElse(),
   }) {
     if (loading != null) {
@@ -1910,6 +2383,7 @@ class _$ErrorImpl extends _Error {
     required TResult Function() viewIndividualCard,
     required TResult Function() loading,
     required TResult Function(String error) error,
+    required TResult Function() finishLearning,
   }) {
     return error(this.error);
   }
@@ -1921,6 +2395,7 @@ class _$ErrorImpl extends _Error {
     TResult? Function()? viewIndividualCard,
     TResult? Function()? loading,
     TResult? Function(String error)? error,
+    TResult? Function()? finishLearning,
   }) {
     return error?.call(this.error);
   }
@@ -1932,6 +2407,7 @@ class _$ErrorImpl extends _Error {
     TResult Function()? viewIndividualCard,
     TResult Function()? loading,
     TResult Function(String error)? error,
+    TResult Function()? finishLearning,
     required TResult orElse(),
   }) {
     if (error != null) {
@@ -1947,6 +2423,7 @@ class _$ErrorImpl extends _Error {
     required TResult Function(_ViewIndividualCard value) viewIndividualCard,
     required TResult Function(_Loading value) loading,
     required TResult Function(_Error value) error,
+    required TResult Function(_FinishLearning value) finishLearning,
   }) {
     return error(this);
   }
@@ -1958,6 +2435,7 @@ class _$ErrorImpl extends _Error {
     TResult? Function(_ViewIndividualCard value)? viewIndividualCard,
     TResult? Function(_Loading value)? loading,
     TResult? Function(_Error value)? error,
+    TResult? Function(_FinishLearning value)? finishLearning,
   }) {
     return error?.call(this);
   }
@@ -1969,6 +2447,7 @@ class _$ErrorImpl extends _Error {
     TResult Function(_ViewIndividualCard value)? viewIndividualCard,
     TResult Function(_Loading value)? loading,
     TResult Function(_Error value)? error,
+    TResult Function(_FinishLearning value)? finishLearning,
     required TResult orElse(),
   }) {
     if (error != null) {
@@ -1986,4 +2465,125 @@ abstract class _Error extends CardsState {
   @JsonKey(ignore: true)
   _$$ErrorImplCopyWith<_$ErrorImpl> get copyWith =>
       throw _privateConstructorUsedError;
+}
+
+/// @nodoc
+abstract class _$$FinishLearningImplCopyWith<$Res> {
+  factory _$$FinishLearningImplCopyWith(_$FinishLearningImpl value,
+          $Res Function(_$FinishLearningImpl) then) =
+      __$$FinishLearningImplCopyWithImpl<$Res>;
+}
+
+/// @nodoc
+class __$$FinishLearningImplCopyWithImpl<$Res>
+    extends _$CardsStateCopyWithImpl<$Res, _$FinishLearningImpl>
+    implements _$$FinishLearningImplCopyWith<$Res> {
+  __$$FinishLearningImplCopyWithImpl(
+      _$FinishLearningImpl _value, $Res Function(_$FinishLearningImpl) _then)
+      : super(_value, _then);
+}
+
+/// @nodoc
+
+class _$FinishLearningImpl extends _FinishLearning {
+  const _$FinishLearningImpl() : super._();
+
+  @override
+  String toString() {
+    return 'CardsState.finishLearning()';
+  }
+
+  @override
+  bool operator ==(Object other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType && other is _$FinishLearningImpl);
+  }
+
+  @override
+  int get hashCode => runtimeType.hashCode;
+
+  @override
+  @optionalTypeArgs
+  TResult when<TResult extends Object?>({
+    required TResult Function(List<CardEntity>? cardsList) loaded,
+    required TResult Function() viewIndividualCard,
+    required TResult Function() loading,
+    required TResult Function(String error) error,
+    required TResult Function() finishLearning,
+  }) {
+    return finishLearning();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? whenOrNull<TResult extends Object?>({
+    TResult? Function(List<CardEntity>? cardsList)? loaded,
+    TResult? Function()? viewIndividualCard,
+    TResult? Function()? loading,
+    TResult? Function(String error)? error,
+    TResult? Function()? finishLearning,
+  }) {
+    return finishLearning?.call();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeWhen<TResult extends Object?>({
+    TResult Function(List<CardEntity>? cardsList)? loaded,
+    TResult Function()? viewIndividualCard,
+    TResult Function()? loading,
+    TResult Function(String error)? error,
+    TResult Function()? finishLearning,
+    required TResult orElse(),
+  }) {
+    if (finishLearning != null) {
+      return finishLearning();
+    }
+    return orElse();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult map<TResult extends Object?>({
+    required TResult Function(_Loaded value) loaded,
+    required TResult Function(_ViewIndividualCard value) viewIndividualCard,
+    required TResult Function(_Loading value) loading,
+    required TResult Function(_Error value) error,
+    required TResult Function(_FinishLearning value) finishLearning,
+  }) {
+    return finishLearning(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? mapOrNull<TResult extends Object?>({
+    TResult? Function(_Loaded value)? loaded,
+    TResult? Function(_ViewIndividualCard value)? viewIndividualCard,
+    TResult? Function(_Loading value)? loading,
+    TResult? Function(_Error value)? error,
+    TResult? Function(_FinishLearning value)? finishLearning,
+  }) {
+    return finishLearning?.call(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeMap<TResult extends Object?>({
+    TResult Function(_Loaded value)? loaded,
+    TResult Function(_ViewIndividualCard value)? viewIndividualCard,
+    TResult Function(_Loading value)? loading,
+    TResult Function(_Error value)? error,
+    TResult Function(_FinishLearning value)? finishLearning,
+    required TResult orElse(),
+  }) {
+    if (finishLearning != null) {
+      return finishLearning(this);
+    }
+    return orElse();
+  }
+}
+
+abstract class _FinishLearning extends CardsState {
+  const factory _FinishLearning() = _$FinishLearningImpl;
+  const _FinishLearning._() : super._();
 }

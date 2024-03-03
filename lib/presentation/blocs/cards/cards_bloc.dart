@@ -14,36 +14,38 @@ part 'cards_bloc.freezed.dart';
 class CardsBloc extends Bloc<CardsEvent, CardsState> {
   CardsBloc({required this.cardRepo})
       : super(const CardsState.loaded(
-    cardsList: [],
-  )) {
+          cardsList: [],
+        )) {
     on<CardsEvent>(_mapEventToState);
   }
 
   final CardRepo cardRepo;
   bool isEditMode = false;
+  late final int cardsLength;
 
   List<String> cardsListToDelete = [];
 
-  getCards(collectionId) async {
-    await cardRepo.fetchCards(collectionId: collectionId);
+  Future<List<CardEntity>> getCards(collectionId) async {
+    return await cardRepo.fetchCards(collectionId: collectionId);
   }
 
   Future<void> _mapEventToState(CardsEvent event, Emitter<CardsState> emit) =>
       event.map(
-        initCard: (event) => _initCard(event, emit),
-        createNewCard: (event) => _createNewCard(event, emit),
-        deleteSelectedCards: (event) => _deleteSelectedCards(event, emit),
-        editCard: (event) => _editCard(event, emit),
-        emptyCardsList: (event) => _emptyCardsList(event, emit),
-        shareCollection: (event) => _shareCard(event, emit),
-        createSharedCards: (event) => _createSharedCards(event, emit),
-      );
+          initCard: (event) => _initCard(event, emit),
+          createNewCard: (event) => _createNewCard(event, emit),
+          deleteSelectedCards: (event) => _deleteSelectedCards(event, emit),
+          editCard: (event) => _editCard(event, emit),
+          emptyCardsList: (event) => _emptyCardsList(event, emit),
+          shareCollection: (event) => _shareCard(event, emit),
+          createSharedCards: (event) => _createSharedCards(event, emit),
+          swipeCard: (event) => _swipeCard(event, emit),
+          finishLearn: (event) => _finishLearn(event, emit));
 
   Future<void> _initCard(_InitCard event, Emitter<CardsState> emit) async {
     try {
       emit(const CardsState.loading());
       final cardsList =
-      await cardRepo.fetchCards(collectionId: event.collectionId);
+          await cardRepo.fetchCards(collectionId: event.collectionId);
       emit(CardsState.loaded(cardsList: cardsList));
     } catch (e) {
       emit(CardsState.error(error: e.toString()));
@@ -80,7 +82,7 @@ class CardsBloc extends Bloc<CardsEvent, CardsState> {
       emit(const CardsState.loading());
       await cardRepo.createCard(cardParam: event.cardParam);
       final cardsList =
-      await cardRepo.fetchCards(collectionId: event.collectionId);
+          await cardRepo.fetchCards(collectionId: event.collectionId);
       emit(CardsState.loaded(cardsList: cardsList));
     } catch (e) {
       emit(CardsState.error(error: e.toString()));
@@ -92,7 +94,7 @@ class CardsBloc extends Bloc<CardsEvent, CardsState> {
       emit(const CardsState.loading());
       cardRepo.editCard(cardParam: event.cardParam);
       final cardsList =
-      await cardRepo.fetchCards(collectionId: event.collectionId);
+          await cardRepo.fetchCards(collectionId: event.collectionId);
       emit(CardsState.loaded(cardsList: cardsList));
     } catch (e) {
       emit(CardsState.error(error: e.toString()));
@@ -107,7 +109,7 @@ class CardsBloc extends Bloc<CardsEvent, CardsState> {
           cardsToDelete: event.cardsIdToDelete,
           collectionId: event.collectionId);
       final cardsList =
-      await cardRepo.fetchCards(collectionId: event.collectionId);
+          await cardRepo.fetchCards(collectionId: event.collectionId);
       emit(CardsState.loaded(cardsList: cardsList));
     } catch (e) {
       emit(CardsState.error(error: e.toString()));
@@ -117,5 +119,17 @@ class CardsBloc extends Bloc<CardsEvent, CardsState> {
   Future<void> _emptyCardsList(
       _EmptyCardsList event, Emitter<CardsState> emit) async {
     emit(const CardsState.loaded(cardsList: []));
+  }
+
+  Future<void> _swipeCard(_SwipeCard event, Emitter<CardsState> emit) async {
+    await cardRepo.swipeCard(cardEntity: event.cardEntity);
+    final cardsList =
+        await cardRepo.fetchCards(collectionId: event.cardEntity.collectionId);
+    emit(CardsState.loaded(cardsList: cardsList));
+  }
+
+  Future<void> _finishLearn(
+      _FinishLearn event, Emitter<CardsState> emit) async {
+    emit(CardsState.finishLearning());
   }
 }

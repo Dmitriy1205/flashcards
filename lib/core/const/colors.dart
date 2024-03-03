@@ -12,4 +12,5 @@ class AppColors{
   static const Color neutralGrey = Color(0xFF9493B3);
   static const Color borderGrey = Color(0xFFC8C8C8);
   static const Color veryLightGrey = Color(0xFFDEDEDE);
+  static const Color bottomShit = Color(0xFFC5C5C5);
 }

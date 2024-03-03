@@ -44,4 +44,8 @@ class CardRepoImpl extends CardRepo {
   Future<List<CardEntity>> fetchCards({required String collectionId}) async {
     return await cardService.fetchCards(collectionId: collectionId);
   }
+  @override
+  Future<void> swipeCard({required CardEntity cardEntity}) async {
+     await cardService.swipeCard(cardEntity: cardEntity);
+  }
 }

@@ -45,7 +45,7 @@ class CardServiceImpl extends CardService {
         "createdAt": FieldValue.serverTimestamp(),
         "collectionId": cardParam.collectionId
       });
-    } on FirebaseException  catch (e) {
+    } on FirebaseException catch (e) {
       throw Exception("Exception createCard $e");
     }
   }
@@ -53,7 +53,7 @@ class CardServiceImpl extends CardService {
   @override
   Future<void> deleteCards(
       {required String collectionId,
-        required List<String> cardsToDelete}) async {
+      required List<String> cardsToDelete}) async {
     try {
       final cards = _fireStore
           .collection(FirestoreCollections.users)
@@ -65,7 +65,7 @@ class CardServiceImpl extends CardService {
       for (int i = 0; i < cardsToDelete.length; i++) {
         await cards.doc(cardsToDelete[i]).delete();
       }
-    }  on FirebaseException catch (e) {
+    } on FirebaseException catch (e) {
       throw Exception("Exception deleteCards $e");
     }
   }
@@ -84,7 +84,7 @@ class CardServiceImpl extends CardService {
         'back': cardParam.back,
         'front': cardParam.front,
       });
-    }  on FirebaseException  catch (e) {
+    } on FirebaseException catch (e) {
       throw Exception("Exception deleteCards $e");
     }
   }
@@ -118,7 +118,6 @@ class CardServiceImpl extends CardService {
             .get();
 
         final cards = await fetchCards(collectionId: collectionId);
-
         if (collection.exists) {
           shareCollection.set(collection.data()!);
           for (int i = 0; i < cards.length; i++) {
@@ -132,7 +131,6 @@ class CardServiceImpl extends CardService {
       }
     }
   }
-
 
   @override
   Future<void> createSharedCards(
@@ -150,20 +148,21 @@ class CardServiceImpl extends CardService {
           .collection(FirestoreCollections.collections)
           .doc(collectionId);
 
-      await sharedCollection.get().then((value) => collection.set(value.data()!));
+      await sharedCollection
+          .get()
+          .then((value) => collection.set(value.data()!));
       await sharedCollection
           .collection(FirestoreCollections.cards)
           .get()
           .then((value) => value.docs.forEach((element) {
-        collection
-            .collection(AppStrings.cards.toLowerCase())
-            .add(element.data());
-      }));
+                collection
+                    .collection(AppStrings.cards.toLowerCase())
+                    .add(element.data());
+              }));
     } on FirebaseException catch (e) {
       throw Exception("Exception createSharedCards $e");
     }
   }
-
 
   @override
   Future<List<CardEntity>> fetchCards({required String collectionId}) async {
@@ -180,9 +179,30 @@ class CardServiceImpl extends CardService {
           cards.docs.map((card) => CardEntity.fromJson(card.data())).toList();
       cardsList.sort((a, b) => b.createdAt!.compareTo(a.createdAt!));
       return cardsList;
-
     } catch (e) {
       throw Exception("Exception fetchCards $e");
+    }
+  }
+
+  @override
+  Future<void> swipeCard({required CardEntity cardEntity}) async {
+    try {
+      final collections = _fireStore
+          .collection(FirestoreCollections.users)
+          .doc(_firebaseAuth.currentUser!.uid)
+          .collection(FirestoreCollections.collections)
+          .doc(cardEntity.collectionId);
+
+      final cards =
+          collections.collection(FirestoreCollections.cards).doc(cardEntity.id);
+      await collections.get().then((snapshot) {snapshot.data()!['collectionName'].toString();
+      });
+
+      await cards.update({
+        "isLearned": cardEntity.isLearned,
+      });
+    } on FirebaseException catch (e) {
+      throw Exception("Exception createCard $e");
     }
   }
 }

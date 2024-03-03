@@ -27,5 +27,8 @@ class CardsEvent with _$CardsEvent {
 
   const factory CardsEvent.emptyCardsList() = _EmptyCardsList;
 
+  const factory CardsEvent.swipeCard({required CardEntity cardEntity}) = _SwipeCard;
+
+  const factory CardsEvent.finishLearn() = _FinishLearn;
 
 }
