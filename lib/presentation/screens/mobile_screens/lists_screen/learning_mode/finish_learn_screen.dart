@@ -7,6 +7,7 @@ import 'package:flashcards/core/router/router.dart';
 import 'package:flashcards/core/themes/theme.dart';
 import 'package:flashcards/domain/entities/card_entity/card_entity.dart';
 import 'package:flashcards/presentation/blocs/cards/cards_bloc.dart';
+import 'package:flashcards/presentation/blocs/lists/lists_bloc.dart';
 import 'package:flashcards/presentation/widgets/app_elevated_button.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -45,6 +46,9 @@ class _FinishLearningScreenState extends State<FinishLearningScreen> {
             ),
             onTap: () {
               router.go('/mobile_home');
+              context
+                  .read<ListsBloc>()
+                  .add(ListsEvent.started(isEditMode: false));
             },
           ),
           Text('${widget.known}/${widget.known + widget.learning}',
@@ -156,14 +160,13 @@ class _FinishLearningScreenState extends State<FinishLearningScreen> {
             Center(
               child: InkWell(
                   child: Text(
-                'Finish',
-                style: AppTheme.themeData.textTheme.titleMedium!.copyWith(
-                  fontSize: 17,
-                  fontWeight: FontWeight.w600,
-                ),
-              ), onTap: (){
-
-              }),
+                    'Finish',
+                    style: AppTheme.themeData.textTheme.titleMedium!.copyWith(
+                      fontSize: 17,
+                      fontWeight: FontWeight.w600,
+                    ),
+                  ),
+                  onTap: () {}),
             ),
             SizedBox(
               height: 23,
@@ -202,9 +205,9 @@ class _FinishLearningScreenState extends State<FinishLearningScreen> {
       androidBorderRadius: 30,
       actions: <BottomSheetAction>[
         BottomSheetAction(
-          title: Text('Learn all ${cards.length}', style: AppTheme.themeData.textTheme.titleMedium!.copyWith(
-              fontSize: 16,
-              fontWeight: FontWeight.w600)),
+          title: Text('Learn all ${cards.length}',
+              style: AppTheme.themeData.textTheme.titleMedium!
+                  .copyWith(fontSize: 16, fontWeight: FontWeight.w600)),
           onPressed: (context) {
             Navigator.pop(context);
             router.push(
@@ -214,9 +217,9 @@ class _FinishLearningScreenState extends State<FinishLearningScreen> {
           },
         ),
         BottomSheetAction(
-            title: Text('Only unknown ${learningCardsList.length}', style: AppTheme.themeData.textTheme.titleMedium!.copyWith(
-                fontSize: 16,
-                fontWeight: FontWeight.w600)),
+            title: Text('Only unknown ${learningCardsList.length}',
+                style: AppTheme.themeData.textTheme.titleMedium!
+                    .copyWith(fontSize: 16, fontWeight: FontWeight.w600)),
             onPressed: (context) {
               Navigator.pop(context);
               router.push(
@@ -228,9 +231,9 @@ class _FinishLearningScreenState extends State<FinishLearningScreen> {
               );
             }),
         BottomSheetAction(
-            title: Text('Only known ${knownCardsList.length}', style: AppTheme.themeData.textTheme.titleMedium!.copyWith(
-                fontSize: 16,
-                fontWeight: FontWeight.w600)),
+            title: Text('Only known ${knownCardsList.length}',
+                style: AppTheme.themeData.textTheme.titleMedium!
+                    .copyWith(fontSize: 16, fontWeight: FontWeight.w600)),
             onPressed: (context) {
               Navigator.pop(context);
               router.push(
@@ -243,10 +246,11 @@ class _FinishLearningScreenState extends State<FinishLearningScreen> {
             }),
       ],
       cancelAction: CancelAction(
-          title: Text(
-              'Cancel', style: AppTheme.themeData.textTheme.titleMedium!.copyWith(
-              fontSize: 16,
-              fontWeight: FontWeight.w600))), // onPressed parameter is optional by default will dismiss the ActionSheet
+          title: Text('Cancel',
+              style: AppTheme.themeData.textTheme.titleMedium!.copyWith(
+                  fontSize: 16,
+                  fontWeight: FontWeight
+                      .w600))), // onPressed parameter is optional by default will dismiss the ActionSheet
     );
   }
 }

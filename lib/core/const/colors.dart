@@ -13,4 +13,11 @@ class AppColors{
   static const Color borderGrey = Color(0xFFC8C8C8);
   static const Color veryLightGrey = Color(0xFFDEDEDE);
   static const Color bottomShit = Color(0xFFC5C5C5);
+  static const Color orangePicker = Color(0xFFFFA800);
+  static const Color yellowPicker = Color(0xFFFFE500);
+  static const Color greenPicker = Color(0xFF8FFF00);
+  static const Color bluePicker = Color(0xFF0D5FFF);
+  static const Color redPicker = Color(0xFFFF0000);
+
+
 }
