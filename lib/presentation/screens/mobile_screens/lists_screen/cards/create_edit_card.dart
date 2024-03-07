@@ -1,6 +1,4 @@
 import 'dart:async';
-import 'dart:developer';
-
 import 'package:flashcards/core/const/colors.dart';
 import 'package:flashcards/core/const/icons.dart';
 import 'package:flashcards/core/const/strings.dart';
@@ -12,6 +10,7 @@ import 'package:flashcards/domain/params/card_param/create_card_param.dart';
 import 'package:flashcards/domain/params/card_param/edit_card_param.dart';
 import 'package:flashcards/presentation/blocs/cards/cards_bloc.dart';
 import 'package:flashcards/presentation/blocs/lists/lists_bloc.dart';
+import 'package:flashcards/presentation/widgets/draw_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_keyboard_visibility/flutter_keyboard_visibility.dart';
@@ -28,7 +27,7 @@ class CreateEditCard extends StatefulWidget {
   State<CreateEditCard> createState() => _CreateEditCardState();
 }
 
-class _CreateEditCardState extends State<CreateEditCard> {
+class _CreateEditCardState extends State<CreateEditCard> with DrawImage{
   late final _frontController = widget.cardEntity != null ? QuillController(document: Document.fromJson(widget.cardEntity!.front), selection: const TextSelection(baseOffset: 0, extentOffset: 0)) : QuillController.basic();
   late final _backController = widget.cardEntity != null ? QuillController(document: Document.fromJson(widget.cardEntity!.back), selection: const TextSelection(baseOffset: 0, extentOffset: 0)) : QuillController.basic();
 
@@ -131,6 +130,7 @@ class _CreateEditCardState extends State<CreateEditCard> {
         setState(() {
           _frontFocusNode.unfocus();
           _backFocusNode.unfocus();
+          removeOverlay();
         });
       },
       child: BlocListener<CardsBloc, CardsState>(
@@ -414,6 +414,7 @@ class _CreateEditCardState extends State<CreateEditCard> {
             children: [
               InkWell(
                 onTap: () {
+                 print('add');
                   // _getImages();
                 },
                 child: SvgPicture.asset(
@@ -423,10 +424,14 @@ class _CreateEditCardState extends State<CreateEditCard> {
                 ),
               ),
               const SizedBox(width: 15),
-              SvgPicture.asset(
-                AppIcons.edit2,
-                height: 76,
-                width: 76,
+              InkWell(onTap: (){
+                showOverlay(context);
+              },
+                child: SvgPicture.asset(
+                  AppIcons.edit2,
+                  height: 76,
+                  width: 76,
+                ),
               ),
             ],
           ),
@@ -514,4 +519,5 @@ class _CreateEditCardState extends State<CreateEditCard> {
     _keyboardVisibilityStreamSubscription.cancel();
     super.dispose();
   }
+
 }
