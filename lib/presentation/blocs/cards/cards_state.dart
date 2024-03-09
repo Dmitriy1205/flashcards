@@ -19,4 +19,6 @@ class CardsState with _$CardsState {
 
   const factory CardsState.error({required String error}) = _Error;
 
+  const factory CardsState.finishLearning() = _FinishLearning;
+
 }

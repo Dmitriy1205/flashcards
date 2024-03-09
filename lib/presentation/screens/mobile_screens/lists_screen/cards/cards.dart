@@ -208,6 +208,7 @@ class _CardsState extends State<Cards> {
                               children: [
                                 SvgPicture.asset(
                                   AppIcons.learnNow,
+                                  color: Colors.black,
                                   height: 23,
                                   width: 23,
                                 ),
@@ -299,7 +300,7 @@ class _CardsState extends State<Cards> {
                                                         .read<CardsBloc>()
                                                         .cardsListToDelete
                                                         .add(
-                                                            data.cardsList![i].id!);
+                                                            data.cardsList![i].id);
                                                   }
                                                 });
                                               },

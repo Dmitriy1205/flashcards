@@ -2,13 +2,12 @@ import 'package:flashcards/core/const/colors.dart';
 import 'package:flashcards/core/const/strings.dart';
 import 'package:flashcards/core/themes/theme.dart';
 import 'package:flashcards/presentation/blocs/lists/lists_bloc.dart';
-import 'package:flashcards/presentation/screens/mobile_screens/lists_screen/learn.dart';
+import 'package:flashcards/presentation/screens/mobile_screens/lists_screen/learning_mode/learn.dart';
 import 'package:flashcards/presentation/screens/mobile_screens/profile/profile.dart';
 import 'package:flashcards/presentation/widgets/navigationBar.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'lists_screen/lists_screen.dart';
-
 
 class HomeMobile extends StatefulWidget {
   const HomeMobile({Key? key}) : super(key: key);
@@ -19,6 +18,7 @@ class HomeMobile extends StatefulWidget {
 
 class _HomeMobileState extends State<HomeMobile> {
   PageController pageController = PageController(initialPage: 0);
+  final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
 
   int _selectedPage = 0;
 
@@ -31,6 +31,7 @@ class _HomeMobileState extends State<HomeMobile> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      key: _scaffoldKey,
       backgroundColor: AppColors.background,
       appBar: AppBar(
         automaticallyImplyLeading: false,
@@ -57,19 +58,20 @@ class _HomeMobileState extends State<HomeMobile> {
                           child: Container(
                             color: Colors.transparent,
                             child: Padding(
-                              padding: EdgeInsets.symmetric(horizontal: 13, vertical: 20),
+                              padding: EdgeInsets.symmetric(
+                                  horizontal: 13, vertical: 20),
                               child: Text(
                                 context.watch<ListsBloc>().isEditMode
                                     ? AppStrings.cancel
                                     : AppStrings.edit,
-                                style: AppTheme.themeData.textTheme.titleLarge?.copyWith(fontSize: 20),
+                                style: AppTheme.themeData.textTheme.titleLarge
+                                    ?.copyWith(fontSize: 20),
                               ),
                             ),
                           ),
                         )
                       : const SizedBox(),
                 ],
-
               ),
             ),
           ],
@@ -83,7 +85,11 @@ class _HomeMobileState extends State<HomeMobile> {
         },
         controller: pageController,
         physics: const NeverScrollableScrollPhysics(),
-        children: const [Lists(), Learn(), Profile()],
+        children: [
+          const Lists(),
+          Learn(scaffoldKey: _scaffoldKey),
+          const Profile()
+        ],
       ),
       bottomNavigationBar: CustomNavigationBar(pageController: pageController),
     );
