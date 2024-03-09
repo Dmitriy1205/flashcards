@@ -1,4 +1,3 @@
-import 'dart:io';
 
 class CreateCardParam {
   CreateCardParam(
@@ -11,6 +10,6 @@ class CreateCardParam {
   final List<Map<String,dynamic>> front;
   final List<Map<String,dynamic>> back;
   final String collectionId;
-  final List<File>? frontImages;
-  final List<File>? backImages;
+  final String? frontImages;
+  final String? backImages;
 }

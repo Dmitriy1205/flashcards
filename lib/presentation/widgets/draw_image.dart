@@ -1,110 +1,204 @@
-import 'package:flashcards/core/const/colors.dart';
-import 'package:flashcards/presentation/widgets/painting_area.dart';
-import 'package:flutter/material.dart';
 
 
 
-mixin DrawImage<T extends StatefulWidget> on State<T> {
-
+/*
+class DrawImage {
   OverlayEntry? _dialogOverlayEntry;
-  OverlayEntry? _colorPickerOverlayEntry;
-  Function(Color)? onColorSelected;
+
   Color _selectedColor = Colors.black;
+  final GlobalKey<PaintingAreaState> _signatureKey =
+  GlobalKey<PaintingAreaState>();
 
   void showOverlay(BuildContext context) {
     _dialogOverlayEntry = _createDialogOverlayEntry(context);
-    //_colorPickerOverlayEntry = _createColorPickerOverlayEntry(context);
 
     Overlay.of(context).insert(_dialogOverlayEntry!);
-    //Overlay.of(context).insert(_colorPickerOverlayEntry!);
   }
 
   void removeOverlay() {
     _dialogOverlayEntry?.remove();
-    _colorPickerOverlayEntry?.remove();
   }
 
   OverlayEntry _createDialogOverlayEntry(BuildContext context) {
-    return OverlayEntry(
-        builder: (context) {
+    return OverlayEntry(builder: (context) {
       return StatefulBuilder(
-        builder: (context,setState) {
-          return Stack(
-          children: [
-          Positioned(
-          bottom: 0,
-          child: Material(
-            color: Colors.transparent,
-            child: Container(
-              width: MediaQuery.of(context).size.width,
-              height: 85,
-              decoration: BoxDecoration(
-                  color: Colors.white,
-                  borderRadius: BorderRadius.circular(15),
-                  border: Border.symmetric(
-                      horizontal: BorderSide(color: Colors.black))),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                children: colors.map((color) {
-                  return GestureDetector(
-                    onTap: () {
-                      // Handle the color selection
-                      print('Color $color selected');
-                    },
-                    child: buildColorChoice(color, setState),
-                  );
-                }).toList(),
+        builder: (context, setState) {
+          return Stack(children: [
+            Positioned(
+              bottom: 0,
+              child: Material(
+                color: Colors.transparent,
+                child: Container(
+                  width: MediaQuery
+                      .of(context)
+                      .size
+                      .width,
+                  height: 85,
+                  decoration: BoxDecoration(
+                    color: Colors.white,
+                    borderRadius: BorderRadius.circular(15),
+                    border: Border.symmetric(
+                        horizontal: BorderSide(color: Colors.black)),
+                    boxShadow: [
+                      // If you want to add shadow to the container
+                      BoxShadow(
+                        color: Colors.black.withOpacity(0.25),
+                        spreadRadius: 1,
+                        blurRadius: 10,
+                        offset: Offset(0, 4), // changes position of shadow
+                      ),
+                    ],
+                  ),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                    children: colors.map((color) {
+                      return GestureDetector(
+                        child: buildColorChoice(color, setState),
+                      );
+                    }).toList(),
+                  ),
+                ),
               ),
             ),
-          ),
-        ),
             Positioned(
-              top: MediaQuery.of(context).size.height / 5.5,
-              left: MediaQuery.of(context).size.width / 10,
+              bottom: 104,
+              right: 25,
+              child: Material(
+                child: InkWell(
+                  onTap: () {
+                    _signatureKey.currentState!.clearSignature();
+                  },
+                  child: Container(
+                    height: 64,
+                    width: 64,
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(35),
+                      color: Colors.white,
+                      boxShadow: [
+                        BoxShadow(
+                          color: Colors.black.withOpacity(0.25),
+                          spreadRadius: 1,
+                          blurRadius: 10,
+                          offset: const Offset(0, 4),
+                        ),
+                      ],
+                    ),
+                    child: Center(
+                      child: SvgPicture.asset(
+                        AppIcons.erase,
+                        height: 28,
+                        width: 24,
+                      ),
+                    ),
+                  ),
+                ),
+              ),
+            ),
+            Positioned(
+              top: MediaQuery
+                  .of(context)
+                  .size
+                  .height / 5.5,
+              left: MediaQuery
+                  .of(context)
+                  .size
+                  .width / 10,
               child: Material(
                 color: Colors.transparent,
                 child: Container(
                   decoration: BoxDecoration(
-                      color: Colors.white,
-                      borderRadius: BorderRadius.circular(15),
-                      border: Border.all(color: Colors.black)),
-                  width: MediaQuery.of(context).size.width * 0.8,
-                  height: MediaQuery.of(context).size.height * 0.6,
-                  // padding: EdgeInsets.all(18),
+                    color: Colors.white,
+                    borderRadius: BorderRadius.circular(15),
+                    border: Border.all(color: Colors.black),
+                    boxShadow: [
+                      BoxShadow(
+                        color: Colors.black.withOpacity(0.25),
+                        spreadRadius: 1,
+                        blurRadius: 10,
+                        offset: Offset(0, 4), // changes position of shadow
+                      ),
+                    ],
+                  ),
+                  width: MediaQuery
+                      .of(context)
+                      .size
+                      .width * 0.8,
+                  height: MediaQuery
+                      .of(context)
+                      .size
+                      .height * 0.55,
                   child: Column(
                     children: [
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                        children: [
-                          TextButton(
-                            onPressed: () => removeOverlay(),
-                            child: Text('Cancel'),
-                          ),
-                          TextButton(
-                            onPressed: () {
-                              // TODO: Implement your confirm logic here
-                              removeOverlay();
-                            },
-                            child: Text('Confirm'),
-                          ),
-                        ],
+                      SizedBox(
+                        height: 59,
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                          children: [
+                            InkWell(
+                              onTap: () => removeOverlay(),
+                              child: Text(
+                                'Cancel',
+                                style: AppTheme.themeData.textTheme.labelMedium!
+                                    .copyWith(
+                                    fontSize: 18, color: AppColors.red),
+                              ),
+                            ),
+                            TextButton(
+                              onPressed: () async {
+                                final img =
+                                await _signatureKey.currentState!.rendered;
+                                final byteData = await img.toByteData(
+                                    format: ImageByteFormat.png);
+                                final bytes = byteData!.buffer.asUint8List();
+                                if (bytes.any((e) => e != 0)) {
+                                  final base64 = base64Encode(bytes.toList());
+
+                                  // _createEditCardKey.currentState?.frontImage = base64;
+                                  setState(() {});
+                                  // print(
+                                  //     '_createEditCardKey.currentState?.image ${_createEditCardKey
+                                  //         .currentState?.frontImage}');
+                                  print('base64 $base64');
+                                  // ApiHandler.clientEventsSink
+                                  //     .add(SignContractClientEvent(image: base64));
+                                  // context.go(Routes.startPage);
+                                }
+                                removeOverlay();
+                              },
+                              child: Text('Confirm',
+                                  style: AppTheme
+                                      .themeData.textTheme.labelMedium!
+                                      .copyWith(
+                                      fontSize: 18,
+                                      color: AppColors.green)),
+                            ),
+                          ],
+                        ),
                       ),
-                      PaintingArea(color: _selectedColor ),
+                      Expanded(
+                        child: Container(
+                          width: double.infinity,
+                          decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(12),
+                              color: Colors.white),
+                          child: PaintingArea(
+                            color: _selectedColor,
+                            key: _signatureKey,
+                          ),
+                        ),
+                      ),
                     ],
                   ),
                 ),
               ),
             ),
-          ]
-        );
+          ]);
         },
       );
     });
   }
 
-
-
-  List<Color> colors = [
+  static const List<Color> colors = [
     Colors.black,
     AppColors.orangePicker,
     AppColors.yellowPicker,
@@ -116,14 +210,8 @@ mixin DrawImage<T extends StatefulWidget> on State<T> {
   Widget buildColorChoice(Color color, Function setState) {
     return GestureDetector(
       onTap: () {
-        print('object $color');
-        this.onColorSelected = (color) {
-          setState(() {
-            _selectedColor = color;
-          });
-        };
         _selectedColor = color;
-        setState((){});
+        setState(() {});
       },
       child: Container(
         width: 25,
@@ -135,4 +223,4 @@ mixin DrawImage<T extends StatefulWidget> on State<T> {
       ),
     );
   }
-}
+}*/

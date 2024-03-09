@@ -1,5 +1,7 @@
 import 'dart:ui';
 
+import 'package:flutter/material.dart';
+
 class AppColors{
 
   static const Color greenBlack = Color(0xFF2B635A);
@@ -19,5 +21,12 @@ class AppColors{
   static const Color bluePicker = Color(0xFF0D5FFF);
   static const Color redPicker = Color(0xFFFF0000);
 
-
+  static const List<Color> colors = [
+    Colors.black,
+    AppColors.orangePicker,
+    AppColors.yellowPicker,
+    AppColors.green,
+    AppColors.bluePicker,
+    AppColors.redPicker
+  ];
 }

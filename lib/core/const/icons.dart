@@ -36,7 +36,7 @@ class AppIcons {
   static const String stackPlus = 'assets/icons/stack.svg';
   static const String solidHat = 'assets/icons/solid_hat.svg';
   static const String solidProfile = 'assets/icons/solid_profile.svg';
-
+  static const String erase = 'assets/icons/erase.svg';
   static const String big = 'assets/icons/big.svg';
   static const String italic = 'assets/icons/itallic.svg';
   static const String numerated = 'assets/icons/numareted.svg';

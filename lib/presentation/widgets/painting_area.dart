@@ -14,6 +14,8 @@ class SignaturePainter extends CustomPainter {
 
   @override
   void paint(Canvas canvas, Size size) {
+    canvas.clipRect(Rect.fromLTWH(0, 0, size.width, size.height));
+
     Paint paint = Paint()
       ..color = lineColor // Use the selected line color
       ..strokeCap = StrokeCap.round
@@ -32,10 +34,9 @@ class SignaturePainter extends CustomPainter {
   }
 }
 
-
-
 class PaintingArea extends StatefulWidget {
-  const PaintingArea({Key? key, required this.color}) : super(key: key);
+  const PaintingArea({Key? key, required this.color})
+      : super(key: key);
   final Color color;
 
   @override
@@ -44,20 +45,21 @@ class PaintingArea extends StatefulWidget {
 
 class PaintingAreaState extends State<PaintingArea> {
   List<Offset?> points = [];
-  Color selectedColor = Colors.black;
 
 
   Future<ui.Image> get rendered {
     ui.PictureRecorder recorder = ui.PictureRecorder();
     Canvas canvas = Canvas(recorder);
-    SignaturePainter painter = SignaturePainter(points: points, lineColor: widget.color);
+    SignaturePainter painter =
+        SignaturePainter(points: points, lineColor: widget.color);
     var size = context.size!;
     painter.paint(canvas, size);
-    return recorder.endRecording()
+    return recorder
+        .endRecording()
         .toImage(size.width.floor(), size.height.floor());
   }
 
-  void clearSignature(){
+  void clearSignature() {
     setState(() {
       points.clear();
     });
@@ -65,26 +67,30 @@ class PaintingAreaState extends State<PaintingArea> {
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      children: [
-        LayoutBuilder(
-          builder: (context,constraints) => GestureDetector(
-            onPanUpdate: (details) {
-              setState(() {
-                RenderBox renderBox = context.findRenderObject() as RenderBox;
-                points.add(renderBox.globalToLocal(details.globalPosition));
-              });
-            },
-            onPanEnd: (details) => points.add(null),
-            child: CustomPaint(
-              painter: SignaturePainter(points: points, lineColor: widget.color),
-              size: Size(constraints.maxWidth, constraints.maxWidth),
+    return ConstrainedBox(
+      constraints: BoxConstraints(
+          maxWidth: MediaQuery.of(context).size.width * 0.9,
+          maxHeight: MediaQuery.of(context).size.height * 0.7),
+      child: Column(
+        children: [
+          LayoutBuilder(
+            builder: (context, constraints) => GestureDetector(
+              onPanUpdate: (details) {
+                setState(() {
+                  RenderBox renderBox = context.findRenderObject() as RenderBox;
+                  points.add(renderBox.globalToLocal(details.globalPosition));
+                });
+              },
+              onPanEnd: (details) => points.add(null),
+              child: CustomPaint(
+                painter:
+                    SignaturePainter(points: points, lineColor: widget.color),
+                size: Size(constraints.maxWidth, constraints.maxWidth),
+              ),
             ),
           ),
-        ),
-      ],
+        ],
+      ),
     );
   }
-
-
 }

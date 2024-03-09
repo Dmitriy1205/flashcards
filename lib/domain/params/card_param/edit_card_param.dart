@@ -1,4 +1,3 @@
-import 'dart:io';
 
 class EditCardParam {
   EditCardParam(
@@ -17,6 +16,6 @@ class EditCardParam {
   final List<Map<String,dynamic>> back;
   final String? sharedFrom;
   final List<String>? shareWithId;
-  final List<File>? frontImages;
-  final List<File>? backImages;
+  final String? frontImages;
+  final String? backImages;
 }

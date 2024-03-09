@@ -43,7 +43,9 @@ class CardServiceImpl extends CardService {
         "id": cards.id,
         "collectionName": collectionName,
         "createdAt": FieldValue.serverTimestamp(),
-        "collectionId": cardParam.collectionId
+        "collectionId": cardParam.collectionId,
+        "frontImage": cardParam.frontImages,
+        "backImage": cardParam.backImages,
       });
     } on FirebaseException catch (e) {
       throw Exception("Exception createCard $e");
@@ -83,6 +85,8 @@ class CardServiceImpl extends CardService {
       await cards.doc(cardParam.id).update({
         'back': cardParam.back,
         'front': cardParam.front,
+        "frontImage": cardParam.frontImages,
+        "backImage": cardParam.backImages,
       });
     } on FirebaseException catch (e) {
       throw Exception("Exception deleteCards $e");
@@ -195,7 +199,8 @@ class CardServiceImpl extends CardService {
 
       final cards =
           collections.collection(FirestoreCollections.cards).doc(cardEntity.id);
-      await collections.get().then((snapshot) {snapshot.data()!['collectionName'].toString();
+      await collections.get().then((snapshot) {
+        snapshot.data()!['collectionName'].toString();
       });
 
       await cards.update({
