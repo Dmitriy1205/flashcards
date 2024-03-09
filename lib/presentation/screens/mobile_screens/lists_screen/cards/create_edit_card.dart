@@ -111,6 +111,10 @@ class CreateEditCardState extends State<CreateEditCard> {
   @override
   void initState() {
     super.initState();
+    if(widget.cardEntity != null){
+      widget.cardEntity!.frontImage != null ? frontImage = widget.cardEntity!.frontImage! :null;
+      widget.cardEntity!.backImage != null ? backImage = widget.cardEntity!.backImage! : null;
+    }
     _frontControllerValueChanged =
         _frontController.document.documentChangeObserver.stream.listen((e) {
           _frontControllerChanged();

@@ -30,8 +30,8 @@ mixin _$CardEntity {
   DateTime? get createdAt => throw _privateConstructorUsedError;
   String? get sharedFrom => throw _privateConstructorUsedError;
   List<String>? get shareWithId => throw _privateConstructorUsedError;
-  List<String>? get frontImages => throw _privateConstructorUsedError;
-  List<String>? get backImages => throw _privateConstructorUsedError;
+  String? get frontImage => throw _privateConstructorUsedError;
+  String? get backImage => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
@@ -56,8 +56,8 @@ abstract class $CardEntityCopyWith<$Res> {
       DateTime? createdAt,
       String? sharedFrom,
       List<String>? shareWithId,
-      List<String>? frontImages,
-      List<String>? backImages});
+      String? frontImage,
+      String? backImage});
 }
 
 /// @nodoc
@@ -82,8 +82,8 @@ class _$CardEntityCopyWithImpl<$Res, $Val extends CardEntity>
     Object? createdAt = freezed,
     Object? sharedFrom = freezed,
     Object? shareWithId = freezed,
-    Object? frontImages = freezed,
-    Object? backImages = freezed,
+    Object? frontImage = freezed,
+    Object? backImage = freezed,
   }) {
     return _then(_value.copyWith(
       id: null == id
@@ -122,14 +122,14 @@ class _$CardEntityCopyWithImpl<$Res, $Val extends CardEntity>
           ? _value.shareWithId
           : shareWithId // ignore: cast_nullable_to_non_nullable
               as List<String>?,
-      frontImages: freezed == frontImages
-          ? _value.frontImages
-          : frontImages // ignore: cast_nullable_to_non_nullable
-              as List<String>?,
-      backImages: freezed == backImages
-          ? _value.backImages
-          : backImages // ignore: cast_nullable_to_non_nullable
-              as List<String>?,
+      frontImage: freezed == frontImage
+          ? _value.frontImage
+          : frontImage // ignore: cast_nullable_to_non_nullable
+              as String?,
+      backImage: freezed == backImage
+          ? _value.backImage
+          : backImage // ignore: cast_nullable_to_non_nullable
+              as String?,
     ) as $Val);
   }
 }
@@ -153,8 +153,8 @@ abstract class _$$CardEntityImplCopyWith<$Res>
       DateTime? createdAt,
       String? sharedFrom,
       List<String>? shareWithId,
-      List<String>? frontImages,
-      List<String>? backImages});
+      String? frontImage,
+      String? backImage});
 }
 
 /// @nodoc
@@ -177,8 +177,8 @@ class __$$CardEntityImplCopyWithImpl<$Res>
     Object? createdAt = freezed,
     Object? sharedFrom = freezed,
     Object? shareWithId = freezed,
-    Object? frontImages = freezed,
-    Object? backImages = freezed,
+    Object? frontImage = freezed,
+    Object? backImage = freezed,
   }) {
     return _then(_$CardEntityImpl(
       id: null == id
@@ -217,14 +217,14 @@ class __$$CardEntityImplCopyWithImpl<$Res>
           ? _value._shareWithId
           : shareWithId // ignore: cast_nullable_to_non_nullable
               as List<String>?,
-      frontImages: freezed == frontImages
-          ? _value._frontImages
-          : frontImages // ignore: cast_nullable_to_non_nullable
-              as List<String>?,
-      backImages: freezed == backImages
-          ? _value._backImages
-          : backImages // ignore: cast_nullable_to_non_nullable
-              as List<String>?,
+      frontImage: freezed == frontImage
+          ? _value.frontImage
+          : frontImage // ignore: cast_nullable_to_non_nullable
+              as String?,
+      backImage: freezed == backImage
+          ? _value.backImage
+          : backImage // ignore: cast_nullable_to_non_nullable
+              as String?,
     ));
   }
 }
@@ -243,13 +243,11 @@ class _$CardEntityImpl implements _CardEntity {
       required this.createdAt,
       this.sharedFrom,
       final List<String>? shareWithId,
-      final List<String>? frontImages,
-      final List<String>? backImages})
+      this.frontImage,
+      this.backImage})
       : _front = front,
         _back = back,
-        _shareWithId = shareWithId,
-        _frontImages = frontImages,
-        _backImages = backImages;
+        _shareWithId = shareWithId;
 
   factory _$CardEntityImpl.fromJson(Map<String, dynamic> json) =>
       _$$CardEntityImplFromJson(json);
@@ -294,29 +292,14 @@ class _$CardEntityImpl implements _CardEntity {
     return EqualUnmodifiableListView(value);
   }
 
-  final List<String>? _frontImages;
   @override
-  List<String>? get frontImages {
-    final value = _frontImages;
-    if (value == null) return null;
-    if (_frontImages is EqualUnmodifiableListView) return _frontImages;
-    // ignore: implicit_dynamic_type
-    return EqualUnmodifiableListView(value);
-  }
-
-  final List<String>? _backImages;
+  final String? frontImage;
   @override
-  List<String>? get backImages {
-    final value = _backImages;
-    if (value == null) return null;
-    if (_backImages is EqualUnmodifiableListView) return _backImages;
-    // ignore: implicit_dynamic_type
-    return EqualUnmodifiableListView(value);
-  }
+  final String? backImage;
 
   @override
   String toString() {
-    return 'CardEntity(id: $id, collectionId: $collectionId, collectionName: $collectionName, front: $front, back: $back, isLearned: $isLearned, createdAt: $createdAt, sharedFrom: $sharedFrom, shareWithId: $shareWithId, frontImages: $frontImages, backImages: $backImages)';
+    return 'CardEntity(id: $id, collectionId: $collectionId, collectionName: $collectionName, front: $front, back: $back, isLearned: $isLearned, createdAt: $createdAt, sharedFrom: $sharedFrom, shareWithId: $shareWithId, frontImage: $frontImage, backImage: $backImage)';
   }
 
   @override
@@ -339,10 +322,10 @@ class _$CardEntityImpl implements _CardEntity {
                 other.sharedFrom == sharedFrom) &&
             const DeepCollectionEquality()
                 .equals(other._shareWithId, _shareWithId) &&
-            const DeepCollectionEquality()
-                .equals(other._frontImages, _frontImages) &&
-            const DeepCollectionEquality()
-                .equals(other._backImages, _backImages));
+            (identical(other.frontImage, frontImage) ||
+                other.frontImage == frontImage) &&
+            (identical(other.backImage, backImage) ||
+                other.backImage == backImage));
   }
 
   @JsonKey(ignore: true)
@@ -358,8 +341,8 @@ class _$CardEntityImpl implements _CardEntity {
       createdAt,
       sharedFrom,
       const DeepCollectionEquality().hash(_shareWithId),
-      const DeepCollectionEquality().hash(_frontImages),
-      const DeepCollectionEquality().hash(_backImages));
+      frontImage,
+      backImage);
 
   @JsonKey(ignore: true)
   @override
@@ -387,8 +370,8 @@ abstract class _CardEntity implements CardEntity {
       required final DateTime? createdAt,
       final String? sharedFrom,
       final List<String>? shareWithId,
-      final List<String>? frontImages,
-      final List<String>? backImages}) = _$CardEntityImpl;
+      final String? frontImage,
+      final String? backImage}) = _$CardEntityImpl;
 
   factory _CardEntity.fromJson(Map<String, dynamic> json) =
       _$CardEntityImpl.fromJson;
@@ -413,9 +396,9 @@ abstract class _CardEntity implements CardEntity {
   @override
   List<String>? get shareWithId;
   @override
-  List<String>? get frontImages;
+  String? get frontImage;
   @override
-  List<String>? get backImages;
+  String? get backImage;
   @override
   @JsonKey(ignore: true)
   _$$CardEntityImplCopyWith<_$CardEntityImpl> get copyWith =>
