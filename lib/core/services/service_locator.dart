@@ -5,6 +5,8 @@ import 'package:flashcards/data/remote/collection_service/collection_service_imp
 import 'package:flashcards/data/remote/user_service/user_service_impl.dart';
 import 'package:flashcards/domain/repositories/cards_repo/card_repo_contract.dart';
 import 'package:flashcards/domain/repositories/cards_repo/card_repo_impl.dart';
+import 'package:flashcards/domain/repositories/collection_pdf_repo/collection_pdf_repo_contract.dart';
+import 'package:flashcards/domain/repositories/collection_pdf_repo/collection_pdf_repo_impl.dart';
 import 'package:flashcards/domain/repositories/collection_repo/collection_repo_contract.dart';
 import 'package:flashcards/domain/repositories/collection_repo/collection_repo_impl.dart';
 import 'package:flashcards/domain/repositories/user_repo/user_repo_contract.dart';
@@ -14,6 +16,7 @@ import 'package:flashcards/presentation/blocs/cards/cards_bloc.dart';
 import 'package:flashcards/presentation/blocs/lists/lists_bloc.dart';
 import 'package:flashcards/presentation/blocs/web_list/web_list_bloc.dart';
 import 'package:get_it/get_it.dart';
+import '../../data/remote/collection_pdf_service/collection_pdf_service_impl.dart';
 import '../../domain/repositories/auth/auth_repository_contract.dart';
 import '../../domain/repositories/auth/auth_repository_impl.dart';
 import '../../presentation/blocs/apple_sign_in/apple_signin_bloc.dart';
@@ -43,11 +46,13 @@ Future<void> init() async {
       fireStore: fireStore,
       firebaseStorage: firebaseStorage,
       firebaseAuth: firebaseAuth);
+  final collectionPdfService = CollectionPdfServiceImpl(db: FirebaseFirestore.instance, storage: FirebaseStorage.instance);
 
   final userRepoImpl = UserRepoImpl(userServiceImpl: userService);
   final collectionRepoImpl =
       CollectionRepoImpl(collectionServiceImpl: collectionService);
   final cardRepoImpl = CardRepoImpl(cardService: cardService);
+  final collectionPdfRepoImpl = CollectionPdfRepoImpl(collectionPdfService: collectionPdfService);
 
   ///Repositories
 
@@ -55,6 +60,7 @@ Future<void> init() async {
   sl.registerSingleton<UserRepoContract>(userRepoImpl);
   sl.registerSingleton<CollectionRepoContract>(collectionRepoImpl);
   sl.registerSingleton<CardRepo>(cardRepoImpl);
+  sl.registerSingleton<CollectionPdfRepo>(collectionPdfRepoImpl);
 
   ///Blocs
   sl.registerLazySingleton(() => AuthBloc(authRepository: sl()));
@@ -62,9 +68,10 @@ Future<void> init() async {
   sl.registerLazySingleton(() => SigninBloc(auth: sl()));
   sl.registerFactory(() => ForgotPasswordBloc(auth: sl()));
   sl.registerFactory(() => GoogleSigninBloc(auth: sl()));
+  sl.registerFactory(() => CollectionPdfRepoImpl(collectionPdfService: sl()));
 
   sl.registerLazySingleton(() => ListsBloc(collectionRepo: sl()));
-  sl.registerLazySingleton(() => CardsBloc(cardRepo: cardRepoImpl));
+  sl.registerLazySingleton(() => CardsBloc(cardRepo: sl()));
 
   sl.registerFactory(() => AppleSigninBloc(auth: sl()));
   sl.registerLazySingleton(() => WebListBloc(collectionRepo: sl()));

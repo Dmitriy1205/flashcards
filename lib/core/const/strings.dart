@@ -47,4 +47,5 @@ class AppStrings {
   static const String english = 'English';
 
   static const String errorEmptyCard = "Card front and back must be filled";
+  static const String pdfFile = "Pdf file";
 }
