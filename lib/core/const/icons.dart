@@ -46,5 +46,6 @@ class AppIcons {
   static const String imageIcon = 'assets/icons/image_icon.svg';
   static const String editIcon = 'assets/icons/edit_icon.svg';
   static const String editGreen = 'assets/icons/edit_green.svg';
+  static const String download = 'assets/icons/download.svg';
   static const String cancel = 'assets/icons/cancel.svg';
 }

@@ -12,6 +12,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flashcards/presentation/widgets/quill_text.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:go_router/go_router.dart';
 import 'create_edit_card.dart';
 
 class Cards extends StatefulWidget {
@@ -186,6 +187,9 @@ class _CardsState extends State<Cards> {
                           ),
                           DropdownMenuItem<String>(
                             value: 'false',
+                            onTap: (){
+                              context.push("/attach_pdf", extra: {"collectionId": widget.collectionId, "collectionName": widget.collectionName});
+                            },
                             child: Row(
                               children: [
                                 SvgPicture.asset(

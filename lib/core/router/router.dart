@@ -7,6 +7,7 @@ import 'package:flashcards/presentation/screens/mobile_screens/lists_screen/card
 import 'package:flashcards/presentation/screens/mobile_screens/lists_screen/learning_mode/finish_learn_screen.dart';
 import 'package:flashcards/presentation/screens/mobile_screens/lists_screen/learning_mode/learn_cards.dart';
 import 'package:flashcards/presentation/screens/mobile_screens/lists_screen/lists_screen.dart';
+import 'package:flashcards/presentation/screens/mobile_screens/lists_screen/pdf/attach_pdf.dart';
 import 'package:flashcards/presentation/screens/mobile_screens/profile/profile.dart';
 import 'package:flashcards/presentation/screens/web_screens/auth/web_forgot_password.dart';
 import 'package:flashcards/presentation/screens/web_screens/home/learn/web_learn.dart';
@@ -173,7 +174,12 @@ final GoRouter router = GoRouter(
         );
       },
     ),
-    // GoRoute(path: '/learn', builder: (context, state) => const Learn()),
+    GoRoute(path: '/attach_pdf', builder: (context,state) {
+      final collectionId = (state.extra as Map<String,dynamic>?)?["collectionId"];
+      final collectionName = (state.extra as Map<String,dynamic>?)?["collectionName"];
+      return AttachPdf(collectionId: collectionId, collectionName: collectionName,);
+    }),
+    GoRoute(path: '/learn', builder: (context, state) => const Learn()),
     GoRoute(path: '/lists', builder: (context, state) => const Lists()),
     GoRoute(path: '/profile', builder: (context, state) => const Profile()),
     GoRoute(

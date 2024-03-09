@@ -3,7 +3,7 @@ class FirestoreCollections{
   static String collections = "collections";
   static String collectionShare = "collection_share";
   static String cards = "cards";
-
+  static String pdfs = "pdfs";
 
 
 }

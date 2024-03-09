@@ -97,16 +97,11 @@ class CardServiceImpl extends CardService {
   Future<void> shareCollection(
       {required String collectionId, required String collectionName}) async {
     collectionName = collectionName.replaceAll(' ', '%20');
-
-    print(
-      'https://flashcards-5984c.web.app/collection_share?sender=${_firebaseAuth.currentUser!.uid}&collectionId=${collectionId}&collectionName=${collectionName}',
-    );
     final result = await Share.shareWithResult(
         'https://flashcards-5984c.web.app/collection_share?sender=${_firebaseAuth.currentUser!.uid}&collectionId=$collectionId&collectionName=$collectionName',
         subject: 'Look what I made!');
 
     if (result.status == ShareResultStatus.success) {
-      print('status success');
       try {
         final shareCollection = _fireStore
             .collection(FirestoreCollections.collectionShare)
@@ -122,12 +117,25 @@ class CardServiceImpl extends CardService {
             .get();
 
         final cards = await fetchCards(collectionId: collectionId);
+
+        final pdfs = await _fireStore
+            .collection(FirestoreCollections.users)
+            .doc(_firebaseAuth.currentUser!.uid)
+            .collection(FirestoreCollections.collections)
+            .doc(collectionId)
+            .collection(FirestoreCollections.pdfs)
+            .get();
         if (collection.exists) {
           shareCollection.set(collection.data()!);
           for (int i = 0; i < cards.length; i++) {
             shareCollection.collection(FirestoreCollections.cards).add(cards[i]
                 .copyWith(sharedFrom: _firebaseAuth.currentUser!.uid)
                 .toJson());
+          }
+          for (int i = 0; i < pdfs.size; i++) {
+            shareCollection
+                .collection(FirestoreCollections.pdfs)
+                .add(pdfs.docs[i].data());
           }
         }
       } on FirebaseException catch (e) {
