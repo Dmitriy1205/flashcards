@@ -38,7 +38,7 @@ class Providers extends StatelessWidget {
         ),
         BlocProvider(
           create: (context) => sl<WebListBloc>(),
-        ),
+        )
       ],
       child: child,
     );

@@ -17,17 +17,14 @@ _$CardEntityImpl _$$CardEntityImplFromJson(Map<String, dynamic> json) =>
       back: (json['back'] as List<dynamic>)
           .map((e) => e as Map<String, dynamic>)
           .toList(),
+      isLearned: json['isLearned'] as bool? ?? false,
       createdAt: FirebaseTimestampConverters.fromTimestamp(json['createdAt']),
       sharedFrom: json['sharedFrom'] as String?,
       shareWithId: (json['shareWithId'] as List<dynamic>?)
           ?.map((e) => e as String)
           .toList(),
-      frontImages: (json['frontImages'] as List<dynamic>?)
-          ?.map((e) => e as String)
-          .toList(),
-      backImages: (json['backImages'] as List<dynamic>?)
-          ?.map((e) => e as String)
-          .toList(),
+      frontImage: json['frontImage'] as String?,
+      backImage: json['backImage'] as String?,
     );
 
 Map<String, dynamic> _$$CardEntityImplToJson(_$CardEntityImpl instance) =>
@@ -37,9 +34,10 @@ Map<String, dynamic> _$$CardEntityImplToJson(_$CardEntityImpl instance) =>
       'collectionName': instance.collectionName,
       'front': instance.front,
       'back': instance.back,
+      'isLearned': instance.isLearned,
       'createdAt': instance.createdAt?.toIso8601String(),
       'sharedFrom': instance.sharedFrom,
       'shareWithId': instance.shareWithId,
-      'frontImages': instance.frontImages,
-      'backImages': instance.backImages,
+      'frontImage': instance.frontImage,
+      'backImage': instance.backImage,
     };

@@ -43,7 +43,9 @@ class CardServiceImpl extends CardService {
         "id": cards.id,
         "collectionName": collectionName,
         "createdAt": FieldValue.serverTimestamp(),
-        "collectionId": cardParam.collectionId
+        "collectionId": cardParam.collectionId,
+        "frontImage": cardParam.frontImages,
+        "backImage": cardParam.backImages,
       });
     } on FirebaseException catch (e) {
       throw Exception("Exception createCard $e");
@@ -83,6 +85,8 @@ class CardServiceImpl extends CardService {
       await cards.doc(cardParam.id).update({
         'back': cardParam.back,
         'front': cardParam.front,
+        "frontImage": cardParam.frontImages,
+        "backImage": cardParam.backImages,
       });
     } on FirebaseException catch (e) {
       throw Exception("Exception deleteCards $e");
@@ -121,7 +125,6 @@ class CardServiceImpl extends CardService {
             .doc(collectionId)
             .collection(FirestoreCollections.pdfs)
             .get();
-
         if (collection.exists) {
           shareCollection.set(collection.data()!);
           for (int i = 0; i < cards.length; i++) {
@@ -190,6 +193,29 @@ class CardServiceImpl extends CardService {
       return cardsList;
     } catch (e) {
       throw Exception("Exception fetchCards $e");
+    }
+  }
+
+  @override
+  Future<void> swipeCard({required CardEntity cardEntity}) async {
+    try {
+      final collections = _fireStore
+          .collection(FirestoreCollections.users)
+          .doc(_firebaseAuth.currentUser!.uid)
+          .collection(FirestoreCollections.collections)
+          .doc(cardEntity.collectionId);
+
+      final cards =
+          collections.collection(FirestoreCollections.cards).doc(cardEntity.id);
+      await collections.get().then((snapshot) {
+        snapshot.data()!['collectionName'].toString();
+      });
+
+      await cards.update({
+        "isLearned": cardEntity.isLearned,
+      });
+    } on FirebaseException catch (e) {
+      throw Exception("Exception createCard $e");
     }
   }
 }

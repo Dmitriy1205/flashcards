@@ -13,12 +13,13 @@ class CardEntity with _$CardEntity {
     required String collectionName,
     required List<Map<String, dynamic>> front,
     required List<Map<String, dynamic>> back,
+    @Default(false) bool isLearned,
     @JsonKey(fromJson: FirebaseTimestampConverters.fromTimestamp)
     required DateTime? createdAt,
     final String? sharedFrom,
     final List<String>? shareWithId,
-    final List<String>? frontImages,
-    final List<String>? backImages,
+    final String? frontImage,
+    final String? backImage,
   }) = _CardEntity;
 
   factory CardEntity.fromJson(Map<String, dynamic> json) =>

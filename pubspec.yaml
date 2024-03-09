@@ -49,6 +49,8 @@ dependencies:
 
   flutter_quill: ^9.2.12
   flutter_html: any
+  adaptive_action_sheet: ^2.0.3
+  flutter_markdown: ^0.6.20
 
 
 

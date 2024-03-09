@@ -36,7 +36,7 @@ class AppIcons {
   static const String stackPlus = 'assets/icons/stack.svg';
   static const String solidHat = 'assets/icons/solid_hat.svg';
   static const String solidProfile = 'assets/icons/solid_profile.svg';
-
+  static const String erase = 'assets/icons/erase.svg';
   static const String big = 'assets/icons/big.svg';
   static const String italic = 'assets/icons/itallic.svg';
   static const String numerated = 'assets/icons/numareted.svg';
@@ -47,4 +47,5 @@ class AppIcons {
   static const String editIcon = 'assets/icons/edit_icon.svg';
   static const String editGreen = 'assets/icons/edit_green.svg';
   static const String download = 'assets/icons/download.svg';
+  static const String cancel = 'assets/icons/cancel.svg';
 }

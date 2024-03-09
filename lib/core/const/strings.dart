@@ -42,6 +42,9 @@ class AppStrings {
   static const String share = 'Share';
   static const String logout = 'Logout';
   static const String profile = 'Profile';
+  static const String sorryNoCards = 'Sorry No Cards';
+
+
 
   static const String language = 'Language';
   static const String english = 'English';
