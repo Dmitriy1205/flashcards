@@ -8,6 +8,7 @@ import 'package:flashcards/presentation/widgets/navigationBar.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'lists_screen/lists_screen.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class HomeMobile extends StatefulWidget {
   const HomeMobile({Key? key}) : super(key: key);
@@ -22,10 +23,10 @@ class _HomeMobileState extends State<HomeMobile> {
 
   int _selectedPage = 0;
 
-  List<String> pageNames = [
-    AppStrings.collections,
-    AppStrings.learn,
-    AppStrings.profile,
+  late List<String> pageNames = [
+    AppLocalizations.of(context)!.collections,
+    AppLocalizations.of(context)!.learn,
+    AppLocalizations.of(context)!.profile,
   ];
 
   @override
@@ -62,8 +63,8 @@ class _HomeMobileState extends State<HomeMobile> {
                                   horizontal: 13, vertical: 20),
                               child: Text(
                                 context.watch<ListsBloc>().isEditMode
-                                    ? AppStrings.cancel
-                                    : AppStrings.edit,
+                                    ? AppLocalizations.of(context)!.cancel
+                                    : AppLocalizations.of(context)!.edit,
                                 style: AppTheme.themeData.textTheme.titleLarge
                                     ?.copyWith(fontSize: 20),
                               ),

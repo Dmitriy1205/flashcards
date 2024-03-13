@@ -1,8 +1,10 @@
+import 'package:file_picker/file_picker.dart';
 import 'package:flashcards/core/const/colors.dart';
 import 'package:flashcards/core/const/icons.dart';
 import 'package:flashcards/core/const/strings.dart';
 import 'package:flashcards/core/router/router.dart';
 import 'package:flashcards/core/themes/theme.dart';
+import 'package:flashcards/core/utils/app_toast.dart';
 import 'package:flashcards/core/utils/confirm_dialog.dart';
 import 'package:flashcards/domain/entities/card_entity/card_entity.dart';
 import 'package:flashcards/presentation/blocs/cards/cards_bloc.dart';
@@ -14,6 +16,7 @@ import 'package:flashcards/presentation/widgets/quill_text.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:go_router/go_router.dart';
 import 'create_edit_card.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class Cards extends StatefulWidget {
   const Cards(
@@ -79,7 +82,7 @@ class _CardsState extends State<Cards> {
                       width: 19,
                     ),
                     Text(
-                      AppStrings.cards,
+                      AppLocalizations.of(context)!.cards,
                       style: AppTheme.themeData.textTheme.headlineLarge,
                     ),
                   ]),
@@ -92,7 +95,7 @@ class _CardsState extends State<Cards> {
                         setState(() {});
                       },
                       child: Text(
-                        AppStrings.cancel,
+                        AppLocalizations.of(context)!.cancel,
                         style:
                             AppTheme.themeData.textTheme.titleLarge!.copyWith(
                           fontSize: 20,
@@ -137,7 +140,7 @@ class _CardsState extends State<Cards> {
                                   ),
                                   const SizedBox(width: 23),
                                   Text(
-                                    AppStrings.share,
+                                    AppLocalizations.of(context)!.share,
                                     style: AppTheme
                                         .themeData.textTheme.labelMedium,
                                   ),
@@ -160,7 +163,7 @@ class _CardsState extends State<Cards> {
                                 ),
                                 const SizedBox(width: 23),
                                 Text(
-                                  AppStrings.edit,
+                                  AppLocalizations.of(context)!.edit,
                                   style:
                                       AppTheme.themeData.textTheme.labelMedium,
                                 ),
@@ -168,6 +171,12 @@ class _CardsState extends State<Cards> {
                             ),
                           ),
                           DropdownMenuItem<String>(
+                            onTap: () async{
+                              final file = await FilePicker.platform.pickFiles(allowedExtensions: ["xlsx","csv"], type: FileType.custom);
+                              if(!mounted) return;
+                              if(file == null) return;
+                              context.read<CardsBloc>().add(CardsEvent.importExcel(path: file.paths.first!, collectionId: widget.collectionId, collectionName: widget.collectionName));
+                            },
                             value: 'false',
                             child: Row(
                               children: [
@@ -199,7 +208,7 @@ class _CardsState extends State<Cards> {
                                 ),
                                 const SizedBox(width: 23),
                                 Text(
-                                  AppStrings.filePdf,
+                                  AppLocalizations.of(context)!.filePdf,
                                   style:
                                       AppTheme.themeData.textTheme.labelMedium,
                                 ),
@@ -218,7 +227,7 @@ class _CardsState extends State<Cards> {
                                 ),
                                 const SizedBox(width: 23),
                                 Text(
-                                  AppStrings.learnNow,
+                                  AppLocalizations.of(context)!.learnNow,
                                   style:
                                       AppTheme.themeData.textTheme.labelMedium,
                                 ),
@@ -238,7 +247,11 @@ class _CardsState extends State<Cards> {
 
           BlocConsumer<CardsBloc, CardsState>(
             listener: (context, state) async {
-              state.maybeMap(orElse: () {});
+              state.maybeMap(
+                  successfullyImported: (_){
+                    AppToast.showSuccess(context, AppStrings.successfullyImported);
+                  },
+                  orElse: () {});
             },
             builder: (context, state) {
               return state.maybeMap(loading: (_) {
@@ -389,7 +402,9 @@ class _CardsState extends State<Cards> {
                       .copyWith(fontSize: 18),
                 ));
               }, orElse: () {
-                return const Center(child: Text('No cards found'));
+                return Container(
+                    color: AppColors.background,
+                    child: LoadingIndicator());
               });
             },
           ),
@@ -414,7 +429,7 @@ class _CardsState extends State<Cards> {
                       child: InkWell(
                           borderRadius: BorderRadius.circular(32),
                           onTap: () async{
-                            final confirmed = await confirmOperation(context, title: "Confirm deleting", message: "Are you sure that you want to delete selected cards?", action: "Delete", cancel: "Cancel");
+                            final confirmed = await confirmOperation(context, title: AppStrings.confirmDeleting, message: AppStrings.deleteSelectedCards, action: AppStrings.delete, cancel: AppStrings.cancel);
                             if(!confirmed) return;
                             context.read<CardsBloc>().add(
                                 CardsEvent.deleteSelectedCards(

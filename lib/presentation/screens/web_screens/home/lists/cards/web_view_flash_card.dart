@@ -2,7 +2,6 @@ import 'dart:math';
 
 import 'package:flashcards/core/const/colors.dart';
 import 'package:flashcards/core/const/icons.dart';
-import 'package:flashcards/core/const/strings.dart';
 import 'package:flashcards/core/router/router.dart';
 import 'package:flashcards/core/themes/theme.dart';
 import 'package:flashcards/domain/entities/card_entity/card_entity.dart';
@@ -11,10 +10,10 @@ import 'package:flashcards/presentation/widgets/loading_indicator.dart';
 import 'package:flashcards/presentation/widgets/quill_text.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_html/flutter_html.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 import '../../../../../blocs/cards/cards_bloc.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class WebViewFlashCard extends StatefulWidget {
   const WebViewFlashCard(
@@ -70,7 +69,7 @@ class _WebViewFlashCardState extends State<WebViewFlashCard> {
                     width: 19,
                   ),
                   Text(
-                    AppStrings.card,
+                    AppLocalizations.of(context)!.card,
                     style: AppTheme.themeData.textTheme.headlineLarge,
                   ),
                 ],
@@ -199,7 +198,7 @@ class _WebViewFlashCardState extends State<WebViewFlashCard> {
                   width: 19,
                 ),
                 Text(
-                  AppStrings.card,
+                  AppLocalizations.of(context)!.card,
                   style: AppTheme.themeData.textTheme.headlineLarge,
                 ),
               ],

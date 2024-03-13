@@ -20,6 +20,8 @@ class CardsEvent with _$CardsEvent {
       {required String collectionId,
         required String sender}) = _CreateSharedCards;
 
+  const factory CardsEvent.importExcel(
+      {required String path, required String collectionId, required String collectionName}) = _ImportExcel;
 
   const factory CardsEvent.shareCollection(
       {required String collectionId,

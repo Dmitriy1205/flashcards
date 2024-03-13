@@ -12,6 +12,7 @@ import '../../../../../core/const/colors.dart';
 import '../../../../../core/const/strings.dart';
 import '../../../../../core/themes/theme.dart';
 import '../../../../../core/utils/app_toast.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class WebListsScreen extends StatefulWidget {
   const WebListsScreen({super.key});
@@ -61,7 +62,7 @@ class _WebListsScreenState extends State<WebListsScreen> {
                           width: 64,
                         ),
                         Text(
-                          AppStrings.collections,
+                          AppLocalizations.of(context)!.collections,
                           style: AppTheme.themeData.textTheme.headlineLarge,
                         ),
                       ],
@@ -150,7 +151,7 @@ class _WebListsScreenState extends State<WebListsScreen> {
                         width: 64,
                       ),
                       Text(
-                        AppStrings.collections,
+                        AppLocalizations.of(context)!.collections,
                         style: AppTheme.themeData.textTheme.headlineLarge,
                       ),
                     ],
@@ -268,7 +269,7 @@ class _WebListsScreenState extends State<WebListsScreen> {
                           child: Align(
                             alignment: Alignment.center,
                             child: Text(
-                              AppStrings.newCollection,
+                              AppLocalizations.of(context)!.newCollection,
                               style: AppTheme.themeData.textTheme.titleMedium!
                                   .copyWith(fontSize: 18),
                             ),
@@ -276,7 +277,7 @@ class _WebListsScreenState extends State<WebListsScreen> {
                         ),
                       ],
                     ),
-                    Text(AppStrings.giveName,
+                    Text(AppLocalizations.of(context)!.giveName,
                         style: AppTheme.themeData.textTheme.labelSmall!
                             .copyWith(color: Colors.black)),
                     const SizedBox(
@@ -313,7 +314,7 @@ class _WebListsScreenState extends State<WebListsScreen> {
                       height: 16,
                     ),
                     TextButton(
-                      child: Text(AppStrings.done,
+                      child: Text(AppLocalizations.of(context)!.done,
                           style: AppTheme.themeData.textTheme.labelMedium!
                               .copyWith(color: AppColors.mainAccent)),
                       onPressed: () {

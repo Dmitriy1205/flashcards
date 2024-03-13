@@ -8,6 +8,7 @@ import '../../../../../core/const/icons.dart';
 import '../../../../../core/const/strings.dart';
 import '../../../../../core/themes/theme.dart';
 import '../../../../blocs/auth/auth_bloc.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class WebProfileScreen extends StatefulWidget {
   const WebProfileScreen({super.key});
@@ -34,7 +35,7 @@ class _WebProfileScreenState extends State<WebProfileScreen> {
                   width: 64,
                 ),
                 Text(
-                  AppStrings.profile,
+                  AppLocalizations.of(context)!.profile,
                   style: AppTheme.themeData.textTheme.headlineLarge,
                 ),
               ],
@@ -150,12 +151,12 @@ class _WebProfileScreenState extends State<WebProfileScreen> {
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
                             Text(
-                              AppStrings.language,
+                              AppLocalizations.of(context)!.language,
                               style: AppTheme.themeData.textTheme.titleSmall!
                                   .copyWith(color: Colors.black),
                             ),
                             Text(
-                              AppStrings.english,
+                              AppLocalizations.of(context)!.english,
                               style: AppTheme.themeData.textTheme.titleSmall!
                                   .copyWith(color: AppColors.mainAccent),
                             ),
@@ -281,12 +282,12 @@ class _WebProfileScreenState extends State<WebProfileScreen> {
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
                           Text(
-                            AppStrings.language,
+                            AppLocalizations.of(context)!.language,
                             style: AppTheme.themeData.textTheme.titleSmall!
                                 .copyWith(color: Colors.black),
                           ),
                           Text(
-                            AppStrings.english,
+                            AppLocalizations.of(context)!.english,
                             style: AppTheme.themeData.textTheme.titleSmall!
                                 .copyWith(color: AppColors.mainAccent),
                           ),

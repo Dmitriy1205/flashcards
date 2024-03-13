@@ -10,6 +10,7 @@ import 'package:flashcards/presentation/widgets/create_edit_collection.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class Collections extends StatelessWidget {
   const Collections(
@@ -106,7 +107,7 @@ class Collections extends StatelessWidget {
                             .copyWith(fontSize: 18),
                       ),
                       subtitle: Text(
-                        '${collectionsList[i].cards?.length ?? 0} ${AppStrings.cards.toLowerCase()}',
+                        '${collectionsList[i].cards?.length ?? 0} ${AppLocalizations.of(context)!.cards.toLowerCase()}',
                         style:
                             AppTheme.themeData.textTheme.labelSmall!.copyWith(
                           color: Colors.black,

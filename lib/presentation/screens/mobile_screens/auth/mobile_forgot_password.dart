@@ -10,6 +10,7 @@ import '../../../blocs/forgot_password/forgot_password_bloc.dart';
 import '../../../widgets/app_elevated_button.dart';
 import '../../../widgets/app_text_field.dart';
 import '../../../widgets/loading_indicator.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class MobileForgotPasswordScreen extends StatefulWidget {
   const MobileForgotPasswordScreen({super.key});
@@ -63,7 +64,7 @@ class _MobileForgotPasswordScreenState
                   },
                   success: (_) {
                     Navigator.pop(context);
-                    AppToast.showSuccess(context, "Email sent, please check your inbox including spam");
+                    AppToast.showSuccess(context, AppStrings.emailSent);
                   },
                   orElse: () {});
             },
@@ -78,18 +79,18 @@ class _MobileForgotPasswordScreenState
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Text(
-                          AppStrings.forgotPass,
+                          AppLocalizations.of(context)!.forgotPass,
                           style: AppTheme.themeData.textTheme.headlineLarge,
                         ),
                         Text(
-                          AppStrings.forgotPassHeader,
+                          AppLocalizations.of(context)!.forgotPassHeader,
                           style: AppTheme.themeData.textTheme.headlineSmall,
                         ),
                         const SizedBox(
                           height: 30,
                         ),
                         Text(
-                          AppStrings.email,
+                          AppLocalizations.of(context)!.email,
                           style: AppTheme.themeData.textTheme.titleMedium,
                         ),
                         const SizedBox(
@@ -100,7 +101,7 @@ class _MobileForgotPasswordScreenState
                           child: AppTextField(
                             focusNode: _emailNode,
                             textController: _emailController,
-                            hintText: AppStrings.enterEmail,
+                            hintText: AppLocalizations.of(context)!.enterEmail,
                             validator: !_validateEmail ? (_) => null : Validator.validateEmail,
                           ),
                         ),
@@ -111,11 +112,11 @@ class _MobileForgotPasswordScreenState
                             widget: state.maybeMap(
                                 loading: (_)=> const SizedBox(width:20,height:20,child: LoadingIndicator(color: Colors.white,)),
                                 orElse: ()=>Text(
-                                  AppStrings.buttonSend,
+                                  AppLocalizations.of(context)!.buttonSend,
                                   style: AppTheme.themeData.textTheme.titleSmall!
                                       .copyWith(color: Colors.white),
                                 )),
-                            text: AppStrings.buttonSend, onPressed: () async{
+                            text: AppLocalizations.of(context)!.buttonSend, onPressed: () async{
                           if(!_validateEmail){
                             setState(() {
                               _emailWasFocused = true;

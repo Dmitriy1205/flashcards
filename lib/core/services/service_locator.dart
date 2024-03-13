@@ -14,6 +14,7 @@ import 'package:flashcards/domain/repositories/user_repo/user_repo_impl.dart';
 import 'package:flashcards/presentation/blocs/auth/auth_bloc.dart';
 import 'package:flashcards/presentation/blocs/cards/cards_bloc.dart';
 import 'package:flashcards/presentation/blocs/lists/lists_bloc.dart';
+import 'package:flashcards/presentation/blocs/locale/locale_cubit.dart';
 import 'package:flashcards/presentation/blocs/web_list/web_list_bloc.dart';
 import 'package:get_it/get_it.dart';
 import '../../data/remote/collection_pdf_service/collection_pdf_service_impl.dart';
@@ -69,6 +70,7 @@ Future<void> init() async {
   sl.registerFactory(() => ForgotPasswordBloc(auth: sl()));
   sl.registerFactory(() => GoogleSigninBloc(auth: sl()));
   sl.registerFactory(() => CollectionPdfRepoImpl(collectionPdfService: sl()));
+  sl.registerFactory(() => LocaleCubit());
 
   sl.registerLazySingleton(() => ListsBloc(collectionRepo: sl()));
   sl.registerLazySingleton(() => CardsBloc(cardRepo: sl()));

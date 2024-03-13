@@ -1,8 +1,10 @@
+import 'dart:io';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:excel/excel.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flashcards/core/const/firebase_collections.dart';
-import 'package:flashcards/core/const/strings.dart';
 import 'package:flashcards/data/remote/card_service/card_service_contract.dart';
 import 'package:flashcards/domain/entities/card_entity/card_entity.dart';
 import 'package:flashcards/domain/params/card_param/create_card_param.dart';
@@ -168,7 +170,7 @@ class CardServiceImpl extends CardService {
           .get()
           .then((value) => value.docs.forEach((element) {
                 collection
-                    .collection(AppStrings.cards.toLowerCase())
+                    .collection('cards')
                     .add(element.data());
               }));
     } on FirebaseException catch (e) {
@@ -216,6 +218,95 @@ class CardServiceImpl extends CardService {
       });
     } on FirebaseException catch (e) {
       throw Exception("Exception createCard $e");
+    }
+  }
+
+  @override
+  Future<void> importExcel({required String path,
+    required String collectionId,
+    required String collectionName}) async{
+    try{
+      final file = File(path);
+      final cards = splitContent(file);
+      for(int i = 0; i < cards.length; i++){
+        final doc = _fireStore
+            .collection(FirestoreCollections.users)
+            .doc(_firebaseAuth.currentUser!.uid)
+            .collection(FirestoreCollections.collections)
+            .doc(collectionId)
+            .collection(FirestoreCollections.cards)
+            .doc();
+        await doc
+            .set({
+          "id": doc.id,
+          "backImage": "",
+          "frontImage": "",
+          "collectionId": collectionId,
+          "collectionName": collectionName,
+          "front": [
+            {"insert": "${cards[i].$1}\n"}
+          ], "back": [
+            {"insert": "${cards[i].$2}\n"}
+          ], "createdAt": FieldValue.serverTimestamp()});
+      }
+    }catch(e){
+      throw const FormatException("Wrong data format");
+    }
+  }
+
+  List<(String,String)> splitContent(File file){
+    final format = file.path.split(".").last;
+    List<String> values = <String>[];
+    switch(format){
+      case "xlsx":
+        final excel = Excel.decodeBytes(file.readAsBytesSync());
+        for(var table in excel.tables.keys){
+          for(var row in excel.tables[table]!.rows){
+            for(var cell in row){
+              if(cell == null) break;
+              final value = cell.value;
+              switch(value){
+                case TextCellValue():
+                  values.add(value.value);
+                  break;
+                case IntCellValue():
+                  values.add(value.value.toString());
+                  break;
+                case DoubleCellValue():
+                  values.add(value.value.toString());
+                  break;
+                default:
+                  break;
+              }
+            }
+          }
+        }
+
+        if(values.length < 4) return [];
+        final dataStartIndex = values.indexWhere((e) => e.toLowerCase() == 'back') + 1;
+        values = values.sublist(dataStartIndex);
+        print(values.toString());
+        final cards = <(String,String)>[];
+        for(int i = 0; i < values.length; i += 2){
+          cards.add((values[i], values[i+1]));
+        }
+        return cards;
+      case "csv":
+        final lines = file.readAsLinesSync();
+        for(int i = 0; i < lines.length; i++){
+          final parts = lines[i].split(",").toList();
+          values.add(parts.first);
+          values.add(parts.last);
+        }
+        if(values.length < 4) return [];
+        final dataStartIndex = values.indexWhere((e) => e.toLowerCase() == 'back') + 1;
+        values = values.sublist(dataStartIndex);
+        final cards = <(String,String)>[];
+        for(int i = 0; i < values.length; i += 2){
+          cards.add((values[i], values[i+1]));
+        }
+        return cards;
+        default: return [];
     }
   }
 }

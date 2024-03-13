@@ -21,6 +21,7 @@ import 'package:go_router/go_router.dart';
 
 import '../../presentation/blocs/auth/auth_bloc.dart';
 import '../../presentation/screens/mobile_screens/auth/mobile_sign_in.dart';
+import '../../presentation/screens/mobile_screens/lists_screen/learning_mode/learn.dart';
 import '../../presentation/screens/web_screens/auth/web_sign_in.dart';
 import '../../presentation/screens/web_screens/auth/web_sign_up.dart';
 import '../../presentation/screens/web_screens/home/home.dart';
@@ -179,7 +180,6 @@ final GoRouter router = GoRouter(
       final collectionName = (state.extra as Map<String,dynamic>?)?["collectionName"];
       return AttachPdf(collectionId: collectionId, collectionName: collectionName,);
     }),
-    GoRoute(path: '/learn', builder: (context, state) => const Learn()),
     GoRoute(path: '/lists', builder: (context, state) => const Lists()),
     GoRoute(path: '/profile', builder: (context, state) => const Profile()),
     GoRoute(

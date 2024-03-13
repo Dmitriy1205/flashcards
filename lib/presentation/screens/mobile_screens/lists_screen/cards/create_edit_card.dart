@@ -19,6 +19,7 @@ import 'package:flutter_keyboard_visibility/flutter_keyboard_visibility.dart';
 import 'package:flutter_quill/flutter_quill.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class CreateEditCard extends StatefulWidget {
   CreateEditCard({Key? key, this.cardEntity, required this.collectionId})
@@ -173,7 +174,7 @@ class CreateEditCardState extends State<CreateEditCard> {
         listener: (context, state) {
           state.maybeMap(
               loaded: (state) {
-                AppToast.showSuccess(context, "Success");
+                AppToast.showSuccess(context, AppStrings.success);
                 if (widget.cardEntity != null) {
                   router.pushReplacement(
                     '/view_card_mobile',
@@ -236,9 +237,9 @@ class CreateEditCardState extends State<CreateEditCard> {
                       ),
                       Text(
                         widget.cardEntity == null
-                            ? '${AppStrings.create} ${AppStrings.card
+                            ? '${AppLocalizations.of(context)!.create} ${AppLocalizations.of(context)!.card
                             .toLowerCase()}'
-                            : '${AppStrings.edit} ${AppStrings.card
+                            : '${AppLocalizations.of(context)!.edit} ${AppLocalizations.of(context)!.card
                             .toLowerCase()}',
                         style: AppTheme.themeData.textTheme.headlineLarge,
                       ),
@@ -271,11 +272,11 @@ class CreateEditCardState extends State<CreateEditCard> {
                           }
                         } else {
                           AppToast.showError(
-                              context, AppStrings.errorEmptyCard);
+                              context, AppLocalizations.of(context)!.errorEmptyCard);
                         }
                       },
                       child: Text(
-                        AppStrings.done,
+                        AppLocalizations.of(context)!.done,
                         style:
                         AppTheme.themeData.textTheme.titleLarge!.copyWith(
                           fontSize: 20,
@@ -328,7 +329,6 @@ class CreateEditCardState extends State<CreateEditCard> {
                             showFontSize: false,
                             showHeaderStyle: false,
                             showCodeBlock: false,
-                            showColorButton: false,
                             showDirection: false,
                             showFontFamily: false,
                             showIndent: false,
@@ -382,7 +382,6 @@ class CreateEditCardState extends State<CreateEditCard> {
                             showFontSize: false,
                             showHeaderStyle: false,
                             showCodeBlock: false,
-                            showColorButton: false,
                             showDirection: false,
                             showFontFamily: false,
                             showIndent: false,
@@ -421,7 +420,7 @@ class CreateEditCardState extends State<CreateEditCard> {
           Padding(
             padding: const EdgeInsets.only(bottom: 12, left: 12),
             child: Text(
-              AppStrings.front,
+              AppLocalizations.of(context)!.front,
               style: AppTheme.themeData.textTheme.titleMedium,
             ),
           ),
@@ -564,7 +563,7 @@ class CreateEditCardState extends State<CreateEditCard> {
           Padding(
             padding: const EdgeInsets.only(bottom: 12, left: 12),
             child: Text(
-              AppStrings.back,
+              AppLocalizations.of(context)!.back,
               style: AppTheme.themeData.textTheme.titleMedium,
             ),
           ),

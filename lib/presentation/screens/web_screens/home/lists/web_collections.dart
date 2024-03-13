@@ -10,6 +10,7 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import '../../../../../core/const/icons.dart';
 import '../../../../../core/router/router.dart';
 import '../../../../widgets/app_icon_button.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class WebCollections extends StatefulWidget {
   const WebCollections({
@@ -151,7 +152,7 @@ class _WebCollectionsState extends State<WebCollections> {
                                       fontWeight: FontWeight.w600),
                             ),
                             subtitle: Text(
-                              '${context.read<WebListBloc>().state.collectionsList![i].cards?.length ?? 0} ${AppStrings.cards.toLowerCase()}',
+                              '${context.read<WebListBloc>().state.collectionsList![i].cards?.length ?? 0} ${AppLocalizations.of(context)!.cards.toLowerCase()}',
                               style: AppTheme.themeData.textTheme.labelSmall!
                                   .copyWith(color: Colors.black, fontSize: 14),
                             ),
@@ -242,7 +243,7 @@ class _WebCollectionsState extends State<WebCollections> {
                         ),
                       ],
                     ),
-                    Text(AppStrings.giveName,
+                    Text(AppLocalizations.of(context)!.giveName,
                         style: AppTheme.themeData.textTheme.labelSmall!
                             .copyWith(color: Colors.black)),
                     const SizedBox(
@@ -282,7 +283,7 @@ class _WebCollectionsState extends State<WebCollections> {
                       height: 16,
                     ),
                     TextButton(
-                      child: Text(AppStrings.done,
+                      child: Text(AppLocalizations.of(context)!.done,
                           style: AppTheme.themeData.textTheme.labelMedium!
                               .copyWith(color: AppColors.mainAccent)),
                       onPressed: () {

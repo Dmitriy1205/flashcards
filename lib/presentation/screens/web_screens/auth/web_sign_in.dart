@@ -19,6 +19,7 @@ import '../../../../core/services/service_locator.dart';
 import '../../../../core/themes/theme.dart';
 import '../../../blocs/sign_in/signin_bloc.dart';
 import '../../../widgets/app_elevated_button.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class WebSignInScreen extends StatefulWidget {
   const WebSignInScreen({super.key});
@@ -105,12 +106,12 @@ class _WebSignInScreenState extends State<WebSignInScreen> {
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
                                 Text(
-                                  AppStrings.login,
+                                  AppLocalizations.of(context)!.login,
                                   style:
                                       AppTheme.themeData.textTheme.headlineLarge,
                                 ),
                                 Text(
-                                  AppStrings.loginHead,
+                                  AppLocalizations.of(context)!.loginHead,
                                   style:
                                       AppTheme.themeData.textTheme.headlineSmall,
                                 ),
@@ -118,7 +119,7 @@ class _WebSignInScreenState extends State<WebSignInScreen> {
                                   height: 30,
                                 ),
                                 Text(
-                                  AppStrings.email,
+                                  AppLocalizations.of(context)!.email,
                                   style: AppTheme.themeData.textTheme.titleMedium,
                                 ),
                                 const SizedBox(
@@ -127,14 +128,14 @@ class _WebSignInScreenState extends State<WebSignInScreen> {
                                 AppTextField(
                                   focusNode: _emailNode,
                                   textController: _emailController,
-                                  hintText: AppStrings.enterEmail,
+                                  hintText: AppLocalizations.of(context)!.enterEmail,
                                   validator: !_validateEmail ? (_) => null : Validator.validateEmail,
                                 ),
                                 const SizedBox(
                                   height: 14,
                                 ),
                                 Text(
-                                  AppStrings.password,
+                                  AppLocalizations.of(context)!.password,
                                   style: AppTheme.themeData.textTheme.titleMedium,
                                 ),
                                 const SizedBox(
@@ -144,7 +145,7 @@ class _WebSignInScreenState extends State<WebSignInScreen> {
                                   focusNode: _passwordNode,
                                   obscureText: isPassObscure,
                                   textController: _passwordController,
-                                  hintText: AppStrings.enterPass,
+                                  hintText: AppLocalizations.of(context)!.enterPass,
                                   suffixIcon: IconButton(
                                     onPressed: () {
                                       setState(() {
@@ -171,7 +172,7 @@ class _WebSignInScreenState extends State<WebSignInScreen> {
                                         router.push('/forgot_pass');
                                       },
                                       child: Text(
-                                        '${AppStrings.forgotPass}?',
+                                        '${AppLocalizations.of(context)!.forgotPass}?',
                                         style: AppTheme
                                             .themeData.textTheme.titleSmall,
                                       ),
@@ -204,13 +205,13 @@ class _WebSignInScreenState extends State<WebSignInScreen> {
                                                 color: Colors.white,
                                               )),
                                           orElse: () => Text(
-                                                AppStrings.buttonLogin,
+                                                AppLocalizations.of(context)!.buttonLogin,
                                                 style: AppTheme.themeData
                                                     .textTheme.titleSmall!
                                                     .copyWith(
                                                         color: Colors.white),
                                               )),
-                                      text: AppStrings.buttonLogin,
+                                      text: AppLocalizations.of(context)!.buttonLogin,
                                       onPressed: () {
                                         if (!_formKey.currentState!.validate()) {
                                           return;
@@ -240,12 +241,12 @@ class _WebSignInScreenState extends State<WebSignInScreen> {
                                             style: AppTheme
                                                 .themeData.textTheme.titleSmall,
                                             children: [
-                                              const TextSpan(
+                                              TextSpan(
                                                 text:
-                                                    '${AppStrings.dontHaveAccount} ',
+                                                    '${AppLocalizations.of(context)!.dontHaveAccount} ',
                                               ),
                                               TextSpan(
-                                                  text: AppStrings.signUp,
+                                                  text: AppLocalizations.of(context)!.signUp,
                                                   style: const TextStyle(
                                                     color: AppColors.mainAccent,
                                                     fontWeight: FontWeight.w600,
@@ -277,7 +278,7 @@ class _WebSignInScreenState extends State<WebSignInScreen> {
                                       padding: const EdgeInsets.symmetric(
                                           horizontal: 10),
                                       child: Text(
-                                        AppStrings.orWith,
+                                        AppLocalizations.of(context)!.orWith,
                                         style: AppTheme
                                             .themeData.textTheme.titleSmall,
                                       ),
@@ -335,18 +336,18 @@ class _WebSignInScreenState extends State<WebSignInScreen> {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Text(
-                          AppStrings.login,
+                          AppLocalizations.of(context)!.login,
                           style: AppTheme.themeData.textTheme.headlineLarge,
                         ),
                         Text(
-                          AppStrings.loginHead,
+                          AppLocalizations.of(context)!.loginHead,
                           style: AppTheme.themeData.textTheme.headlineSmall,
                         ),
                         const SizedBox(
                           height: 30,
                         ),
                         Text(
-                          AppStrings.email,
+                          AppLocalizations.of(context)!.email,
                           style: AppTheme.themeData.textTheme.titleMedium,
                         ),
                         const SizedBox(
@@ -355,14 +356,14 @@ class _WebSignInScreenState extends State<WebSignInScreen> {
                         AppTextField(
                           focusNode: _emailNode,
                           textController: _emailController,
-                          hintText: AppStrings.enterEmail,
+                          hintText: AppLocalizations.of(context)!.enterEmail,
                           validator: Validator.validateEmail,
                         ),
                         const SizedBox(
                           height: 14,
                         ),
                         Text(
-                          AppStrings.password,
+                          AppLocalizations.of(context)!.password,
                           style: AppTheme.themeData.textTheme.titleMedium,
                         ),
                         const SizedBox(
@@ -372,7 +373,7 @@ class _WebSignInScreenState extends State<WebSignInScreen> {
                           focusNode: _passwordNode,
                           obscureText: isPassObscure,
                           textController: _passwordController,
-                          hintText: AppStrings.enterPass,
+                          hintText: AppLocalizations.of(context)!.enterPass,
                           suffixIcon: IconButton(
                             onPressed: () {
                               setState(() {
@@ -399,7 +400,7 @@ class _WebSignInScreenState extends State<WebSignInScreen> {
                                 router.push('/forgot_pass');
                               },
                               child: Text(
-                                '${AppStrings.forgotPass}?',
+                                '${AppLocalizations.of(context)!.forgotPass}?',
                                 style: AppTheme
                                     .themeData.textTheme.titleSmall,
                               ),
@@ -432,13 +433,13 @@ class _WebSignInScreenState extends State<WebSignInScreen> {
                                         color: Colors.white,
                                       )),
                                   orElse: () => Text(
-                                    AppStrings.buttonLogin,
+                                    AppLocalizations.of(context)!.buttonLogin,
                                     style: AppTheme.themeData
                                         .textTheme.titleSmall!
                                         .copyWith(
                                         color: Colors.white),
                                   )),
-                              text: AppStrings.buttonLogin,
+                              text: AppLocalizations.of(context)!.buttonLogin,
                               onPressed: () async{
                                 if(!_validateEmail){
                                   setState(() {
@@ -474,11 +475,11 @@ class _WebSignInScreenState extends State<WebSignInScreen> {
                                     style: AppTheme.themeData.textTheme
                                         .titleSmall,
                                     children: [
-                                      const TextSpan(
-                                        text: '${AppStrings.dontHaveAccount} ',
+                                      TextSpan(
+                                        text: '${AppLocalizations.of(context)!.dontHaveAccount} ',
                                       ),
                                       TextSpan(
-                                          text: AppStrings.signUp,
+                                          text: AppLocalizations.of(context)!.signUp,
                                           style: const TextStyle(
                                             color: AppColors.mainAccent,
                                             fontWeight: FontWeight.w600,
@@ -509,7 +510,7 @@ class _WebSignInScreenState extends State<WebSignInScreen> {
                               padding: const EdgeInsets.symmetric(
                                   horizontal: 10),
                               child: Text(
-                                AppStrings.orWith,
+                                AppLocalizations.of(context)!.orWith,
                                 style: AppTheme.themeData.textTheme.titleSmall,
                               ),
                             ),

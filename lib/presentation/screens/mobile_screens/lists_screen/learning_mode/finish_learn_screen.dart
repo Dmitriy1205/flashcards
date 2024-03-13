@@ -3,6 +3,7 @@ import 'package:adaptive_action_sheet/adaptive_action_sheet.dart';
 import 'package:flashcards/core/const/colors.dart';
 import 'package:flashcards/core/const/icons.dart';
 import 'package:flashcards/core/const/images.dart';
+import 'package:flashcards/core/const/strings.dart';
 import 'package:flashcards/core/router/router.dart';
 import 'package:flashcards/core/themes/theme.dart';
 import 'package:flashcards/domain/entities/card_entity/card_entity.dart';
@@ -63,7 +64,7 @@ class _FinishLearningScreenState extends State<FinishLearningScreen> {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Text(
-              "You're doing a great \n job! Keep up the \n good work!",
+              AppStrings.greatJob,
               style: AppTheme.themeData.textTheme.titleMedium!
                   .copyWith(fontSize: 22),
             ),

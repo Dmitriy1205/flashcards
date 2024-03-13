@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import '../../../../../core/const/colors.dart';
 import '../../../../../core/const/strings.dart';
 import '../../../../../core/themes/theme.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class WebLearnScreen extends StatelessWidget {
   const WebLearnScreen({super.key});
@@ -22,7 +23,7 @@ class WebLearnScreen extends StatelessWidget {
                   width: 64,
                 ),
                 Text(
-                  AppStrings.learn,
+                  AppLocalizations.of(context)!.learn,
                   style: AppTheme.themeData.textTheme.headlineLarge,
                 ),
               ],

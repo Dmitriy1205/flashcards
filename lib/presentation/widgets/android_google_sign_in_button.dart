@@ -9,6 +9,7 @@ import '../../core/const/strings.dart';
 import '../../core/services/service_locator.dart';
 import '../../core/themes/theme.dart';
 import '../blocs/google_sign_in/google_signin_bloc.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class AndroidGoogleSignInButton extends StatelessWidget {
   AndroidGoogleSignInButton({Key? key}) : super(key: key);
@@ -59,7 +60,7 @@ class AndroidGoogleSignInButton extends StatelessWidget {
                       ),
 
                       Text(
-                        AppStrings.google,
+                        AppLocalizations.of(context)!.google,
                         style: AppTheme.themeData.textTheme.labelMedium!
                             .copyWith(color: Colors.black),
                       ),
@@ -82,7 +83,7 @@ class AndroidGoogleSignInButton extends StatelessWidget {
                       SvgPicture.asset(AppIcons.google),
 
                       Text(
-                        AppStrings.google,
+                        AppLocalizations.of(context)!.google,
                         style: AppTheme.themeData.textTheme.labelMedium,
                       ),
                       const SizedBox(

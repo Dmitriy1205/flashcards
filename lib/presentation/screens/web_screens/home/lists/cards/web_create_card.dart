@@ -21,6 +21,7 @@ import '../../../../../../domain/params/card_param/create_card_param.dart';
 import '../../../../../../domain/params/card_param/edit_card_param.dart';
 import '../../../../../blocs/cards/cards_bloc.dart';
 import '../../../../mobile_screens/lists_screen/cards/view_flash_card.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class WebCreateCard extends StatefulWidget {
   const WebCreateCard({Key? key, this.card, required this.collectionId})
@@ -137,8 +138,8 @@ class _WebCreateCardState extends State<WebCreateCard> {
               ),
               Text(
                 widget.card == null
-                    ? '${AppStrings.create} ${AppStrings.card.toLowerCase()}'
-                    : '${AppStrings.edit} ${AppStrings.card.toLowerCase()}',
+                    ? '${AppLocalizations.of(context)!.create} ${AppLocalizations.of(context)!.card.toLowerCase()}'
+                    : '${AppLocalizations.of(context)!.edit} ${AppLocalizations.of(context)!.card.toLowerCase()}',
                 style: AppTheme.themeData.textTheme.headlineLarge,
               ),
             ],
@@ -178,7 +179,7 @@ class _WebCreateCardState extends State<WebCreateCard> {
                               width: 86,
                               child: AppElevatedButton(
                                 borderRadius: 36,
-                                text: AppStrings.done,
+                                text: AppLocalizations.of(context)!.done,
                                 onPressed: () {
                                   if (frontText.isNotEmpty &&
                                       backText.isNotEmpty) {
@@ -204,7 +205,7 @@ class _WebCreateCardState extends State<WebCreateCard> {
                                               collectionId: widget.collectionId));
                                     }
                                   }else{
-                                    AppToast.showError(context, AppStrings.errorEmptyCard);
+                                    AppToast.showError(context, AppLocalizations.of(context)!.errorEmptyCard);
                                   }
                                 },
                               ))),
@@ -226,7 +227,7 @@ class _WebCreateCardState extends State<WebCreateCard> {
         Padding(
           padding: const EdgeInsets.only(left: 35.0),
           child: Text(
-            AppStrings.back,
+            AppLocalizations.of(context)!.back,
             style: AppTheme.themeData.textTheme.titleMedium,
           ),
         ),
@@ -396,7 +397,7 @@ class _WebCreateCardState extends State<WebCreateCard> {
         Padding(
           padding: const EdgeInsets.only(left: 35.0),
           child: Text(
-            AppStrings.front,
+            AppLocalizations.of(context)!.front,
             style: AppTheme.themeData.textTheme.titleMedium,
           ),
         ),

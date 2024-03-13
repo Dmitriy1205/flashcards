@@ -16,6 +16,7 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import '../../../../../../core/const/icons.dart';
 import '../../../../../../core/router/router.dart';
 import '../../../../../widgets/app_round_button.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class WebCards extends StatefulWidget {
   const WebCards(
@@ -71,7 +72,7 @@ class _WebCardsState extends State<WebCards> {
                           width: 19,
                         ),
                         Text(
-                          AppStrings.cards,
+                          AppLocalizations.of(context)!.cards,
                           style: AppTheme.themeData.textTheme.headlineLarge,
                         ),
                       ],
@@ -485,7 +486,7 @@ class _WebCardsState extends State<WebCards> {
                         width: 19,
                       ),
                       Text(
-                        AppStrings.cards,
+                        AppLocalizations.of(context)!.cards,
                         style: AppTheme.themeData.textTheme.headlineLarge,
                       ),
                     ],

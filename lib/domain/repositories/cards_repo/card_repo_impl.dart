@@ -48,4 +48,11 @@ class CardRepoImpl extends CardRepo {
   Future<void> swipeCard({required CardEntity cardEntity}) async {
      await cardService.swipeCard(cardEntity: cardEntity);
   }
+
+  @override
+  Future<void> importExcel({required String path,
+    required String collectionId,
+    required String collectionName}) async{
+    await cardService.importExcel(path: path, collectionName: collectionName, collectionId: collectionId);
+  }
 }

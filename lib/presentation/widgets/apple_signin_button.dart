@@ -6,6 +6,7 @@ import '../../core/const/strings.dart';
 import '../../core/services/service_locator.dart';
 import '../../core/themes/theme.dart';
 import '../blocs/apple_sign_in/apple_signin_bloc.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class AppleSignInButton extends StatelessWidget {
   AppleSignInButton({Key? key}) : super(key: key);
@@ -59,7 +60,7 @@ class AppleSignInButton extends StatelessWidget {
                           color: Colors.black,
                         ),
                         Text(
-                          AppStrings.apple,
+                          AppLocalizations.of(context)!.apple,
                           style: AppTheme.themeData.textTheme.labelMedium,
                         ),
                         const SizedBox(

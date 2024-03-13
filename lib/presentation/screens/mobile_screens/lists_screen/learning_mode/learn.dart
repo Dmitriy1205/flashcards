@@ -9,6 +9,7 @@ import 'package:flashcards/presentation/blocs/lists/lists_bloc.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import '../collections.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class Learn extends StatefulWidget {
   const Learn({Key? key, required this.scaffoldKey}) : super(key: key);
@@ -30,7 +31,7 @@ class _LearnState extends State<Learn> {
       listener: (context, state) {
         state.maybeMap(
           operationSucceeded: (_) {
-            AppToast.showSuccess(context, "Success");
+            AppToast.showSuccess(context, AppStrings.success);
           },
           viewCards: (selectedCollection) {
             showBottomMenu(
@@ -62,8 +63,8 @@ class _LearnState extends State<Learn> {
                   isEditMode: collections.isEditMode);
             },
             orElse: () {
-              return const Center(
-                child: Text(AppStrings.noCollection),
+              return Center(
+                child: Text(AppLocalizations.of(context)!.noCollection),
               );
             },
           ),
