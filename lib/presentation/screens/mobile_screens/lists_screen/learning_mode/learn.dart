@@ -31,7 +31,7 @@ class _LearnState extends State<Learn> {
       listener: (context, state) {
         state.maybeMap(
           operationSucceeded: (_) {
-            AppToast.showSuccess(context, AppStrings.success);
+            AppToast.showSuccess(context, AppLocalizations.of(context)!.success);
           },
           viewCards: (selectedCollection) {
             showBottomMenu(
@@ -93,7 +93,7 @@ class _LearnState extends State<Learn> {
       androidBorderRadius: 30,
       actions: <BottomSheetAction>[
         BottomSheetAction(
-          title: Text('Learn all ${cards.length}',
+          title: Text('${AppLocalizations.of(context)!.learnAll} ${cards.length}',
               style: AppTheme.themeData.textTheme.titleMedium!
                   .copyWith(fontSize: 16, fontWeight: FontWeight.w600)),
           onPressed: (context) {
@@ -105,7 +105,7 @@ class _LearnState extends State<Learn> {
           },
         ),
         BottomSheetAction(
-            title: Text('Only unknown ${learningCardsList.length}',
+            title: Text('${AppLocalizations.of(context)!.onlyUnknown} ${learningCardsList.length}',
                 style: AppTheme.themeData.textTheme.titleMedium!
                     .copyWith(fontSize: 16, fontWeight: FontWeight.w600)),
             onPressed: (context) {
@@ -119,7 +119,7 @@ class _LearnState extends State<Learn> {
               );
             }),
         BottomSheetAction(
-            title: Text('Only known ${knownCardsList.length}',
+            title: Text('${AppLocalizations.of(context)!.onlyKnown} ${knownCardsList.length}',
                 style: AppTheme.themeData.textTheme.titleMedium!
                     .copyWith(fontSize: 16, fontWeight: FontWeight.w600)),
             onPressed: (context) {
@@ -134,7 +134,7 @@ class _LearnState extends State<Learn> {
             }),
       ],
       cancelAction: CancelAction(
-          title: Text('Cancel',
+          title: Text(AppLocalizations.of(context)!.cancel,
               style: AppTheme.themeData.textTheme.titleMedium!.copyWith(
                   fontSize: 16,
                   fontWeight: FontWeight

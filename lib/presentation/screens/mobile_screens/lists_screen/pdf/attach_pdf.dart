@@ -61,7 +61,7 @@ class _AttachPdfState extends State<AttachPdf> {
       bloc: _collectionPdfBloc,
       listener: (context,state){
         if(state.isSaved){
-          AppToast.showSuccess(context, AppStrings.saved);
+          AppToast.showSuccess(context, AppLocalizations.of(context)!.saved);
         }
       },
       builder: (context, state) => Scaffold(
@@ -112,7 +112,7 @@ class _AttachPdfState extends State<AttachPdf> {
                   _selectAFile(),
                   const Spacer(),
                   AppElevatedButton(
-                      text: AppStrings.save,
+                      text: AppLocalizations.of(context)!.save,
                       color: state.isEditing ? AppColors.mainAccent : AppColors.greyLight,
                       onPressed: () {
                         if(!state.isEditing) return;
@@ -133,8 +133,8 @@ class _AttachPdfState extends State<AttachPdf> {
   Widget _noFileAttached() {
     return Column(
       children: [
-        const Text(
-          AppStrings.noFileAttachedToCollection,
+        Text(
+          AppLocalizations.of(context)!.noFileAttachedToCollection,
           style: TextStyle(
               color: AppColors.mainAccent,
               fontSize: 22,
@@ -174,7 +174,7 @@ class _AttachPdfState extends State<AttachPdf> {
                       if(isDownloaded){
                         await openFile(extractFilename(e));
                       }else{
-                        AppToast.showSuccess(context, AppStrings.downloadingStarted);
+                        AppToast.showSuccess(context, AppLocalizations.of(context)!.downloadingStarted);
                         _collectionPdfBloc.add(CollectionPdfEvent.downloadPdf(path: e));
                       }
                     }));
@@ -283,9 +283,9 @@ class _AttachPdfState extends State<AttachPdf> {
                           size: 30,
                         )),
                   ),
-                  const Center(
+                  Center(
                     child: Text(
-                      AppStrings.selectFile,
+                      AppLocalizations.of(context)!.selectFile,
                       style: TextStyle(
                           color: AppColors.borderGrey,
                           fontSize: 20,
@@ -300,8 +300,8 @@ class _AttachPdfState extends State<AttachPdf> {
         const SizedBox(
           height: 10,
         ),
-        const Text(
-          AppStrings.attachPdfVersion,
+        Text(
+          AppLocalizations.of(context)!.attachPdfVersion,
           style: TextStyle(
               fontWeight: FontWeight.w600,
               fontSize: 12,

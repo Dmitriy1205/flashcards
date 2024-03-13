@@ -249,7 +249,7 @@ class _CardsState extends State<Cards> {
             listener: (context, state) async {
               state.maybeMap(
                   successfullyImported: (_){
-                    AppToast.showSuccess(context, AppStrings.successfullyImported);
+                    AppToast.showSuccess(context, AppLocalizations.of(context)!.successfullyImported);
                   },
                   orElse: () {});
             },
@@ -276,7 +276,7 @@ class _CardsState extends State<Cards> {
                                         fontSize: 18, fontWeight: FontWeight.w600),
                               ),
                               Text(
-                                '${data.cardsList!.length} cards',
+                                '${data.cardsList!.length} ${AppLocalizations.of(context)!.cards.toLowerCase()}',
                                 style: AppTheme.themeData.textTheme.labelSmall!
                                     .copyWith(
                                   color: Colors.black,
@@ -429,7 +429,7 @@ class _CardsState extends State<Cards> {
                       child: InkWell(
                           borderRadius: BorderRadius.circular(32),
                           onTap: () async{
-                            final confirmed = await confirmOperation(context, title: AppStrings.confirmDeleting, message: AppStrings.deleteSelectedCards, action: AppStrings.delete, cancel: AppStrings.cancel);
+                            final confirmed = await confirmOperation(context, title: AppLocalizations.of(context)!.confirmDeleting, message: AppLocalizations.of(context)!.deleteSelectedCards, action: AppLocalizations.of(context)!.delete, cancel: AppLocalizations.of(context)!.cancel);
                             if(!confirmed) return;
                             context.read<CardsBloc>().add(
                                 CardsEvent.deleteSelectedCards(

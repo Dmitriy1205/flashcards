@@ -1,39 +1,44 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class Validator {
-  static String? validateEmail(String? value) {
-    if (value == null) return 'Email cannot be empty';
+  final BuildContext context;
+  const Validator(this.context);
 
-    if (value.isEmpty) return 'Email cannot be empty';
+  String? validateEmail(String? value) {
+    if (value == null) return AppLocalizations.of(context)!.email_cannot_be_empty;
+
+    if (value.isEmpty) return AppLocalizations.of(context)!.email_cannot_be_empty;
 
     bool emailValid = RegExp(
       r"^[a-zA-Z0-9.a-zA-Z0-9.!#$%&'*+-/=?^_`{|}~]+@[a-zA-Z0-9]+\.[a-zA-Z]+",
     ).hasMatch(value);
 
-    return !emailValid ? 'Enter a valid email address' : null;
+    return !emailValid ? AppLocalizations.of(context)!.enter_valid_email : null;
   }
 
-  static String? validatePassword(String? value){
-    if(value == null || value.isEmpty) return "Enter your password";
+  String? validatePassword(String? value){
+    if(value == null || value.isEmpty) return AppLocalizations.of(context)!.enter_password;
 
     String error = "";
     if(value.length < 8){
-      error += "● Password length must be at least 8 characters\n";
+      error += "● ${AppLocalizations.of(context)!.password_length_greater_than_8}\n";
     }
 
     if (!value.contains(RegExp(r'[A-Z]'))) {
-      error += "● At least one uppercase letter\n";
+      error += "● ${AppLocalizations.of(context)!.at_least_one_uppercase}\n";
     }
 
     if (!value.contains(RegExp(r'[0-9]'))) {
-      error += "● At least one digit\n";
+      error += "● ${AppLocalizations.of(context)!.at_least_one_digit}\n";
     }
 
     return error.isEmpty ? null : error;
   }
 
-  static String? validatePasswordEmpty(String? value) {
-    if(value == null || value.isEmpty) return "Enter your password";
+  String? validatePasswordEmpty(String? value) {
+    if(value == null || value.isEmpty) return AppLocalizations.of(context)!.enter_password;
     return null;
   }
 }

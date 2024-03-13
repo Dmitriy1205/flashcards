@@ -72,7 +72,7 @@ class _MobileSignInScreenState extends State<MobileSignInScreen> {
           listener: (context, state){
             state.maybeMap(
                 userNotVerified: (_){
-                  AppToast.showError(context, AppStrings.confirmEmailAddress);
+                  AppToast.showError(context, AppLocalizations.of(context)!.confirmEmailAddress);
                 },
                 orElse: (){});
           },
@@ -81,7 +81,7 @@ class _MobileSignInScreenState extends State<MobileSignInScreen> {
               state.maybeMap(
                   success: (_)=>context.read<AuthBloc>().add(AuthEvent.initUser(user: context.read<AuthBloc>().state.user)),
                   error: (e) {
-                    AppToast.showError(context, e.error);
+                    AppToast.showError(context, e.error.localizedMessageOrDefault(context));
                   },
                   orElse: () {});
             },
@@ -122,7 +122,7 @@ class _MobileSignInScreenState extends State<MobileSignInScreen> {
                             focusNode: _emailNode,
                             textController: _emailController,
                             hintText: AppLocalizations.of(context)!.enterEmail,
-                            validator: !_validateEmail ? (_) => null : Validator.validateEmail,
+                            validator: !_validateEmail ? (_) => null : Validator(context).validateEmail,
                           ),
                           const SizedBox(
                             height: 14,
@@ -149,7 +149,7 @@ class _MobileSignInScreenState extends State<MobileSignInScreen> {
                                   ? SvgPicture.asset(AppIcons.closedEye)
                                   : SvgPicture.asset(AppIcons.openEye),
                             ),
-                            validator: Validator.validatePasswordEmpty,
+                            validator: Validator(context).validatePasswordEmpty,
                           ),
                           const SizedBox(
                             height: 7,

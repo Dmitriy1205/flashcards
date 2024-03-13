@@ -28,7 +28,7 @@ class CollectionPdfServiceImpl implements CollectionPdfService {
           .map((e) => CollectionPdfEntity.fromJson(e.data()))
           .toList();
     }catch(e){
-      throw BadRequestException(message: "Failed to find pdf files");
+      throw LocalizedException(message: "Failed to find pdf files", localizationKey: 'failed-find-pdfs');
     }
   }
 
@@ -43,7 +43,7 @@ class CollectionPdfServiceImpl implements CollectionPdfService {
       //Upload pdfs
       bool fileSizeExceeded = filePaths.map((e) => File(e)).any((e) => e.lengthSync() > _maxBytes);
       if(fileSizeExceeded){
-        throw BadRequestException(message: "File is too big, maximum 5 mb");
+        throw LocalizedException(message: "File is too big, maximum 5 mb", localizationKey: 'max-file-size-5mb');
       }
       for (var path in filePaths) {
         await _storage.ref("$storagePath/${extractFilename(path)}").putFile(
@@ -76,7 +76,7 @@ class CollectionPdfServiceImpl implements CollectionPdfService {
             docId: doc.id, path: "$storagePath/${extractFilename(path)}"));
       }
     }catch(e){
-      throw BadRequestException(message: "Failed to upload pdf");
+      throw LocalizedException(message: "Failed to upload pdf", localizationKey: 'failed-upload-pdf');
     }
   }
 

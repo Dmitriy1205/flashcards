@@ -60,7 +60,7 @@ class _WebForgotPasswordScreenState extends State<WebForgotPasswordScreen> {
           listener: (context, state) {
             state.maybeMap(
                 error: (e) {
-                  AppToast.showError(context, e.error);
+                  AppToast.showError(context, e.error.localizedMessageOrDefault(context));
                 },
                 success: (_) {
                   router.pop();
@@ -125,7 +125,7 @@ class _WebForgotPasswordScreenState extends State<WebForgotPasswordScreen> {
                                 focusNode: _emailNode,
                                 textController: _emailController,
                                 hintText: AppLocalizations.of(context)!.enterEmail,
-                                validator: !_validateEmail ? (_) => null : Validator.validateEmail,
+                                validator: !_validateEmail ? (_) => null : Validator(context).validateEmail,
                               ),
                             ),
                             const SizedBox(
@@ -241,7 +241,7 @@ class _WebForgotPasswordScreenState extends State<WebForgotPasswordScreen> {
                                     focusNode: _emailNode,
                                     textController: _emailController,
                                     hintText: AppLocalizations.of(context)!.enterEmail,
-                                    validator: Validator.validateEmail,
+                                    validator: Validator(context).validateEmail,
                                   ),
                                 ),
                                 const SizedBox(

@@ -22,7 +22,7 @@ class AndroidGoogleSignInButton extends StatelessWidget {
       listener: (context, state) {
         state.maybeMap(
             error: (e) {
-              AppToast.showError(context, e.error);
+              AppToast.showError(context, e.error.localizedMessageOrDefault(context));
             },
             orElse: () {});
       },

@@ -995,7 +995,7 @@ mixin _$CollectionPdfState {
         loaded,
     required TResult Function(List<EditCollectionPdfEntity> pdfs) editing,
     required TResult Function(List<CollectionPdfEntity> pdfs) saved,
-    required TResult Function(String message) error,
+    required TResult Function(LocalizedException message) error,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
@@ -1006,7 +1006,7 @@ mixin _$CollectionPdfState {
         loaded,
     TResult? Function(List<EditCollectionPdfEntity> pdfs)? editing,
     TResult? Function(List<CollectionPdfEntity> pdfs)? saved,
-    TResult? Function(String message)? error,
+    TResult? Function(LocalizedException message)? error,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
@@ -1017,7 +1017,7 @@ mixin _$CollectionPdfState {
         loaded,
     TResult Function(List<EditCollectionPdfEntity> pdfs)? editing,
     TResult Function(List<CollectionPdfEntity> pdfs)? saved,
-    TResult Function(String message)? error,
+    TResult Function(LocalizedException message)? error,
     required TResult orElse(),
   }) =>
       throw _privateConstructorUsedError;
@@ -1113,7 +1113,7 @@ class _$InitialStateImpl extends _InitialState {
         loaded,
     required TResult Function(List<EditCollectionPdfEntity> pdfs) editing,
     required TResult Function(List<CollectionPdfEntity> pdfs) saved,
-    required TResult Function(String message) error,
+    required TResult Function(LocalizedException message) error,
   }) {
     return initial();
   }
@@ -1127,7 +1127,7 @@ class _$InitialStateImpl extends _InitialState {
         loaded,
     TResult? Function(List<EditCollectionPdfEntity> pdfs)? editing,
     TResult? Function(List<CollectionPdfEntity> pdfs)? saved,
-    TResult? Function(String message)? error,
+    TResult? Function(LocalizedException message)? error,
   }) {
     return initial?.call();
   }
@@ -1141,7 +1141,7 @@ class _$InitialStateImpl extends _InitialState {
         loaded,
     TResult Function(List<EditCollectionPdfEntity> pdfs)? editing,
     TResult Function(List<CollectionPdfEntity> pdfs)? saved,
-    TResult Function(String message)? error,
+    TResult Function(LocalizedException message)? error,
     required TResult orElse(),
   }) {
     if (initial != null) {
@@ -1316,7 +1316,7 @@ class _$LoadedStateImpl extends _LoadedState {
         loaded,
     required TResult Function(List<EditCollectionPdfEntity> pdfs) editing,
     required TResult Function(List<CollectionPdfEntity> pdfs) saved,
-    required TResult Function(String message) error,
+    required TResult Function(LocalizedException message) error,
   }) {
     return loaded(pdfs, pathsDownloading, pathsDownloaded);
   }
@@ -1330,7 +1330,7 @@ class _$LoadedStateImpl extends _LoadedState {
         loaded,
     TResult? Function(List<EditCollectionPdfEntity> pdfs)? editing,
     TResult? Function(List<CollectionPdfEntity> pdfs)? saved,
-    TResult? Function(String message)? error,
+    TResult? Function(LocalizedException message)? error,
   }) {
     return loaded?.call(pdfs, pathsDownloading, pathsDownloaded);
   }
@@ -1344,7 +1344,7 @@ class _$LoadedStateImpl extends _LoadedState {
         loaded,
     TResult Function(List<EditCollectionPdfEntity> pdfs)? editing,
     TResult Function(List<CollectionPdfEntity> pdfs)? saved,
-    TResult Function(String message)? error,
+    TResult Function(LocalizedException message)? error,
     required TResult orElse(),
   }) {
     if (loaded != null) {
@@ -1487,7 +1487,7 @@ class _$EditingStateImpl extends _EditingState {
         loaded,
     required TResult Function(List<EditCollectionPdfEntity> pdfs) editing,
     required TResult Function(List<CollectionPdfEntity> pdfs) saved,
-    required TResult Function(String message) error,
+    required TResult Function(LocalizedException message) error,
   }) {
     return editing(pdfs);
   }
@@ -1501,7 +1501,7 @@ class _$EditingStateImpl extends _EditingState {
         loaded,
     TResult? Function(List<EditCollectionPdfEntity> pdfs)? editing,
     TResult? Function(List<CollectionPdfEntity> pdfs)? saved,
-    TResult? Function(String message)? error,
+    TResult? Function(LocalizedException message)? error,
   }) {
     return editing?.call(pdfs);
   }
@@ -1515,7 +1515,7 @@ class _$EditingStateImpl extends _EditingState {
         loaded,
     TResult Function(List<EditCollectionPdfEntity> pdfs)? editing,
     TResult Function(List<CollectionPdfEntity> pdfs)? saved,
-    TResult Function(String message)? error,
+    TResult Function(LocalizedException message)? error,
     required TResult orElse(),
   }) {
     if (editing != null) {
@@ -1654,7 +1654,7 @@ class _$SavedStateImpl extends _SavedState {
         loaded,
     required TResult Function(List<EditCollectionPdfEntity> pdfs) editing,
     required TResult Function(List<CollectionPdfEntity> pdfs) saved,
-    required TResult Function(String message) error,
+    required TResult Function(LocalizedException message) error,
   }) {
     return saved(pdfs);
   }
@@ -1668,7 +1668,7 @@ class _$SavedStateImpl extends _SavedState {
         loaded,
     TResult? Function(List<EditCollectionPdfEntity> pdfs)? editing,
     TResult? Function(List<CollectionPdfEntity> pdfs)? saved,
-    TResult? Function(String message)? error,
+    TResult? Function(LocalizedException message)? error,
   }) {
     return saved?.call(pdfs);
   }
@@ -1682,7 +1682,7 @@ class _$SavedStateImpl extends _SavedState {
         loaded,
     TResult Function(List<EditCollectionPdfEntity> pdfs)? editing,
     TResult Function(List<CollectionPdfEntity> pdfs)? saved,
-    TResult Function(String message)? error,
+    TResult Function(LocalizedException message)? error,
     required TResult orElse(),
   }) {
     if (saved != null) {
@@ -1749,7 +1749,7 @@ abstract class _$$ErrorStateImplCopyWith<$Res> {
           _$ErrorStateImpl value, $Res Function(_$ErrorStateImpl) then) =
       __$$ErrorStateImplCopyWithImpl<$Res>;
   @useResult
-  $Res call({String message});
+  $Res call({LocalizedException message});
 }
 
 /// @nodoc
@@ -1769,7 +1769,7 @@ class __$$ErrorStateImplCopyWithImpl<$Res>
       message: null == message
           ? _value.message
           : message // ignore: cast_nullable_to_non_nullable
-              as String,
+              as LocalizedException,
     ));
   }
 }
@@ -1780,7 +1780,7 @@ class _$ErrorStateImpl extends _ErrorState {
   const _$ErrorStateImpl({required this.message}) : super._();
 
   @override
-  final String message;
+  final LocalizedException message;
 
   @override
   String toString() {
@@ -1813,7 +1813,7 @@ class _$ErrorStateImpl extends _ErrorState {
         loaded,
     required TResult Function(List<EditCollectionPdfEntity> pdfs) editing,
     required TResult Function(List<CollectionPdfEntity> pdfs) saved,
-    required TResult Function(String message) error,
+    required TResult Function(LocalizedException message) error,
   }) {
     return error(message);
   }
@@ -1827,7 +1827,7 @@ class _$ErrorStateImpl extends _ErrorState {
         loaded,
     TResult? Function(List<EditCollectionPdfEntity> pdfs)? editing,
     TResult? Function(List<CollectionPdfEntity> pdfs)? saved,
-    TResult? Function(String message)? error,
+    TResult? Function(LocalizedException message)? error,
   }) {
     return error?.call(message);
   }
@@ -1841,7 +1841,7 @@ class _$ErrorStateImpl extends _ErrorState {
         loaded,
     TResult Function(List<EditCollectionPdfEntity> pdfs)? editing,
     TResult Function(List<CollectionPdfEntity> pdfs)? saved,
-    TResult Function(String message)? error,
+    TResult Function(LocalizedException message)? error,
     required TResult orElse(),
   }) {
     if (error != null) {
@@ -1892,10 +1892,11 @@ class _$ErrorStateImpl extends _ErrorState {
 }
 
 abstract class _ErrorState extends CollectionPdfState {
-  const factory _ErrorState({required final String message}) = _$ErrorStateImpl;
+  const factory _ErrorState({required final LocalizedException message}) =
+      _$ErrorStateImpl;
   const _ErrorState._() : super._();
 
-  String get message;
+  LocalizedException get message;
   @JsonKey(ignore: true)
   _$$ErrorStateImplCopyWith<_$ErrorStateImpl> get copyWith =>
       throw _privateConstructorUsedError;

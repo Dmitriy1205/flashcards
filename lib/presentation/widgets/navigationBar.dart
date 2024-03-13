@@ -127,7 +127,7 @@ class _CustomNavigationBarState extends State<CustomNavigationBar> {
                             borderRadius: BorderRadius.circular(32),
                             onTap: () async{
                               if(context.read<ListsBloc>().isEditMode){
-                                final confirmed = await confirmOperation(context, title: "Confirm deleting", message: "Are you sure that you want to delete selected collections?", action: "Delete", cancel: "Cancel");
+                                final confirmed = await confirmOperation(context, title: AppLocalizations.of(context)!.confirmDeleting, message: AppLocalizations.of(context)!.deleteSelectedCollection, action: AppLocalizations.of(context)!.delete, cancel: AppLocalizations.of(context)!.cancel);
                                 if(!confirmed) return;
                                 context.read<ListsBloc>().add(
                                     const ListsEvent.deleteSelectedCollection(
@@ -230,7 +230,7 @@ class _CustomNavigationBarState extends State<CustomNavigationBar> {
                         onPressed: () {
                           if (nameTextEditingController.text.isNotEmpty) {
                             if(context.read<ListsBloc>().state.collectionsList!.any((element) => element.collectionName == nameTextEditingController.text )){
-                            AppToast.showError(context, 'Collection with same name exists ');
+                            AppToast.showError(context, AppLocalizations.of(context)!.collectionExists);
                             Navigator.of(context).pop();
 
                             }else{

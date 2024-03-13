@@ -32,7 +32,7 @@ class UserServiceImpl extends UserServiceContract {
             .size !=
         0;
     if (userExists) {
-      throw BadRequestException(message: "User with such email already exists");
+      throw LocalizedException(message: "User with such email already exists", localizationKey: 'user-already-exists');
     } else {
       await doc.set({
         "email": email,

@@ -23,16 +23,17 @@ class AuthRepositoryImpl implements AuthRepository {
     try {
       await _auth.signInWithEmailAndPassword(email: email, password: password);
     } on FirebaseAuthException catch (e) {
-      if (e.code == 'invalid-credential') {
-        throw BadRequestException(
-            message: 'email or password is wrong', attribute: 'password');
+      if (e.code == 'invalid-credential' ||
+          e.code == 'invalid-email' ||
+          e.code == 'wrong-password' ||
+          e.message!.contains('INVALID_LOGIN_CREDENTIALS')) {
+        throw LocalizedException(
+            message: 'email or password is wrong',
+            attribute: 'password',
+            localizationKey: 'email-or-password-wrong');
       }
-      if (e.message!.contains('INVALID_LOGIN_CREDENTIALS')) {
-        throw BadRequestException(
-            message: 'email or password is wrong', attribute: 'password');
-      }
-      throw BadRequestException(
-          message: e.message!, attribute: 'password');
+      throw LocalizedException(
+          message: e.message!, attribute: 'password', localizationKey: e.code);
     }
   }
 
@@ -60,9 +61,9 @@ class AuthRepositoryImpl implements AuthRepository {
 
       await _auth.signInWithCredential(oauthCredential);
     } on FirebaseAuthException catch (e) {
-      throw BadRequestException(message: e.message!);
+      throw LocalizedException(message: e.message!, localizationKey: e.code);
     } catch (e) {
-      throw BadRequestException(message: e.toString());
+      throw LocalizedException(message: e.toString());
     }
   }
 
@@ -84,9 +85,9 @@ class AuthRepositoryImpl implements AuthRepository {
 
       await _auth.signInWithCredential(credential);
     } on FirebaseAuthException catch (e) {
-      throw BadRequestException(message: e.message!);
+      throw LocalizedException(message: e.message!, localizationKey: e.code);
     } on Exception catch (e) {
-      throw BadRequestException(message: e.toString());
+      throw LocalizedException(message: e.toString());
     }
   }
 
@@ -96,20 +97,19 @@ class AuthRepositoryImpl implements AuthRepository {
       await _auth.createUserWithEmailAndPassword(
           email: email, password: password);
       await _auth.currentUser?.sendEmailVerification();
-
     } on FirebaseAuthException catch (e) {
       if (e.code == 'weak-password') {
-        throw BadRequestException(
+        throw LocalizedException(
             message:
                 'The password provided is too weak.\nmust be more than 6 digits',
-            attribute: 'password');
+            attribute: 'password', localizationKey: e.code);
       } else if (e.code == 'email-already-in-use') {
-        throw BadRequestException(
+        throw LocalizedException(
             message: 'The account already exists for that email',
-            attribute: 'email');
+            attribute: 'email', localizationKey: e.code);
       }
     } catch (e) {
-      throw BadRequestException(message: e.toString());
+      throw LocalizedException(message: e.toString());
     }
   }
 
@@ -127,9 +127,9 @@ class AuthRepositoryImpl implements AuthRepository {
     try {
       await _auth.sendPasswordResetEmail(email: email);
     } on FirebaseAuthException catch (e) {
-      throw BadRequestException(message: e.message!);
+      throw LocalizedException(message: e.message!);
     } on Exception catch (e) {
-      throw BadRequestException(message: e.toString());
+      throw LocalizedException(message: e.toString());
     }
   }
 

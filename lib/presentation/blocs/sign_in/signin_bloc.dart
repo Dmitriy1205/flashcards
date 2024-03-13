@@ -33,8 +33,8 @@ class SigninBloc extends Bloc<SigninEvent, SigninState> {
         password: event.password.toString(),
       );
       emit(const SigninState.success());
-    } on BadRequestException catch (e) {
-      emit(SigninState.error(error: e.message));
+    } on LocalizedException catch (e) {
+      emit(SigninState.error(error: e));
     }
   }
 }

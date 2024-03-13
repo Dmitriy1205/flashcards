@@ -1,4 +1,4 @@
-class AppStrings {
+class AppStrings{
   static const String login = 'Login';
   static const String loginHead = 'Login to start using the app.';
   static const String createAccount = 'Create account';
@@ -65,4 +65,14 @@ class AppStrings {
   static const String verifyYourEmail = "Verify your email, please check your inbox including spam and follow the instructions";
   static const String noCardsLeft = "No cards left to learn";
   static const String account = "Account";
+
+  static const String deleteSelectedCollection = "Are you sure that you want to delete selected collections?";
+  static const String known = "Known";
+  static const String collectionExists = "Collection with same name exists";
+  static const String learnAll = "Learn all";
+  static const String onlyUnknown = "Only unknown";
+  static const String onlyKnown = "Only known";
+  static const String stillLearning = "Still learning";
+  static const String finish = "Finish";
+  static const String continueLearning = "Continue Learning";
 }

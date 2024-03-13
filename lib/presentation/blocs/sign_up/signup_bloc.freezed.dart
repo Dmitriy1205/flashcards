@@ -259,7 +259,7 @@ mixin _$SignupState {
     required TResult Function() initial,
     required TResult Function() loading,
     required TResult Function() success,
-    required TResult Function(String error) error,
+    required TResult Function(LocalizedException error) error,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
@@ -267,7 +267,7 @@ mixin _$SignupState {
     TResult? Function()? initial,
     TResult? Function()? loading,
     TResult? Function()? success,
-    TResult? Function(String error)? error,
+    TResult? Function(LocalizedException error)? error,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
@@ -275,7 +275,7 @@ mixin _$SignupState {
     TResult Function()? initial,
     TResult Function()? loading,
     TResult Function()? success,
-    TResult Function(String error)? error,
+    TResult Function(LocalizedException error)? error,
     required TResult orElse(),
   }) =>
       throw _privateConstructorUsedError;
@@ -365,7 +365,7 @@ class _$InitialStateImpl implements _InitialState {
     required TResult Function() initial,
     required TResult Function() loading,
     required TResult Function() success,
-    required TResult Function(String error) error,
+    required TResult Function(LocalizedException error) error,
   }) {
     return initial();
   }
@@ -376,7 +376,7 @@ class _$InitialStateImpl implements _InitialState {
     TResult? Function()? initial,
     TResult? Function()? loading,
     TResult? Function()? success,
-    TResult? Function(String error)? error,
+    TResult? Function(LocalizedException error)? error,
   }) {
     return initial?.call();
   }
@@ -387,7 +387,7 @@ class _$InitialStateImpl implements _InitialState {
     TResult Function()? initial,
     TResult Function()? loading,
     TResult Function()? success,
-    TResult Function(String error)? error,
+    TResult Function(LocalizedException error)? error,
     required TResult orElse(),
   }) {
     if (initial != null) {
@@ -479,7 +479,7 @@ class _$LoadingStateImpl implements _LoadingState {
     required TResult Function() initial,
     required TResult Function() loading,
     required TResult Function() success,
-    required TResult Function(String error) error,
+    required TResult Function(LocalizedException error) error,
   }) {
     return loading();
   }
@@ -490,7 +490,7 @@ class _$LoadingStateImpl implements _LoadingState {
     TResult? Function()? initial,
     TResult? Function()? loading,
     TResult? Function()? success,
-    TResult? Function(String error)? error,
+    TResult? Function(LocalizedException error)? error,
   }) {
     return loading?.call();
   }
@@ -501,7 +501,7 @@ class _$LoadingStateImpl implements _LoadingState {
     TResult Function()? initial,
     TResult Function()? loading,
     TResult Function()? success,
-    TResult Function(String error)? error,
+    TResult Function(LocalizedException error)? error,
     required TResult orElse(),
   }) {
     if (loading != null) {
@@ -593,7 +593,7 @@ class _$SuccesStateImpl implements _SuccesState {
     required TResult Function() initial,
     required TResult Function() loading,
     required TResult Function() success,
-    required TResult Function(String error) error,
+    required TResult Function(LocalizedException error) error,
   }) {
     return success();
   }
@@ -604,7 +604,7 @@ class _$SuccesStateImpl implements _SuccesState {
     TResult? Function()? initial,
     TResult? Function()? loading,
     TResult? Function()? success,
-    TResult? Function(String error)? error,
+    TResult? Function(LocalizedException error)? error,
   }) {
     return success?.call();
   }
@@ -615,7 +615,7 @@ class _$SuccesStateImpl implements _SuccesState {
     TResult Function()? initial,
     TResult Function()? loading,
     TResult Function()? success,
-    TResult Function(String error)? error,
+    TResult Function(LocalizedException error)? error,
     required TResult orElse(),
   }) {
     if (success != null) {
@@ -672,7 +672,7 @@ abstract class _$$ErrorStateImplCopyWith<$Res> {
           _$ErrorStateImpl value, $Res Function(_$ErrorStateImpl) then) =
       __$$ErrorStateImplCopyWithImpl<$Res>;
   @useResult
-  $Res call({String error});
+  $Res call({LocalizedException error});
 }
 
 /// @nodoc
@@ -692,7 +692,7 @@ class __$$ErrorStateImplCopyWithImpl<$Res>
       error: null == error
           ? _value.error
           : error // ignore: cast_nullable_to_non_nullable
-              as String,
+              as LocalizedException,
     ));
   }
 }
@@ -703,7 +703,7 @@ class _$ErrorStateImpl implements _ErrorState {
   const _$ErrorStateImpl({required this.error});
 
   @override
-  final String error;
+  final LocalizedException error;
 
   @override
   String toString() {
@@ -733,7 +733,7 @@ class _$ErrorStateImpl implements _ErrorState {
     required TResult Function() initial,
     required TResult Function() loading,
     required TResult Function() success,
-    required TResult Function(String error) error,
+    required TResult Function(LocalizedException error) error,
   }) {
     return error(this.error);
   }
@@ -744,7 +744,7 @@ class _$ErrorStateImpl implements _ErrorState {
     TResult? Function()? initial,
     TResult? Function()? loading,
     TResult? Function()? success,
-    TResult? Function(String error)? error,
+    TResult? Function(LocalizedException error)? error,
   }) {
     return error?.call(this.error);
   }
@@ -755,7 +755,7 @@ class _$ErrorStateImpl implements _ErrorState {
     TResult Function()? initial,
     TResult Function()? loading,
     TResult Function()? success,
-    TResult Function(String error)? error,
+    TResult Function(LocalizedException error)? error,
     required TResult orElse(),
   }) {
     if (error != null) {
@@ -803,9 +803,10 @@ class _$ErrorStateImpl implements _ErrorState {
 }
 
 abstract class _ErrorState implements SignupState {
-  const factory _ErrorState({required final String error}) = _$ErrorStateImpl;
+  const factory _ErrorState({required final LocalizedException error}) =
+      _$ErrorStateImpl;
 
-  String get error;
+  LocalizedException get error;
   @JsonKey(ignore: true)
   _$$ErrorStateImplCopyWith<_$ErrorStateImpl> get copyWith =>
       throw _privateConstructorUsedError;

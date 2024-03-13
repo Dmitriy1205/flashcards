@@ -60,11 +60,11 @@ class _MobileForgotPasswordScreenState
             listener: (context, state) {
               state.maybeMap(
                   error: (e) {
-                    AppToast.showError(context, e.error);
+                    AppToast.showError(context, e.error.localizedMessageOrDefault(context));
                   },
                   success: (_) {
                     Navigator.pop(context);
-                    AppToast.showSuccess(context, AppStrings.emailSent);
+                    AppToast.showSuccess(context, AppLocalizations.of(context)!.emailSent);
                   },
                   orElse: () {});
             },
@@ -102,7 +102,7 @@ class _MobileForgotPasswordScreenState
                             focusNode: _emailNode,
                             textController: _emailController,
                             hintText: AppLocalizations.of(context)!.enterEmail,
-                            validator: !_validateEmail ? (_) => null : Validator.validateEmail,
+                            validator: !_validateEmail ? (_) => null : Validator(context).validateEmail,
                           ),
                         ),
                         const SizedBox(

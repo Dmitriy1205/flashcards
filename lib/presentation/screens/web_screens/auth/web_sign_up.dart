@@ -73,7 +73,7 @@ class _WebSignUpScreenState extends State<WebSignUpScreen> {
                   router.pop();
                 },
                 error: (e) {
-                  AppToast.showError(context, e.error);
+                  AppToast.showError(context, e.error.localizedMessageOrDefault(context));
                 },
                 orElse: () {});
           },
@@ -113,7 +113,7 @@ class _WebSignUpScreenState extends State<WebSignUpScreen> {
                                 focusNode: _emailNode,
                                 textController: _emailController,
                                 hintText: AppLocalizations.of(context)!.enterEmail,
-                                validator: Validator.validateEmail,
+                                validator: Validator(context).validateEmail,
                               ),
                               const SizedBox(
                                 height: 14,
@@ -140,7 +140,7 @@ class _WebSignUpScreenState extends State<WebSignUpScreen> {
                                       ? SvgPicture.asset(AppIcons.closedEye)
                                       : SvgPicture.asset(AppIcons.openEye),
                                 ),
-                                validator: _validateEmail ? (_) => null : Validator.validatePassword,
+                                validator: _validateEmail ? (_) => null : Validator(context).validatePassword,
                               ),
                               const SizedBox(
                                 height: 27,
@@ -262,7 +262,7 @@ class _WebSignUpScreenState extends State<WebSignUpScreen> {
                                     focusNode: _emailNode,
                                     textController: _emailController,
                                     hintText: AppLocalizations.of(context)!.enterEmail,
-                                    validator: Validator.validateEmail,
+                                    validator: Validator(context).validateEmail,
                                   ),
                                   const SizedBox(
                                     height: 14,
@@ -289,7 +289,7 @@ class _WebSignUpScreenState extends State<WebSignUpScreen> {
                                           ? SvgPicture.asset(AppIcons.closedEye)
                                           : SvgPicture.asset(AppIcons.openEye),
                                     ),
-                                    validator: Validator.validatePassword,
+                                    validator: Validator(context).validatePassword,
                                   ),
                                   const SizedBox(
                                     height: 27,

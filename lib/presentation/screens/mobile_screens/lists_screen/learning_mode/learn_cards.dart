@@ -280,7 +280,7 @@ class _LearnCardsState extends State<LearnCards> {
                   .copyWith(fontSize: 18),
             ));
           }, orElse: () {
-            return const Center(child: Text(AppStrings.noCardsLeft));
+            return Center(child: Text(AppLocalizations.of(context)!.noCardsLeft));
           });
         },
       ),

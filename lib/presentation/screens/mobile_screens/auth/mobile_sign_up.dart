@@ -67,11 +67,11 @@ class _MobileSignUpScreenState extends State<MobileSignUpScreen> {
               success: (_) {
                     context.read<AuthBloc>().add(const AuthEvent.logout());
                     AppToast.showSuccess(context,
-                        AppStrings.verifyYourEmail);
+                        AppLocalizations.of(context)!.verifyYourEmail);
                     router.pop();
                   },
                 error: (e) {
-                  AppToast.showError(context, e.error);
+                  AppToast.showError(context, e.error.localizedMessageOrDefault(context));
                 },
                 orElse: () {});
           },
@@ -108,7 +108,7 @@ class _MobileSignUpScreenState extends State<MobileSignUpScreen> {
                           focusNode: _emailNode,
                           textController: _emailController,
                           hintText: AppLocalizations.of(context)!.enterEmail,
-                          validator: !_validateEmail ? (_) => null : Validator.validateEmail,
+                          validator: !_validateEmail ? (_) => null : Validator(context).validateEmail,
                         ),
                         const SizedBox(
                           height: 14,
@@ -135,7 +135,7 @@ class _MobileSignUpScreenState extends State<MobileSignUpScreen> {
                                 ? SvgPicture.asset(AppIcons.closedEye)
                                 : SvgPicture.asset(AppIcons.openEye),
                           ),
-                          validator: Validator.validatePassword,
+                          validator: Validator(context).validatePassword,
                         ),
                         const SizedBox(
                           height: 27,

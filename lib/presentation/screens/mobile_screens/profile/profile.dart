@@ -54,7 +54,7 @@ class Profile extends StatelessWidget {
                               mainAxisAlignment: MainAxisAlignment.center,
                               children: [
                                 Text(
-                                  AppStrings.account,
+                                  AppLocalizations.of(context)!.account,
                                   style: AppTheme
                                       .themeData.textTheme.titleLarge!
                                       .copyWith(fontSize: 18),
@@ -78,9 +78,9 @@ class Profile extends StatelessWidget {
                       width: 23,
                     ),
                     SizedBox(
-                        width: 81,
+                        width: 84,
                         child: AppElevatedButton(
-                            text: AppStrings.logout,
+                            text: AppLocalizations.of(context)!.logout,
                             shadowColor: Colors.transparent,
                             color: Colors.white,
                             borderColor: AppColors.mainAccent,
@@ -126,7 +126,7 @@ class Profile extends StatelessWidget {
                           shadowColor: MaterialStatePropertyAll(Colors.transparent,),
                           surfaceTintColor: MaterialStatePropertyAll(Colors.transparent),
                         ),
-                        initialSelection: AppLocalizations.of(context)!.english,
+                        initialSelection: context.watch<LocaleCubit>().state.languageName,
                           inputDecorationTheme: const InputDecorationTheme(
                             filled: true,
                             fillColor: Colors.transparent,

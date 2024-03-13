@@ -30,8 +30,8 @@ class GoogleSigninBloc extends Bloc<GoogleSigninEvent, GoogleSigninState> {
       await _authRepository.signInWithGoogle();
 
       emit(const GoogleSigninState.success());
-    } on BadRequestException catch (e) {
-      emit(GoogleSigninState.error(error: e.message));
+    } on LocalizedException catch (e) {
+      emit(GoogleSigninState.error(error: e));
     }
   }
 }
