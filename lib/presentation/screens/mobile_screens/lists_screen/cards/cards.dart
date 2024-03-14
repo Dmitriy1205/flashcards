@@ -15,6 +15,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flashcards/presentation/widgets/quill_text.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:go_router/go_router.dart';
+import '../../../../widgets/learn_dialog.dart';
 import 'create_edit_card.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
@@ -217,6 +218,11 @@ class _CardsState extends State<Cards> {
                           ),
                           DropdownMenuItem<String>(
                             value: 'false',
+                            onTap: (){
+                              showBottomMenu(
+                                  context: context,
+                                  selectedCollectionId: widget.collectionId);
+                            },
                             child: Row(
                               children: [
                                 SvgPicture.asset(

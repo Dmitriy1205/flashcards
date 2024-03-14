@@ -159,8 +159,18 @@ class _FinishLearningScreenState extends State<FinishLearningScreen> {
               ),
             ),
             const Spacer(),
-            Center(
-              child: InkWell(
+            GestureDetector(
+              onTap: () {
+                router.go('/mobile_home');
+                context
+                    .read<ListsBloc>()
+                    .add(ListsEvent.started(isEditMode: false));
+              },
+              child: Container(
+                color: Colors.transparent,
+                width: double.infinity,
+                height: 35,
+                child: Center(
                   child: Text(
                     AppLocalizations.of(context)!.finish,
                     style: AppTheme.themeData.textTheme.titleMedium!.copyWith(
@@ -168,7 +178,8 @@ class _FinishLearningScreenState extends State<FinishLearningScreen> {
                       fontWeight: FontWeight.w600,
                     ),
                   ),
-                  onTap: () {}),
+                ),
+              ),
             ),
             SizedBox(
               height: 23,

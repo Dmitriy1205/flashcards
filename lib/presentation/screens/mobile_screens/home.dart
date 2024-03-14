@@ -23,7 +23,7 @@ class _HomeMobileState extends State<HomeMobile> {
 
   int _selectedPage = 0;
 
-  late List<String> pageNames = [
+  List<String> get pageNames => [
     AppLocalizations.of(context)!.collections,
     AppLocalizations.of(context)!.learn,
     AppLocalizations.of(context)!.profile,
