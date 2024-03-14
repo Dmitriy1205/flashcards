@@ -10,11 +10,13 @@ import 'package:flashcards/presentation/widgets/create_edit_collection.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class Collections extends StatelessWidget {
   const Collections(
-      {Key? key, required this.collectionsList, required this.isEditMode})
+      {Key? key, required this.collectionsList, required this.isEditMode, required this.onTileTap})
       : super(key: key);
+  final Function(CollectionEntity) onTileTap;
   final List<CollectionEntity> collectionsList;
   final bool isEditMode;
 
@@ -93,11 +95,7 @@ class Collections extends StatelessWidget {
                               collectionName: collectionsList[i].collectionName,
                               collectionId: collectionsList[i].id);
                         } else {
-                          context
-                              .read<ListsBloc>()
-                              .add(ListsEvent.selectCollection(
-                                collection: collectionsList[i],
-                              ));
+                          onTileTap.call(collectionsList[i]);
                         }
                       },
                       title: Text(
@@ -106,7 +104,7 @@ class Collections extends StatelessWidget {
                             .copyWith(fontSize: 18),
                       ),
                       subtitle: Text(
-                        '${collectionsList[i].cards?.length ?? 0} ${AppStrings.cards.toLowerCase()}',
+                        '${collectionsList[i].cards?.length ?? 0} ${AppLocalizations.of(context)!.cards.toLowerCase()}',
                         style:
                             AppTheme.themeData.textTheme.labelSmall!.copyWith(
                           color: Colors.black,

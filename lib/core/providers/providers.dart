@@ -1,5 +1,6 @@
 import 'package:flashcards/presentation/blocs/cards/cards_bloc.dart';
 import 'package:flashcards/presentation/blocs/lists/lists_bloc.dart';
+import 'package:flashcards/presentation/blocs/locale/locale_cubit.dart';
 import 'package:flashcards/presentation/blocs/sign_in/signin_bloc.dart';
 import 'package:flashcards/presentation/blocs/sign_up/signup_bloc.dart';
 import 'package:flashcards/presentation/blocs/web_list/web_list_bloc.dart';
@@ -38,7 +39,8 @@ class Providers extends StatelessWidget {
         ),
         BlocProvider(
           create: (context) => sl<WebListBloc>(),
-        )
+        ),
+        BlocProvider(create: (context) => sl<LocaleCubit>())
       ],
       child: child,
     );

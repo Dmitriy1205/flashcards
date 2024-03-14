@@ -10,6 +10,7 @@ import 'package:flashcards/presentation/widgets/quill_text.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_html/flutter_html.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class ViewFlashCard extends StatefulWidget {
   const ViewFlashCard(
@@ -58,7 +59,7 @@ class _ViewFlashCardState extends State<ViewFlashCard> {
                       width: 19,
                     ),
                     Text(
-                      AppStrings.card,
+                      AppLocalizations.of(context)!.card,
                       style: AppTheme.themeData.textTheme.headlineLarge,
                     ),
                   ]),
@@ -72,7 +73,7 @@ class _ViewFlashCardState extends State<ViewFlashCard> {
                   });
                 },
                 child: Text(
-                  AppStrings.edit,
+                  AppLocalizations.of(context)!.edit,
                   style: AppTheme.themeData.textTheme.titleLarge!.copyWith(
                     fontSize: 20,
                   ),

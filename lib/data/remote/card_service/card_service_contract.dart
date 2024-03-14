@@ -18,5 +18,9 @@ abstract class CardService {
 
   Future<List<CardEntity>> fetchCards({required String collectionId});
 
+  Future<void> importExcel({required String path,
+    required String collectionId,
+    required String collectionName});
+
   Future<void> swipeCard({required CardEntity cardEntity});
 }

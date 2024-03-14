@@ -9,6 +9,7 @@ import 'package:flashcards/presentation/blocs/lists/lists_bloc.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import '../collections.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class Learn extends StatefulWidget {
   const Learn({Key? key, required this.scaffoldKey}) : super(key: key);
@@ -19,6 +20,7 @@ class Learn extends StatefulWidget {
 }
 
 class _LearnState extends State<Learn> {
+  @override
   Widget build(BuildContext context) {
     return BlocConsumer<ListsBloc, ListsState>(
       listenWhen: (previousState, state) {
@@ -30,12 +32,7 @@ class _LearnState extends State<Learn> {
       listener: (context, state) {
         state.maybeMap(
           operationSucceeded: (_) {
-            AppToast.showSuccess(context, "Success");
-          },
-          viewCards: (selectedCollection) {
-            showBottomMenu(
-                scaffoldKey: widget.scaffoldKey,
-                selectedCollectionId: selectedCollection.collection.id);
+            AppToast.showSuccess(context, AppLocalizations.of(context)!.success);
           },
           orElse: () {},
         );
@@ -49,7 +46,7 @@ class _LearnState extends State<Learn> {
       builder: (context, state) {
         return Container(
           child: state.maybeMap(
-            loading: (_) => const CircularProgressIndicator(),
+            loading: (_) => const Center(child: CircularProgressIndicator()),
             error: (e) => Center(
                 child: Text(
               'Error $e',
@@ -58,12 +55,17 @@ class _LearnState extends State<Learn> {
             )),
             viewCollections: (collections) {
               return Collections(
+                  onTileTap: (el){
+                    showBottomMenu(
+                        scaffoldKey: widget.scaffoldKey,
+                        selectedCollectionId: el.id);
+                  },
                   collectionsList: collections.collectionsList,
                   isEditMode: collections.isEditMode);
             },
             orElse: () {
-              return const Center(
-                child: Text(AppStrings.noCollection),
+              return Center(
+                child: Text(AppLocalizations.of(context)!.noCollection),
               );
             },
           ),
@@ -92,7 +94,7 @@ class _LearnState extends State<Learn> {
       androidBorderRadius: 30,
       actions: <BottomSheetAction>[
         BottomSheetAction(
-          title: Text('Learn all ${cards.length}',
+          title: Text('${AppLocalizations.of(context)!.learnAll} ${cards.length}',
               style: AppTheme.themeData.textTheme.titleMedium!
                   .copyWith(fontSize: 16, fontWeight: FontWeight.w600)),
           onPressed: (context) {
@@ -104,7 +106,7 @@ class _LearnState extends State<Learn> {
           },
         ),
         BottomSheetAction(
-            title: Text('Only unknown ${learningCardsList.length}',
+            title: Text('${AppLocalizations.of(context)!.onlyUnknown} ${learningCardsList.length}',
                 style: AppTheme.themeData.textTheme.titleMedium!
                     .copyWith(fontSize: 16, fontWeight: FontWeight.w600)),
             onPressed: (context) {
@@ -118,7 +120,7 @@ class _LearnState extends State<Learn> {
               );
             }),
         BottomSheetAction(
-            title: Text('Only known ${knownCardsList.length}',
+            title: Text('${AppLocalizations.of(context)!.onlyKnown} ${knownCardsList.length}',
                 style: AppTheme.themeData.textTheme.titleMedium!
                     .copyWith(fontSize: 16, fontWeight: FontWeight.w600)),
             onPressed: (context) {
@@ -133,7 +135,7 @@ class _LearnState extends State<Learn> {
             }),
       ],
       cancelAction: CancelAction(
-          title: Text('Cancel',
+          title: Text(AppLocalizations.of(context)!.cancel,
               style: AppTheme.themeData.textTheme.titleMedium!.copyWith(
                   fontSize: 16,
                   fontWeight: FontWeight

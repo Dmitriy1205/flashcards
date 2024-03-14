@@ -8,5 +8,5 @@ class AppleSigninState with _$AppleSigninState {
 
   const factory AppleSigninState.success() = _SuccesState;
 
-  const factory AppleSigninState.error({required String error}) = _ErrorState;
+  const factory AppleSigninState.error({required LocalizedException error}) = _ErrorState;
 }

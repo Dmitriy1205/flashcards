@@ -1,4 +1,4 @@
-class AppStrings {
+class AppStrings{
   static const String login = 'Login';
   static const String loginHead = 'Login to start using the app.';
   static const String createAccount = 'Create account';
@@ -44,11 +44,35 @@ class AppStrings {
   static const String profile = 'Profile';
   static const String sorryNoCards = 'Sorry No Cards';
 
-
-
   static const String language = 'Language';
   static const String english = 'English';
 
   static const String errorEmptyCard = "Card front and back must be filled";
   static const String pdfFile = "Pdf file";
+  static const String emailSent = "Email sent, please check your inbox including spam";
+  static const String confirmEmailAddress = "Confirm email address before login";
+  static const String successfullyImported = "Succesfully imported!";
+  static const String confirmDeleting = "Confirm deleting";
+  static const String deleteSelectedCards = "Are you sure that you want to delete selected cards?";
+  static const String delete = "Delete";
+  static const String success = "Success";
+  static const String greatJob = "You're doing a great \n job! Keep up the \n good work!";
+  static const String saved = "Saved";
+  static const String noFileAttachedToCollection = "No file attached to collection";
+  static const String downloadingStarted = "Downloading started";
+  static const String selectFile = "Select file *";
+  static const String attachPdfVersion = "* Attach pdf version of your flashcards collection, so that other people could download it.";
+  static const String verifyYourEmail = "Verify your email, please check your inbox including spam and follow the instructions";
+  static const String noCardsLeft = "No cards left to learn";
+  static const String account = "Account";
+
+  static const String deleteSelectedCollection = "Are you sure that you want to delete selected collections?";
+  static const String known = "Known";
+  static const String collectionExists = "Collection with same name exists";
+  static const String learnAll = "Learn all";
+  static const String onlyUnknown = "Only unknown";
+  static const String onlyKnown = "Only known";
+  static const String stillLearning = "Still learning";
+  static const String finish = "Finish";
+  static const String continueLearning = "Continue Learning";
 }

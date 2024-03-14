@@ -47,11 +47,13 @@ class AppElevatedButton extends StatelessWidget {
                   : BorderRadius.circular(borderRadius!)),
         ),
         child: widget ??
-            Text(
-              text,
-              style: style ??
-                  AppTheme.themeData.textTheme.titleSmall!
-                      .copyWith(color: Colors.white),
+            FittedBox(
+              child: Text(
+                text,
+                style: style ??
+                    AppTheme.themeData.textTheme.titleSmall!
+                        .copyWith(color: Colors.white),
+              ),
             ),
       ),
     );

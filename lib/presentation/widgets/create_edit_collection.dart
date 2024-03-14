@@ -6,6 +6,7 @@ import 'package:flashcards/presentation/blocs/lists/lists_bloc.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class CreateEditCollectionDialog {
   CreateEditCollectionDialog({Key? key});
@@ -49,8 +50,8 @@ class CreateEditCollectionDialog {
                             alignment: Alignment.center,
                             child: Text(
                               collectionName == null
-                                  ? AppStrings.newCollection
-                                  : AppStrings.renameCollection,
+                                  ? AppLocalizations.of(context)!.newCollection
+                                  : AppLocalizations.of(context)!.renameCollection,
                               style: AppTheme.themeData.textTheme.titleMedium!
                                   .copyWith(fontSize: 18),
                             ),
@@ -60,8 +61,8 @@ class CreateEditCollectionDialog {
                     ),
                     Text(
                         collectionName == null
-                            ? AppStrings.giveName
-                            : AppStrings.renameCollectionSubTitle,
+                            ? AppLocalizations.of(context)!.giveName
+                            : AppLocalizations.of(context)!.renameCollectionSubTitle,
                         style: AppTheme.themeData.textTheme.labelSmall!
                             .copyWith(color: Colors.black)),
                     const SizedBox(
@@ -96,7 +97,7 @@ class CreateEditCollectionDialog {
                     SizedBox(
                       height: 46,
                       child: TextButton(
-                        child: Text(AppStrings.save,
+                        child: Text(AppLocalizations.of(context)!.save,
                             style: AppTheme.themeData.textTheme.labelMedium!
                                 .copyWith(color: AppColors.mainAccent)),
                         onPressed: () {

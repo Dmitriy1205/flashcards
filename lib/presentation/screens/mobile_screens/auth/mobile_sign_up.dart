@@ -15,6 +15,7 @@ import '../../../blocs/auth/auth_bloc.dart';
 import '../../../blocs/sign_up/signup_bloc.dart';
 import '../../../widgets/app_text_field.dart';
 import '../../../widgets/loading_indicator.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class MobileSignUpScreen extends StatefulWidget {
   const MobileSignUpScreen({super.key});
@@ -66,11 +67,11 @@ class _MobileSignUpScreenState extends State<MobileSignUpScreen> {
               success: (_) {
                     context.read<AuthBloc>().add(const AuthEvent.logout());
                     AppToast.showSuccess(context,
-                        'Verify your email, please check your inbox including spam and follow the instructions');
+                        AppLocalizations.of(context)!.verifyYourEmail);
                     router.pop();
                   },
                 error: (e) {
-                  AppToast.showError(context, e.error);
+                  AppToast.showError(context, e.error.localizedMessageOrDefault(context));
                 },
                 orElse: () {});
           },
@@ -86,18 +87,18 @@ class _MobileSignUpScreenState extends State<MobileSignUpScreen> {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Text(
-                          AppStrings.createAccount,
+                          AppLocalizations.of(context)!.createAccount,
                           style: AppTheme.themeData.textTheme.headlineLarge,
                         ),
                         Text(
-                          AppStrings.createAccountHeader,
+                          AppLocalizations.of(context)!.createAccountHeader,
                           style: AppTheme.themeData.textTheme.headlineSmall,
                         ),
                         const SizedBox(
                           height: 30,
                         ),
                         Text(
-                          AppStrings.email,
+                          AppLocalizations.of(context)!.email,
                           style: AppTheme.themeData.textTheme.titleMedium,
                         ),
                         const SizedBox(
@@ -106,14 +107,14 @@ class _MobileSignUpScreenState extends State<MobileSignUpScreen> {
                         AppTextField(
                           focusNode: _emailNode,
                           textController: _emailController,
-                          hintText: AppStrings.enterEmail,
-                          validator: !_validateEmail ? (_) => null : Validator.validateEmail,
+                          hintText: AppLocalizations.of(context)!.enterEmail,
+                          validator: !_validateEmail ? (_) => null : Validator(context).validateEmail,
                         ),
                         const SizedBox(
                           height: 14,
                         ),
                         Text(
-                          AppStrings.password,
+                          AppLocalizations.of(context)!.password,
                           style: AppTheme.themeData.textTheme.titleMedium,
                         ),
                         const SizedBox(
@@ -123,7 +124,7 @@ class _MobileSignUpScreenState extends State<MobileSignUpScreen> {
                           focusNode: _passwordNode,
                           obscureText: isPassObscure,
                           textController: _passwordController,
-                          hintText: AppStrings.enterPass,
+                          hintText: AppLocalizations.of(context)!.enterPass,
                           suffixIcon: IconButton(
                             onPressed: () {
                               setState(() {
@@ -134,7 +135,7 @@ class _MobileSignUpScreenState extends State<MobileSignUpScreen> {
                                 ? SvgPicture.asset(AppIcons.closedEye)
                                 : SvgPicture.asset(AppIcons.openEye),
                           ),
-                          validator: Validator.validatePassword,
+                          validator: Validator(context).validatePassword,
                         ),
                         const SizedBox(
                           height: 27,
@@ -143,11 +144,11 @@ class _MobileSignUpScreenState extends State<MobileSignUpScreen> {
                             widget: state.maybeMap(
                                 loading: (_)=> const SizedBox(width:20,height:20,child: LoadingIndicator(color: Colors.white,)),
                                 orElse: ()=>Text(
-                                  AppStrings.createAccount,
+                                  AppLocalizations.of(context)!.createAccount,
                                   style: AppTheme.themeData.textTheme.titleSmall!
                                       .copyWith(color: Colors.white),
                                 )),
-                            text: AppStrings.createAccount,
+                            text: AppLocalizations.of(context)!.createAccount,
                             onPressed: () async{
                               if(!_validateEmail){
                                 setState(() {
@@ -179,11 +180,11 @@ class _MobileSignUpScreenState extends State<MobileSignUpScreen> {
                                     style:
                                         AppTheme.themeData.textTheme.titleSmall,
                                     children: [
-                                      const TextSpan(
-                                        text: '${AppStrings.haveAccount} ',
+                                      TextSpan(
+                                        text: '${AppLocalizations.of(context)!.haveAccount} ',
                                       ),
                                       TextSpan(
-                                          text: AppStrings.signIn,
+                                          text: AppLocalizations.of(context)!.signIn,
                                           style: const TextStyle(
                                             color: AppColors.mainAccent,
                                             fontWeight: FontWeight.w600,

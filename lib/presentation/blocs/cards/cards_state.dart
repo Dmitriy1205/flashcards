@@ -6,6 +6,7 @@ class CardsState with _$CardsState {
 
   List<CardEntity>? get cardsList => maybeMap(
       loaded: (state) => state.cardsList,
+      successfullyImported: (_) => [],
       orElse: () {
         return null;
       });
@@ -16,6 +17,8 @@ class CardsState with _$CardsState {
   const factory CardsState.viewIndividualCard() = _ViewIndividualCard;
 
   const factory CardsState.loading() = _Loading;
+
+  const factory CardsState.successfullyImported() = _SuccessfullyImported;
 
   const factory CardsState.error({required String error}) = _Error;
 

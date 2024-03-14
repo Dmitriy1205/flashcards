@@ -20,6 +20,7 @@ import 'package:go_router/go_router.dart';
 import '../../../../../core/const/icons.dart';
 import '../../../../../core/services/service_locator.dart';
 import '../../../../../core/themes/theme.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class AttachPdf extends StatefulWidget {
   final String collectionId;
@@ -60,7 +61,7 @@ class _AttachPdfState extends State<AttachPdf> {
       bloc: _collectionPdfBloc,
       listener: (context,state){
         if(state.isSaved){
-          AppToast.showSuccess(context, "Saved!");
+          AppToast.showSuccess(context, AppLocalizations.of(context)!.saved);
         }
       },
       builder: (context, state) => Scaffold(
@@ -84,7 +85,7 @@ class _AttachPdfState extends State<AttachPdf> {
                     width: 19,
                   ),
                   Text(
-                    AppStrings.pdfFile,
+                    AppLocalizations.of(context)!.pdfFile,
                     style: AppTheme.themeData.textTheme.headlineLarge,
                   ),
                 ]),
@@ -111,7 +112,7 @@ class _AttachPdfState extends State<AttachPdf> {
                   _selectAFile(),
                   const Spacer(),
                   AppElevatedButton(
-                      text: "Save",
+                      text: AppLocalizations.of(context)!.save,
                       color: state.isEditing ? AppColors.mainAccent : AppColors.greyLight,
                       onPressed: () {
                         if(!state.isEditing) return;
@@ -132,8 +133,8 @@ class _AttachPdfState extends State<AttachPdf> {
   Widget _noFileAttached() {
     return Column(
       children: [
-        const Text(
-          "No file attached to collection",
+        Text(
+          AppLocalizations.of(context)!.noFileAttachedToCollection,
           style: TextStyle(
               color: AppColors.mainAccent,
               fontSize: 22,
@@ -173,7 +174,7 @@ class _AttachPdfState extends State<AttachPdf> {
                       if(isDownloaded){
                         await openFile(extractFilename(e));
                       }else{
-                        AppToast.showSuccess(context, "Downloading started");
+                        AppToast.showSuccess(context, AppLocalizations.of(context)!.downloadingStarted);
                         _collectionPdfBloc.add(CollectionPdfEvent.downloadPdf(path: e));
                       }
                     }));
@@ -282,9 +283,9 @@ class _AttachPdfState extends State<AttachPdf> {
                           size: 30,
                         )),
                   ),
-                  const Center(
+                  Center(
                     child: Text(
-                      "Select file *",
+                      AppLocalizations.of(context)!.selectFile,
                       style: TextStyle(
                           color: AppColors.borderGrey,
                           fontSize: 20,
@@ -299,8 +300,8 @@ class _AttachPdfState extends State<AttachPdf> {
         const SizedBox(
           height: 10,
         ),
-        const Text(
-          "* Attach pdf version of your flashcards collection, so that other people could download it.",
+        Text(
+          AppLocalizations.of(context)!.attachPdfVersion,
           style: TextStyle(
               fontWeight: FontWeight.w600,
               fontSize: 12,

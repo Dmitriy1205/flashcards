@@ -40,8 +40,8 @@ class CollectionPdfBloc extends Bloc<CollectionPdfEvent, CollectionPdfState> {
           pdfs: pdfs,
           pathsDownloaded: await _getDownloadedFilePaths(pdfs),
           pathsDownloading: []));
-    } on BadRequestException catch (e) {
-      emit(CollectionPdfState.error(message: e.message));
+    } on LocalizedException catch (e) {
+      emit(CollectionPdfState.error(message: e));
     }
   }
 
@@ -120,8 +120,8 @@ class CollectionPdfBloc extends Bloc<CollectionPdfEvent, CollectionPdfState> {
           collectionId: event.collectionUid, userUid: event.userUid);
       emit(CollectionPdfState.saved(pdfs: pdfs));
       add(CollectionPdfEvent.fetchPdfs(userUid: event.userUid, collectionUid: event.collectionUid));
-    } on BadRequestException catch (e) {
-      emit(CollectionPdfState.error(message: e.message));
+    } on LocalizedException catch (e) {
+      emit(CollectionPdfState.error(message: e));
     }
   }
 }

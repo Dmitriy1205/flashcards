@@ -6,6 +6,7 @@ import 'package:flashcards/presentation/blocs/lists/lists_bloc.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'collections.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class Lists extends StatefulWidget {
   const Lists({Key? key}) : super(key: key);
@@ -27,7 +28,7 @@ class _ListsState extends State<Lists> {
       listener: (context, state) {
         state.maybeMap(
           operationSucceeded: (_){
-            AppToast.showSuccess(context, "Success");
+            AppToast.showSuccess(context, AppLocalizations.of(context)!.success);
           },
           viewCards: (selectedCollection) {
             router.push(
@@ -50,7 +51,7 @@ class _ListsState extends State<Lists> {
       builder: (context, state) {
         return Container(
           child: state.maybeMap(
-            loading: (_) => const CircularProgressIndicator(),
+            loading: (_) => const Center(child: CircularProgressIndicator()),
             error: (e) => Center(
                 child: Text(
               'Error $e',
@@ -59,12 +60,19 @@ class _ListsState extends State<Lists> {
             )),
             viewCollections: (collections) {
               return Collections(
+                  onTileTap: (el){
+                    context
+                        .read<ListsBloc>()
+                        .add(ListsEvent.selectCollection(
+                      collection: el,
+                    ));
+                  },
                   collectionsList: collections.collectionsList,
                   isEditMode: collections.isEditMode);
             },
             orElse: () {
-              return const Center(
-                child: Text(AppStrings.noCollection),
+              return Center(
+                child: Text(AppLocalizations.of(context)!.noCollection),
               );
             },
           ),

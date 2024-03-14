@@ -23,6 +23,7 @@ import '../../../../core/themes/theme.dart';
 import '../../../blocs/sign_in/signin_bloc.dart';
 import '../../../widgets/app_elevated_button.dart';
 import 'mobile_sign_up.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class MobileSignInScreen extends StatefulWidget {
   const MobileSignInScreen({super.key});
@@ -71,7 +72,7 @@ class _MobileSignInScreenState extends State<MobileSignInScreen> {
           listener: (context, state){
             state.maybeMap(
                 userNotVerified: (_){
-                  AppToast.showError(context, "Confirm email address before login");
+                  AppToast.showError(context, AppLocalizations.of(context)!.confirmEmailAddress);
                 },
                 orElse: (){});
           },
@@ -80,7 +81,7 @@ class _MobileSignInScreenState extends State<MobileSignInScreen> {
               state.maybeMap(
                   success: (_)=>context.read<AuthBloc>().add(AuthEvent.initUser(user: context.read<AuthBloc>().state.user)),
                   error: (e) {
-                    AppToast.showError(context, e.error);
+                    AppToast.showError(context, e.error.localizedMessageOrDefault(context));
                   },
                   orElse: () {});
             },
@@ -100,18 +101,18 @@ class _MobileSignInScreenState extends State<MobileSignInScreen> {
                             child: Image.asset(AppImages.logo,scale: 1.5,),
                           ),
                           Text(
-                            AppStrings.login,
+                            AppLocalizations.of(context)!.login,
                             style: AppTheme.themeData.textTheme.headlineLarge,
                           ),
                           Text(
-                            AppStrings.loginHead,
+                            AppLocalizations.of(context)!.loginHead,
                             style: AppTheme.themeData.textTheme.headlineSmall,
                           ),
                           const SizedBox(
                             height: 30,
                           ),
                           Text(
-                            AppStrings.email,
+                            AppLocalizations.of(context)!.email,
                             style: AppTheme.themeData.textTheme.titleMedium,
                           ),
                           const SizedBox(
@@ -120,14 +121,14 @@ class _MobileSignInScreenState extends State<MobileSignInScreen> {
                           AppTextField(
                             focusNode: _emailNode,
                             textController: _emailController,
-                            hintText: AppStrings.enterEmail,
-                            validator: !_validateEmail ? (_) => null : Validator.validateEmail,
+                            hintText: AppLocalizations.of(context)!.enterEmail,
+                            validator: !_validateEmail ? (_) => null : Validator(context).validateEmail,
                           ),
                           const SizedBox(
                             height: 14,
                           ),
                           Text(
-                            AppStrings.password,
+                            AppLocalizations.of(context)!.password,
                             style: AppTheme.themeData.textTheme.titleMedium,
                           ),
                           const SizedBox(
@@ -137,7 +138,7 @@ class _MobileSignInScreenState extends State<MobileSignInScreen> {
                             focusNode: _passwordNode,
                             obscureText: isPassObscure,
                             textController: _passwordController,
-                            hintText: AppStrings.enterPass,
+                            hintText: AppLocalizations.of(context)!.enterPass,
                             suffixIcon: IconButton(
                               onPressed: () {
                                 setState(() {
@@ -148,7 +149,7 @@ class _MobileSignInScreenState extends State<MobileSignInScreen> {
                                   ? SvgPicture.asset(AppIcons.closedEye)
                                   : SvgPicture.asset(AppIcons.openEye),
                             ),
-                            validator: Validator.validatePasswordEmpty,
+                            validator: Validator(context).validatePasswordEmpty,
                           ),
                           const SizedBox(
                             height: 7,
@@ -166,7 +167,7 @@ class _MobileSignInScreenState extends State<MobileSignInScreen> {
                                   );
                                 },
                                 child: Text(
-                                  '${AppStrings.forgotPass}?',
+                                  '${AppLocalizations.of(context)!.forgotPass}?',
                                   style: AppTheme.themeData.textTheme.titleSmall,
                                 )),
                           ),
@@ -177,11 +178,11 @@ class _MobileSignInScreenState extends State<MobileSignInScreen> {
                             widget: state.maybeMap(
                               loading: (_)=> const SizedBox(width:20,height:20,child: LoadingIndicator(color: Colors.white,)),
                                 orElse: ()=>Text(
-                              AppStrings.buttonLogin,
+                              AppLocalizations.of(context)!.buttonLogin,
                               style: AppTheme.themeData.textTheme.titleSmall!
                                       .copyWith(color: Colors.white),
                             )),
-                              text: AppStrings.buttonLogin, onPressed: () async{
+                              text: AppLocalizations.of(context)!.buttonLogin, onPressed: () async{
                               if(!_validateEmail){
                                 setState(() {
                                   _emailWasFocused = true;
@@ -216,11 +217,11 @@ class _MobileSignInScreenState extends State<MobileSignInScreen> {
                                         style: AppTheme.themeData.textTheme
                                             .titleSmall,
                                         children: [
-                                          const TextSpan(
-                                            text: '${AppStrings.dontHaveAccount} ',
+                                          TextSpan(
+                                            text: '${AppLocalizations.of(context)!.dontHaveAccount} ',
                                           ),
                                           TextSpan(
-                                              text: AppStrings.signUp,
+                                              text: AppLocalizations.of(context)!.signUp,
                                               style: const TextStyle(
                                                 color: AppColors.mainAccent,
                                                 fontWeight: FontWeight.w600,
@@ -256,7 +257,7 @@ class _MobileSignInScreenState extends State<MobileSignInScreen> {
                                 padding: const EdgeInsets.symmetric(
                                     horizontal: 10),
                                 child: Text(
-                                  AppStrings.orWith,
+                                  AppLocalizations.of(context)!.orWith,
                                   style: AppTheme.themeData.textTheme.titleSmall,
                                 ),
                               ),

@@ -12,6 +12,7 @@ import 'package:flashcards/presentation/widgets/swiper.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class LearnCards extends StatefulWidget {
   const LearnCards({Key? key, required this.collectionId, required this.cards})
@@ -94,7 +95,7 @@ class _LearnCardsState extends State<LearnCards> {
                       width: 19,
                     ),
                     Text(
-                      AppStrings.learn,
+                      AppLocalizations.of(context)!.learn,
                       style: AppTheme.themeData.textTheme.headlineLarge,
                     ),
                   ]),
@@ -279,7 +280,7 @@ class _LearnCardsState extends State<LearnCards> {
                   .copyWith(fontSize: 18),
             ));
           }, orElse: () {
-            return const Center(child: Text('No cards left to learn'));
+            return Center(child: Text(AppLocalizations.of(context)!.noCardsLeft));
           });
         },
       ),

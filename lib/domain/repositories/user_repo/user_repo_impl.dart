@@ -3,7 +3,7 @@ import 'package:flashcards/domain/entities/user_entity/user_entity.dart';
 import 'package:flashcards/domain/params/user_param/edit_user_param.dart';
 import 'package:flashcards/domain/repositories/user_repo/user_repo_contract.dart';
 
-class UserRepoImpl extends UserRepoContract {
+class UserRepoImpl extends UserRepo {
   UserRepoImpl({required this.userServiceImpl});
 
   final UserServiceImpl userServiceImpl;

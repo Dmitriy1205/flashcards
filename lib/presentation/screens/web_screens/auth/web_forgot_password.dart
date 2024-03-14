@@ -14,6 +14,7 @@ import '../../../blocs/forgot_password/forgot_password_bloc.dart';
 import '../../../widgets/app_elevated_button.dart';
 import '../../../widgets/app_text_field.dart';
 import '../../../widgets/loading_indicator.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class WebForgotPasswordScreen extends StatefulWidget {
   const WebForgotPasswordScreen({super.key});
@@ -59,7 +60,7 @@ class _WebForgotPasswordScreenState extends State<WebForgotPasswordScreen> {
           listener: (context, state) {
             state.maybeMap(
                 error: (e) {
-                  AppToast.showError(context, e.error);
+                  AppToast.showError(context, e.error.localizedMessageOrDefault(context));
                 },
                 success: (_) {
                   router.pop();
@@ -101,18 +102,18 @@ class _WebForgotPasswordScreenState extends State<WebForgotPasswordScreen> {
                               height: 76,
                             ),
                             Text(
-                              AppStrings.forgotPass,
+                              AppLocalizations.of(context)!.forgotPass,
                               style: AppTheme.themeData.textTheme.headlineLarge,
                             ),
                             Text(
-                              AppStrings.forgotPassHeader,
+                              AppLocalizations.of(context)!.forgotPassHeader,
                               style: AppTheme.themeData.textTheme.headlineSmall,
                             ),
                             const SizedBox(
                               height: 30,
                             ),
                             Text(
-                              AppStrings.email,
+                              AppLocalizations.of(context)!.email,
                               style: AppTheme.themeData.textTheme.titleMedium,
                             ),
                             const SizedBox(
@@ -123,8 +124,8 @@ class _WebForgotPasswordScreenState extends State<WebForgotPasswordScreen> {
                               child: AppTextField(
                                 focusNode: _emailNode,
                                 textController: _emailController,
-                                hintText: AppStrings.enterEmail,
-                                validator: !_validateEmail ? (_) => null : Validator.validateEmail,
+                                hintText: AppLocalizations.of(context)!.enterEmail,
+                                validator: !_validateEmail ? (_) => null : Validator(context).validateEmail,
                               ),
                             ),
                             const SizedBox(
@@ -153,12 +154,12 @@ class _WebForgotPasswordScreenState extends State<WebForgotPasswordScreen> {
                                             color: Colors.white,
                                           )),
                                       orElse: () => Text(
-                                        AppStrings.buttonSend,
+                                        AppLocalizations.of(context)!.buttonSend,
                                         style: AppTheme
                                             .themeData.textTheme.titleSmall!
                                             .copyWith(color: Colors.white),
                                       )),
-                                  text: AppStrings.buttonSend,
+                                  text: AppLocalizations.of(context)!.buttonSend,
                                   onPressed: () {
                                     if (!_formKey.currentState!.validate()) {
                                       return;
@@ -217,18 +218,18 @@ class _WebForgotPasswordScreenState extends State<WebForgotPasswordScreen> {
                                   height: 76,
                                 ),
                                 Text(
-                                  AppStrings.forgotPass,
+                                  AppLocalizations.of(context)!.forgotPass,
                                   style: AppTheme.themeData.textTheme.headlineLarge,
                                 ),
                                 Text(
-                                  AppStrings.forgotPassHeader,
+                                  AppLocalizations.of(context)!.forgotPassHeader,
                                   style: AppTheme.themeData.textTheme.headlineSmall,
                                 ),
                                 const SizedBox(
                                   height: 30,
                                 ),
                                 Text(
-                                  AppStrings.email,
+                                  AppLocalizations.of(context)!.email,
                                   style: AppTheme.themeData.textTheme.titleMedium,
                                 ),
                                 const SizedBox(
@@ -239,8 +240,8 @@ class _WebForgotPasswordScreenState extends State<WebForgotPasswordScreen> {
                                   child: AppTextField(
                                     focusNode: _emailNode,
                                     textController: _emailController,
-                                    hintText: AppStrings.enterEmail,
-                                    validator: Validator.validateEmail,
+                                    hintText: AppLocalizations.of(context)!.enterEmail,
+                                    validator: Validator(context).validateEmail,
                                   ),
                                 ),
                                 const SizedBox(
@@ -269,12 +270,12 @@ class _WebForgotPasswordScreenState extends State<WebForgotPasswordScreen> {
                                                 color: Colors.white,
                                               )),
                                           orElse: () => Text(
-                                            AppStrings.buttonSend,
+                                            AppLocalizations.of(context)!.buttonSend,
                                             style: AppTheme
                                                 .themeData.textTheme.titleSmall!
                                                 .copyWith(color: Colors.white),
                                           )),
-                                      text: AppStrings.buttonSend,
+                                      text: AppLocalizations.of(context)!.buttonSend,
                                       onPressed: () async{
                                         if(!_validateEmail){
                                           setState(() {

@@ -33,5 +33,5 @@ class CollectionPdfState with _$CollectionPdfState {
   const factory CollectionPdfState.loaded({required List<CollectionPdfEntity> pdfs, required List<String> pathsDownloading, required List<String> pathsDownloaded}) = _LoadedState;
   const factory CollectionPdfState.editing({required List<EditCollectionPdfEntity> pdfs}) = _EditingState;
   const factory CollectionPdfState.saved({required List<CollectionPdfEntity> pdfs}) = _SavedState;
-  const factory CollectionPdfState.error({required String message}) = _ErrorState;
+  const factory CollectionPdfState.error({required LocalizedException message}) = _ErrorState;
 }

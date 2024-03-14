@@ -8,5 +8,5 @@ class ForgotPasswordState with _$ForgotPasswordState {
 
   const factory ForgotPasswordState.success() = _SuccesState;
 
-  const factory ForgotPasswordState.error({required String error}) = _ErrorState;
+  const factory ForgotPasswordState.error({required LocalizedException error}) = _ErrorState;
 }

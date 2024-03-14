@@ -30,8 +30,8 @@ class AppleSigninBloc extends Bloc<AppleSigninEvent, AppleSigninState> {
       await _authRepository.signInWithApple();
 
       emit(const AppleSigninState.success());
-    } on BadRequestException catch (e) {
-      emit(AppleSigninState.error(error: e.message));
+    } on LocalizedException catch (e) {
+      emit(AppleSigninState.error(error: e));
     }
   }
 }

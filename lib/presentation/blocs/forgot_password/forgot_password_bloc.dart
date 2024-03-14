@@ -31,8 +31,8 @@ class ForgotPasswordBloc
     try {
       await _authRepository.resetPassword(event.email);
       emit(const ForgotPasswordState.success());
-    } on BadRequestException catch (e) {
-      emit(ForgotPasswordState.error(error: e.message));
+    } on LocalizedException catch (e) {
+      emit(ForgotPasswordState.error(error: e));
     }
   }
 }

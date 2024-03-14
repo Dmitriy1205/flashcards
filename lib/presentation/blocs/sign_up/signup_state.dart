@@ -8,5 +8,5 @@ class SignupState with _$SignupState {
 
   const factory SignupState.success() = _SuccesState;
 
-  const factory SignupState.error({required String error}) = _ErrorState;
+  const factory SignupState.error({required LocalizedException error}) = _ErrorState;
 }

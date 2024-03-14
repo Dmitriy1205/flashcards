@@ -31,7 +31,7 @@ class ListsBloc extends Bloc<ListsEvent, ListsState> {
       started: (event) => _started(event, emit),
       deleteSelectedCollection: (event) =>
           _deleteSelectedCollection(event, emit),
-      editListName: (event) => _editListName(event, emit),
+      editListName: (event) => _editListName(event, emit)
     );
   }
 

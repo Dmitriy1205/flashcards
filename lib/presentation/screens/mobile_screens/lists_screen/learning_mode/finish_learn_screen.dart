@@ -3,6 +3,7 @@ import 'package:adaptive_action_sheet/adaptive_action_sheet.dart';
 import 'package:flashcards/core/const/colors.dart';
 import 'package:flashcards/core/const/icons.dart';
 import 'package:flashcards/core/const/images.dart';
+import 'package:flashcards/core/const/strings.dart';
 import 'package:flashcards/core/router/router.dart';
 import 'package:flashcards/core/themes/theme.dart';
 import 'package:flashcards/domain/entities/card_entity/card_entity.dart';
@@ -12,6 +13,7 @@ import 'package:flashcards/presentation/widgets/app_elevated_button.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class FinishLearningScreen extends StatefulWidget {
   const FinishLearningScreen(
@@ -63,7 +65,7 @@ class _FinishLearningScreenState extends State<FinishLearningScreen> {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Text(
-              "You're doing a great \n job! Keep up the \n good work!",
+              AppLocalizations.of(context)!.greatJob,
               style: AppTheme.themeData.textTheme.titleMedium!
                   .copyWith(fontSize: 22),
             ),
@@ -90,7 +92,7 @@ class _FinishLearningScreenState extends State<FinishLearningScreen> {
                       Row(
                         children: [
                           Text(
-                            'Known',
+                            AppLocalizations.of(context)!.known,
                             style: AppTheme.themeData.textTheme.headlineLarge!
                                 .copyWith(
                               fontSize: 17,
@@ -119,7 +121,7 @@ class _FinishLearningScreenState extends State<FinishLearningScreen> {
                       Row(
                         children: [
                           Text(
-                            'Still learning',
+                            AppLocalizations.of(context)!.stillLearning,
                             style: AppTheme.themeData.textTheme.headlineLarge!
                                 .copyWith(
                               fontSize: 17,
@@ -160,7 +162,7 @@ class _FinishLearningScreenState extends State<FinishLearningScreen> {
             Center(
               child: InkWell(
                   child: Text(
-                    'Finish',
+                    AppLocalizations.of(context)!.finish,
                     style: AppTheme.themeData.textTheme.titleMedium!.copyWith(
                       fontSize: 17,
                       fontWeight: FontWeight.w600,
@@ -172,7 +174,7 @@ class _FinishLearningScreenState extends State<FinishLearningScreen> {
               height: 23,
             ),
             AppElevatedButton(
-              text: 'Continue Learning',
+              text: AppLocalizations.of(context)!.continueLearning,
               onPressed: () {
                 showBottomMenu(
                     scaffoldKey: _scaffoldKey,
@@ -205,7 +207,7 @@ class _FinishLearningScreenState extends State<FinishLearningScreen> {
       androidBorderRadius: 30,
       actions: <BottomSheetAction>[
         BottomSheetAction(
-          title: Text('Learn all ${cards.length}',
+          title: Text('${AppLocalizations.of(context)!.learnAll} ${cards.length}',
               style: AppTheme.themeData.textTheme.titleMedium!
                   .copyWith(fontSize: 16, fontWeight: FontWeight.w600)),
           onPressed: (context) {
@@ -217,7 +219,7 @@ class _FinishLearningScreenState extends State<FinishLearningScreen> {
           },
         ),
         BottomSheetAction(
-            title: Text('Only unknown ${learningCardsList.length}',
+            title: Text('${AppLocalizations.of(context)!.onlyUnknown} ${learningCardsList.length}',
                 style: AppTheme.themeData.textTheme.titleMedium!
                     .copyWith(fontSize: 16, fontWeight: FontWeight.w600)),
             onPressed: (context) {
@@ -231,7 +233,7 @@ class _FinishLearningScreenState extends State<FinishLearningScreen> {
               );
             }),
         BottomSheetAction(
-            title: Text('Only known ${knownCardsList.length}',
+            title: Text('${AppLocalizations.of(context)!.onlyKnown} ${knownCardsList.length}',
                 style: AppTheme.themeData.textTheme.titleMedium!
                     .copyWith(fontSize: 16, fontWeight: FontWeight.w600)),
             onPressed: (context) {
@@ -246,7 +248,7 @@ class _FinishLearningScreenState extends State<FinishLearningScreen> {
             }),
       ],
       cancelAction: CancelAction(
-          title: Text('Cancel',
+          title: Text(AppLocalizations.of(context)!.cancel,
               style: AppTheme.themeData.textTheme.titleMedium!.copyWith(
                   fontSize: 16,
                   fontWeight: FontWeight

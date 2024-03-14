@@ -8,5 +8,5 @@ class GoogleSigninState with _$GoogleSigninState {
 
   const factory GoogleSigninState.success() = _SuccesState;
 
-  const factory GoogleSigninState.error({required String error}) = _ErrorState;
+  const factory GoogleSigninState.error({required LocalizedException error}) = _ErrorState;
 }

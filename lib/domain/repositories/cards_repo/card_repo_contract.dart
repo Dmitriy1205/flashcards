@@ -12,9 +12,13 @@ abstract class CardRepo {
   Future<void> shareCollection(
       {required String collectionId, required String collectionName});
 
+  Future<void> importExcel(
+      {required String path,
+      required String collectionId,
+      required String collectionName});
+
   Future<void> createSharedCards(
       {required String collectionId, required String sender});
-
 
   Future<void> deleteCards(
       {required List<String> cardsToDelete, required String collectionId});

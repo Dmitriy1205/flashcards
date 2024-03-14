@@ -9,6 +9,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/svg.dart';
 
 import '../../core/utils/confirm_dialog.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class CustomNavigationBar extends StatefulWidget {
   const CustomNavigationBar({Key? key, required this.pageController})
@@ -126,7 +127,7 @@ class _CustomNavigationBarState extends State<CustomNavigationBar> {
                             borderRadius: BorderRadius.circular(32),
                             onTap: () async{
                               if(context.read<ListsBloc>().isEditMode){
-                                final confirmed = await confirmOperation(context, title: "Confirm deleting", message: "Are you sure that you want to delete selected collections?", action: "Delete", cancel: "Cancel");
+                                final confirmed = await confirmOperation(context, title: AppLocalizations.of(context)!.confirmDeleting, message: AppLocalizations.of(context)!.deleteSelectedCollection, action: AppLocalizations.of(context)!.delete, cancel: AppLocalizations.of(context)!.cancel);
                                 if(!confirmed) return;
                                 context.read<ListsBloc>().add(
                                     const ListsEvent.deleteSelectedCollection(
@@ -179,7 +180,7 @@ class _CustomNavigationBarState extends State<CustomNavigationBar> {
                           child: Align(
                             alignment: Alignment.center,
                             child: Text(
-                              AppStrings.newCollection,
+                              AppLocalizations.of(context)!.newCollection,
                               style: AppTheme.themeData.textTheme.titleMedium!
                                   .copyWith(fontSize: 18),
                             ),
@@ -187,7 +188,7 @@ class _CustomNavigationBarState extends State<CustomNavigationBar> {
                         ),
                       ],
                     ),
-                    Text(AppStrings.giveName,
+                    Text(AppLocalizations.of(context)!.giveName,
                         style: AppTheme.themeData.textTheme.labelSmall!
                             .copyWith(color:Colors.black)),
                     const SizedBox(
@@ -223,13 +224,13 @@ class _CustomNavigationBarState extends State<CustomNavigationBar> {
                       height: 54,
                       width: double.infinity,
                       child: TextButton(
-                        child: Text(AppStrings.done,
+                        child: Text(AppLocalizations.of(context)!.done,
                             style: AppTheme.themeData.textTheme.labelMedium!
                                 .copyWith(color: AppColors.mainAccent)),
                         onPressed: () {
                           if (nameTextEditingController.text.isNotEmpty) {
                             if(context.read<ListsBloc>().state.collectionsList!.any((element) => element.collectionName == nameTextEditingController.text )){
-                            AppToast.showError(context, 'Collection with same name exists ');
+                            AppToast.showError(context, AppLocalizations.of(context)!.collectionExists);
                             Navigator.of(context).pop();
 
                             }else{

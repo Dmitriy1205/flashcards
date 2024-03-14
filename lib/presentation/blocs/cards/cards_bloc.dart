@@ -39,7 +39,21 @@ class CardsBloc extends Bloc<CardsEvent, CardsState> {
           shareCollection: (event) => _shareCard(event, emit),
           createSharedCards: (event) => _createSharedCards(event, emit),
           swipeCard: (event) => _swipeCard(event, emit),
-          finishLearn: (event) => _finishLearn(event, emit));
+          finishLearn: (event) => _finishLearn(event, emit),
+          importExcel: (event) => _importExcel(event, emit));
+
+  Future<void> _importExcel(_ImportExcel event, Emitter<CardsState> emit) async{
+    final prevState = state;
+    try{
+      await cardRepo.importExcel(path: event.path, collectionName: event.collectionName, collectionId: event.collectionId);
+      emit(const CardsState.successfullyImported());
+      final cards = await cardRepo.fetchCards(collectionId: event.collectionId);
+      emit(CardsState.loaded(cardsList: cards));
+    }on FormatException catch(e){
+      emit(CardsState.error(error: e.message));
+      emit(prevState);
+    }
+  }
 
   Future<void> _initCard(_InitCard event, Emitter<CardsState> emit) async {
     try {
@@ -130,6 +144,6 @@ class CardsBloc extends Bloc<CardsEvent, CardsState> {
 
   Future<void> _finishLearn(
       _FinishLearn event, Emitter<CardsState> emit) async {
-    emit(CardsState.finishLearning());
+    emit(const CardsState.finishLearning());
   }
 }
