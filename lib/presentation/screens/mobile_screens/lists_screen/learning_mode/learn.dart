@@ -20,6 +20,7 @@ class Learn extends StatefulWidget {
 }
 
 class _LearnState extends State<Learn> {
+  @override
   Widget build(BuildContext context) {
     return BlocConsumer<ListsBloc, ListsState>(
       listenWhen: (previousState, state) {
@@ -33,11 +34,6 @@ class _LearnState extends State<Learn> {
           operationSucceeded: (_) {
             AppToast.showSuccess(context, AppLocalizations.of(context)!.success);
           },
-          viewCards: (selectedCollection) {
-            showBottomMenu(
-                scaffoldKey: widget.scaffoldKey,
-                selectedCollectionId: selectedCollection.collection.id);
-          },
           orElse: () {},
         );
       },
@@ -50,7 +46,7 @@ class _LearnState extends State<Learn> {
       builder: (context, state) {
         return Container(
           child: state.maybeMap(
-            loading: (_) => const CircularProgressIndicator(),
+            loading: (_) => const Center(child: CircularProgressIndicator()),
             error: (e) => Center(
                 child: Text(
               'Error $e',
@@ -59,6 +55,11 @@ class _LearnState extends State<Learn> {
             )),
             viewCollections: (collections) {
               return Collections(
+                  onTileTap: (el){
+                    showBottomMenu(
+                        scaffoldKey: widget.scaffoldKey,
+                        selectedCollectionId: el.id);
+                  },
                   collectionsList: collections.collectionsList,
                   isEditMode: collections.isEditMode);
             },

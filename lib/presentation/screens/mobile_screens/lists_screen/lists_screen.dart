@@ -51,7 +51,7 @@ class _ListsState extends State<Lists> {
       builder: (context, state) {
         return Container(
           child: state.maybeMap(
-            loading: (_) => const CircularProgressIndicator(),
+            loading: (_) => const Center(child: CircularProgressIndicator()),
             error: (e) => Center(
                 child: Text(
               'Error $e',
@@ -60,6 +60,13 @@ class _ListsState extends State<Lists> {
             )),
             viewCollections: (collections) {
               return Collections(
+                  onTileTap: (el){
+                    context
+                        .read<ListsBloc>()
+                        .add(ListsEvent.selectCollection(
+                      collection: el,
+                    ));
+                  },
                   collectionsList: collections.collectionsList,
                   isEditMode: collections.isEditMode);
             },
