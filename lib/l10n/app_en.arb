@@ -51,7 +51,7 @@
   "deleteSelectedCards": "Are you sure that you want to delete selected cards?",
   "delete": "Delete",
   "success": "Success",
-  "greatJob": "You're doing a great \n job! Keep up the \n good work!",
+  "greatJob": "You're doing a great \njob! Keep up the \ngood work!",
   "saved": "Saved",
   "noFileAttachedToCollection": "No file attached to collection",
   "downloadingStarted": "Downloading started",

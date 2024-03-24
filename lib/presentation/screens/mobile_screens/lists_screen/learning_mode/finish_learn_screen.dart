@@ -83,70 +83,78 @@ class _FinishLearningScreenState extends State<FinishLearningScreen> {
                         segmentGap: 2),
                   ),
                 ),
-                SizedBox(
-                  width: 191,
-                  height: 63,
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Row(
-                        children: [
-                          Text(
-                            AppLocalizations.of(context)!.known,
-                            style: AppTheme.themeData.textTheme.headlineLarge!
-                                .copyWith(
-                              fontSize: 17,
-                              fontWeight: FontWeight.w600,
-                            ),
-                          ),
-                          Spacer(),
-                          Container(
-                              height: 26,
-                              width: 26,
-                              decoration: const BoxDecoration(
-                                color: AppColors.mainAccent,
-                                shape: BoxShape.circle,
+                Expanded(
+                  child: IntrinsicHeight(
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Row(
+                          children: [
+                            Expanded(
+                              child: Text(
+                                AppLocalizations.of(context)!.known,
+                                maxLines: 2,
+                                overflow: TextOverflow.ellipsis,
+                                style: AppTheme.themeData.textTheme.headlineLarge!
+                                    .copyWith(
+                                  fontSize: 17,
+                                  fontWeight: FontWeight.w600,
+                                ),
                               ),
-                              child: Center(
-                                  child: Text(widget.known.toString(),
-                                      style: AppTheme
-                                          .themeData.textTheme.labelMedium!
-                                          .copyWith(
-                                        color: Colors.white,
-                                        fontSize: 14,
-                                      ))))
-                        ],
-                      ),
-                      Spacer(),
-                      Row(
-                        children: [
-                          Text(
-                            AppLocalizations.of(context)!.stillLearning,
-                            style: AppTheme.themeData.textTheme.headlineLarge!
-                                .copyWith(
-                              fontSize: 17,
-                              fontWeight: FontWeight.w600,
                             ),
-                          ),
-                          Spacer(),
-                          Container(
-                              height: 26,
-                              width: 26,
-                              decoration: const BoxDecoration(
-                                color: AppColors.mainAccent,
-                                shape: BoxShape.circle,
+                            SizedBox(width: 10,),
+                            Container(
+                                height: 26,
+                                width: 26,
+                                decoration: const BoxDecoration(
+                                  color: AppColors.mainAccent,
+                                  shape: BoxShape.circle,
+                                ),
+                                child: Center(
+                                    child: Text(widget.known.toString(),
+                                        style: AppTheme
+                                            .themeData.textTheme.labelMedium!
+                                            .copyWith(
+                                          color: Colors.white,
+                                          fontSize: 14,
+                                        ))))
+                          ],
+                        ),
+                        SizedBox(height: 10,),
+                        Row(
+                          children: [
+                            Expanded(
+                              child: Text(
+                                AppLocalizations.of(context)!.stillLearning,
+                                maxLines: 2,
+                                overflow: TextOverflow.ellipsis,
+                                style: AppTheme.themeData.textTheme.headlineLarge!
+                                    .copyWith(
+                                  fontSize: 17,
+                                  fontWeight: FontWeight.w600,
+                                ),
                               ),
-                              child: Center(
-                                  child: Text(widget.learning.toString(),
-                                      style: AppTheme
-                                          .themeData.textTheme.labelMedium!
-                                          .copyWith(
-                                        color: Colors.white,
-                                        fontSize: 14,
-                                      ))))
-                        ],
-                      ),
-                    ],
+                            ),
+                            SizedBox(width: 10,),
+                            Container(
+                                height: 26,
+                                width: 26,
+                                decoration: const BoxDecoration(
+                                  color: AppColors.mainAccent,
+                                  shape: BoxShape.circle,
+                                ),
+                                child: Center(
+                                    child: Text(widget.learning.toString(),
+                                        style: AppTheme
+                                            .themeData.textTheme.labelMedium!
+                                            .copyWith(
+                                          color: Colors.white,
+                                          fontSize: 14,
+                                        ))))
+                          ],
+                        ),
+                      ],
+                    ),
                   ),
                 )
               ],

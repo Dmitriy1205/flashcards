@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:flashcards/core/const/colors.dart';
 import 'package:flashcards/core/const/icons.dart';
 import 'package:flashcards/core/const/strings.dart';
@@ -6,6 +8,7 @@ import 'package:flashcards/core/themes/theme.dart';
 import 'package:flashcards/domain/entities/card_entity/card_entity.dart';
 import 'package:flashcards/presentation/blocs/cards/cards_bloc.dart';
 import 'package:flashcards/presentation/blocs/lists/lists_bloc.dart';
+import 'package:flashcards/presentation/screens/mobile_screens/lists_screen/cards/view_flash_card.dart';
 import 'package:flashcards/presentation/widgets/loading_indicator.dart';
 import 'package:flashcards/presentation/widgets/quill_text.dart';
 import 'package:flashcards/presentation/widgets/swiper.dart';
@@ -46,7 +49,6 @@ class _LearnCardsState extends State<LearnCards> {
       } else {
         learning += 1;
       }
-      print('known $known learning $learning');
     }
   }
 
@@ -144,7 +146,7 @@ class _LearnCardsState extends State<LearnCards> {
                         Padding(
                           padding: const EdgeInsets.symmetric(horizontal: 35),
                           child: Text(
-                            '$_index/${known + learning}',
+                            '${min(_index, known + learning)}/${known + learning}',
                             style: AppTheme.themeData.textTheme.labelMedium!
                                 .copyWith(
                               color: AppColors.mainAccent,
@@ -233,37 +235,7 @@ class _LearnCardsState extends State<LearnCards> {
                           cardController: _cardController,
                           context: context,
                           items: List.generate(widget.cards.length, (index) {
-                            return Container(
-                              decoration: const BoxDecoration(
-                                  boxShadow: [
-                                    BoxShadow(
-                                      color: AppColors.borderGrey,
-                                      blurRadius: 10,
-                                    ),
-                                  ],
-                                  shape: BoxShape.rectangle,
-                                  borderRadius: BorderRadius.all(
-                                    Radius.circular(15),
-                                  )),
-                              child: Card(
-                                // shadowColor: Colors.grey,
-                                child: Center(
-                                    child: Padding(
-                                  padding: const EdgeInsets.symmetric(
-                                      horizontal: 50),
-                                  child: Align(
-                                    alignment: Alignment.center,
-                                    child: FractionallySizedBox(
-                                      widthFactor: 1,
-                                      // Adjust the width factor as needed
-                                      child: QuillText(
-                                        content: widget.cards[index].front,
-                                      ),
-                                    ),
-                                  ),
-                                )),
-                              ),
-                            );
+                            return _Card(card: widget.cards[index]);
                           }),
                         ),
                       ],
@@ -283,6 +255,78 @@ class _LearnCardsState extends State<LearnCards> {
             return Center(child: Text(AppLocalizations.of(context)!.noCardsLeft));
           });
         },
+      ),
+    );
+  }
+}
+
+class _Card extends StatefulWidget {
+  final CardEntity card;
+  const _Card({Key? key, required this.card}) : super(key: key);
+
+  @override
+  State<_Card> createState() => _CardState();
+}
+
+class _CardState extends State<_Card> {
+  bool isFlipped = false;
+  bool disableInitialAnimation = true;
+
+
+  @override
+  Widget build(BuildContext context) {
+    return GestureDetector(
+      onTap: (){
+        setState(() {
+          disableInitialAnimation = false;
+          isFlipped = !isFlipped;
+        });
+      },
+      child: TweenAnimationBuilder(
+        duration: disableInitialAnimation
+            ? const Duration(milliseconds: 0)
+            : const Duration(milliseconds: 700),
+        curve: Curves.easeOut,
+        tween: Tween(
+            begin: isFlipped ? 180.0 : 0.0,
+            end: isFlipped ? 0.0 : 180.0),
+        builder: (context, double value, child) => RotationY(
+          rotationY: value,
+          child: Container(
+            decoration: const BoxDecoration(
+                boxShadow: [
+                  BoxShadow(
+                    color: AppColors.borderGrey,
+                    blurRadius: 10,
+                  ),
+                ],
+                shape: BoxShape.rectangle,
+                borderRadius: BorderRadius.all(
+                  Radius.circular(15),
+                )),
+            child: Card(
+              // shadowColor: Colors.grey,
+              child: Center(
+                  child: RotationY(
+                    rotationY: value >= 90 ? 180 : 0,
+                    child: Padding(
+                      padding: const EdgeInsets.symmetric(
+                          horizontal: 50),
+                      child: Align(
+                        alignment: Alignment.center,
+                        child: FractionallySizedBox(
+                          widthFactor: 1,
+                          // Adjust the width factor as needed
+                          child: QuillText(
+                            content: value >= 90 ? widget.card.back : widget.card.front,
+                          ),
+                        ),
+                      ),
+                    ),
+                  )),
+            ),
+          ),
+        ),
       ),
     );
   }
