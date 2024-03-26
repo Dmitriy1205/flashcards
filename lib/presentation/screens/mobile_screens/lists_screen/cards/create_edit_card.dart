@@ -34,7 +34,6 @@ class CreateEditCard extends StatefulWidget {
 class CreateEditCardState extends State<CreateEditCard> {
   String frontImage = '';
   String backImage = '';
-  OverlayEntry? _dialogOverlayEntry;
 
   Color _selectedColor = Colors.black;
   final GlobalKey<PaintingAreaState> _signatureKey =
@@ -43,6 +42,8 @@ class CreateEditCardState extends State<CreateEditCard> {
   // set imag (String base64){
   //   image = base64;
   // }
+
+  ScrollController _scrollController = ScrollController();
   late final _frontController = widget.cardEntity != null
       ? QuillController(
       document: Document.fromJson(widget.cardEntity!.front),
@@ -147,7 +148,10 @@ class CreateEditCardState extends State<CreateEditCard> {
       if (!mounted) return;
 
       if (_showKeyboardFront) {
-        Scrollable.ensureVisible(_frontKey.currentContext!);
+        setState(() {
+          _scrollController.animateTo(0, curve: Curves.easeOut,
+              duration: const Duration(milliseconds: 300));
+        });
       } else if (_showKeyboardBack) {
         Scrollable.ensureVisible(_backKey.currentContext!);
       }
@@ -158,6 +162,10 @@ class CreateEditCardState extends State<CreateEditCard> {
     setState(() {
       _showKeyboardBack = false;
       _showKeyboardFront = false;
+    });
+    setState(() {
+      _scrollController.animateTo(0, curve: Curves.easeOut,
+          duration: const Duration(milliseconds: 300));
     });
   }
 
@@ -182,6 +190,8 @@ class CreateEditCardState extends State<CreateEditCard> {
                       "card": widget.cardEntity!.copyWith(
                         front: frontText,
                         back: backText,
+                        frontImage: frontImage,
+                        backImage: backImage
                       ),
                       "collectionId": widget.collectionId,
                     },
@@ -291,6 +301,7 @@ class CreateEditCardState extends State<CreateEditCard> {
           body: Stack(
             children: [
               SingleChildScrollView(
+                controller: _scrollController,
                 child: Column(
                   children: [
                     frontEditor(),
@@ -534,10 +545,7 @@ class CreateEditCardState extends State<CreateEditCard> {
               const SizedBox(width: 15),
               InkWell(
                 onTap: () {
-                  _dialogOverlayEntry =
-                      _createDialogOverlayEntry(context, true);
-
-                  Overlay.of(context).insert(_dialogOverlayEntry!);
+                  _openDialog(context, true);
                 },
                 child: SvgPicture.asset(
                   AppIcons.edit2,
@@ -678,9 +686,7 @@ class CreateEditCardState extends State<CreateEditCard> {
               const SizedBox(width: 15),
               InkWell(
                 onTap: () {
-                  _dialogOverlayEntry =
-                      _createDialogOverlayEntry(context, false);
-                  Overlay.of(context).insert(_dialogOverlayEntry!);
+                  _openDialog(context, false);
                 },
                 child: SvgPicture.asset(
                   AppIcons.edit2,
@@ -695,181 +701,175 @@ class CreateEditCardState extends State<CreateEditCard> {
     );
   }
 
-  OverlayEntry _createDialogOverlayEntry(BuildContext context, bool isFront) {
-    return OverlayEntry(builder: (context) {
+  Future<void> _openDialog(BuildContext context, bool isFront) {
+    return showDialog(context: context, builder: (context){
       return StatefulBuilder(
-          builder: (context, setStateIn) {
-            return
-              Material(
-                color: Colors.black26,
-                child: Stack(children: [
-                  Positioned(
-                    bottom: 0,
-                    child: Material(
-                      color: Colors.transparent,
-                      child: Container(
-                        width: MediaQuery
-                            .of(context)
-                            .size
-                            .width,
-                        height: 85,
-                        decoration: BoxDecoration(
-                          color: Colors.white,
-                          borderRadius: BorderRadius.circular(15),
-                          border: const Border.symmetric(
-                              horizontal: BorderSide(color: Colors.black)),
-                          boxShadow: [
-                            BoxShadow(
-                              color: Colors.black.withOpacity(0.25),
-                              spreadRadius: 1,
-                              blurRadius: 10,
-                              offset: const Offset(0, 4),
-                            ),
-                          ],
-                        ),
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                          children: AppColors.colors.map((color) {
-                            return GestureDetector(
-                              child: buildColorChoice(color, setStateIn),
-                            );
-                          }).toList(),
-                        ),
-                      ),
-                    ),
-                  ),
-                  Positioned(
-                    bottom: 104,
-                    right: 25,
-                    child: InkWell(
-                      onTap: () {
-                        _signatureKey.currentState!.clearSignature();
-                      },
-                      child: Container(
-                        height: 64,
-                        width: 64,
-                        decoration: BoxDecoration(
-
-                          borderRadius: BorderRadius.circular(35),
-                          color: Colors.white,
-                          boxShadow: [
-                            BoxShadow(
-                              color: Colors.black.withOpacity(0.25),
-                              spreadRadius: 1,
-                              blurRadius: 10,
-                              offset: const Offset(0, 4),
-                            ),
-                          ],
-                        ),
-                        child: Center(
-                          child: SvgPicture.asset(
-                            AppIcons.erase,
-                            height: 28,
-                            width: 24,
+        builder: (context, setStateIn) {
+          return Material(
+            color: Colors.black26,
+            child: Stack(children: [
+              Positioned(
+                  left: 0,
+                  bottom: 85,
+                  child: Material(
+                    color: Colors.transparent,
+                    child: Container(
+                      decoration: BoxDecoration(
+                        color: Colors.white,
+                        borderRadius: BorderRadius.circular(15),
+                        border: Border.all(color: Colors.black),
+                        boxShadow: [
+                          BoxShadow(
+                            color: Colors.black.withOpacity(0.25),
+                            spreadRadius: 1,
+                            blurRadius: 10,
+                            offset: const Offset(0, 4), // changes position of shadow
                           ),
-                        ),
+                        ],
                       ),
-                    ),
-                  ),
-                  Positioned(
-                    top: MediaQuery
-                        .of(context)
-                        .size
-                        .height / 5.5,
-                    left: MediaQuery
-                        .of(context)
-                        .size
-                        .width / 10,
-                    child: Material(
-                      color: Colors.transparent,
-                      child: Container(
-                        decoration: BoxDecoration(
-                          color: Colors.white,
-                          borderRadius: BorderRadius.circular(15),
-                          border: Border.all(color: Colors.black),
-                          boxShadow: [
-                            BoxShadow(
-                              color: Colors.black.withOpacity(0.25),
-                              spreadRadius: 1,
-                              blurRadius: 10,
-                              offset: const Offset(0, 4), // changes position of shadow
-                            ),
-                          ],
-                        ),
-                        width: MediaQuery
-                            .of(context)
-                            .size
-                            .width * 0.8,
-                        height: MediaQuery
-                            .of(context)
-                            .size
-                            .height * 0.55,
-                        child: Column(
-                          children: [
-                            SizedBox(
-                              height: 59,
-                              child: Row(
-                                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                                children: [
-                                  InkWell(
-                                    onTap: () => removeOverlay(),
-                                    child: Text(
-                                      'Cancel',
+                      width: MediaQuery
+                          .of(context)
+                          .size
+                          .width,
+                      height: MediaQuery
+                          .of(context)
+                          .size
+                          .width + 60,
+                      child: Column(
+                        children: [
+                          SizedBox(
+                            height: 59,
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                              children: [
+                                InkWell(
+                                  onTap: () => Navigator.of(context).pop(),
+                                  child: Text(
+                                    'Cancel',
+                                    style: AppTheme.themeData.textTheme
+                                        .labelMedium!
+                                        .copyWith(
+                                        fontSize: 18, color: AppColors.red),
+                                  ),
+                                ),
+                                TextButton(
+                                  onPressed: () async {
+                                    final img =
+                                    await _signatureKey.currentState!.rendered;
+                                    final byteData = await img.toByteData(
+                                        format: ImageByteFormat.png);
+                                    final bytes = byteData!.buffer
+                                        .asUint8List();
+                                    if (bytes.any((e) => e != 0)) {
+                                      setState(() {
+                                        isFront
+                                            ? frontImage =
+                                            base64Encode(bytes.toList())
+                                            : backImage =
+                                            base64Encode(bytes.toList());
+                                      });
+                                    }
+                                    Navigator.of(context).pop();
+                                  },
+                                  child: Text('Confirm',
                                       style: AppTheme.themeData.textTheme
                                           .labelMedium!
                                           .copyWith(
-                                          fontSize: 18, color: AppColors.red),
-                                    ),
-                                  ),
-                                  TextButton(
-                                    onPressed: () async {
-                                      final img =
-                                      await _signatureKey.currentState!.rendered;
-                                      final byteData = await img.toByteData(
-                                          format: ImageByteFormat.png);
-                                      final bytes = byteData!.buffer
-                                          .asUint8List();
-                                      removeOverlay();
-                                      if (bytes.any((e) => e != 0)) {
-                                        setState(() {
-                                          isFront
-                                              ? frontImage =
-                                              base64Encode(bytes.toList())
-                                              : backImage =
-                                              base64Encode(bytes.toList());
-                                        });
-                                      }
-                                    },
-                                    child: Text('Confirm',
-                                        style: AppTheme.themeData.textTheme
-                                            .labelMedium!
-                                            .copyWith(
-                                            fontSize: 18,
-                                            color: AppColors.green)),
-                                  ),
-                                ],
-                              ),
-                            ),
-                            Expanded(
-                              child: Container(
-                                width: double.infinity,
-                                decoration: BoxDecoration(
-                                    borderRadius: BorderRadius.circular(12),
-                                    color: Colors.white),
-                                child: PaintingArea(
-                                  color: _selectedColor,
-                                  key: _signatureKey,
+                                          fontSize: 18,
+                                          color: AppColors.green)),
                                 ),
+                              ],
+                            ),
+                          ),
+                          Expanded(
+                            child: Container(
+                              width: double.infinity,
+                              decoration: BoxDecoration(
+                                  borderRadius: BorderRadius.circular(12),
+                                  color: Colors.white),
+                              child: PaintingArea(
+                                color: _selectedColor,
+                                key: _signatureKey,
                               ),
                             ),
-                          ],
+                          ),
+                        ],
+                      ),
+                    ),
+                  )
+              ),
+              Positioned(
+                bottom: 0,
+                child: Material(
+                  color: Colors.transparent,
+                  child: Container(
+                    width: MediaQuery
+                        .of(context)
+                        .size
+                        .width,
+                    height: 85,
+                    decoration: BoxDecoration(
+                      color: Colors.white,
+                      borderRadius: BorderRadius.vertical(top: Radius.circular(15)),
+                      border: Border.symmetric(
+                          horizontal: BorderSide(color: Colors.black.withOpacity(0.25))),
+                      boxShadow: [
+                        BoxShadow(
+                          color: Colors.black.withOpacity(0.25),
+                          spreadRadius: 1,
+                          blurRadius: 10,
+                          offset: const Offset(0, 4),
                         ),
+                      ],
+                    ),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                      children: AppColors.colors.map((color) {
+                        return GestureDetector(
+                          child: buildColorChoice(color, setStateIn),
+                        );
+                      }).toList(),
+                    ),
+                  ),
+                ),
+              ),
+              Positioned(
+                bottom: 104,
+                right: 25,
+                child: InkWell(
+                  onTap: () {
+                    _signatureKey.currentState!.clearSignature();
+                  },
+                  child: Container(
+                    height: 64,
+                    width: 64,
+                    decoration: BoxDecoration(
+
+                      borderRadius: BorderRadius.circular(35),
+                      color: Colors.white,
+                      boxShadow: [
+                        BoxShadow(
+                          color: Colors.black.withOpacity(0.25),
+                          spreadRadius: 1,
+                          blurRadius: 10,
+                          offset: const Offset(0, 4),
+                        ),
+                      ],
+                    ),
+                    child: Center(
+                      child: SvgPicture.asset(
+                        AppIcons.erase,
+                        height: 28,
+                        width: 24,
                       ),
                     ),
                   ),
-                ]),
-              );
-          });
+                ),
+              ),
+            ]),
+          );
+        }
+      );
     });
   }
 
@@ -879,19 +879,19 @@ class CreateEditCardState extends State<CreateEditCard> {
         _selectedColor = color;
         setState(() {});
       },
-      child: Container(
-        width: 25,
-        height: 25,
-        decoration: BoxDecoration(
-          color: color,
-          shape: BoxShape.circle,
+      child: CircleAvatar(
+        backgroundColor: _selectedColor == color ? AppColors.mainAccent : Colors.transparent,
+        radius: 15,
+        child: Container(
+          width: 25,
+          height: 25,
+          decoration: BoxDecoration(
+            color: color,
+            shape: BoxShape.circle,
+          ),
         ),
       ),
     );
-  }
-
-  void removeOverlay() {
-    _dialogOverlayEntry?.remove();
   }
 
   @override
@@ -903,6 +903,7 @@ class CreateEditCardState extends State<CreateEditCard> {
     _frontController.dispose();
     _backController.dispose();
     _keyboardVisibilityStreamSubscription.cancel();
+    _scrollController.dispose();
     super.dispose();
   }
 }

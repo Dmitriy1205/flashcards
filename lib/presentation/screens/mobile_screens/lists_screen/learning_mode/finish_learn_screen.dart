@@ -15,6 +15,8 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
+import '../../../../widgets/learn_dialog.dart';
+
 class FinishLearningScreen extends StatefulWidget {
   const FinishLearningScreen(
       {Key? key,
@@ -196,82 +198,13 @@ class _FinishLearningScreenState extends State<FinishLearningScreen> {
               text: AppLocalizations.of(context)!.continueLearning,
               onPressed: () {
                 showBottomMenu(
-                    scaffoldKey: _scaffoldKey,
+                    context: context,
                     selectedCollectionId: widget.collectionId);
               },
             )
           ],
         ),
       ),
-    );
-  }
-
-  Future<Future> showBottomMenu(
-      {required GlobalKey<ScaffoldState> scaffoldKey,
-      required String selectedCollectionId}) async {
-    List<CardEntity> cards =
-        await context.read<CardsBloc>().getCards(selectedCollectionId);
-    List<CardEntity> knownCardsList = [];
-    List<CardEntity> learningCardsList = [];
-    for (CardEntity card in cards) {
-      if (card.isLearned) {
-        knownCardsList.add(card);
-      } else {
-        learningCardsList.add(card);
-      }
-    }
-    return showAdaptiveActionSheet(
-      context: scaffoldKey.currentContext!,
-      isDismissible: true,
-      androidBorderRadius: 30,
-      actions: <BottomSheetAction>[
-        BottomSheetAction(
-          title: Text('${AppLocalizations.of(context)!.learnAll} ${cards.length}',
-              style: AppTheme.themeData.textTheme.titleMedium!
-                  .copyWith(fontSize: 16, fontWeight: FontWeight.w600)),
-          onPressed: (context) {
-            Navigator.pop(context);
-            router.push(
-              '/learn_cards',
-              extra: {"collectionId": selectedCollectionId, "cards": cards},
-            );
-          },
-        ),
-        BottomSheetAction(
-            title: Text('${AppLocalizations.of(context)!.onlyUnknown} ${learningCardsList.length}',
-                style: AppTheme.themeData.textTheme.titleMedium!
-                    .copyWith(fontSize: 16, fontWeight: FontWeight.w600)),
-            onPressed: (context) {
-              Navigator.pop(context);
-              router.push(
-                '/learn_cards',
-                extra: {
-                  "collectionId": selectedCollectionId,
-                  "cards": learningCardsList
-                },
-              );
-            }),
-        BottomSheetAction(
-            title: Text('${AppLocalizations.of(context)!.onlyKnown} ${knownCardsList.length}',
-                style: AppTheme.themeData.textTheme.titleMedium!
-                    .copyWith(fontSize: 16, fontWeight: FontWeight.w600)),
-            onPressed: (context) {
-              Navigator.pop(context);
-              router.push(
-                '/learn_cards',
-                extra: {
-                  "collectionId": selectedCollectionId,
-                  "cards": knownCardsList
-                },
-              );
-            }),
-      ],
-      cancelAction: CancelAction(
-          title: Text(AppLocalizations.of(context)!.cancel,
-              style: AppTheme.themeData.textTheme.titleMedium!.copyWith(
-                  fontSize: 16,
-                  fontWeight: FontWeight
-                      .w600))), // onPressed parameter is optional by default will dismiss the ActionSheet
     );
   }
 }

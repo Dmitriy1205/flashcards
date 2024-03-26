@@ -263,7 +263,7 @@ class _CardsState extends State<Cards> {
               return state.maybeMap(loading: (_) {
                 return Container(
                     color: AppColors.background,
-                    child: LoadingIndicator());
+                    child: const LoadingIndicator());
               }, loaded: (data) {
                 return Column(
                   children: [
@@ -380,8 +380,8 @@ class _CardsState extends State<Cards> {
                                             );
                                           },
                                           child: ListTile(
-                                            title: QuillText(content: card.front, style: TextStyle(fontWeight: FontWeight.w600, color: AppColors.mainAccent),),
-                                            subtitle: QuillText(content: card.back, style: TextStyle(fontWeight: FontWeight.w400, color: Colors.black),),
+                                            title: QuillText(content: card.front, style: const TextStyle(fontWeight: FontWeight.w600, color: AppColors.mainAccent),),
+                                            subtitle: QuillText(content: card.back, style: const TextStyle(fontWeight: FontWeight.w400, color: Colors.black),),
                                             trailing: SvgPicture.asset(
                                               AppIcons.rightArrow,
                                               height: 18,
@@ -410,7 +410,7 @@ class _CardsState extends State<Cards> {
               }, orElse: () {
                 return Container(
                     color: AppColors.background,
-                    child: LoadingIndicator());
+                    child: const LoadingIndicator());
               });
             },
           ),

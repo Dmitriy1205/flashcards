@@ -1,3 +1,4 @@
+import 'dart:convert';
 import 'dart:math';
 
 import 'package:flashcards/core/const/colors.dart';
@@ -50,6 +51,8 @@ class _LearnCardsState extends State<LearnCards> {
         learning += 1;
       }
     }
+
+
   }
 
   @override
@@ -272,6 +275,23 @@ class _CardState extends State<_Card> {
   bool isFlipped = false;
   bool disableInitialAnimation = true;
 
+  Image? frontImage;
+  Image? backImage;
+
+  @override
+  void initState() {
+    super.initState();
+    frontImage = widget.card.frontImage == null || widget.card.frontImage!.isEmpty ? null : Image.memory(base64Decode(widget.card.frontImage!));
+    backImage = widget.card.backImage == null || widget.card.backImage!.isEmpty ? null : Image.memory(base64Decode(widget.card.backImage!));
+  }
+
+  @override
+  void didUpdateWidget(covariant _Card oldWidget) {
+    frontImage = widget.card.frontImage == null || widget.card.frontImage!.isEmpty ? null : Image.memory(base64Decode(widget.card.frontImage!));
+    backImage = widget.card.backImage == null || widget.card.backImage!.isEmpty ? null : Image.memory(base64Decode(widget.card.backImage!));
+    super.didUpdateWidget(oldWidget);
+  }
+
 
   @override
   Widget build(BuildContext context) {
@@ -317,8 +337,27 @@ class _CardState extends State<_Card> {
                         child: FractionallySizedBox(
                           widthFactor: 1,
                           // Adjust the width factor as needed
-                          child: QuillText(
-                            content: value >= 90 ? widget.card.back : widget.card.front,
+                          child: Column(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            crossAxisAlignment: CrossAxisAlignment.center,
+                            children: [
+                              value >= 90 ? (frontImage == null ? SizedBox.shrink() : SizedBox(
+                                  width: 140,
+                                  height: 140,
+                                  child: FittedBox(
+                                      fit: BoxFit.fill,
+                                      child: frontImage!))) : (backImage == null ? SizedBox.shrink() : SizedBox(
+                                  width: 140,
+                                  height: 140,
+                                  child: FittedBox(
+                                      fit: BoxFit.fill,
+                                      child: backImage!))),
+                              QuillText(
+                                content: value >= 90 ? widget.card.back : widget.card.front,
+                                center: true,
+                                style: TextStyle(fontSize: 22),
+                              ),
+                            ],
                           ),
                         ),
                       ),
