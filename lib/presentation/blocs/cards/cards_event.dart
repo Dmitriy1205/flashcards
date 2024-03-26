@@ -23,6 +23,12 @@ class CardsEvent with _$CardsEvent {
   const factory CardsEvent.importExcel(
       {required String path, required String collectionId, required String collectionName}) = _ImportExcel;
 
+  const factory CardsEvent.moveCards(
+      {required List<CardEntity> cards, required String fromCollectionId, required String toCollectionId}) = _MoveCards;
+
+  const factory CardsEvent.copyCards(
+      {required List<CardEntity> cards, required String toCollectionId}) = _CopyCards;
+
   const factory CardsEvent.shareCollection(
       {required String collectionId,
       required String collectionName}) = _ShareCard;

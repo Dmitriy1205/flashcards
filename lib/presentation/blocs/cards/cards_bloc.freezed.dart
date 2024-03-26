@@ -30,6 +30,11 @@ mixin _$CardsEvent {
     required TResult Function(
             String path, String collectionId, String collectionName)
         importExcel,
+    required TResult Function(List<CardEntity> cards, String fromCollectionId,
+            String toCollectionId)
+        moveCards,
+    required TResult Function(List<CardEntity> cards, String toCollectionId)
+        copyCards,
     required TResult Function(String collectionId, String collectionName)
         shareCollection,
     required TResult Function() emptyCardsList,
@@ -48,6 +53,10 @@ mixin _$CardsEvent {
     TResult? Function(String collectionId, String sender)? createSharedCards,
     TResult? Function(String path, String collectionId, String collectionName)?
         importExcel,
+    TResult? Function(List<CardEntity> cards, String fromCollectionId,
+            String toCollectionId)?
+        moveCards,
+    TResult? Function(List<CardEntity> cards, String toCollectionId)? copyCards,
     TResult? Function(String collectionId, String collectionName)?
         shareCollection,
     TResult? Function()? emptyCardsList,
@@ -66,6 +75,10 @@ mixin _$CardsEvent {
     TResult Function(String collectionId, String sender)? createSharedCards,
     TResult Function(String path, String collectionId, String collectionName)?
         importExcel,
+    TResult Function(List<CardEntity> cards, String fromCollectionId,
+            String toCollectionId)?
+        moveCards,
+    TResult Function(List<CardEntity> cards, String toCollectionId)? copyCards,
     TResult Function(String collectionId, String collectionName)?
         shareCollection,
     TResult Function()? emptyCardsList,
@@ -82,6 +95,8 @@ mixin _$CardsEvent {
     required TResult Function(_CreateNewCard value) createNewCard,
     required TResult Function(_CreateSharedCards value) createSharedCards,
     required TResult Function(_ImportExcel value) importExcel,
+    required TResult Function(_MoveCards value) moveCards,
+    required TResult Function(_CopyCards value) copyCards,
     required TResult Function(_ShareCard value) shareCollection,
     required TResult Function(_EmptyCardsList value) emptyCardsList,
     required TResult Function(_SwipeCard value) swipeCard,
@@ -96,6 +111,8 @@ mixin _$CardsEvent {
     TResult? Function(_CreateNewCard value)? createNewCard,
     TResult? Function(_CreateSharedCards value)? createSharedCards,
     TResult? Function(_ImportExcel value)? importExcel,
+    TResult? Function(_MoveCards value)? moveCards,
+    TResult? Function(_CopyCards value)? copyCards,
     TResult? Function(_ShareCard value)? shareCollection,
     TResult? Function(_EmptyCardsList value)? emptyCardsList,
     TResult? Function(_SwipeCard value)? swipeCard,
@@ -110,6 +127,8 @@ mixin _$CardsEvent {
     TResult Function(_CreateNewCard value)? createNewCard,
     TResult Function(_CreateSharedCards value)? createSharedCards,
     TResult Function(_ImportExcel value)? importExcel,
+    TResult Function(_MoveCards value)? moveCards,
+    TResult Function(_CopyCards value)? copyCards,
     TResult Function(_ShareCard value)? shareCollection,
     TResult Function(_EmptyCardsList value)? emptyCardsList,
     TResult Function(_SwipeCard value)? swipeCard,
@@ -223,6 +242,11 @@ class _$EditCardImpl implements _EditCard {
     required TResult Function(
             String path, String collectionId, String collectionName)
         importExcel,
+    required TResult Function(List<CardEntity> cards, String fromCollectionId,
+            String toCollectionId)
+        moveCards,
+    required TResult Function(List<CardEntity> cards, String toCollectionId)
+        copyCards,
     required TResult Function(String collectionId, String collectionName)
         shareCollection,
     required TResult Function() emptyCardsList,
@@ -244,6 +268,10 @@ class _$EditCardImpl implements _EditCard {
     TResult? Function(String collectionId, String sender)? createSharedCards,
     TResult? Function(String path, String collectionId, String collectionName)?
         importExcel,
+    TResult? Function(List<CardEntity> cards, String fromCollectionId,
+            String toCollectionId)?
+        moveCards,
+    TResult? Function(List<CardEntity> cards, String toCollectionId)? copyCards,
     TResult? Function(String collectionId, String collectionName)?
         shareCollection,
     TResult? Function()? emptyCardsList,
@@ -265,6 +293,10 @@ class _$EditCardImpl implements _EditCard {
     TResult Function(String collectionId, String sender)? createSharedCards,
     TResult Function(String path, String collectionId, String collectionName)?
         importExcel,
+    TResult Function(List<CardEntity> cards, String fromCollectionId,
+            String toCollectionId)?
+        moveCards,
+    TResult Function(List<CardEntity> cards, String toCollectionId)? copyCards,
     TResult Function(String collectionId, String collectionName)?
         shareCollection,
     TResult Function()? emptyCardsList,
@@ -287,6 +319,8 @@ class _$EditCardImpl implements _EditCard {
     required TResult Function(_CreateNewCard value) createNewCard,
     required TResult Function(_CreateSharedCards value) createSharedCards,
     required TResult Function(_ImportExcel value) importExcel,
+    required TResult Function(_MoveCards value) moveCards,
+    required TResult Function(_CopyCards value) copyCards,
     required TResult Function(_ShareCard value) shareCollection,
     required TResult Function(_EmptyCardsList value) emptyCardsList,
     required TResult Function(_SwipeCard value) swipeCard,
@@ -304,6 +338,8 @@ class _$EditCardImpl implements _EditCard {
     TResult? Function(_CreateNewCard value)? createNewCard,
     TResult? Function(_CreateSharedCards value)? createSharedCards,
     TResult? Function(_ImportExcel value)? importExcel,
+    TResult? Function(_MoveCards value)? moveCards,
+    TResult? Function(_CopyCards value)? copyCards,
     TResult? Function(_ShareCard value)? shareCollection,
     TResult? Function(_EmptyCardsList value)? emptyCardsList,
     TResult? Function(_SwipeCard value)? swipeCard,
@@ -321,6 +357,8 @@ class _$EditCardImpl implements _EditCard {
     TResult Function(_CreateNewCard value)? createNewCard,
     TResult Function(_CreateSharedCards value)? createSharedCards,
     TResult Function(_ImportExcel value)? importExcel,
+    TResult Function(_MoveCards value)? moveCards,
+    TResult Function(_CopyCards value)? copyCards,
     TResult Function(_ShareCard value)? shareCollection,
     TResult Function(_EmptyCardsList value)? emptyCardsList,
     TResult Function(_SwipeCard value)? swipeCard,
@@ -423,6 +461,11 @@ class _$InitCardImpl implements _InitCard {
     required TResult Function(
             String path, String collectionId, String collectionName)
         importExcel,
+    required TResult Function(List<CardEntity> cards, String fromCollectionId,
+            String toCollectionId)
+        moveCards,
+    required TResult Function(List<CardEntity> cards, String toCollectionId)
+        copyCards,
     required TResult Function(String collectionId, String collectionName)
         shareCollection,
     required TResult Function() emptyCardsList,
@@ -444,6 +487,10 @@ class _$InitCardImpl implements _InitCard {
     TResult? Function(String collectionId, String sender)? createSharedCards,
     TResult? Function(String path, String collectionId, String collectionName)?
         importExcel,
+    TResult? Function(List<CardEntity> cards, String fromCollectionId,
+            String toCollectionId)?
+        moveCards,
+    TResult? Function(List<CardEntity> cards, String toCollectionId)? copyCards,
     TResult? Function(String collectionId, String collectionName)?
         shareCollection,
     TResult? Function()? emptyCardsList,
@@ -465,6 +512,10 @@ class _$InitCardImpl implements _InitCard {
     TResult Function(String collectionId, String sender)? createSharedCards,
     TResult Function(String path, String collectionId, String collectionName)?
         importExcel,
+    TResult Function(List<CardEntity> cards, String fromCollectionId,
+            String toCollectionId)?
+        moveCards,
+    TResult Function(List<CardEntity> cards, String toCollectionId)? copyCards,
     TResult Function(String collectionId, String collectionName)?
         shareCollection,
     TResult Function()? emptyCardsList,
@@ -487,6 +538,8 @@ class _$InitCardImpl implements _InitCard {
     required TResult Function(_CreateNewCard value) createNewCard,
     required TResult Function(_CreateSharedCards value) createSharedCards,
     required TResult Function(_ImportExcel value) importExcel,
+    required TResult Function(_MoveCards value) moveCards,
+    required TResult Function(_CopyCards value) copyCards,
     required TResult Function(_ShareCard value) shareCollection,
     required TResult Function(_EmptyCardsList value) emptyCardsList,
     required TResult Function(_SwipeCard value) swipeCard,
@@ -504,6 +557,8 @@ class _$InitCardImpl implements _InitCard {
     TResult? Function(_CreateNewCard value)? createNewCard,
     TResult? Function(_CreateSharedCards value)? createSharedCards,
     TResult? Function(_ImportExcel value)? importExcel,
+    TResult? Function(_MoveCards value)? moveCards,
+    TResult? Function(_CopyCards value)? copyCards,
     TResult? Function(_ShareCard value)? shareCollection,
     TResult? Function(_EmptyCardsList value)? emptyCardsList,
     TResult? Function(_SwipeCard value)? swipeCard,
@@ -521,6 +576,8 @@ class _$InitCardImpl implements _InitCard {
     TResult Function(_CreateNewCard value)? createNewCard,
     TResult Function(_CreateSharedCards value)? createSharedCards,
     TResult Function(_ImportExcel value)? importExcel,
+    TResult Function(_MoveCards value)? moveCards,
+    TResult Function(_CopyCards value)? copyCards,
     TResult Function(_ShareCard value)? shareCollection,
     TResult Function(_EmptyCardsList value)? emptyCardsList,
     TResult Function(_SwipeCard value)? swipeCard,
@@ -640,6 +697,11 @@ class _$DeleteSelectedCardsImpl implements _DeleteSelectedCards {
     required TResult Function(
             String path, String collectionId, String collectionName)
         importExcel,
+    required TResult Function(List<CardEntity> cards, String fromCollectionId,
+            String toCollectionId)
+        moveCards,
+    required TResult Function(List<CardEntity> cards, String toCollectionId)
+        copyCards,
     required TResult Function(String collectionId, String collectionName)
         shareCollection,
     required TResult Function() emptyCardsList,
@@ -661,6 +723,10 @@ class _$DeleteSelectedCardsImpl implements _DeleteSelectedCards {
     TResult? Function(String collectionId, String sender)? createSharedCards,
     TResult? Function(String path, String collectionId, String collectionName)?
         importExcel,
+    TResult? Function(List<CardEntity> cards, String fromCollectionId,
+            String toCollectionId)?
+        moveCards,
+    TResult? Function(List<CardEntity> cards, String toCollectionId)? copyCards,
     TResult? Function(String collectionId, String collectionName)?
         shareCollection,
     TResult? Function()? emptyCardsList,
@@ -682,6 +748,10 @@ class _$DeleteSelectedCardsImpl implements _DeleteSelectedCards {
     TResult Function(String collectionId, String sender)? createSharedCards,
     TResult Function(String path, String collectionId, String collectionName)?
         importExcel,
+    TResult Function(List<CardEntity> cards, String fromCollectionId,
+            String toCollectionId)?
+        moveCards,
+    TResult Function(List<CardEntity> cards, String toCollectionId)? copyCards,
     TResult Function(String collectionId, String collectionName)?
         shareCollection,
     TResult Function()? emptyCardsList,
@@ -704,6 +774,8 @@ class _$DeleteSelectedCardsImpl implements _DeleteSelectedCards {
     required TResult Function(_CreateNewCard value) createNewCard,
     required TResult Function(_CreateSharedCards value) createSharedCards,
     required TResult Function(_ImportExcel value) importExcel,
+    required TResult Function(_MoveCards value) moveCards,
+    required TResult Function(_CopyCards value) copyCards,
     required TResult Function(_ShareCard value) shareCollection,
     required TResult Function(_EmptyCardsList value) emptyCardsList,
     required TResult Function(_SwipeCard value) swipeCard,
@@ -721,6 +793,8 @@ class _$DeleteSelectedCardsImpl implements _DeleteSelectedCards {
     TResult? Function(_CreateNewCard value)? createNewCard,
     TResult? Function(_CreateSharedCards value)? createSharedCards,
     TResult? Function(_ImportExcel value)? importExcel,
+    TResult? Function(_MoveCards value)? moveCards,
+    TResult? Function(_CopyCards value)? copyCards,
     TResult? Function(_ShareCard value)? shareCollection,
     TResult? Function(_EmptyCardsList value)? emptyCardsList,
     TResult? Function(_SwipeCard value)? swipeCard,
@@ -738,6 +812,8 @@ class _$DeleteSelectedCardsImpl implements _DeleteSelectedCards {
     TResult Function(_CreateNewCard value)? createNewCard,
     TResult Function(_CreateSharedCards value)? createSharedCards,
     TResult Function(_ImportExcel value)? importExcel,
+    TResult Function(_MoveCards value)? moveCards,
+    TResult Function(_CopyCards value)? copyCards,
     TResult Function(_ShareCard value)? shareCollection,
     TResult Function(_EmptyCardsList value)? emptyCardsList,
     TResult Function(_SwipeCard value)? swipeCard,
@@ -850,6 +926,11 @@ class _$CreateNewCardImpl implements _CreateNewCard {
     required TResult Function(
             String path, String collectionId, String collectionName)
         importExcel,
+    required TResult Function(List<CardEntity> cards, String fromCollectionId,
+            String toCollectionId)
+        moveCards,
+    required TResult Function(List<CardEntity> cards, String toCollectionId)
+        copyCards,
     required TResult Function(String collectionId, String collectionName)
         shareCollection,
     required TResult Function() emptyCardsList,
@@ -871,6 +952,10 @@ class _$CreateNewCardImpl implements _CreateNewCard {
     TResult? Function(String collectionId, String sender)? createSharedCards,
     TResult? Function(String path, String collectionId, String collectionName)?
         importExcel,
+    TResult? Function(List<CardEntity> cards, String fromCollectionId,
+            String toCollectionId)?
+        moveCards,
+    TResult? Function(List<CardEntity> cards, String toCollectionId)? copyCards,
     TResult? Function(String collectionId, String collectionName)?
         shareCollection,
     TResult? Function()? emptyCardsList,
@@ -892,6 +977,10 @@ class _$CreateNewCardImpl implements _CreateNewCard {
     TResult Function(String collectionId, String sender)? createSharedCards,
     TResult Function(String path, String collectionId, String collectionName)?
         importExcel,
+    TResult Function(List<CardEntity> cards, String fromCollectionId,
+            String toCollectionId)?
+        moveCards,
+    TResult Function(List<CardEntity> cards, String toCollectionId)? copyCards,
     TResult Function(String collectionId, String collectionName)?
         shareCollection,
     TResult Function()? emptyCardsList,
@@ -914,6 +1003,8 @@ class _$CreateNewCardImpl implements _CreateNewCard {
     required TResult Function(_CreateNewCard value) createNewCard,
     required TResult Function(_CreateSharedCards value) createSharedCards,
     required TResult Function(_ImportExcel value) importExcel,
+    required TResult Function(_MoveCards value) moveCards,
+    required TResult Function(_CopyCards value) copyCards,
     required TResult Function(_ShareCard value) shareCollection,
     required TResult Function(_EmptyCardsList value) emptyCardsList,
     required TResult Function(_SwipeCard value) swipeCard,
@@ -931,6 +1022,8 @@ class _$CreateNewCardImpl implements _CreateNewCard {
     TResult? Function(_CreateNewCard value)? createNewCard,
     TResult? Function(_CreateSharedCards value)? createSharedCards,
     TResult? Function(_ImportExcel value)? importExcel,
+    TResult? Function(_MoveCards value)? moveCards,
+    TResult? Function(_CopyCards value)? copyCards,
     TResult? Function(_ShareCard value)? shareCollection,
     TResult? Function(_EmptyCardsList value)? emptyCardsList,
     TResult? Function(_SwipeCard value)? swipeCard,
@@ -948,6 +1041,8 @@ class _$CreateNewCardImpl implements _CreateNewCard {
     TResult Function(_CreateNewCard value)? createNewCard,
     TResult Function(_CreateSharedCards value)? createSharedCards,
     TResult Function(_ImportExcel value)? importExcel,
+    TResult Function(_MoveCards value)? moveCards,
+    TResult Function(_CopyCards value)? copyCards,
     TResult Function(_ShareCard value)? shareCollection,
     TResult Function(_EmptyCardsList value)? emptyCardsList,
     TResult Function(_SwipeCard value)? swipeCard,
@@ -1060,6 +1155,11 @@ class _$CreateSharedCardsImpl implements _CreateSharedCards {
     required TResult Function(
             String path, String collectionId, String collectionName)
         importExcel,
+    required TResult Function(List<CardEntity> cards, String fromCollectionId,
+            String toCollectionId)
+        moveCards,
+    required TResult Function(List<CardEntity> cards, String toCollectionId)
+        copyCards,
     required TResult Function(String collectionId, String collectionName)
         shareCollection,
     required TResult Function() emptyCardsList,
@@ -1081,6 +1181,10 @@ class _$CreateSharedCardsImpl implements _CreateSharedCards {
     TResult? Function(String collectionId, String sender)? createSharedCards,
     TResult? Function(String path, String collectionId, String collectionName)?
         importExcel,
+    TResult? Function(List<CardEntity> cards, String fromCollectionId,
+            String toCollectionId)?
+        moveCards,
+    TResult? Function(List<CardEntity> cards, String toCollectionId)? copyCards,
     TResult? Function(String collectionId, String collectionName)?
         shareCollection,
     TResult? Function()? emptyCardsList,
@@ -1102,6 +1206,10 @@ class _$CreateSharedCardsImpl implements _CreateSharedCards {
     TResult Function(String collectionId, String sender)? createSharedCards,
     TResult Function(String path, String collectionId, String collectionName)?
         importExcel,
+    TResult Function(List<CardEntity> cards, String fromCollectionId,
+            String toCollectionId)?
+        moveCards,
+    TResult Function(List<CardEntity> cards, String toCollectionId)? copyCards,
     TResult Function(String collectionId, String collectionName)?
         shareCollection,
     TResult Function()? emptyCardsList,
@@ -1124,6 +1232,8 @@ class _$CreateSharedCardsImpl implements _CreateSharedCards {
     required TResult Function(_CreateNewCard value) createNewCard,
     required TResult Function(_CreateSharedCards value) createSharedCards,
     required TResult Function(_ImportExcel value) importExcel,
+    required TResult Function(_MoveCards value) moveCards,
+    required TResult Function(_CopyCards value) copyCards,
     required TResult Function(_ShareCard value) shareCollection,
     required TResult Function(_EmptyCardsList value) emptyCardsList,
     required TResult Function(_SwipeCard value) swipeCard,
@@ -1141,6 +1251,8 @@ class _$CreateSharedCardsImpl implements _CreateSharedCards {
     TResult? Function(_CreateNewCard value)? createNewCard,
     TResult? Function(_CreateSharedCards value)? createSharedCards,
     TResult? Function(_ImportExcel value)? importExcel,
+    TResult? Function(_MoveCards value)? moveCards,
+    TResult? Function(_CopyCards value)? copyCards,
     TResult? Function(_ShareCard value)? shareCollection,
     TResult? Function(_EmptyCardsList value)? emptyCardsList,
     TResult? Function(_SwipeCard value)? swipeCard,
@@ -1158,6 +1270,8 @@ class _$CreateSharedCardsImpl implements _CreateSharedCards {
     TResult Function(_CreateNewCard value)? createNewCard,
     TResult Function(_CreateSharedCards value)? createSharedCards,
     TResult Function(_ImportExcel value)? importExcel,
+    TResult Function(_MoveCards value)? moveCards,
+    TResult Function(_CopyCards value)? copyCards,
     TResult Function(_ShareCard value)? shareCollection,
     TResult Function(_EmptyCardsList value)? emptyCardsList,
     TResult Function(_SwipeCard value)? swipeCard,
@@ -1281,6 +1395,11 @@ class _$ImportExcelImpl implements _ImportExcel {
     required TResult Function(
             String path, String collectionId, String collectionName)
         importExcel,
+    required TResult Function(List<CardEntity> cards, String fromCollectionId,
+            String toCollectionId)
+        moveCards,
+    required TResult Function(List<CardEntity> cards, String toCollectionId)
+        copyCards,
     required TResult Function(String collectionId, String collectionName)
         shareCollection,
     required TResult Function() emptyCardsList,
@@ -1302,6 +1421,10 @@ class _$ImportExcelImpl implements _ImportExcel {
     TResult? Function(String collectionId, String sender)? createSharedCards,
     TResult? Function(String path, String collectionId, String collectionName)?
         importExcel,
+    TResult? Function(List<CardEntity> cards, String fromCollectionId,
+            String toCollectionId)?
+        moveCards,
+    TResult? Function(List<CardEntity> cards, String toCollectionId)? copyCards,
     TResult? Function(String collectionId, String collectionName)?
         shareCollection,
     TResult? Function()? emptyCardsList,
@@ -1323,6 +1446,10 @@ class _$ImportExcelImpl implements _ImportExcel {
     TResult Function(String collectionId, String sender)? createSharedCards,
     TResult Function(String path, String collectionId, String collectionName)?
         importExcel,
+    TResult Function(List<CardEntity> cards, String fromCollectionId,
+            String toCollectionId)?
+        moveCards,
+    TResult Function(List<CardEntity> cards, String toCollectionId)? copyCards,
     TResult Function(String collectionId, String collectionName)?
         shareCollection,
     TResult Function()? emptyCardsList,
@@ -1345,6 +1472,8 @@ class _$ImportExcelImpl implements _ImportExcel {
     required TResult Function(_CreateNewCard value) createNewCard,
     required TResult Function(_CreateSharedCards value) createSharedCards,
     required TResult Function(_ImportExcel value) importExcel,
+    required TResult Function(_MoveCards value) moveCards,
+    required TResult Function(_CopyCards value) copyCards,
     required TResult Function(_ShareCard value) shareCollection,
     required TResult Function(_EmptyCardsList value) emptyCardsList,
     required TResult Function(_SwipeCard value) swipeCard,
@@ -1362,6 +1491,8 @@ class _$ImportExcelImpl implements _ImportExcel {
     TResult? Function(_CreateNewCard value)? createNewCard,
     TResult? Function(_CreateSharedCards value)? createSharedCards,
     TResult? Function(_ImportExcel value)? importExcel,
+    TResult? Function(_MoveCards value)? moveCards,
+    TResult? Function(_CopyCards value)? copyCards,
     TResult? Function(_ShareCard value)? shareCollection,
     TResult? Function(_EmptyCardsList value)? emptyCardsList,
     TResult? Function(_SwipeCard value)? swipeCard,
@@ -1379,6 +1510,8 @@ class _$ImportExcelImpl implements _ImportExcel {
     TResult Function(_CreateNewCard value)? createNewCard,
     TResult Function(_CreateSharedCards value)? createSharedCards,
     TResult Function(_ImportExcel value)? importExcel,
+    TResult Function(_MoveCards value)? moveCards,
+    TResult Function(_CopyCards value)? copyCards,
     TResult Function(_ShareCard value)? shareCollection,
     TResult Function(_EmptyCardsList value)? emptyCardsList,
     TResult Function(_SwipeCard value)? swipeCard,
@@ -1403,6 +1536,495 @@ abstract class _ImportExcel implements CardsEvent {
   String get collectionName;
   @JsonKey(ignore: true)
   _$$ImportExcelImplCopyWith<_$ImportExcelImpl> get copyWith =>
+      throw _privateConstructorUsedError;
+}
+
+/// @nodoc
+abstract class _$$MoveCardsImplCopyWith<$Res> {
+  factory _$$MoveCardsImplCopyWith(
+          _$MoveCardsImpl value, $Res Function(_$MoveCardsImpl) then) =
+      __$$MoveCardsImplCopyWithImpl<$Res>;
+  @useResult
+  $Res call(
+      {List<CardEntity> cards, String fromCollectionId, String toCollectionId});
+}
+
+/// @nodoc
+class __$$MoveCardsImplCopyWithImpl<$Res>
+    extends _$CardsEventCopyWithImpl<$Res, _$MoveCardsImpl>
+    implements _$$MoveCardsImplCopyWith<$Res> {
+  __$$MoveCardsImplCopyWithImpl(
+      _$MoveCardsImpl _value, $Res Function(_$MoveCardsImpl) _then)
+      : super(_value, _then);
+
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? cards = null,
+    Object? fromCollectionId = null,
+    Object? toCollectionId = null,
+  }) {
+    return _then(_$MoveCardsImpl(
+      cards: null == cards
+          ? _value._cards
+          : cards // ignore: cast_nullable_to_non_nullable
+              as List<CardEntity>,
+      fromCollectionId: null == fromCollectionId
+          ? _value.fromCollectionId
+          : fromCollectionId // ignore: cast_nullable_to_non_nullable
+              as String,
+      toCollectionId: null == toCollectionId
+          ? _value.toCollectionId
+          : toCollectionId // ignore: cast_nullable_to_non_nullable
+              as String,
+    ));
+  }
+}
+
+/// @nodoc
+
+class _$MoveCardsImpl implements _MoveCards {
+  const _$MoveCardsImpl(
+      {required final List<CardEntity> cards,
+      required this.fromCollectionId,
+      required this.toCollectionId})
+      : _cards = cards;
+
+  final List<CardEntity> _cards;
+  @override
+  List<CardEntity> get cards {
+    if (_cards is EqualUnmodifiableListView) return _cards;
+    // ignore: implicit_dynamic_type
+    return EqualUnmodifiableListView(_cards);
+  }
+
+  @override
+  final String fromCollectionId;
+  @override
+  final String toCollectionId;
+
+  @override
+  String toString() {
+    return 'CardsEvent.moveCards(cards: $cards, fromCollectionId: $fromCollectionId, toCollectionId: $toCollectionId)';
+  }
+
+  @override
+  bool operator ==(Object other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType &&
+            other is _$MoveCardsImpl &&
+            const DeepCollectionEquality().equals(other._cards, _cards) &&
+            (identical(other.fromCollectionId, fromCollectionId) ||
+                other.fromCollectionId == fromCollectionId) &&
+            (identical(other.toCollectionId, toCollectionId) ||
+                other.toCollectionId == toCollectionId));
+  }
+
+  @override
+  int get hashCode => Object.hash(
+      runtimeType,
+      const DeepCollectionEquality().hash(_cards),
+      fromCollectionId,
+      toCollectionId);
+
+  @JsonKey(ignore: true)
+  @override
+  @pragma('vm:prefer-inline')
+  _$$MoveCardsImplCopyWith<_$MoveCardsImpl> get copyWith =>
+      __$$MoveCardsImplCopyWithImpl<_$MoveCardsImpl>(this, _$identity);
+
+  @override
+  @optionalTypeArgs
+  TResult when<TResult extends Object?>({
+    required TResult Function(EditCardParam cardParam, String collectionId)
+        editCard,
+    required TResult Function(String collectionId) initCard,
+    required TResult Function(List<String> cardsIdToDelete, String collectionId)
+        deleteSelectedCards,
+    required TResult Function(CreateCardParam cardParam, String collectionId)
+        createNewCard,
+    required TResult Function(String collectionId, String sender)
+        createSharedCards,
+    required TResult Function(
+            String path, String collectionId, String collectionName)
+        importExcel,
+    required TResult Function(List<CardEntity> cards, String fromCollectionId,
+            String toCollectionId)
+        moveCards,
+    required TResult Function(List<CardEntity> cards, String toCollectionId)
+        copyCards,
+    required TResult Function(String collectionId, String collectionName)
+        shareCollection,
+    required TResult Function() emptyCardsList,
+    required TResult Function(CardEntity cardEntity) swipeCard,
+    required TResult Function() finishLearn,
+  }) {
+    return moveCards(cards, fromCollectionId, toCollectionId);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? whenOrNull<TResult extends Object?>({
+    TResult? Function(EditCardParam cardParam, String collectionId)? editCard,
+    TResult? Function(String collectionId)? initCard,
+    TResult? Function(List<String> cardsIdToDelete, String collectionId)?
+        deleteSelectedCards,
+    TResult? Function(CreateCardParam cardParam, String collectionId)?
+        createNewCard,
+    TResult? Function(String collectionId, String sender)? createSharedCards,
+    TResult? Function(String path, String collectionId, String collectionName)?
+        importExcel,
+    TResult? Function(List<CardEntity> cards, String fromCollectionId,
+            String toCollectionId)?
+        moveCards,
+    TResult? Function(List<CardEntity> cards, String toCollectionId)? copyCards,
+    TResult? Function(String collectionId, String collectionName)?
+        shareCollection,
+    TResult? Function()? emptyCardsList,
+    TResult? Function(CardEntity cardEntity)? swipeCard,
+    TResult? Function()? finishLearn,
+  }) {
+    return moveCards?.call(cards, fromCollectionId, toCollectionId);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeWhen<TResult extends Object?>({
+    TResult Function(EditCardParam cardParam, String collectionId)? editCard,
+    TResult Function(String collectionId)? initCard,
+    TResult Function(List<String> cardsIdToDelete, String collectionId)?
+        deleteSelectedCards,
+    TResult Function(CreateCardParam cardParam, String collectionId)?
+        createNewCard,
+    TResult Function(String collectionId, String sender)? createSharedCards,
+    TResult Function(String path, String collectionId, String collectionName)?
+        importExcel,
+    TResult Function(List<CardEntity> cards, String fromCollectionId,
+            String toCollectionId)?
+        moveCards,
+    TResult Function(List<CardEntity> cards, String toCollectionId)? copyCards,
+    TResult Function(String collectionId, String collectionName)?
+        shareCollection,
+    TResult Function()? emptyCardsList,
+    TResult Function(CardEntity cardEntity)? swipeCard,
+    TResult Function()? finishLearn,
+    required TResult orElse(),
+  }) {
+    if (moveCards != null) {
+      return moveCards(cards, fromCollectionId, toCollectionId);
+    }
+    return orElse();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult map<TResult extends Object?>({
+    required TResult Function(_EditCard value) editCard,
+    required TResult Function(_InitCard value) initCard,
+    required TResult Function(_DeleteSelectedCards value) deleteSelectedCards,
+    required TResult Function(_CreateNewCard value) createNewCard,
+    required TResult Function(_CreateSharedCards value) createSharedCards,
+    required TResult Function(_ImportExcel value) importExcel,
+    required TResult Function(_MoveCards value) moveCards,
+    required TResult Function(_CopyCards value) copyCards,
+    required TResult Function(_ShareCard value) shareCollection,
+    required TResult Function(_EmptyCardsList value) emptyCardsList,
+    required TResult Function(_SwipeCard value) swipeCard,
+    required TResult Function(_FinishLearn value) finishLearn,
+  }) {
+    return moveCards(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? mapOrNull<TResult extends Object?>({
+    TResult? Function(_EditCard value)? editCard,
+    TResult? Function(_InitCard value)? initCard,
+    TResult? Function(_DeleteSelectedCards value)? deleteSelectedCards,
+    TResult? Function(_CreateNewCard value)? createNewCard,
+    TResult? Function(_CreateSharedCards value)? createSharedCards,
+    TResult? Function(_ImportExcel value)? importExcel,
+    TResult? Function(_MoveCards value)? moveCards,
+    TResult? Function(_CopyCards value)? copyCards,
+    TResult? Function(_ShareCard value)? shareCollection,
+    TResult? Function(_EmptyCardsList value)? emptyCardsList,
+    TResult? Function(_SwipeCard value)? swipeCard,
+    TResult? Function(_FinishLearn value)? finishLearn,
+  }) {
+    return moveCards?.call(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeMap<TResult extends Object?>({
+    TResult Function(_EditCard value)? editCard,
+    TResult Function(_InitCard value)? initCard,
+    TResult Function(_DeleteSelectedCards value)? deleteSelectedCards,
+    TResult Function(_CreateNewCard value)? createNewCard,
+    TResult Function(_CreateSharedCards value)? createSharedCards,
+    TResult Function(_ImportExcel value)? importExcel,
+    TResult Function(_MoveCards value)? moveCards,
+    TResult Function(_CopyCards value)? copyCards,
+    TResult Function(_ShareCard value)? shareCollection,
+    TResult Function(_EmptyCardsList value)? emptyCardsList,
+    TResult Function(_SwipeCard value)? swipeCard,
+    TResult Function(_FinishLearn value)? finishLearn,
+    required TResult orElse(),
+  }) {
+    if (moveCards != null) {
+      return moveCards(this);
+    }
+    return orElse();
+  }
+}
+
+abstract class _MoveCards implements CardsEvent {
+  const factory _MoveCards(
+      {required final List<CardEntity> cards,
+      required final String fromCollectionId,
+      required final String toCollectionId}) = _$MoveCardsImpl;
+
+  List<CardEntity> get cards;
+  String get fromCollectionId;
+  String get toCollectionId;
+  @JsonKey(ignore: true)
+  _$$MoveCardsImplCopyWith<_$MoveCardsImpl> get copyWith =>
+      throw _privateConstructorUsedError;
+}
+
+/// @nodoc
+abstract class _$$CopyCardsImplCopyWith<$Res> {
+  factory _$$CopyCardsImplCopyWith(
+          _$CopyCardsImpl value, $Res Function(_$CopyCardsImpl) then) =
+      __$$CopyCardsImplCopyWithImpl<$Res>;
+  @useResult
+  $Res call({List<CardEntity> cards, String toCollectionId});
+}
+
+/// @nodoc
+class __$$CopyCardsImplCopyWithImpl<$Res>
+    extends _$CardsEventCopyWithImpl<$Res, _$CopyCardsImpl>
+    implements _$$CopyCardsImplCopyWith<$Res> {
+  __$$CopyCardsImplCopyWithImpl(
+      _$CopyCardsImpl _value, $Res Function(_$CopyCardsImpl) _then)
+      : super(_value, _then);
+
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? cards = null,
+    Object? toCollectionId = null,
+  }) {
+    return _then(_$CopyCardsImpl(
+      cards: null == cards
+          ? _value._cards
+          : cards // ignore: cast_nullable_to_non_nullable
+              as List<CardEntity>,
+      toCollectionId: null == toCollectionId
+          ? _value.toCollectionId
+          : toCollectionId // ignore: cast_nullable_to_non_nullable
+              as String,
+    ));
+  }
+}
+
+/// @nodoc
+
+class _$CopyCardsImpl implements _CopyCards {
+  const _$CopyCardsImpl(
+      {required final List<CardEntity> cards, required this.toCollectionId})
+      : _cards = cards;
+
+  final List<CardEntity> _cards;
+  @override
+  List<CardEntity> get cards {
+    if (_cards is EqualUnmodifiableListView) return _cards;
+    // ignore: implicit_dynamic_type
+    return EqualUnmodifiableListView(_cards);
+  }
+
+  @override
+  final String toCollectionId;
+
+  @override
+  String toString() {
+    return 'CardsEvent.copyCards(cards: $cards, toCollectionId: $toCollectionId)';
+  }
+
+  @override
+  bool operator ==(Object other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType &&
+            other is _$CopyCardsImpl &&
+            const DeepCollectionEquality().equals(other._cards, _cards) &&
+            (identical(other.toCollectionId, toCollectionId) ||
+                other.toCollectionId == toCollectionId));
+  }
+
+  @override
+  int get hashCode => Object.hash(
+      runtimeType, const DeepCollectionEquality().hash(_cards), toCollectionId);
+
+  @JsonKey(ignore: true)
+  @override
+  @pragma('vm:prefer-inline')
+  _$$CopyCardsImplCopyWith<_$CopyCardsImpl> get copyWith =>
+      __$$CopyCardsImplCopyWithImpl<_$CopyCardsImpl>(this, _$identity);
+
+  @override
+  @optionalTypeArgs
+  TResult when<TResult extends Object?>({
+    required TResult Function(EditCardParam cardParam, String collectionId)
+        editCard,
+    required TResult Function(String collectionId) initCard,
+    required TResult Function(List<String> cardsIdToDelete, String collectionId)
+        deleteSelectedCards,
+    required TResult Function(CreateCardParam cardParam, String collectionId)
+        createNewCard,
+    required TResult Function(String collectionId, String sender)
+        createSharedCards,
+    required TResult Function(
+            String path, String collectionId, String collectionName)
+        importExcel,
+    required TResult Function(List<CardEntity> cards, String fromCollectionId,
+            String toCollectionId)
+        moveCards,
+    required TResult Function(List<CardEntity> cards, String toCollectionId)
+        copyCards,
+    required TResult Function(String collectionId, String collectionName)
+        shareCollection,
+    required TResult Function() emptyCardsList,
+    required TResult Function(CardEntity cardEntity) swipeCard,
+    required TResult Function() finishLearn,
+  }) {
+    return copyCards(cards, toCollectionId);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? whenOrNull<TResult extends Object?>({
+    TResult? Function(EditCardParam cardParam, String collectionId)? editCard,
+    TResult? Function(String collectionId)? initCard,
+    TResult? Function(List<String> cardsIdToDelete, String collectionId)?
+        deleteSelectedCards,
+    TResult? Function(CreateCardParam cardParam, String collectionId)?
+        createNewCard,
+    TResult? Function(String collectionId, String sender)? createSharedCards,
+    TResult? Function(String path, String collectionId, String collectionName)?
+        importExcel,
+    TResult? Function(List<CardEntity> cards, String fromCollectionId,
+            String toCollectionId)?
+        moveCards,
+    TResult? Function(List<CardEntity> cards, String toCollectionId)? copyCards,
+    TResult? Function(String collectionId, String collectionName)?
+        shareCollection,
+    TResult? Function()? emptyCardsList,
+    TResult? Function(CardEntity cardEntity)? swipeCard,
+    TResult? Function()? finishLearn,
+  }) {
+    return copyCards?.call(cards, toCollectionId);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeWhen<TResult extends Object?>({
+    TResult Function(EditCardParam cardParam, String collectionId)? editCard,
+    TResult Function(String collectionId)? initCard,
+    TResult Function(List<String> cardsIdToDelete, String collectionId)?
+        deleteSelectedCards,
+    TResult Function(CreateCardParam cardParam, String collectionId)?
+        createNewCard,
+    TResult Function(String collectionId, String sender)? createSharedCards,
+    TResult Function(String path, String collectionId, String collectionName)?
+        importExcel,
+    TResult Function(List<CardEntity> cards, String fromCollectionId,
+            String toCollectionId)?
+        moveCards,
+    TResult Function(List<CardEntity> cards, String toCollectionId)? copyCards,
+    TResult Function(String collectionId, String collectionName)?
+        shareCollection,
+    TResult Function()? emptyCardsList,
+    TResult Function(CardEntity cardEntity)? swipeCard,
+    TResult Function()? finishLearn,
+    required TResult orElse(),
+  }) {
+    if (copyCards != null) {
+      return copyCards(cards, toCollectionId);
+    }
+    return orElse();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult map<TResult extends Object?>({
+    required TResult Function(_EditCard value) editCard,
+    required TResult Function(_InitCard value) initCard,
+    required TResult Function(_DeleteSelectedCards value) deleteSelectedCards,
+    required TResult Function(_CreateNewCard value) createNewCard,
+    required TResult Function(_CreateSharedCards value) createSharedCards,
+    required TResult Function(_ImportExcel value) importExcel,
+    required TResult Function(_MoveCards value) moveCards,
+    required TResult Function(_CopyCards value) copyCards,
+    required TResult Function(_ShareCard value) shareCollection,
+    required TResult Function(_EmptyCardsList value) emptyCardsList,
+    required TResult Function(_SwipeCard value) swipeCard,
+    required TResult Function(_FinishLearn value) finishLearn,
+  }) {
+    return copyCards(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? mapOrNull<TResult extends Object?>({
+    TResult? Function(_EditCard value)? editCard,
+    TResult? Function(_InitCard value)? initCard,
+    TResult? Function(_DeleteSelectedCards value)? deleteSelectedCards,
+    TResult? Function(_CreateNewCard value)? createNewCard,
+    TResult? Function(_CreateSharedCards value)? createSharedCards,
+    TResult? Function(_ImportExcel value)? importExcel,
+    TResult? Function(_MoveCards value)? moveCards,
+    TResult? Function(_CopyCards value)? copyCards,
+    TResult? Function(_ShareCard value)? shareCollection,
+    TResult? Function(_EmptyCardsList value)? emptyCardsList,
+    TResult? Function(_SwipeCard value)? swipeCard,
+    TResult? Function(_FinishLearn value)? finishLearn,
+  }) {
+    return copyCards?.call(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeMap<TResult extends Object?>({
+    TResult Function(_EditCard value)? editCard,
+    TResult Function(_InitCard value)? initCard,
+    TResult Function(_DeleteSelectedCards value)? deleteSelectedCards,
+    TResult Function(_CreateNewCard value)? createNewCard,
+    TResult Function(_CreateSharedCards value)? createSharedCards,
+    TResult Function(_ImportExcel value)? importExcel,
+    TResult Function(_MoveCards value)? moveCards,
+    TResult Function(_CopyCards value)? copyCards,
+    TResult Function(_ShareCard value)? shareCollection,
+    TResult Function(_EmptyCardsList value)? emptyCardsList,
+    TResult Function(_SwipeCard value)? swipeCard,
+    TResult Function(_FinishLearn value)? finishLearn,
+    required TResult orElse(),
+  }) {
+    if (copyCards != null) {
+      return copyCards(this);
+    }
+    return orElse();
+  }
+}
+
+abstract class _CopyCards implements CardsEvent {
+  const factory _CopyCards(
+      {required final List<CardEntity> cards,
+      required final String toCollectionId}) = _$CopyCardsImpl;
+
+  List<CardEntity> get cards;
+  String get toCollectionId;
+  @JsonKey(ignore: true)
+  _$$CopyCardsImplCopyWith<_$CopyCardsImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }
 
@@ -1493,6 +2115,11 @@ class _$ShareCardImpl implements _ShareCard {
     required TResult Function(
             String path, String collectionId, String collectionName)
         importExcel,
+    required TResult Function(List<CardEntity> cards, String fromCollectionId,
+            String toCollectionId)
+        moveCards,
+    required TResult Function(List<CardEntity> cards, String toCollectionId)
+        copyCards,
     required TResult Function(String collectionId, String collectionName)
         shareCollection,
     required TResult Function() emptyCardsList,
@@ -1514,6 +2141,10 @@ class _$ShareCardImpl implements _ShareCard {
     TResult? Function(String collectionId, String sender)? createSharedCards,
     TResult? Function(String path, String collectionId, String collectionName)?
         importExcel,
+    TResult? Function(List<CardEntity> cards, String fromCollectionId,
+            String toCollectionId)?
+        moveCards,
+    TResult? Function(List<CardEntity> cards, String toCollectionId)? copyCards,
     TResult? Function(String collectionId, String collectionName)?
         shareCollection,
     TResult? Function()? emptyCardsList,
@@ -1535,6 +2166,10 @@ class _$ShareCardImpl implements _ShareCard {
     TResult Function(String collectionId, String sender)? createSharedCards,
     TResult Function(String path, String collectionId, String collectionName)?
         importExcel,
+    TResult Function(List<CardEntity> cards, String fromCollectionId,
+            String toCollectionId)?
+        moveCards,
+    TResult Function(List<CardEntity> cards, String toCollectionId)? copyCards,
     TResult Function(String collectionId, String collectionName)?
         shareCollection,
     TResult Function()? emptyCardsList,
@@ -1557,6 +2192,8 @@ class _$ShareCardImpl implements _ShareCard {
     required TResult Function(_CreateNewCard value) createNewCard,
     required TResult Function(_CreateSharedCards value) createSharedCards,
     required TResult Function(_ImportExcel value) importExcel,
+    required TResult Function(_MoveCards value) moveCards,
+    required TResult Function(_CopyCards value) copyCards,
     required TResult Function(_ShareCard value) shareCollection,
     required TResult Function(_EmptyCardsList value) emptyCardsList,
     required TResult Function(_SwipeCard value) swipeCard,
@@ -1574,6 +2211,8 @@ class _$ShareCardImpl implements _ShareCard {
     TResult? Function(_CreateNewCard value)? createNewCard,
     TResult? Function(_CreateSharedCards value)? createSharedCards,
     TResult? Function(_ImportExcel value)? importExcel,
+    TResult? Function(_MoveCards value)? moveCards,
+    TResult? Function(_CopyCards value)? copyCards,
     TResult? Function(_ShareCard value)? shareCollection,
     TResult? Function(_EmptyCardsList value)? emptyCardsList,
     TResult? Function(_SwipeCard value)? swipeCard,
@@ -1591,6 +2230,8 @@ class _$ShareCardImpl implements _ShareCard {
     TResult Function(_CreateNewCard value)? createNewCard,
     TResult Function(_CreateSharedCards value)? createSharedCards,
     TResult Function(_ImportExcel value)? importExcel,
+    TResult Function(_MoveCards value)? moveCards,
+    TResult Function(_CopyCards value)? copyCards,
     TResult Function(_ShareCard value)? shareCollection,
     TResult Function(_EmptyCardsList value)? emptyCardsList,
     TResult Function(_SwipeCard value)? swipeCard,
@@ -1666,6 +2307,11 @@ class _$EmptyCardsListImpl implements _EmptyCardsList {
     required TResult Function(
             String path, String collectionId, String collectionName)
         importExcel,
+    required TResult Function(List<CardEntity> cards, String fromCollectionId,
+            String toCollectionId)
+        moveCards,
+    required TResult Function(List<CardEntity> cards, String toCollectionId)
+        copyCards,
     required TResult Function(String collectionId, String collectionName)
         shareCollection,
     required TResult Function() emptyCardsList,
@@ -1687,6 +2333,10 @@ class _$EmptyCardsListImpl implements _EmptyCardsList {
     TResult? Function(String collectionId, String sender)? createSharedCards,
     TResult? Function(String path, String collectionId, String collectionName)?
         importExcel,
+    TResult? Function(List<CardEntity> cards, String fromCollectionId,
+            String toCollectionId)?
+        moveCards,
+    TResult? Function(List<CardEntity> cards, String toCollectionId)? copyCards,
     TResult? Function(String collectionId, String collectionName)?
         shareCollection,
     TResult? Function()? emptyCardsList,
@@ -1708,6 +2358,10 @@ class _$EmptyCardsListImpl implements _EmptyCardsList {
     TResult Function(String collectionId, String sender)? createSharedCards,
     TResult Function(String path, String collectionId, String collectionName)?
         importExcel,
+    TResult Function(List<CardEntity> cards, String fromCollectionId,
+            String toCollectionId)?
+        moveCards,
+    TResult Function(List<CardEntity> cards, String toCollectionId)? copyCards,
     TResult Function(String collectionId, String collectionName)?
         shareCollection,
     TResult Function()? emptyCardsList,
@@ -1730,6 +2384,8 @@ class _$EmptyCardsListImpl implements _EmptyCardsList {
     required TResult Function(_CreateNewCard value) createNewCard,
     required TResult Function(_CreateSharedCards value) createSharedCards,
     required TResult Function(_ImportExcel value) importExcel,
+    required TResult Function(_MoveCards value) moveCards,
+    required TResult Function(_CopyCards value) copyCards,
     required TResult Function(_ShareCard value) shareCollection,
     required TResult Function(_EmptyCardsList value) emptyCardsList,
     required TResult Function(_SwipeCard value) swipeCard,
@@ -1747,6 +2403,8 @@ class _$EmptyCardsListImpl implements _EmptyCardsList {
     TResult? Function(_CreateNewCard value)? createNewCard,
     TResult? Function(_CreateSharedCards value)? createSharedCards,
     TResult? Function(_ImportExcel value)? importExcel,
+    TResult? Function(_MoveCards value)? moveCards,
+    TResult? Function(_CopyCards value)? copyCards,
     TResult? Function(_ShareCard value)? shareCollection,
     TResult? Function(_EmptyCardsList value)? emptyCardsList,
     TResult? Function(_SwipeCard value)? swipeCard,
@@ -1764,6 +2422,8 @@ class _$EmptyCardsListImpl implements _EmptyCardsList {
     TResult Function(_CreateNewCard value)? createNewCard,
     TResult Function(_CreateSharedCards value)? createSharedCards,
     TResult Function(_ImportExcel value)? importExcel,
+    TResult Function(_MoveCards value)? moveCards,
+    TResult Function(_CopyCards value)? copyCards,
     TResult Function(_ShareCard value)? shareCollection,
     TResult Function(_EmptyCardsList value)? emptyCardsList,
     TResult Function(_SwipeCard value)? swipeCard,
@@ -1868,6 +2528,11 @@ class _$SwipeCardImpl implements _SwipeCard {
     required TResult Function(
             String path, String collectionId, String collectionName)
         importExcel,
+    required TResult Function(List<CardEntity> cards, String fromCollectionId,
+            String toCollectionId)
+        moveCards,
+    required TResult Function(List<CardEntity> cards, String toCollectionId)
+        copyCards,
     required TResult Function(String collectionId, String collectionName)
         shareCollection,
     required TResult Function() emptyCardsList,
@@ -1889,6 +2554,10 @@ class _$SwipeCardImpl implements _SwipeCard {
     TResult? Function(String collectionId, String sender)? createSharedCards,
     TResult? Function(String path, String collectionId, String collectionName)?
         importExcel,
+    TResult? Function(List<CardEntity> cards, String fromCollectionId,
+            String toCollectionId)?
+        moveCards,
+    TResult? Function(List<CardEntity> cards, String toCollectionId)? copyCards,
     TResult? Function(String collectionId, String collectionName)?
         shareCollection,
     TResult? Function()? emptyCardsList,
@@ -1910,6 +2579,10 @@ class _$SwipeCardImpl implements _SwipeCard {
     TResult Function(String collectionId, String sender)? createSharedCards,
     TResult Function(String path, String collectionId, String collectionName)?
         importExcel,
+    TResult Function(List<CardEntity> cards, String fromCollectionId,
+            String toCollectionId)?
+        moveCards,
+    TResult Function(List<CardEntity> cards, String toCollectionId)? copyCards,
     TResult Function(String collectionId, String collectionName)?
         shareCollection,
     TResult Function()? emptyCardsList,
@@ -1932,6 +2605,8 @@ class _$SwipeCardImpl implements _SwipeCard {
     required TResult Function(_CreateNewCard value) createNewCard,
     required TResult Function(_CreateSharedCards value) createSharedCards,
     required TResult Function(_ImportExcel value) importExcel,
+    required TResult Function(_MoveCards value) moveCards,
+    required TResult Function(_CopyCards value) copyCards,
     required TResult Function(_ShareCard value) shareCollection,
     required TResult Function(_EmptyCardsList value) emptyCardsList,
     required TResult Function(_SwipeCard value) swipeCard,
@@ -1949,6 +2624,8 @@ class _$SwipeCardImpl implements _SwipeCard {
     TResult? Function(_CreateNewCard value)? createNewCard,
     TResult? Function(_CreateSharedCards value)? createSharedCards,
     TResult? Function(_ImportExcel value)? importExcel,
+    TResult? Function(_MoveCards value)? moveCards,
+    TResult? Function(_CopyCards value)? copyCards,
     TResult? Function(_ShareCard value)? shareCollection,
     TResult? Function(_EmptyCardsList value)? emptyCardsList,
     TResult? Function(_SwipeCard value)? swipeCard,
@@ -1966,6 +2643,8 @@ class _$SwipeCardImpl implements _SwipeCard {
     TResult Function(_CreateNewCard value)? createNewCard,
     TResult Function(_CreateSharedCards value)? createSharedCards,
     TResult Function(_ImportExcel value)? importExcel,
+    TResult Function(_MoveCards value)? moveCards,
+    TResult Function(_CopyCards value)? copyCards,
     TResult Function(_ShareCard value)? shareCollection,
     TResult Function(_EmptyCardsList value)? emptyCardsList,
     TResult Function(_SwipeCard value)? swipeCard,
@@ -2039,6 +2718,11 @@ class _$FinishLearnImpl implements _FinishLearn {
     required TResult Function(
             String path, String collectionId, String collectionName)
         importExcel,
+    required TResult Function(List<CardEntity> cards, String fromCollectionId,
+            String toCollectionId)
+        moveCards,
+    required TResult Function(List<CardEntity> cards, String toCollectionId)
+        copyCards,
     required TResult Function(String collectionId, String collectionName)
         shareCollection,
     required TResult Function() emptyCardsList,
@@ -2060,6 +2744,10 @@ class _$FinishLearnImpl implements _FinishLearn {
     TResult? Function(String collectionId, String sender)? createSharedCards,
     TResult? Function(String path, String collectionId, String collectionName)?
         importExcel,
+    TResult? Function(List<CardEntity> cards, String fromCollectionId,
+            String toCollectionId)?
+        moveCards,
+    TResult? Function(List<CardEntity> cards, String toCollectionId)? copyCards,
     TResult? Function(String collectionId, String collectionName)?
         shareCollection,
     TResult? Function()? emptyCardsList,
@@ -2081,6 +2769,10 @@ class _$FinishLearnImpl implements _FinishLearn {
     TResult Function(String collectionId, String sender)? createSharedCards,
     TResult Function(String path, String collectionId, String collectionName)?
         importExcel,
+    TResult Function(List<CardEntity> cards, String fromCollectionId,
+            String toCollectionId)?
+        moveCards,
+    TResult Function(List<CardEntity> cards, String toCollectionId)? copyCards,
     TResult Function(String collectionId, String collectionName)?
         shareCollection,
     TResult Function()? emptyCardsList,
@@ -2103,6 +2795,8 @@ class _$FinishLearnImpl implements _FinishLearn {
     required TResult Function(_CreateNewCard value) createNewCard,
     required TResult Function(_CreateSharedCards value) createSharedCards,
     required TResult Function(_ImportExcel value) importExcel,
+    required TResult Function(_MoveCards value) moveCards,
+    required TResult Function(_CopyCards value) copyCards,
     required TResult Function(_ShareCard value) shareCollection,
     required TResult Function(_EmptyCardsList value) emptyCardsList,
     required TResult Function(_SwipeCard value) swipeCard,
@@ -2120,6 +2814,8 @@ class _$FinishLearnImpl implements _FinishLearn {
     TResult? Function(_CreateNewCard value)? createNewCard,
     TResult? Function(_CreateSharedCards value)? createSharedCards,
     TResult? Function(_ImportExcel value)? importExcel,
+    TResult? Function(_MoveCards value)? moveCards,
+    TResult? Function(_CopyCards value)? copyCards,
     TResult? Function(_ShareCard value)? shareCollection,
     TResult? Function(_EmptyCardsList value)? emptyCardsList,
     TResult? Function(_SwipeCard value)? swipeCard,
@@ -2137,6 +2833,8 @@ class _$FinishLearnImpl implements _FinishLearn {
     TResult Function(_CreateNewCard value)? createNewCard,
     TResult Function(_CreateSharedCards value)? createSharedCards,
     TResult Function(_ImportExcel value)? importExcel,
+    TResult Function(_MoveCards value)? moveCards,
+    TResult Function(_CopyCards value)? copyCards,
     TResult Function(_ShareCard value)? shareCollection,
     TResult Function(_EmptyCardsList value)? emptyCardsList,
     TResult Function(_SwipeCard value)? swipeCard,
@@ -2162,6 +2860,8 @@ mixin _$CardsState {
     required TResult Function() viewIndividualCard,
     required TResult Function() loading,
     required TResult Function() successfullyImported,
+    required TResult Function() successfullyCopied,
+    required TResult Function() successfullyMoved,
     required TResult Function(String error) error,
     required TResult Function() finishLearning,
   }) =>
@@ -2172,6 +2872,8 @@ mixin _$CardsState {
     TResult? Function()? viewIndividualCard,
     TResult? Function()? loading,
     TResult? Function()? successfullyImported,
+    TResult? Function()? successfullyCopied,
+    TResult? Function()? successfullyMoved,
     TResult? Function(String error)? error,
     TResult? Function()? finishLearning,
   }) =>
@@ -2182,6 +2884,8 @@ mixin _$CardsState {
     TResult Function()? viewIndividualCard,
     TResult Function()? loading,
     TResult Function()? successfullyImported,
+    TResult Function()? successfullyCopied,
+    TResult Function()? successfullyMoved,
     TResult Function(String error)? error,
     TResult Function()? finishLearning,
     required TResult orElse(),
@@ -2193,6 +2897,8 @@ mixin _$CardsState {
     required TResult Function(_ViewIndividualCard value) viewIndividualCard,
     required TResult Function(_Loading value) loading,
     required TResult Function(_SuccessfullyImported value) successfullyImported,
+    required TResult Function(_SuccessfullyCopied value) successfullyCopied,
+    required TResult Function(_SuccessfullyMoved value) successfullyMoved,
     required TResult Function(_Error value) error,
     required TResult Function(_FinishLearning value) finishLearning,
   }) =>
@@ -2203,6 +2909,8 @@ mixin _$CardsState {
     TResult? Function(_ViewIndividualCard value)? viewIndividualCard,
     TResult? Function(_Loading value)? loading,
     TResult? Function(_SuccessfullyImported value)? successfullyImported,
+    TResult? Function(_SuccessfullyCopied value)? successfullyCopied,
+    TResult? Function(_SuccessfullyMoved value)? successfullyMoved,
     TResult? Function(_Error value)? error,
     TResult? Function(_FinishLearning value)? finishLearning,
   }) =>
@@ -2213,6 +2921,8 @@ mixin _$CardsState {
     TResult Function(_ViewIndividualCard value)? viewIndividualCard,
     TResult Function(_Loading value)? loading,
     TResult Function(_SuccessfullyImported value)? successfullyImported,
+    TResult Function(_SuccessfullyCopied value)? successfullyCopied,
+    TResult Function(_SuccessfullyMoved value)? successfullyMoved,
     TResult Function(_Error value)? error,
     TResult Function(_FinishLearning value)? finishLearning,
     required TResult orElse(),
@@ -2317,6 +3027,8 @@ class _$LoadedImpl extends _Loaded {
     required TResult Function() viewIndividualCard,
     required TResult Function() loading,
     required TResult Function() successfullyImported,
+    required TResult Function() successfullyCopied,
+    required TResult Function() successfullyMoved,
     required TResult Function(String error) error,
     required TResult Function() finishLearning,
   }) {
@@ -2330,6 +3042,8 @@ class _$LoadedImpl extends _Loaded {
     TResult? Function()? viewIndividualCard,
     TResult? Function()? loading,
     TResult? Function()? successfullyImported,
+    TResult? Function()? successfullyCopied,
+    TResult? Function()? successfullyMoved,
     TResult? Function(String error)? error,
     TResult? Function()? finishLearning,
   }) {
@@ -2343,6 +3057,8 @@ class _$LoadedImpl extends _Loaded {
     TResult Function()? viewIndividualCard,
     TResult Function()? loading,
     TResult Function()? successfullyImported,
+    TResult Function()? successfullyCopied,
+    TResult Function()? successfullyMoved,
     TResult Function(String error)? error,
     TResult Function()? finishLearning,
     required TResult orElse(),
@@ -2360,6 +3076,8 @@ class _$LoadedImpl extends _Loaded {
     required TResult Function(_ViewIndividualCard value) viewIndividualCard,
     required TResult Function(_Loading value) loading,
     required TResult Function(_SuccessfullyImported value) successfullyImported,
+    required TResult Function(_SuccessfullyCopied value) successfullyCopied,
+    required TResult Function(_SuccessfullyMoved value) successfullyMoved,
     required TResult Function(_Error value) error,
     required TResult Function(_FinishLearning value) finishLearning,
   }) {
@@ -2373,6 +3091,8 @@ class _$LoadedImpl extends _Loaded {
     TResult? Function(_ViewIndividualCard value)? viewIndividualCard,
     TResult? Function(_Loading value)? loading,
     TResult? Function(_SuccessfullyImported value)? successfullyImported,
+    TResult? Function(_SuccessfullyCopied value)? successfullyCopied,
+    TResult? Function(_SuccessfullyMoved value)? successfullyMoved,
     TResult? Function(_Error value)? error,
     TResult? Function(_FinishLearning value)? finishLearning,
   }) {
@@ -2386,6 +3106,8 @@ class _$LoadedImpl extends _Loaded {
     TResult Function(_ViewIndividualCard value)? viewIndividualCard,
     TResult Function(_Loading value)? loading,
     TResult Function(_SuccessfullyImported value)? successfullyImported,
+    TResult Function(_SuccessfullyCopied value)? successfullyCopied,
+    TResult Function(_SuccessfullyMoved value)? successfullyMoved,
     TResult Function(_Error value)? error,
     TResult Function(_FinishLearning value)? finishLearning,
     required TResult orElse(),
@@ -2450,6 +3172,8 @@ class _$ViewIndividualCardImpl extends _ViewIndividualCard {
     required TResult Function() viewIndividualCard,
     required TResult Function() loading,
     required TResult Function() successfullyImported,
+    required TResult Function() successfullyCopied,
+    required TResult Function() successfullyMoved,
     required TResult Function(String error) error,
     required TResult Function() finishLearning,
   }) {
@@ -2463,6 +3187,8 @@ class _$ViewIndividualCardImpl extends _ViewIndividualCard {
     TResult? Function()? viewIndividualCard,
     TResult? Function()? loading,
     TResult? Function()? successfullyImported,
+    TResult? Function()? successfullyCopied,
+    TResult? Function()? successfullyMoved,
     TResult? Function(String error)? error,
     TResult? Function()? finishLearning,
   }) {
@@ -2476,6 +3202,8 @@ class _$ViewIndividualCardImpl extends _ViewIndividualCard {
     TResult Function()? viewIndividualCard,
     TResult Function()? loading,
     TResult Function()? successfullyImported,
+    TResult Function()? successfullyCopied,
+    TResult Function()? successfullyMoved,
     TResult Function(String error)? error,
     TResult Function()? finishLearning,
     required TResult orElse(),
@@ -2493,6 +3221,8 @@ class _$ViewIndividualCardImpl extends _ViewIndividualCard {
     required TResult Function(_ViewIndividualCard value) viewIndividualCard,
     required TResult Function(_Loading value) loading,
     required TResult Function(_SuccessfullyImported value) successfullyImported,
+    required TResult Function(_SuccessfullyCopied value) successfullyCopied,
+    required TResult Function(_SuccessfullyMoved value) successfullyMoved,
     required TResult Function(_Error value) error,
     required TResult Function(_FinishLearning value) finishLearning,
   }) {
@@ -2506,6 +3236,8 @@ class _$ViewIndividualCardImpl extends _ViewIndividualCard {
     TResult? Function(_ViewIndividualCard value)? viewIndividualCard,
     TResult? Function(_Loading value)? loading,
     TResult? Function(_SuccessfullyImported value)? successfullyImported,
+    TResult? Function(_SuccessfullyCopied value)? successfullyCopied,
+    TResult? Function(_SuccessfullyMoved value)? successfullyMoved,
     TResult? Function(_Error value)? error,
     TResult? Function(_FinishLearning value)? finishLearning,
   }) {
@@ -2519,6 +3251,8 @@ class _$ViewIndividualCardImpl extends _ViewIndividualCard {
     TResult Function(_ViewIndividualCard value)? viewIndividualCard,
     TResult Function(_Loading value)? loading,
     TResult Function(_SuccessfullyImported value)? successfullyImported,
+    TResult Function(_SuccessfullyCopied value)? successfullyCopied,
+    TResult Function(_SuccessfullyMoved value)? successfullyMoved,
     TResult Function(_Error value)? error,
     TResult Function(_FinishLearning value)? finishLearning,
     required TResult orElse(),
@@ -2577,6 +3311,8 @@ class _$LoadingImpl extends _Loading {
     required TResult Function() viewIndividualCard,
     required TResult Function() loading,
     required TResult Function() successfullyImported,
+    required TResult Function() successfullyCopied,
+    required TResult Function() successfullyMoved,
     required TResult Function(String error) error,
     required TResult Function() finishLearning,
   }) {
@@ -2590,6 +3326,8 @@ class _$LoadingImpl extends _Loading {
     TResult? Function()? viewIndividualCard,
     TResult? Function()? loading,
     TResult? Function()? successfullyImported,
+    TResult? Function()? successfullyCopied,
+    TResult? Function()? successfullyMoved,
     TResult? Function(String error)? error,
     TResult? Function()? finishLearning,
   }) {
@@ -2603,6 +3341,8 @@ class _$LoadingImpl extends _Loading {
     TResult Function()? viewIndividualCard,
     TResult Function()? loading,
     TResult Function()? successfullyImported,
+    TResult Function()? successfullyCopied,
+    TResult Function()? successfullyMoved,
     TResult Function(String error)? error,
     TResult Function()? finishLearning,
     required TResult orElse(),
@@ -2620,6 +3360,8 @@ class _$LoadingImpl extends _Loading {
     required TResult Function(_ViewIndividualCard value) viewIndividualCard,
     required TResult Function(_Loading value) loading,
     required TResult Function(_SuccessfullyImported value) successfullyImported,
+    required TResult Function(_SuccessfullyCopied value) successfullyCopied,
+    required TResult Function(_SuccessfullyMoved value) successfullyMoved,
     required TResult Function(_Error value) error,
     required TResult Function(_FinishLearning value) finishLearning,
   }) {
@@ -2633,6 +3375,8 @@ class _$LoadingImpl extends _Loading {
     TResult? Function(_ViewIndividualCard value)? viewIndividualCard,
     TResult? Function(_Loading value)? loading,
     TResult? Function(_SuccessfullyImported value)? successfullyImported,
+    TResult? Function(_SuccessfullyCopied value)? successfullyCopied,
+    TResult? Function(_SuccessfullyMoved value)? successfullyMoved,
     TResult? Function(_Error value)? error,
     TResult? Function(_FinishLearning value)? finishLearning,
   }) {
@@ -2646,6 +3390,8 @@ class _$LoadingImpl extends _Loading {
     TResult Function(_ViewIndividualCard value)? viewIndividualCard,
     TResult Function(_Loading value)? loading,
     TResult Function(_SuccessfullyImported value)? successfullyImported,
+    TResult Function(_SuccessfullyCopied value)? successfullyCopied,
+    TResult Function(_SuccessfullyMoved value)? successfullyMoved,
     TResult Function(_Error value)? error,
     TResult Function(_FinishLearning value)? finishLearning,
     required TResult orElse(),
@@ -2705,6 +3451,8 @@ class _$SuccessfullyImportedImpl extends _SuccessfullyImported {
     required TResult Function() viewIndividualCard,
     required TResult Function() loading,
     required TResult Function() successfullyImported,
+    required TResult Function() successfullyCopied,
+    required TResult Function() successfullyMoved,
     required TResult Function(String error) error,
     required TResult Function() finishLearning,
   }) {
@@ -2718,6 +3466,8 @@ class _$SuccessfullyImportedImpl extends _SuccessfullyImported {
     TResult? Function()? viewIndividualCard,
     TResult? Function()? loading,
     TResult? Function()? successfullyImported,
+    TResult? Function()? successfullyCopied,
+    TResult? Function()? successfullyMoved,
     TResult? Function(String error)? error,
     TResult? Function()? finishLearning,
   }) {
@@ -2731,6 +3481,8 @@ class _$SuccessfullyImportedImpl extends _SuccessfullyImported {
     TResult Function()? viewIndividualCard,
     TResult Function()? loading,
     TResult Function()? successfullyImported,
+    TResult Function()? successfullyCopied,
+    TResult Function()? successfullyMoved,
     TResult Function(String error)? error,
     TResult Function()? finishLearning,
     required TResult orElse(),
@@ -2748,6 +3500,8 @@ class _$SuccessfullyImportedImpl extends _SuccessfullyImported {
     required TResult Function(_ViewIndividualCard value) viewIndividualCard,
     required TResult Function(_Loading value) loading,
     required TResult Function(_SuccessfullyImported value) successfullyImported,
+    required TResult Function(_SuccessfullyCopied value) successfullyCopied,
+    required TResult Function(_SuccessfullyMoved value) successfullyMoved,
     required TResult Function(_Error value) error,
     required TResult Function(_FinishLearning value) finishLearning,
   }) {
@@ -2761,6 +3515,8 @@ class _$SuccessfullyImportedImpl extends _SuccessfullyImported {
     TResult? Function(_ViewIndividualCard value)? viewIndividualCard,
     TResult? Function(_Loading value)? loading,
     TResult? Function(_SuccessfullyImported value)? successfullyImported,
+    TResult? Function(_SuccessfullyCopied value)? successfullyCopied,
+    TResult? Function(_SuccessfullyMoved value)? successfullyMoved,
     TResult? Function(_Error value)? error,
     TResult? Function(_FinishLearning value)? finishLearning,
   }) {
@@ -2774,6 +3530,8 @@ class _$SuccessfullyImportedImpl extends _SuccessfullyImported {
     TResult Function(_ViewIndividualCard value)? viewIndividualCard,
     TResult Function(_Loading value)? loading,
     TResult Function(_SuccessfullyImported value)? successfullyImported,
+    TResult Function(_SuccessfullyCopied value)? successfullyCopied,
+    TResult Function(_SuccessfullyMoved value)? successfullyMoved,
     TResult Function(_Error value)? error,
     TResult Function(_FinishLearning value)? finishLearning,
     required TResult orElse(),
@@ -2788,6 +3546,284 @@ class _$SuccessfullyImportedImpl extends _SuccessfullyImported {
 abstract class _SuccessfullyImported extends CardsState {
   const factory _SuccessfullyImported() = _$SuccessfullyImportedImpl;
   const _SuccessfullyImported._() : super._();
+}
+
+/// @nodoc
+abstract class _$$SuccessfullyCopiedImplCopyWith<$Res> {
+  factory _$$SuccessfullyCopiedImplCopyWith(_$SuccessfullyCopiedImpl value,
+          $Res Function(_$SuccessfullyCopiedImpl) then) =
+      __$$SuccessfullyCopiedImplCopyWithImpl<$Res>;
+}
+
+/// @nodoc
+class __$$SuccessfullyCopiedImplCopyWithImpl<$Res>
+    extends _$CardsStateCopyWithImpl<$Res, _$SuccessfullyCopiedImpl>
+    implements _$$SuccessfullyCopiedImplCopyWith<$Res> {
+  __$$SuccessfullyCopiedImplCopyWithImpl(_$SuccessfullyCopiedImpl _value,
+      $Res Function(_$SuccessfullyCopiedImpl) _then)
+      : super(_value, _then);
+}
+
+/// @nodoc
+
+class _$SuccessfullyCopiedImpl extends _SuccessfullyCopied {
+  const _$SuccessfullyCopiedImpl() : super._();
+
+  @override
+  String toString() {
+    return 'CardsState.successfullyCopied()';
+  }
+
+  @override
+  bool operator ==(Object other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType && other is _$SuccessfullyCopiedImpl);
+  }
+
+  @override
+  int get hashCode => runtimeType.hashCode;
+
+  @override
+  @optionalTypeArgs
+  TResult when<TResult extends Object?>({
+    required TResult Function(List<CardEntity>? cardsList) loaded,
+    required TResult Function() viewIndividualCard,
+    required TResult Function() loading,
+    required TResult Function() successfullyImported,
+    required TResult Function() successfullyCopied,
+    required TResult Function() successfullyMoved,
+    required TResult Function(String error) error,
+    required TResult Function() finishLearning,
+  }) {
+    return successfullyCopied();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? whenOrNull<TResult extends Object?>({
+    TResult? Function(List<CardEntity>? cardsList)? loaded,
+    TResult? Function()? viewIndividualCard,
+    TResult? Function()? loading,
+    TResult? Function()? successfullyImported,
+    TResult? Function()? successfullyCopied,
+    TResult? Function()? successfullyMoved,
+    TResult? Function(String error)? error,
+    TResult? Function()? finishLearning,
+  }) {
+    return successfullyCopied?.call();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeWhen<TResult extends Object?>({
+    TResult Function(List<CardEntity>? cardsList)? loaded,
+    TResult Function()? viewIndividualCard,
+    TResult Function()? loading,
+    TResult Function()? successfullyImported,
+    TResult Function()? successfullyCopied,
+    TResult Function()? successfullyMoved,
+    TResult Function(String error)? error,
+    TResult Function()? finishLearning,
+    required TResult orElse(),
+  }) {
+    if (successfullyCopied != null) {
+      return successfullyCopied();
+    }
+    return orElse();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult map<TResult extends Object?>({
+    required TResult Function(_Loaded value) loaded,
+    required TResult Function(_ViewIndividualCard value) viewIndividualCard,
+    required TResult Function(_Loading value) loading,
+    required TResult Function(_SuccessfullyImported value) successfullyImported,
+    required TResult Function(_SuccessfullyCopied value) successfullyCopied,
+    required TResult Function(_SuccessfullyMoved value) successfullyMoved,
+    required TResult Function(_Error value) error,
+    required TResult Function(_FinishLearning value) finishLearning,
+  }) {
+    return successfullyCopied(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? mapOrNull<TResult extends Object?>({
+    TResult? Function(_Loaded value)? loaded,
+    TResult? Function(_ViewIndividualCard value)? viewIndividualCard,
+    TResult? Function(_Loading value)? loading,
+    TResult? Function(_SuccessfullyImported value)? successfullyImported,
+    TResult? Function(_SuccessfullyCopied value)? successfullyCopied,
+    TResult? Function(_SuccessfullyMoved value)? successfullyMoved,
+    TResult? Function(_Error value)? error,
+    TResult? Function(_FinishLearning value)? finishLearning,
+  }) {
+    return successfullyCopied?.call(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeMap<TResult extends Object?>({
+    TResult Function(_Loaded value)? loaded,
+    TResult Function(_ViewIndividualCard value)? viewIndividualCard,
+    TResult Function(_Loading value)? loading,
+    TResult Function(_SuccessfullyImported value)? successfullyImported,
+    TResult Function(_SuccessfullyCopied value)? successfullyCopied,
+    TResult Function(_SuccessfullyMoved value)? successfullyMoved,
+    TResult Function(_Error value)? error,
+    TResult Function(_FinishLearning value)? finishLearning,
+    required TResult orElse(),
+  }) {
+    if (successfullyCopied != null) {
+      return successfullyCopied(this);
+    }
+    return orElse();
+  }
+}
+
+abstract class _SuccessfullyCopied extends CardsState {
+  const factory _SuccessfullyCopied() = _$SuccessfullyCopiedImpl;
+  const _SuccessfullyCopied._() : super._();
+}
+
+/// @nodoc
+abstract class _$$SuccessfullyMovedImplCopyWith<$Res> {
+  factory _$$SuccessfullyMovedImplCopyWith(_$SuccessfullyMovedImpl value,
+          $Res Function(_$SuccessfullyMovedImpl) then) =
+      __$$SuccessfullyMovedImplCopyWithImpl<$Res>;
+}
+
+/// @nodoc
+class __$$SuccessfullyMovedImplCopyWithImpl<$Res>
+    extends _$CardsStateCopyWithImpl<$Res, _$SuccessfullyMovedImpl>
+    implements _$$SuccessfullyMovedImplCopyWith<$Res> {
+  __$$SuccessfullyMovedImplCopyWithImpl(_$SuccessfullyMovedImpl _value,
+      $Res Function(_$SuccessfullyMovedImpl) _then)
+      : super(_value, _then);
+}
+
+/// @nodoc
+
+class _$SuccessfullyMovedImpl extends _SuccessfullyMoved {
+  const _$SuccessfullyMovedImpl() : super._();
+
+  @override
+  String toString() {
+    return 'CardsState.successfullyMoved()';
+  }
+
+  @override
+  bool operator ==(Object other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType && other is _$SuccessfullyMovedImpl);
+  }
+
+  @override
+  int get hashCode => runtimeType.hashCode;
+
+  @override
+  @optionalTypeArgs
+  TResult when<TResult extends Object?>({
+    required TResult Function(List<CardEntity>? cardsList) loaded,
+    required TResult Function() viewIndividualCard,
+    required TResult Function() loading,
+    required TResult Function() successfullyImported,
+    required TResult Function() successfullyCopied,
+    required TResult Function() successfullyMoved,
+    required TResult Function(String error) error,
+    required TResult Function() finishLearning,
+  }) {
+    return successfullyMoved();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? whenOrNull<TResult extends Object?>({
+    TResult? Function(List<CardEntity>? cardsList)? loaded,
+    TResult? Function()? viewIndividualCard,
+    TResult? Function()? loading,
+    TResult? Function()? successfullyImported,
+    TResult? Function()? successfullyCopied,
+    TResult? Function()? successfullyMoved,
+    TResult? Function(String error)? error,
+    TResult? Function()? finishLearning,
+  }) {
+    return successfullyMoved?.call();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeWhen<TResult extends Object?>({
+    TResult Function(List<CardEntity>? cardsList)? loaded,
+    TResult Function()? viewIndividualCard,
+    TResult Function()? loading,
+    TResult Function()? successfullyImported,
+    TResult Function()? successfullyCopied,
+    TResult Function()? successfullyMoved,
+    TResult Function(String error)? error,
+    TResult Function()? finishLearning,
+    required TResult orElse(),
+  }) {
+    if (successfullyMoved != null) {
+      return successfullyMoved();
+    }
+    return orElse();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult map<TResult extends Object?>({
+    required TResult Function(_Loaded value) loaded,
+    required TResult Function(_ViewIndividualCard value) viewIndividualCard,
+    required TResult Function(_Loading value) loading,
+    required TResult Function(_SuccessfullyImported value) successfullyImported,
+    required TResult Function(_SuccessfullyCopied value) successfullyCopied,
+    required TResult Function(_SuccessfullyMoved value) successfullyMoved,
+    required TResult Function(_Error value) error,
+    required TResult Function(_FinishLearning value) finishLearning,
+  }) {
+    return successfullyMoved(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? mapOrNull<TResult extends Object?>({
+    TResult? Function(_Loaded value)? loaded,
+    TResult? Function(_ViewIndividualCard value)? viewIndividualCard,
+    TResult? Function(_Loading value)? loading,
+    TResult? Function(_SuccessfullyImported value)? successfullyImported,
+    TResult? Function(_SuccessfullyCopied value)? successfullyCopied,
+    TResult? Function(_SuccessfullyMoved value)? successfullyMoved,
+    TResult? Function(_Error value)? error,
+    TResult? Function(_FinishLearning value)? finishLearning,
+  }) {
+    return successfullyMoved?.call(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeMap<TResult extends Object?>({
+    TResult Function(_Loaded value)? loaded,
+    TResult Function(_ViewIndividualCard value)? viewIndividualCard,
+    TResult Function(_Loading value)? loading,
+    TResult Function(_SuccessfullyImported value)? successfullyImported,
+    TResult Function(_SuccessfullyCopied value)? successfullyCopied,
+    TResult Function(_SuccessfullyMoved value)? successfullyMoved,
+    TResult Function(_Error value)? error,
+    TResult Function(_FinishLearning value)? finishLearning,
+    required TResult orElse(),
+  }) {
+    if (successfullyMoved != null) {
+      return successfullyMoved(this);
+    }
+    return orElse();
+  }
+}
+
+abstract class _SuccessfullyMoved extends CardsState {
+  const factory _SuccessfullyMoved() = _$SuccessfullyMovedImpl;
+  const _SuccessfullyMoved._() : super._();
 }
 
 /// @nodoc
@@ -2858,6 +3894,8 @@ class _$ErrorImpl extends _Error {
     required TResult Function() viewIndividualCard,
     required TResult Function() loading,
     required TResult Function() successfullyImported,
+    required TResult Function() successfullyCopied,
+    required TResult Function() successfullyMoved,
     required TResult Function(String error) error,
     required TResult Function() finishLearning,
   }) {
@@ -2871,6 +3909,8 @@ class _$ErrorImpl extends _Error {
     TResult? Function()? viewIndividualCard,
     TResult? Function()? loading,
     TResult? Function()? successfullyImported,
+    TResult? Function()? successfullyCopied,
+    TResult? Function()? successfullyMoved,
     TResult? Function(String error)? error,
     TResult? Function()? finishLearning,
   }) {
@@ -2884,6 +3924,8 @@ class _$ErrorImpl extends _Error {
     TResult Function()? viewIndividualCard,
     TResult Function()? loading,
     TResult Function()? successfullyImported,
+    TResult Function()? successfullyCopied,
+    TResult Function()? successfullyMoved,
     TResult Function(String error)? error,
     TResult Function()? finishLearning,
     required TResult orElse(),
@@ -2901,6 +3943,8 @@ class _$ErrorImpl extends _Error {
     required TResult Function(_ViewIndividualCard value) viewIndividualCard,
     required TResult Function(_Loading value) loading,
     required TResult Function(_SuccessfullyImported value) successfullyImported,
+    required TResult Function(_SuccessfullyCopied value) successfullyCopied,
+    required TResult Function(_SuccessfullyMoved value) successfullyMoved,
     required TResult Function(_Error value) error,
     required TResult Function(_FinishLearning value) finishLearning,
   }) {
@@ -2914,6 +3958,8 @@ class _$ErrorImpl extends _Error {
     TResult? Function(_ViewIndividualCard value)? viewIndividualCard,
     TResult? Function(_Loading value)? loading,
     TResult? Function(_SuccessfullyImported value)? successfullyImported,
+    TResult? Function(_SuccessfullyCopied value)? successfullyCopied,
+    TResult? Function(_SuccessfullyMoved value)? successfullyMoved,
     TResult? Function(_Error value)? error,
     TResult? Function(_FinishLearning value)? finishLearning,
   }) {
@@ -2927,6 +3973,8 @@ class _$ErrorImpl extends _Error {
     TResult Function(_ViewIndividualCard value)? viewIndividualCard,
     TResult Function(_Loading value)? loading,
     TResult Function(_SuccessfullyImported value)? successfullyImported,
+    TResult Function(_SuccessfullyCopied value)? successfullyCopied,
+    TResult Function(_SuccessfullyMoved value)? successfullyMoved,
     TResult Function(_Error value)? error,
     TResult Function(_FinishLearning value)? finishLearning,
     required TResult orElse(),
@@ -2990,6 +4038,8 @@ class _$FinishLearningImpl extends _FinishLearning {
     required TResult Function() viewIndividualCard,
     required TResult Function() loading,
     required TResult Function() successfullyImported,
+    required TResult Function() successfullyCopied,
+    required TResult Function() successfullyMoved,
     required TResult Function(String error) error,
     required TResult Function() finishLearning,
   }) {
@@ -3003,6 +4053,8 @@ class _$FinishLearningImpl extends _FinishLearning {
     TResult? Function()? viewIndividualCard,
     TResult? Function()? loading,
     TResult? Function()? successfullyImported,
+    TResult? Function()? successfullyCopied,
+    TResult? Function()? successfullyMoved,
     TResult? Function(String error)? error,
     TResult? Function()? finishLearning,
   }) {
@@ -3016,6 +4068,8 @@ class _$FinishLearningImpl extends _FinishLearning {
     TResult Function()? viewIndividualCard,
     TResult Function()? loading,
     TResult Function()? successfullyImported,
+    TResult Function()? successfullyCopied,
+    TResult Function()? successfullyMoved,
     TResult Function(String error)? error,
     TResult Function()? finishLearning,
     required TResult orElse(),
@@ -3033,6 +4087,8 @@ class _$FinishLearningImpl extends _FinishLearning {
     required TResult Function(_ViewIndividualCard value) viewIndividualCard,
     required TResult Function(_Loading value) loading,
     required TResult Function(_SuccessfullyImported value) successfullyImported,
+    required TResult Function(_SuccessfullyCopied value) successfullyCopied,
+    required TResult Function(_SuccessfullyMoved value) successfullyMoved,
     required TResult Function(_Error value) error,
     required TResult Function(_FinishLearning value) finishLearning,
   }) {
@@ -3046,6 +4102,8 @@ class _$FinishLearningImpl extends _FinishLearning {
     TResult? Function(_ViewIndividualCard value)? viewIndividualCard,
     TResult? Function(_Loading value)? loading,
     TResult? Function(_SuccessfullyImported value)? successfullyImported,
+    TResult? Function(_SuccessfullyCopied value)? successfullyCopied,
+    TResult? Function(_SuccessfullyMoved value)? successfullyMoved,
     TResult? Function(_Error value)? error,
     TResult? Function(_FinishLearning value)? finishLearning,
   }) {
@@ -3059,6 +4117,8 @@ class _$FinishLearningImpl extends _FinishLearning {
     TResult Function(_ViewIndividualCard value)? viewIndividualCard,
     TResult Function(_Loading value)? loading,
     TResult Function(_SuccessfullyImported value)? successfullyImported,
+    TResult Function(_SuccessfullyCopied value)? successfullyCopied,
+    TResult Function(_SuccessfullyMoved value)? successfullyMoved,
     TResult Function(_Error value)? error,
     TResult Function(_FinishLearning value)? finishLearning,
     required TResult orElse(),

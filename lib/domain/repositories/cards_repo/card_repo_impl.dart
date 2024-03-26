@@ -50,6 +50,16 @@ class CardRepoImpl extends CardRepo {
   }
 
   @override
+  Future<void> copyToCollection({required List<CardEntity> cards, required String toCollectionId}) async{
+    await cardService.copyToCollection(cards: cards, toCollectionId: toCollectionId);
+  }
+
+  @override
+  Future<void> moveToCollection({required List<CardEntity> cards, required String fromCollectionId, required String toCollectionId}) async{
+    await cardService.moveToCollection(cards: cards, fromCollectionId: fromCollectionId, toCollectionId: toCollectionId);
+  }
+
+  @override
   Future<void> importExcel({required String path,
     required String collectionId,
     required String collectionName}) async{

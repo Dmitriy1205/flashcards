@@ -17,6 +17,10 @@ abstract class CardRepo {
       required String collectionId,
       required String collectionName});
 
+  Future<void> moveToCollection({required List<CardEntity> cards, required String fromCollectionId, required String toCollectionId});
+
+  Future<void> copyToCollection({required List<CardEntity> cards, required String toCollectionId});
+
   Future<void> createSharedCards(
       {required String collectionId, required String sender});
 

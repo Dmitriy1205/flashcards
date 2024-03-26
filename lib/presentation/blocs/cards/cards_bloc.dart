@@ -32,6 +32,8 @@ class CardsBloc extends Bloc<CardsEvent, CardsState> {
   Future<void> _mapEventToState(CardsEvent event, Emitter<CardsState> emit) =>
       event.map(
           initCard: (event) => _initCard(event, emit),
+          moveCards: (event) => _moveCards(event, emit),
+          copyCards: (event) => _copyCards(event, emit),
           createNewCard: (event) => _createNewCard(event, emit),
           deleteSelectedCards: (event) => _deleteSelectedCards(event, emit),
           editCard: (event) => _editCard(event, emit),
@@ -48,6 +50,31 @@ class CardsBloc extends Bloc<CardsEvent, CardsState> {
       await cardRepo.importExcel(path: event.path, collectionName: event.collectionName, collectionId: event.collectionId);
       emit(const CardsState.successfullyImported());
       final cards = await cardRepo.fetchCards(collectionId: event.collectionId);
+      emit(CardsState.loaded(cardsList: cards));
+    }on FormatException catch(e){
+      emit(CardsState.error(error: e.message));
+      emit(prevState);
+    }
+  }
+
+  Future<void> _copyCards(_CopyCards event, Emitter<CardsState> emit) async{
+    final prevState = state;
+    try{
+      await cardRepo.copyToCollection(cards: event.cards, toCollectionId: event.toCollectionId);
+      emit(const CardsState.successfullyCopied());
+      emit(prevState);
+    }on FormatException catch(e){
+      emit(CardsState.error(error: e.message));
+      emit(prevState);
+    }
+  }
+
+  Future<void> _moveCards(_MoveCards event, Emitter<CardsState> emit) async{
+    final prevState = state;
+    try{
+      await cardRepo.moveToCollection(cards: event.cards, fromCollectionId: event.fromCollectionId, toCollectionId: event.toCollectionId);
+      emit(const CardsState.successfullyMoved());
+      final cards = await cardRepo.fetchCards(collectionId: event.fromCollectionId);
       emit(CardsState.loaded(cardsList: cards));
     }on FormatException catch(e){
       emit(CardsState.error(error: e.message));

@@ -1,3 +1,4 @@
+import 'dart:developer';
 import 'dart:io';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
@@ -22,6 +23,8 @@ class CollectionPdfServiceImpl implements CollectionPdfService {
       final snap = await _db
           .collection(FirestoreCollections.users)
           .doc(userUid)
+          .collection(FirestoreCollections.collections)
+          .doc(collectionId)
           .collection(FirestoreCollections.pdfs)
           .get();
       return snap.docs
@@ -41,35 +44,46 @@ class CollectionPdfServiceImpl implements CollectionPdfService {
       String storagePath = StorageRefs.collectionPdfs(
           userUid: userUid, collectionId: collectionId);
       //Upload pdfs
-      bool fileSizeExceeded = filePaths.map((e) => File(e)).any((e) => e.lengthSync() > _maxBytes);
+      final localFilesPaths = filePaths.where((e) => !e.startsWith("users/")).toList();
+      final remoteFilesPaths = filePaths.where((e) => e.startsWith("users/")).toList();
+      final remoteFilesNames = remoteFilesPaths.map((e) => extractFilename(e)).toList();
+      bool fileSizeExceeded = localFilesPaths.map((e) => File(e)).any((e) => e.lengthSync() > _maxBytes);
       if(fileSizeExceeded){
         throw LocalizedException(message: "File is too big, maximum 5 mb", localizationKey: 'max-file-size-5mb');
-      }
-      for (var path in filePaths) {
-        await _storage.ref("$storagePath/${extractFilename(path)}").putFile(
-            File(path), SettableMetadata(contentType: "application/pdf"));
       }
       //Delete old pdf
       final oldPdfs = await _db
           .collection(FirestoreCollections.users)
           .doc(userUid)
+          .collection(FirestoreCollections.collections)
+          .doc(collectionId)
           .collection(FirestoreCollections.pdfs)
           .get();
+
       for (var element in oldPdfs.docs) {
+        if(remoteFilesNames.contains(extractFilename(element.data()["path"]))){
+          continue;
+        }
         final pdf = CollectionPdfEntity.fromJson(element.data());
-        await _storage.ref(pdf.path).delete();
+        _storage.ref(pdf.path).delete();
         await _db
             .collection(FirestoreCollections.users)
             .doc(userUid)
+            .collection(FirestoreCollections.collections)
+            .doc(collectionId)
             .collection(FirestoreCollections.pdfs)
             .doc(element.id)
             .delete();
       }
-      //Create new pdfs
-      for (var path in filePaths) {
+
+      for (var path in localFilesPaths) {
+        await _storage.ref("$storagePath/${extractFilename(path)}").putFile(
+            File(path), SettableMetadata(contentType: "application/pdf"));
         final doc = _db
             .collection(FirestoreCollections.users)
             .doc(userUid)
+            .collection(FirestoreCollections.collections)
+            .doc(collectionId)
             .collection(FirestoreCollections.pdfs)
             .doc();
         await doc.set(CollectionPdfEntity.createFirestoreDocument(

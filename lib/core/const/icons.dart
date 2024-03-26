@@ -48,4 +48,6 @@ class AppIcons {
   static const String editGreen = 'assets/icons/edit_green.svg';
   static const String download = 'assets/icons/download.svg';
   static const String cancel = 'assets/icons/cancel.svg';
+  static const String move = 'assets/icons/move.svg';
+  static const String copy = 'assets/icons/copy.svg';
 }

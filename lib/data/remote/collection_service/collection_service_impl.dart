@@ -68,7 +68,13 @@ class CollectionServiceImpl extends CollectionServiceContract {
           .doc(_firebaseAuth.currentUser!.uid)
           .collection(FirestoreCollections.collections);
       for (int i = 0; i < collectionsListToDelete.length; i++) {
-        await collections.doc(collectionsListToDelete[i]).delete();
+        final cardsRefs = await collections.doc(collectionsListToDelete[i]).collection("cards").get();
+        final batch = _fireStore.batch();
+        batch.delete(collections.doc(collectionsListToDelete[i]));
+        for(var cardRef in cardsRefs.docs){
+          batch.delete(collections.doc(collectionsListToDelete[i]).collection("cards").doc(cardRef.id));
+        }
+        await batch.commit();
       }
     } catch (e) {
       throw Exception("Exception deleteCollections $e");

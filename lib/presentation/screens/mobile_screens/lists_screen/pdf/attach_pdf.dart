@@ -139,6 +139,7 @@ class _AttachPdfState extends State<AttachPdf> {
               color: AppColors.mainAccent,
               fontSize: 22,
               fontWeight: FontWeight.w600),
+          textAlign: TextAlign.center,
         ),
         Text(
           "“${widget.collectionName}”",

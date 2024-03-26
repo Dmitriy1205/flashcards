@@ -5,6 +5,7 @@ import 'package:excel/excel.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flashcards/core/const/firebase_collections.dart';
+import 'package:flashcards/core/exceptions/exceptions.dart';
 import 'package:flashcards/data/remote/card_service/card_service_contract.dart';
 import 'package:flashcards/domain/entities/card_entity/card_entity.dart';
 import 'package:flashcards/domain/params/card_param/create_card_param.dart';
@@ -309,4 +310,54 @@ class CardServiceImpl extends CardService {
         default: return [];
     }
   }
+
+  @override
+  Future<void> moveToCollection({required List<CardEntity> cards, required String fromCollectionId, required String toCollectionId}) async{
+    try{
+      var batch = _fireStore.batch();
+      for(var card in cards){
+        final oldCardRef = _fireStore
+            .collection(FirestoreCollections.users)
+            .doc(_firebaseAuth.currentUser!.uid)
+            .collection(FirestoreCollections.collections)
+            .doc(fromCollectionId)
+            .collection(FirestoreCollections.cards)
+            .doc(card.id);
+        batch.delete(oldCardRef);
+        final newCardRef = _fireStore
+            .collection(FirestoreCollections.users)
+            .doc(_firebaseAuth.currentUser!.uid)
+            .collection(FirestoreCollections.collections)
+            .doc(toCollectionId)
+            .collection(FirestoreCollections.cards)
+            .doc(card.id);
+        batch.set(newCardRef, card.toJson());
+      }
+      await batch.commit();
+    }catch(e){
+      throw LocalizedException(message: 'Failed to move collection');
+    }
+  }
+
+  @override
+  Future<void> copyToCollection({required List<CardEntity> cards, required String toCollectionId}) async{
+    try{
+      var batch = _fireStore.batch();
+      for(var card in cards){
+        final cardRef = _fireStore
+            .collection(FirestoreCollections.users)
+            .doc(_firebaseAuth.currentUser!.uid)
+            .collection(FirestoreCollections.collections)
+            .doc(toCollectionId)
+            .collection(FirestoreCollections.cards)
+            .doc(card.id);
+        batch.set(cardRef, card.toJson());
+      }
+      await batch.commit();
+    }catch(e){
+      throw LocalizedException(message: 'Failed to copy collection');
+    }
+  }
+
+
 }
