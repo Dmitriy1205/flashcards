@@ -1,16 +1,17 @@
 # flashcards
 
-A new Flutter project.
+Flashcards app.
 
-## Getting Started
+## Localization guide
 
-This project is a starting point for a Flutter application.
+In order to change localization use next [link](https://github.com/Dmitriy1205/flashcards/tree/master/lib/l10).
+It contain localization for 4 languages:
+- app_de.arb (German)
+- app_en.arb (English)
+- app_fr.arb (French)
+- app_it.arb (Italian)
 
-A few resources to get you started if this is your first Flutter project:
+Changing one files is done via next button:
+<img width="1426" alt="Знімок екрана 2024-03-26 о 12 43 17" src="https://github.com/Dmitriy1205/flashcards/assets/61013205/16d879b7-a64a-4458-8ab9-974bb911fb1b">
 
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
-
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+After you changed localization, request developers to release new version and your changes are gonna be seen in next build.
