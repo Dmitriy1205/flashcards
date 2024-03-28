@@ -1,3 +1,4 @@
+import 'dart:developer';
 import 'dart:ui' as ui;
 
 import 'package:flutter/material.dart';
@@ -44,6 +45,7 @@ class PaintingArea extends StatefulWidget {
 
 class PaintingAreaState extends State<PaintingArea> {
   late List<(Offset?, Color lineColor)> points = [(null, widget.color)];
+  List<int> pointsCountPerPanEnd = [];
 
 
   Future<ui.Image> get rendered {
@@ -64,19 +66,33 @@ class PaintingAreaState extends State<PaintingArea> {
     });
   }
 
+  void back(){
+    if(points.isEmpty || pointsCountPerPanEnd.isEmpty) return;
+    setState(() {
+      points = points.sublist(0,points.length - pointsCountPerPanEnd.last);
+      pointsCountPerPanEnd = pointsCountPerPanEnd.sublist(0,pointsCountPerPanEnd.length - 1);
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return Column(
       children: [
         LayoutBuilder(
           builder: (context, constraints) => GestureDetector(
+            onPanStart: (_){
+              pointsCountPerPanEnd.add(1);
+            },
             onPanUpdate: (details) {
               setState(() {
                 RenderBox renderBox = context.findRenderObject() as RenderBox;
+                pointsCountPerPanEnd[pointsCountPerPanEnd.length - 1]++;
                 points.add((renderBox.globalToLocal(details.globalPosition), widget.color));
               });
             },
-            onPanEnd: (details) => points.add((null, Colors.transparent)),
+            onPanEnd: (details) {
+              points.add((null, Colors.transparent));
+            },
             child: CustomPaint(
               painter:
                   SignaturePainter(points: points, lineColor: widget.color),

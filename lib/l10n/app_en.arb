@@ -52,6 +52,7 @@
   "delete": "Delete",
   "success": "Success",
   "greatJob": "You're doing a great \njob! Keep up the \ngood work!",
+  "badJob": "It`s still progress \ndon't give up!",
   "saved": "Saved",
   "noFileAttachedToCollection": "No file attached to collection",
   "downloadingStarted": "Downloading started",

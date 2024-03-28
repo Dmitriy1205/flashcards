@@ -836,34 +836,67 @@ class CreateEditCardState extends State<CreateEditCard> {
               Positioned(
                 bottom: 104,
                 right: 25,
-                child: InkWell(
-                  onTap: () {
-                    _signatureKey.currentState!.clearSignature();
-                  },
-                  child: Container(
-                    height: 64,
-                    width: 64,
-                    decoration: BoxDecoration(
-
-                      borderRadius: BorderRadius.circular(35),
-                      color: Colors.white,
-                      boxShadow: [
-                        BoxShadow(
-                          color: Colors.black.withOpacity(0.25),
-                          spreadRadius: 1,
-                          blurRadius: 10,
-                          offset: const Offset(0, 4),
+                child: Row(
+                  children: [
+                    InkWell(
+                      onTap: () {
+                        _signatureKey.currentState!.back();
+                      },
+                      child: Container(
+                        height: 64,
+                        width: 64,
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(35),
+                          color: Colors.white,
+                          boxShadow: [
+                            BoxShadow(
+                              color: Colors.black.withOpacity(0.25),
+                              spreadRadius: 1,
+                              blurRadius: 10,
+                              offset: const Offset(0, 4),
+                            ),
+                          ],
                         ),
-                      ],
-                    ),
-                    child: Center(
-                      child: SvgPicture.asset(
-                        AppIcons.erase,
-                        height: 28,
-                        width: 24,
+                        child: Center(
+                          child: SvgPicture.asset(
+                            AppIcons.undo,
+                            height: 28,
+                            width: 24,
+                          ),
+                        ),
                       ),
                     ),
-                  ),
+                    SizedBox(width: 25,),
+                    InkWell(
+                      onTap: () {
+                        _signatureKey.currentState!.clearSignature();
+                      },
+                      child: Container(
+                        height: 64,
+                        width: 64,
+                        decoration: BoxDecoration(
+
+                          borderRadius: BorderRadius.circular(35),
+                          color: Colors.white,
+                          boxShadow: [
+                            BoxShadow(
+                              color: Colors.black.withOpacity(0.25),
+                              spreadRadius: 1,
+                              blurRadius: 10,
+                              offset: const Offset(0, 4),
+                            ),
+                          ],
+                        ),
+                        child: Center(
+                          child: SvgPicture.asset(
+                            AppIcons.erase,
+                            height: 28,
+                            width: 24,
+                          ),
+                        ),
+                      ),
+                    ),
+                  ],
                 ),
               ),
             ]),

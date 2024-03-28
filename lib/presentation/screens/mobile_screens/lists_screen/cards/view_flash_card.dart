@@ -160,8 +160,8 @@ class _ViewFlashCardState extends State<ViewFlashCard> {
                                                 crossAxisAlignment: CrossAxisAlignment.center,
                                                 children: [
                                                   frontImage == null ? SizedBox.shrink() : SizedBox(
-                                                      height: 140,
-                                                      width: 140,
+                                                      height: 200,
+                                                      width: 200,
                                                       child: FittedBox(
                                                           fit: BoxFit.fill,
                                                           child: frontImage!)),
@@ -177,8 +177,8 @@ class _ViewFlashCardState extends State<ViewFlashCard> {
                                                 crossAxisAlignment: CrossAxisAlignment.center,
                                                 children: [
                                                   backImage == null ? SizedBox.shrink() : SizedBox(
-                                                      height: 140,
-                                                      width: 140,
+                                                      height: 200,
+                                                      width: 200,
                                                       child: FittedBox(
                                                           fit: BoxFit.fill,
                                                           child: backImage!)),

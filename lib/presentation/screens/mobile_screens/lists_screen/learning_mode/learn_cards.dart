@@ -342,18 +342,18 @@ class _CardState extends State<_Card> {
                             crossAxisAlignment: CrossAxisAlignment.center,
                             children: [
                               value >= 90 ? (frontImage == null ? SizedBox.shrink() : SizedBox(
-                                  width: 140,
-                                  height: 140,
+                                  width: 200,
+                                  height: 200,
                                   child: FittedBox(
                                       fit: BoxFit.fill,
                                       child: frontImage!))) : (backImage == null ? SizedBox.shrink() : SizedBox(
-                                  width: 140,
-                                  height: 140,
+                                  width: 200,
+                                  height: 200,
                                   child: FittedBox(
                                       fit: BoxFit.fill,
                                       child: backImage!))),
                               QuillText(
-                                content: value >= 90 ? widget.card.back : widget.card.front,
+                                content: value >= 90 ? widget.card.front : widget.card.back,
                                 center: true,
                                 style: TextStyle(fontSize: 22),
                               ),

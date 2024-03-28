@@ -67,7 +67,7 @@ class _FinishLearningScreenState extends State<FinishLearningScreen> {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Text(
-              AppLocalizations.of(context)!.greatJob,
+              (widget.known / widget.learning + widget.known) < 0.41 ? AppLocalizations.of(context)!.badJob : AppLocalizations.of(context)!.greatJob,
               style: AppTheme.themeData.textTheme.titleMedium!
                   .copyWith(fontSize: 22),
             ),

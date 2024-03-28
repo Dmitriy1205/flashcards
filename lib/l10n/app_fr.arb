@@ -52,6 +52,7 @@
   "delete": "Supprimer",
   "success": "Succès",
   "greatJob": "Vous faites un excellent \ntravail ! Continuez comme ça !",
+  "badJob": "C'est encore du progrès \nn'abandonne pas!",
   "saved": "Enregistré",
   "noFileAttachedToCollection": "Aucun fichier attaché à la collection",
   "downloadingStarted": "Téléchargement commencé",

@@ -50,4 +50,5 @@ class AppIcons {
   static const String cancel = 'assets/icons/cancel.svg';
   static const String move = 'assets/icons/move.svg';
   static const String copy = 'assets/icons/copy.svg';
+  static const String undo = 'assets/icons/undo.svg';
 }
