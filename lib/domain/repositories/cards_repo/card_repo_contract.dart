@@ -1,9 +1,12 @@
 import 'package:flashcards/domain/entities/card_entity/card_entity.dart';
+import 'package:flashcards/domain/entities/full_card_entity/full_card_entity.dart';
 import 'package:flashcards/domain/params/card_param/create_card_param.dart';
 import 'package:flashcards/domain/params/card_param/edit_card_param.dart';
 
 abstract class CardRepo {
   Future<void> createCard({required CreateCardParam cardParam});
+
+  Future<FullCardEntity> getFullCard({required CardEntity card});
 
   Future<void> editCard({required EditCardParam cardParam});
 

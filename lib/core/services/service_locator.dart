@@ -15,6 +15,7 @@ import 'package:flashcards/domain/repositories/user_repo/user_repo_contract.dart
 import 'package:flashcards/domain/repositories/user_repo/user_repo_impl.dart';
 import 'package:flashcards/presentation/blocs/auth/auth_bloc.dart';
 import 'package:flashcards/presentation/blocs/cards/cards_bloc.dart';
+import 'package:flashcards/presentation/blocs/full_card/full_card_bloc.dart';
 import 'package:flashcards/presentation/blocs/lists/lists_bloc.dart';
 import 'package:flashcards/presentation/blocs/locale/locale_cubit.dart';
 import 'package:flashcards/presentation/blocs/web_list/web_list_bloc.dart';
@@ -82,6 +83,7 @@ Future<void> init() async {
   sl.registerFactory(() => ForgotPasswordBloc(auth: sl()));
   sl.registerFactory(() => GoogleSigninBloc(auth: sl()));
   sl.registerFactory(() => localeBloc);
+  sl.registerFactory(() => FullCardBloc(cardRepo: sl()));
 
   sl.registerLazySingleton(() => ListsBloc(collectionRepo: sl()));
   sl.registerLazySingleton(() => CardsBloc(cardRepo: sl()));

@@ -23,8 +23,6 @@ _$CardEntityImpl _$$CardEntityImplFromJson(Map<String, dynamic> json) =>
       shareWithId: (json['shareWithId'] as List<dynamic>?)
           ?.map((e) => e as String)
           .toList(),
-      frontImage: json['frontImage'] as String?,
-      backImage: json['backImage'] as String?,
     );
 
 Map<String, dynamic> _$$CardEntityImplToJson(_$CardEntityImpl instance) =>
@@ -38,6 +36,4 @@ Map<String, dynamic> _$$CardEntityImplToJson(_$CardEntityImpl instance) =>
       'createdAt': instance.createdAt?.toIso8601String(),
       'sharedFrom': instance.sharedFrom,
       'shareWithId': instance.shareWithId,
-      'frontImage': instance.frontImage,
-      'backImage': instance.backImage,
     };

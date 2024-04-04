@@ -1,5 +1,6 @@
 import 'dart:convert';
 import 'dart:math';
+import 'dart:developer' as dev;
 
 import 'package:flashcards/core/const/colors.dart';
 import 'package:flashcards/core/const/icons.dart';
@@ -17,6 +18,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+
+import '../../../../../core/services/service_locator.dart';
+import '../../../../blocs/full_card/full_card_bloc.dart';
 
 class LearnCards extends StatefulWidget {
   const LearnCards({Key? key, required this.collectionId, required this.cards})
@@ -59,6 +63,7 @@ class _LearnCardsState extends State<LearnCards> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        scrolledUnderElevation: 0,
         bottom: PreferredSize(
           preferredSize: const Size.fromHeight(4.0),
           child: Container(
@@ -255,7 +260,7 @@ class _LearnCardsState extends State<LearnCards> {
                   .copyWith(fontSize: 18),
             ));
           }, orElse: () {
-            return Center(child: Text(AppLocalizations.of(context)!.noCardsLeft));
+            return SizedBox.shrink();
           });
         },
       ),
@@ -278,91 +283,106 @@ class _CardState extends State<_Card> {
   Image? frontImage;
   Image? backImage;
 
+  final _fullCardBloc = sl<FullCardBloc>();
+
   @override
   void initState() {
     super.initState();
-    frontImage = widget.card.frontImage == null || widget.card.frontImage!.isEmpty ? null : Image.memory(base64Decode(widget.card.frontImage!));
-    backImage = widget.card.backImage == null || widget.card.backImage!.isEmpty ? null : Image.memory(base64Decode(widget.card.backImage!));
+    _fullCardBloc.add(FullCardEvent.fetchFullInformation(card: widget.card));
   }
 
   @override
   void didUpdateWidget(covariant _Card oldWidget) {
-    frontImage = widget.card.frontImage == null || widget.card.frontImage!.isEmpty ? null : Image.memory(base64Decode(widget.card.frontImage!));
-    backImage = widget.card.backImage == null || widget.card.backImage!.isEmpty ? null : Image.memory(base64Decode(widget.card.backImage!));
+    frontImage = null;
+    backImage = null;
+    _fullCardBloc.add(FullCardEvent.fetchFullInformation(card: widget.card));
     super.didUpdateWidget(oldWidget);
   }
 
 
   @override
   Widget build(BuildContext context) {
-    return GestureDetector(
-      onTap: (){
-        setState(() {
-          disableInitialAnimation = false;
-          isFlipped = !isFlipped;
-        });
+    return BlocConsumer<FullCardBloc,FullCardState>(
+      bloc: _fullCardBloc,
+      listener: (context,state){
+        state.maybeMap(
+            loaded: (state){
+              frontImage = state.card.base64FrontImage == null || state.card.base64FrontImage!.isEmpty ? null : Image.memory(base64Decode(state.card.base64FrontImage!));
+              backImage = state.card.base64BackImage == null || state.card.base64BackImage!.isEmpty ? null : Image.memory(base64Decode(state.card.base64BackImage!));
+            },
+            orElse: (){});
       },
-      child: TweenAnimationBuilder(
-        duration: disableInitialAnimation
-            ? const Duration(milliseconds: 0)
-            : const Duration(milliseconds: 700),
-        curve: Curves.easeOut,
-        tween: Tween(
-            begin: isFlipped ? 180.0 : 0.0,
-            end: isFlipped ? 0.0 : 180.0),
-        builder: (context, double value, child) => RotationY(
-          rotationY: value,
-          child: Container(
-            decoration: const BoxDecoration(
-                boxShadow: [
-                  BoxShadow(
-                    color: AppColors.borderGrey,
-                    blurRadius: 10,
-                  ),
-                ],
-                shape: BoxShape.rectangle,
-                borderRadius: BorderRadius.all(
-                  Radius.circular(15),
-                )),
-            child: Card(
-              // shadowColor: Colors.grey,
-              child: Center(
-                  child: RotationY(
-                    rotationY: value >= 90 ? 180 : 0,
-                    child: Padding(
-                      padding: const EdgeInsets.symmetric(
-                          horizontal: 50),
-                      child: Align(
-                        alignment: Alignment.center,
-                        child: FractionallySizedBox(
-                          widthFactor: 1,
-                          // Adjust the width factor as needed
-                          child: Column(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            crossAxisAlignment: CrossAxisAlignment.center,
-                            children: [
-                              value >= 90 ? (frontImage == null ? SizedBox.shrink() : SizedBox(
-                                  width: 200,
-                                  height: 200,
-                                  child: FittedBox(
-                                      fit: BoxFit.fill,
-                                      child: frontImage!))) : (backImage == null ? SizedBox.shrink() : SizedBox(
-                                  width: 200,
-                                  height: 200,
-                                  child: FittedBox(
-                                      fit: BoxFit.fill,
-                                      child: backImage!))),
-                              QuillText(
-                                content: value >= 90 ? widget.card.front : widget.card.back,
-                                center: true,
-                                style: TextStyle(fontSize: 22),
+      builder: (context,state) => GestureDetector(
+        onTap: (){
+          setState(() {
+            disableInitialAnimation = false;
+            isFlipped = !isFlipped;
+          });
+        },
+        child: TweenAnimationBuilder(
+          duration: disableInitialAnimation
+              ? const Duration(milliseconds: 0)
+              : const Duration(milliseconds: 700),
+          curve: Curves.easeOut,
+          tween: Tween(
+              begin: isFlipped ? 180.0 : 0.0,
+              end: isFlipped ? 0.0 : 180.0),
+          builder: (context, double value, child) => RotationY(
+            rotationY: value,
+            child: Container(
+              decoration: const BoxDecoration(
+                  boxShadow: [
+                    BoxShadow(
+                      color: AppColors.borderGrey,
+                      blurRadius: 10,
+                    ),
+                  ],
+                  shape: BoxShape.rectangle,
+                  borderRadius: BorderRadius.all(
+                    Radius.circular(15),
+                  )),
+              child: Card(
+                // shadowColor: Colors.grey,
+                child: Center(
+                    child: RotationY(
+                      rotationY: value >= 90 ? 180 : 0,
+                      child: Padding(
+                        padding: const EdgeInsets.symmetric(
+                            horizontal: 50),
+                        child: Align(
+                          alignment: Alignment.center,
+                          child: FractionallySizedBox(
+                            widthFactor: 1,
+                            // Adjust the width factor as needed
+                            child: SingleChildScrollView(
+                              child: Column(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                crossAxisAlignment: CrossAxisAlignment.center,
+                                children: [
+                                  value >= 90 ? (frontImage == null ? SizedBox.shrink() : SizedBox(
+                                      width: 200,
+                                      height: 200,
+                                      child: FittedBox(
+                                          fit: BoxFit.fill,
+                                          child: frontImage!))) : (backImage == null ? SizedBox.shrink() : SizedBox(
+                                      width: 200,
+                                      height: 200,
+                                      child: FittedBox(
+                                          fit: BoxFit.fill,
+                                          child: backImage!))),
+                                  QuillText(
+                                    content: value >= 90 ? widget.card.front : widget.card.back,
+                                    center: true,
+                                    style: TextStyle(fontSize: 22),
+                                  ),
+                                ],
                               ),
-                            ],
+                            ),
                           ),
                         ),
                       ),
-                    ),
-                  )),
+                    )),
+              ),
             ),
           ),
         ),

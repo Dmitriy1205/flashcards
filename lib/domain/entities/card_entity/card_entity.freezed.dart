@@ -30,8 +30,6 @@ mixin _$CardEntity {
   DateTime? get createdAt => throw _privateConstructorUsedError;
   String? get sharedFrom => throw _privateConstructorUsedError;
   List<String>? get shareWithId => throw _privateConstructorUsedError;
-  String? get frontImage => throw _privateConstructorUsedError;
-  String? get backImage => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
@@ -55,9 +53,7 @@ abstract class $CardEntityCopyWith<$Res> {
       @JsonKey(fromJson: FirebaseTimestampConverters.fromTimestamp)
       DateTime? createdAt,
       String? sharedFrom,
-      List<String>? shareWithId,
-      String? frontImage,
-      String? backImage});
+      List<String>? shareWithId});
 }
 
 /// @nodoc
@@ -82,8 +78,6 @@ class _$CardEntityCopyWithImpl<$Res, $Val extends CardEntity>
     Object? createdAt = freezed,
     Object? sharedFrom = freezed,
     Object? shareWithId = freezed,
-    Object? frontImage = freezed,
-    Object? backImage = freezed,
   }) {
     return _then(_value.copyWith(
       id: null == id
@@ -122,14 +116,6 @@ class _$CardEntityCopyWithImpl<$Res, $Val extends CardEntity>
           ? _value.shareWithId
           : shareWithId // ignore: cast_nullable_to_non_nullable
               as List<String>?,
-      frontImage: freezed == frontImage
-          ? _value.frontImage
-          : frontImage // ignore: cast_nullable_to_non_nullable
-              as String?,
-      backImage: freezed == backImage
-          ? _value.backImage
-          : backImage // ignore: cast_nullable_to_non_nullable
-              as String?,
     ) as $Val);
   }
 }
@@ -152,9 +138,7 @@ abstract class _$$CardEntityImplCopyWith<$Res>
       @JsonKey(fromJson: FirebaseTimestampConverters.fromTimestamp)
       DateTime? createdAt,
       String? sharedFrom,
-      List<String>? shareWithId,
-      String? frontImage,
-      String? backImage});
+      List<String>? shareWithId});
 }
 
 /// @nodoc
@@ -177,8 +161,6 @@ class __$$CardEntityImplCopyWithImpl<$Res>
     Object? createdAt = freezed,
     Object? sharedFrom = freezed,
     Object? shareWithId = freezed,
-    Object? frontImage = freezed,
-    Object? backImage = freezed,
   }) {
     return _then(_$CardEntityImpl(
       id: null == id
@@ -217,14 +199,6 @@ class __$$CardEntityImplCopyWithImpl<$Res>
           ? _value._shareWithId
           : shareWithId // ignore: cast_nullable_to_non_nullable
               as List<String>?,
-      frontImage: freezed == frontImage
-          ? _value.frontImage
-          : frontImage // ignore: cast_nullable_to_non_nullable
-              as String?,
-      backImage: freezed == backImage
-          ? _value.backImage
-          : backImage // ignore: cast_nullable_to_non_nullable
-              as String?,
     ));
   }
 }
@@ -242,9 +216,7 @@ class _$CardEntityImpl implements _CardEntity {
       @JsonKey(fromJson: FirebaseTimestampConverters.fromTimestamp)
       required this.createdAt,
       this.sharedFrom,
-      final List<String>? shareWithId,
-      this.frontImage,
-      this.backImage})
+      final List<String>? shareWithId})
       : _front = front,
         _back = back,
         _shareWithId = shareWithId;
@@ -293,13 +265,8 @@ class _$CardEntityImpl implements _CardEntity {
   }
 
   @override
-  final String? frontImage;
-  @override
-  final String? backImage;
-
-  @override
   String toString() {
-    return 'CardEntity(id: $id, collectionId: $collectionId, collectionName: $collectionName, front: $front, back: $back, isLearned: $isLearned, createdAt: $createdAt, sharedFrom: $sharedFrom, shareWithId: $shareWithId, frontImage: $frontImage, backImage: $backImage)';
+    return 'CardEntity(id: $id, collectionId: $collectionId, collectionName: $collectionName, front: $front, back: $back, isLearned: $isLearned, createdAt: $createdAt, sharedFrom: $sharedFrom, shareWithId: $shareWithId)';
   }
 
   @override
@@ -321,11 +288,7 @@ class _$CardEntityImpl implements _CardEntity {
             (identical(other.sharedFrom, sharedFrom) ||
                 other.sharedFrom == sharedFrom) &&
             const DeepCollectionEquality()
-                .equals(other._shareWithId, _shareWithId) &&
-            (identical(other.frontImage, frontImage) ||
-                other.frontImage == frontImage) &&
-            (identical(other.backImage, backImage) ||
-                other.backImage == backImage));
+                .equals(other._shareWithId, _shareWithId));
   }
 
   @JsonKey(ignore: true)
@@ -340,9 +303,7 @@ class _$CardEntityImpl implements _CardEntity {
       isLearned,
       createdAt,
       sharedFrom,
-      const DeepCollectionEquality().hash(_shareWithId),
-      frontImage,
-      backImage);
+      const DeepCollectionEquality().hash(_shareWithId));
 
   @JsonKey(ignore: true)
   @override
@@ -369,9 +330,7 @@ abstract class _CardEntity implements CardEntity {
       @JsonKey(fromJson: FirebaseTimestampConverters.fromTimestamp)
       required final DateTime? createdAt,
       final String? sharedFrom,
-      final List<String>? shareWithId,
-      final String? frontImage,
-      final String? backImage}) = _$CardEntityImpl;
+      final List<String>? shareWithId}) = _$CardEntityImpl;
 
   factory _CardEntity.fromJson(Map<String, dynamic> json) =
       _$CardEntityImpl.fromJson;
@@ -395,10 +354,6 @@ abstract class _CardEntity implements CardEntity {
   String? get sharedFrom;
   @override
   List<String>? get shareWithId;
-  @override
-  String? get frontImage;
-  @override
-  String? get backImage;
   @override
   @JsonKey(ignore: true)
   _$$CardEntityImplCopyWith<_$CardEntityImpl> get copyWith =>

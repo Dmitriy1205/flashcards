@@ -1,5 +1,6 @@
 import 'package:flashcards/data/remote/card_service/card_service_contract.dart';
 import 'package:flashcards/domain/entities/card_entity/card_entity.dart';
+import 'package:flashcards/domain/entities/full_card_entity/full_card_entity.dart';
 import 'package:flashcards/domain/params/card_param/create_card_param.dart';
 import 'package:flashcards/domain/params/card_param/edit_card_param.dart';
 import 'package:flashcards/domain/repositories/cards_repo/card_repo_contract.dart';
@@ -57,6 +58,11 @@ class CardRepoImpl extends CardRepo {
   @override
   Future<void> moveToCollection({required List<CardEntity> cards, required String fromCollectionId, required String toCollectionId}) async{
     await cardService.moveToCollection(cards: cards, fromCollectionId: fromCollectionId, toCollectionId: toCollectionId);
+  }
+
+  @override
+  Future<FullCardEntity> getFullCard({required CardEntity card}) {
+    return cardService.getFullCard(card: card);
   }
 
   @override

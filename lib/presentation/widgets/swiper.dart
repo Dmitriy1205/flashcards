@@ -133,7 +133,9 @@ class _CardsSectionState extends State<SwipeableCardsSection>
           ignoring: !enableSwipe,
           child: Stack(
             children: <Widget>[
-              if (cards.length > 1) middleCard(),
+              if (cards.length > 1) IgnorePointer(
+                  ignoring: true,
+                  child: middleCard()),
               if (cards.isNotEmpty) frontCard(),
 
               // Prevent swiping if the cards are animating

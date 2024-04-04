@@ -18,8 +18,6 @@ class CardEntity with _$CardEntity {
     required DateTime? createdAt,
     final String? sharedFrom,
     final List<String>? shareWithId,
-    final String? frontImage,
-    final String? backImage,
   }) = _CardEntity;
 
   factory CardEntity.fromJson(Map<String, dynamic> json) =>

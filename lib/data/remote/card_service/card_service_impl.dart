@@ -8,6 +8,7 @@ import 'package:flashcards/core/const/firebase_collections.dart';
 import 'package:flashcards/core/exceptions/exceptions.dart';
 import 'package:flashcards/data/remote/card_service/card_service_contract.dart';
 import 'package:flashcards/domain/entities/card_entity/card_entity.dart';
+import 'package:flashcards/domain/entities/full_card_entity/full_card_entity.dart';
 import 'package:flashcards/domain/params/card_param/create_card_param.dart';
 import 'package:flashcards/domain/params/card_param/edit_card_param.dart';
 import 'package:share_plus/share_plus.dart';
@@ -17,12 +18,10 @@ class CardServiceImpl extends CardService {
       {required FirebaseFirestore fireStore,
       required FirebaseStorage firebaseStorage,
       required FirebaseAuth firebaseAuth})
-      : _firebaseStorage = firebaseStorage,
-        _fireStore = fireStore,
+      : _fireStore = fireStore,
         _firebaseAuth = firebaseAuth;
 
   final FirebaseFirestore _fireStore;
-  final FirebaseStorage _firebaseStorage;
   final FirebaseAuth _firebaseAuth;
 
   @override
@@ -40,16 +39,30 @@ class CardServiceImpl extends CardService {
         collectionName = snapshot.data()!['collectionName'].toString();
       });
 
-      await cards.set({
+      final batch = _fireStore.batch();
+
+      batch.set(cards, {
         "front": cardParam.front,
         "back": cardParam.back,
         "id": cards.id,
         "collectionName": collectionName,
         "createdAt": FieldValue.serverTimestamp(),
         "collectionId": cardParam.collectionId,
-        "frontImage": cardParam.frontImages,
-        "backImage": cardParam.backImages,
       });
+
+      if (cardParam.frontImages != null) {
+        final frontImage =
+            cards.collection(FirestoreCollections.images).doc("front");
+        batch.set(frontImage, {"image": cardParam.frontImages});
+      }
+
+      if (cardParam.backImages != null) {
+        final backImage =
+            cards.collection(FirestoreCollections.images).doc("back");
+        batch.set(backImage, {"image": cardParam.backImages});
+      }
+
+      await batch.commit();
     } on FirebaseException catch (e) {
       throw Exception("Exception createCard $e");
     }
@@ -60,6 +73,7 @@ class CardServiceImpl extends CardService {
       {required String collectionId,
       required List<String> cardsToDelete}) async {
     try {
+      final batch = _fireStore.batch();
       final cards = _fireStore
           .collection(FirestoreCollections.users)
           .doc(_firebaseAuth.currentUser!.uid)
@@ -68,8 +82,16 @@ class CardServiceImpl extends CardService {
           .collection(FirestoreCollections.cards);
 
       for (int i = 0; i < cardsToDelete.length; i++) {
-        await cards.doc(cardsToDelete[i]).delete();
+        final images = await cards
+            .doc(cardsToDelete[i])
+            .collection(FirestoreCollections.images)
+            .get();
+        for (int j = 0; j < images.size; j++) {
+          batch.delete(images.docs[j].reference);
+        }
+        batch.delete(cards.doc(cardsToDelete[i]));
       }
+      await batch.commit();
     } on FirebaseException catch (e) {
       throw Exception("Exception deleteCards $e");
     }
@@ -78,19 +100,39 @@ class CardServiceImpl extends CardService {
   @override
   Future<void> editCard({required EditCardParam cardParam}) async {
     try {
-      final cards = _fireStore
+      final card = _fireStore
           .collection(FirestoreCollections.users)
           .doc(_firebaseAuth.currentUser!.uid)
           .collection(FirestoreCollections.collections)
           .doc(cardParam.collectionId)
-          .collection(FirestoreCollections.cards);
+          .collection(FirestoreCollections.cards)
+          .doc(cardParam.id);
 
-      await cards.doc(cardParam.id).update({
+      final batch = _fireStore.batch();
+
+      batch.update(card, {
         'back': cardParam.back,
         'front': cardParam.front,
-        "frontImage": cardParam.frontImages,
-        "backImage": cardParam.backImages,
       });
+
+      final frontImage =
+          card.collection(FirestoreCollections.images).doc("front");
+      final backImage =
+          card.collection(FirestoreCollections.images).doc("back");
+
+      if (cardParam.frontImages != null) {
+        batch.update(frontImage, {"image": cardParam.frontImages});
+      } else {
+        batch.delete(frontImage);
+      }
+
+      if (cardParam.backImages != null) {
+        batch.update(backImage, {"image": cardParam.backImages});
+      } else {
+        batch.delete(backImage);
+      }
+
+      await batch.commit();
     } on FirebaseException catch (e) {
       throw Exception("Exception deleteCards $e");
     }
@@ -106,6 +148,7 @@ class CardServiceImpl extends CardService {
 
     if (result.status == ShareResultStatus.success) {
       try {
+        final batch = _fireStore.batch();
         final shareCollection = _fireStore
             .collection(FirestoreCollections.collectionShare)
             .doc(_firebaseAuth.currentUser!.uid)
@@ -131,14 +174,16 @@ class CardServiceImpl extends CardService {
         if (collection.exists) {
           shareCollection.set(collection.data()!);
           for (int i = 0; i < cards.length; i++) {
-            shareCollection.collection(FirestoreCollections.cards).add(cards[i]
-                .copyWith(sharedFrom: _firebaseAuth.currentUser!.uid)
-                .toJson());
+            batch.set(
+                shareCollection.collection(FirestoreCollections.cards).doc(),
+                cards[i]
+                    .copyWith(sharedFrom: _firebaseAuth.currentUser!.uid)
+                    .toJson());
           }
           for (int i = 0; i < pdfs.size; i++) {
-            shareCollection
-                .collection(FirestoreCollections.pdfs)
-                .add(pdfs.docs[i].data());
+            batch.set(
+                shareCollection.collection(FirestoreCollections.pdfs).doc(),
+                pdfs.docs[i].data());
           }
         }
       } on FirebaseException catch (e) {
@@ -170,9 +215,7 @@ class CardServiceImpl extends CardService {
           .collection(FirestoreCollections.cards)
           .get()
           .then((value) => value.docs.forEach((element) {
-                collection
-                    .collection('cards')
-                    .add(element.data());
+                collection.collection('cards').add(element.data());
               }));
     } on FirebaseException catch (e) {
       throw Exception("Exception createSharedCards $e");
@@ -223,13 +266,14 @@ class CardServiceImpl extends CardService {
   }
 
   @override
-  Future<void> importExcel({required String path,
-    required String collectionId,
-    required String collectionName}) async{
-    try{
+  Future<void> importExcel(
+      {required String path,
+      required String collectionId,
+      required String collectionName}) async {
+    try {
       final file = File(path);
       final cards = splitContent(file);
-      for(int i = 0; i < cards.length; i++){
+      for (int i = 0; i < cards.length; i++) {
         final doc = _fireStore
             .collection(FirestoreCollections.users)
             .doc(_firebaseAuth.currentUser!.uid)
@@ -237,8 +281,7 @@ class CardServiceImpl extends CardService {
             .doc(collectionId)
             .collection(FirestoreCollections.cards)
             .doc();
-        await doc
-            .set({
+        await doc.set({
           "id": doc.id,
           "backImage": "",
           "frontImage": "",
@@ -246,27 +289,30 @@ class CardServiceImpl extends CardService {
           "collectionName": collectionName,
           "front": [
             {"insert": "${cards[i].$1}\n"}
-          ], "back": [
+          ],
+          "back": [
             {"insert": "${cards[i].$2}\n"}
-          ], "createdAt": FieldValue.serverTimestamp()});
+          ],
+          "createdAt": FieldValue.serverTimestamp()
+        });
       }
-    }catch(e){
+    } catch (e) {
       throw const FormatException("Wrong data format");
     }
   }
 
-  List<(String,String)> splitContent(File file){
+  List<(String, String)> splitContent(File file) {
     final format = file.path.split(".").last;
     List<String> values = <String>[];
-    switch(format){
+    switch (format) {
       case "xlsx":
         final excel = Excel.decodeBytes(file.readAsBytesSync());
-        for(var table in excel.tables.keys){
-          for(var row in excel.tables[table]!.rows){
-            for(var cell in row){
-              if(cell == null) break;
+        for (var table in excel.tables.keys) {
+          for (var row in excel.tables[table]!.rows) {
+            for (var cell in row) {
+              if (cell == null) break;
               final value = cell.value;
-              switch(value){
+              switch (value) {
                 case TextCellValue():
                   values.add(value.value);
                   break;
@@ -283,67 +329,66 @@ class CardServiceImpl extends CardService {
           }
         }
 
-        if(values.length < 4) return [];
-        final dataStartIndex = values.indexWhere((e) => e.toLowerCase() == 'back') + 1;
+        if (values.length < 4) return [];
+        final dataStartIndex =
+            values.indexWhere((e) => e.toLowerCase() == 'back') + 1;
         values = values.sublist(dataStartIndex);
         print(values.toString());
-        final cards = <(String,String)>[];
-        for(int i = 0; i < values.length; i += 2){
-          cards.add((values[i], values[i+1]));
+        final cards = <(String, String)>[];
+        for (int i = 0; i < values.length; i += 2) {
+          cards.add((values[i], values[i + 1]));
         }
         return cards;
       case "csv":
         final lines = file.readAsLinesSync();
-        for(int i = 0; i < lines.length; i++){
+        int backRowIndex = -1;
+        int frontRowIndex = -1;
+        for (int i = 0; i < lines.length; i++) {
           final parts = lines[i].split(",").toList();
-          values.add(parts.first);
-          values.add(parts.last);
+          if(frontRowIndex == -1 || backRowIndex == -1){
+            frontRowIndex = parts.indexWhere((element) => element.toLowerCase().contains("front"));
+            backRowIndex = parts.indexWhere((element) => element.toLowerCase().contains("back"));
+            if(frontRowIndex != -1 && backRowIndex != -1){
+              continue;
+            }
+          }else{
+            values.add(parts[frontRowIndex]);
+            values.add(parts[backRowIndex]);
+          }
         }
-        if(values.length < 4) return [];
-        final dataStartIndex = values.indexWhere((e) => e.toLowerCase() == 'back') + 1;
+        if (values.length < 4) return [];
+        final dataStartIndex =
+            values.indexWhere((e) => e.toLowerCase() == 'back') + 1;
         values = values.sublist(dataStartIndex);
-        final cards = <(String,String)>[];
-        for(int i = 0; i < values.length; i += 2){
-          cards.add((values[i], values[i+1]));
+        final cards = <(String, String)>[];
+        for (int i = 0; i < values.length; i += 2) {
+          cards.add((values[i], values[i + 1]));
         }
         return cards;
-        default: return [];
+      default:
+        return [];
     }
   }
 
   @override
-  Future<void> moveToCollection({required List<CardEntity> cards, required String fromCollectionId, required String toCollectionId}) async{
-    try{
+  Future<void> moveToCollection(
+      {required List<CardEntity> cards,
+      required String fromCollectionId,
+      required String toCollectionId}) async {
+    try {
       var batch = _fireStore.batch();
-      for(var card in cards){
-        final oldCardRef = _fireStore
-            .collection(FirestoreCollections.users)
-            .doc(_firebaseAuth.currentUser!.uid)
-            .collection(FirestoreCollections.collections)
-            .doc(fromCollectionId)
-            .collection(FirestoreCollections.cards)
-            .doc(card.id);
-        batch.delete(oldCardRef);
-        final newCardRef = _fireStore
-            .collection(FirestoreCollections.users)
-            .doc(_firebaseAuth.currentUser!.uid)
-            .collection(FirestoreCollections.collections)
-            .doc(toCollectionId)
-            .collection(FirestoreCollections.cards)
-            .doc(card.id);
-        batch.set(newCardRef, card.toJson());
-      }
-      await batch.commit();
-    }catch(e){
-      throw LocalizedException(message: 'Failed to move collection');
-    }
-  }
-
-  @override
-  Future<void> copyToCollection({required List<CardEntity> cards, required String toCollectionId}) async{
-    try{
-      var batch = _fireStore.batch();
-      for(var card in cards){
+      final collectionName = (await _fireStore
+              .collection(FirestoreCollections.users)
+              .doc(_firebaseAuth.currentUser!.uid)
+              .collection(FirestoreCollections.collections)
+              .doc(toCollectionId)
+              .get())
+          .get("collectionName");
+      final newCards = cards.map((e) {
+        return e.copyWith(
+            collectionId: toCollectionId, collectionName: collectionName);
+      });
+      for (var card in newCards) {
         final cardRef = _fireStore
             .collection(FirestoreCollections.users)
             .doc(_firebaseAuth.currentUser!.uid)
@@ -351,13 +396,111 @@ class CardServiceImpl extends CardService {
             .doc(toCollectionId)
             .collection(FirestoreCollections.cards)
             .doc(card.id);
+        final cardToDeleteRef = _fireStore
+            .collection(FirestoreCollections.users)
+            .doc(_firebaseAuth.currentUser!.uid)
+            .collection(FirestoreCollections.collections)
+            .doc(fromCollectionId)
+            .collection(FirestoreCollections.cards)
+            .doc(card.id);
+        final imagesFromCollection = await _fireStore
+            .collection(FirestoreCollections.users)
+            .doc(_firebaseAuth.currentUser!.uid)
+            .collection(FirestoreCollections.collections)
+            .doc(fromCollectionId)
+            .collection(FirestoreCollections.cards)
+            .doc(card.id)
+            .collection(FirestoreCollections.images)
+            .get();
+        final imagesToCollection =
+            cardRef.collection(FirestoreCollections.images);
+        for (var image in imagesFromCollection.docs) {
+          batch.set(imagesToCollection.doc(image.id), image.data());
+        }
         batch.set(cardRef, card.toJson());
+        batch.delete(cardToDeleteRef);
+        final imagesToDelete =
+            await cardToDeleteRef.collection(FirestoreCollections.images).get();
+        for (var imageToDelete in imagesToDelete.docs) {
+          batch.delete(imageToDelete.reference);
+        }
       }
       await batch.commit();
-    }catch(e){
-      throw LocalizedException(message: 'Failed to copy collection');
+    } catch (e) {
+      throw LocalizedException(message: 'Failed to move collection');
     }
   }
 
+  @override
+  Future<FullCardEntity> getFullCard({required CardEntity card}) async {
+    String? base64FrontImage;
+    String? base64BackImage;
+    final cardImagesRef = _fireStore
+        .collection(FirestoreCollections.users)
+        .doc(_firebaseAuth.currentUser!.uid)
+        .collection(FirestoreCollections.collections)
+        .doc(card.collectionId)
+        .collection(FirestoreCollections.cards)
+        .doc(card.id)
+        .collection(FirestoreCollections.images);
+    final frontImageDoc = await cardImagesRef.doc("front").get();
+    final backImageDoc = await cardImagesRef.doc("back").get();
+    if (frontImageDoc.exists) {
+      base64FrontImage = frontImageDoc.get("image");
+    }
+    if (backImageDoc.exists) {
+      base64BackImage = backImageDoc.get("image");
+    }
+    return FullCardEntity(
+        card: card,
+        base64FrontImage: base64FrontImage,
+        base64BackImage: base64BackImage);
+  }
 
+  @override
+  Future<void> copyToCollection(
+      {required List<CardEntity> cards, required String toCollectionId}) async {
+    try {
+      var batch = _fireStore.batch();
+      final fromCollectionId = cards.first.collectionId;
+      final collectionName = (await _fireStore
+              .collection(FirestoreCollections.users)
+              .doc(_firebaseAuth.currentUser!.uid)
+              .collection(FirestoreCollections.collections)
+              .doc(toCollectionId)
+              .get())
+          .get("collectionName");
+      final newCards = cards.map((e) {
+        return e.copyWith(
+            collectionId: toCollectionId, collectionName: collectionName);
+      });
+      for (var card in newCards) {
+        final cardRef = _fireStore
+            .collection(FirestoreCollections.users)
+            .doc(_firebaseAuth.currentUser!.uid)
+            .collection(FirestoreCollections.collections)
+            .doc(toCollectionId)
+            .collection(FirestoreCollections.cards)
+            .doc(card.id);
+        final imagesFromCollection = await _fireStore
+            .collection(FirestoreCollections.users)
+            .doc(_firebaseAuth.currentUser!.uid)
+            .collection(FirestoreCollections.collections)
+            .doc(fromCollectionId)
+            .collection(FirestoreCollections.cards)
+            .doc(card.id)
+            .collection(FirestoreCollections.images)
+            .get();
+        final imagesToCollection =
+            cardRef.collection(FirestoreCollections.images);
+        for (var image in imagesFromCollection.docs) {
+          batch.set(imagesToCollection.doc(image.id), image.data());
+        }
+        batch.set(cardRef, card.toJson());
+      }
+      await batch.commit();
+    } catch (e) {
+      throw LocalizedException(message: 'Failed to copy collection');
+    }
+  }
 }
