@@ -288,6 +288,7 @@ class _CardState extends State<_Card> {
   @override
   void initState() {
     super.initState();
+    dev.log("next card is");
     _fullCardBloc.add(FullCardEvent.fetchFullInformation(card: widget.card));
   }
 
@@ -295,6 +296,8 @@ class _CardState extends State<_Card> {
   void didUpdateWidget(covariant _Card oldWidget) {
     frontImage = null;
     backImage = null;
+    disableInitialAnimation = true;
+    isFlipped = false;
     _fullCardBloc.add(FullCardEvent.fetchFullInformation(card: widget.card));
     super.didUpdateWidget(oldWidget);
   }
@@ -363,12 +366,12 @@ class _CardState extends State<_Card> {
                                       width: 200,
                                       height: 200,
                                       child: FittedBox(
-                                          fit: BoxFit.fill,
+                                          fit: BoxFit.contain,
                                           child: frontImage!))) : (backImage == null ? SizedBox.shrink() : SizedBox(
                                       width: 200,
                                       height: 200,
                                       child: FittedBox(
-                                          fit: BoxFit.fill,
+                                          fit: BoxFit.contain,
                                           child: backImage!))),
                                   QuillText(
                                     content: value >= 90 ? widget.card.front : widget.card.back,

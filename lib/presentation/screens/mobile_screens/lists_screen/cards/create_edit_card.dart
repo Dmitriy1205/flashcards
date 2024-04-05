@@ -111,12 +111,18 @@ class CreateEditCardState extends State<CreateEditCard> {
   int textLengthFront = 0;
   int textLengthBack = 0;
 
-  int maxLength = 400;
+  int maxLength = 100;
 
   final _fullCardBloc = sl<FullCardBloc>();
 
   void _frontControllerChanged() {
     int length = _frontController.document.toPlainText().length - 1;
+    final newLinesCount = _frontController.document.toPlainText().split("\n").length;
+    final maxLengthWithLines = _frontController.document.toPlainText().split("\n").take(5).join("\n").length;
+    if(newLinesCount > 5){
+      _frontController.replaceText(maxLengthWithLines, length - maxLengthWithLines, '',
+          TextSelection.collapsed(offset: maxLengthWithLines));
+    }
     if (length > maxLength) {
       _frontController.replaceText(maxLength, length - maxLength, '',
           TextSelection.collapsed(offset: maxLength));
@@ -129,6 +135,12 @@ class CreateEditCardState extends State<CreateEditCard> {
 
   void _backControllerChanged() {
     int length = _backController.document.toPlainText().length - 1;
+    final newLinesCount = _backController.document.toPlainText().split("\n").length;
+    final maxLengthWithLines = _backController.document.toPlainText().split("\n").take(5).join("\n").length;
+    if(newLinesCount > 5){
+      _backController.replaceText(maxLengthWithLines, length - maxLengthWithLines, '',
+          TextSelection.collapsed(offset: maxLengthWithLines));
+    }
     if (length > maxLength) {
       _backController.replaceText(maxLength, length - maxLength, '',
           TextSelection.collapsed(offset: maxLength));
@@ -487,6 +499,7 @@ class CreateEditCardState extends State<CreateEditCard> {
                 QuillEditor.basic(
                   configurations: QuillEditorConfigurations(
                       minHeight: 160,
+                      maxHeight: 160,
                       controller: _frontController,
                       padding: const EdgeInsets.symmetric(
                           horizontal: 4, vertical: 4)),

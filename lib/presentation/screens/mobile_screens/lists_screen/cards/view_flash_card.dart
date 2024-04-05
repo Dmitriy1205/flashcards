@@ -177,7 +177,7 @@ class _ViewFlashCardState extends State<ViewFlashCard> {
                                                           height: 200,
                                                           width: 200,
                                                           child: FittedBox(
-                                                              fit: BoxFit.fill,
+                                                              fit: BoxFit.contain,
                                                               child: frontImage!)),
                                                       QuillText(content: widget.card.front, center: true, style: TextStyle(fontSize: 22),),
                                                     ],
@@ -196,7 +196,7 @@ class _ViewFlashCardState extends State<ViewFlashCard> {
                                                           height: 200,
                                                           width: 200,
                                                           child: FittedBox(
-                                                              fit: BoxFit.fill,
+                                                              fit: BoxFit.contain,
                                                               child: backImage!)),
                                                       QuillText(content: widget.card.back, center: true, style: TextStyle(fontSize: 22),),
                                                     ],

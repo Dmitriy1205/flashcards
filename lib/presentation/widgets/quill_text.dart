@@ -13,7 +13,7 @@ class QuillText extends StatelessWidget {
   QuillText({Key? key, required this.content, this.style, this.center = false}) : super(key: key){
     final document = Document.fromJson(content);
     if(center){
-      document.format(0, Document.fromJson(content).toDelta().length, Attribute.centerAlignment);
+      document.format(0, Document.fromJson(content).toString().length, Attribute.centerAlignment);
     }
     _controller = QuillController(document: document, selection: const TextSelection(baseOffset: 0, extentOffset: 0));
   }
