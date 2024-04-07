@@ -163,7 +163,7 @@ class _ViewFlashCardState extends State<ViewFlashCard> {
                                         rotationY: value >= 90 ? 180 : 0,
                                         child: Padding(
                                           padding: const EdgeInsets.symmetric(
-                                              horizontal: 50),
+                                              horizontal: 40),
                                           child: value >= 90
                                               ? FractionallySizedBox(
                                                 widthFactor: 1,
@@ -174,11 +174,13 @@ class _ViewFlashCardState extends State<ViewFlashCard> {
                                                     crossAxisAlignment: CrossAxisAlignment.center,
                                                     children: [
                                                       frontImage == null ? SizedBox.shrink() : SizedBox(
-                                                          height: 200,
-                                                          width: 200,
-                                                          child: FittedBox(
-                                                              fit: BoxFit.contain,
-                                                              child: frontImage!)),
+                                                          width: double.infinity,
+                                                          child: AspectRatio(
+                                                            aspectRatio: 1,
+                                                            child: FittedBox(
+                                                                fit: BoxFit.contain,
+                                                                child: frontImage!),
+                                                          )),
                                                       QuillText(content: widget.card.front, center: true, style: TextStyle(fontSize: 22),),
                                                     ],
                                                   ),
@@ -193,11 +195,13 @@ class _ViewFlashCardState extends State<ViewFlashCard> {
                                                     crossAxisAlignment: CrossAxisAlignment.center,
                                                     children: [
                                                       backImage == null ? SizedBox.shrink() : SizedBox(
-                                                          height: 200,
-                                                          width: 200,
-                                                          child: FittedBox(
-                                                              fit: BoxFit.contain,
-                                                              child: backImage!)),
+                                                          width: double.infinity,
+                                                          child: AspectRatio(
+                                                            aspectRatio: 1,
+                                                            child: FittedBox(
+                                                                fit: BoxFit.contain,
+                                                                child: backImage!),
+                                                          )),
                                                       QuillText(content: widget.card.back, center: true, style: TextStyle(fontSize: 22),),
                                                     ],
                                                   ),

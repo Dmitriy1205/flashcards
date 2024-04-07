@@ -117,7 +117,7 @@ class _CardsSectionState extends State<SwipeableCardsSection>
 
     // Init the animation controller
     _controller = AnimationController(
-      duration: const Duration(milliseconds: 700),
+      duration: const Duration(milliseconds: 300),
       vsync: this,
     );
     _controller.addListener(() => setState(() {}));

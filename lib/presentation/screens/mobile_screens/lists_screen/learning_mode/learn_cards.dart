@@ -288,7 +288,6 @@ class _CardState extends State<_Card> {
   @override
   void initState() {
     super.initState();
-    dev.log("next card is");
     _fullCardBloc.add(FullCardEvent.fetchFullInformation(card: widget.card));
   }
 
@@ -351,7 +350,7 @@ class _CardState extends State<_Card> {
                       rotationY: value >= 90 ? 180 : 0,
                       child: Padding(
                         padding: const EdgeInsets.symmetric(
-                            horizontal: 50),
+                            horizontal: 40),
                         child: Align(
                           alignment: Alignment.center,
                           child: FractionallySizedBox(
@@ -363,16 +362,20 @@ class _CardState extends State<_Card> {
                                 crossAxisAlignment: CrossAxisAlignment.center,
                                 children: [
                                   value >= 90 ? (frontImage == null ? SizedBox.shrink() : SizedBox(
-                                      width: 200,
-                                      height: 200,
-                                      child: FittedBox(
-                                          fit: BoxFit.contain,
-                                          child: frontImage!))) : (backImage == null ? SizedBox.shrink() : SizedBox(
-                                      width: 200,
-                                      height: 200,
-                                      child: FittedBox(
-                                          fit: BoxFit.contain,
-                                          child: backImage!))),
+                                      width: double.infinity,
+                                      child: AspectRatio(
+                                        aspectRatio: 1,
+                                        child: FittedBox(
+                                            fit: BoxFit.contain,
+                                            child: frontImage!),
+                                      ))) : (backImage == null ? SizedBox.shrink() : SizedBox(
+                                      width: double.infinity,
+                                      child: AspectRatio(
+                                        aspectRatio: 1,
+                                        child: FittedBox(
+                                            fit: BoxFit.contain,
+                                            child: backImage!),
+                                      ))),
                                   QuillText(
                                     content: value >= 90 ? widget.card.front : widget.card.back,
                                     center: true,
