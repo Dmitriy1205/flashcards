@@ -4,6 +4,7 @@ import 'package:flashcards/core/const/strings.dart';
 import 'package:flashcards/core/themes/theme.dart';
 import 'package:flashcards/core/utils/app_toast.dart';
 import 'package:flashcards/presentation/blocs/lists/lists_bloc.dart';
+import 'package:flashcards/presentation/widgets/create_edit_collection.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/svg.dart';
@@ -28,16 +29,16 @@ class _CustomNavigationBarState extends State<CustomNavigationBar> {
   @override
   Widget build(BuildContext context) {
     return SizedBox(
-      height: 113,
+      height: 88,
       child: Stack(
         children: [
           Positioned(
             left: 24,
-            bottom: 36,
+            bottom: 16,
             child: ClipRRect(
               borderRadius: BorderRadius.circular(50),
               child: Container(
-                height: 73,
+                height: 56,
                 color: Colors.white,
                 child: Row(
                   children: [
@@ -47,16 +48,14 @@ class _CustomNavigationBarState extends State<CustomNavigationBar> {
                         pageIndex == 0
                             ? AppIcons.selectedHamburger
                             : AppIcons.defaultHamburger,
-                        height: 27.5,
-                        width: 30,
+                        height: 20,
                       ),
                     ),
                     Container(
                       margin: const EdgeInsets.only(left: 22, right: 22),
                       child: SvgPicture.asset(
                         pageIndex == 1 ? AppIcons.selectedHat : AppIcons.hat,
-                        height: 27.5,
-                        width: 30,
+                        height: 20,
                       ),
                     ),
                     Container(
@@ -65,30 +64,30 @@ class _CustomNavigationBarState extends State<CustomNavigationBar> {
                         pageIndex == 2
                             ? AppIcons.selectedProfile
                             : AppIcons.defaultProfile,
-                        height: 27.5,
-                        width: 30,
+                        height: 20,
                       ),
                     ),
                   ]
                       .asMap()
                       .entries
-                      .map((e) => SizedBox(
-                            height: double.infinity,
-                            child: Material(
-                              child: InkWell(
-                                onTap: () {
-                                  setState(() {
-                                    pageIndex = e.key;
-                                    widget.pageController.animateToPage(e.key,
-                                        duration:
-                                            const Duration(milliseconds: 100),
-                                        curve: Curves.ease);
-                                  });
-                                },
-                                child: e.value,
-                              ),
-                            ),
-                          ))
+                      .map((e) =>
+                      SizedBox(
+                        height: double.infinity,
+                        child: Material(
+                          child: InkWell(
+                            onTap: () {
+                              setState(() {
+                                pageIndex = e.key;
+                                widget.pageController.animateToPage(e.key,
+                                    duration:
+                                    const Duration(milliseconds: 100),
+                                    curve: Curves.ease);
+                              });
+                            },
+                            child: e.value,
+                          ),
+                        ),
+                      ))
                       .toList(),
                 ),
               ),
@@ -96,160 +95,73 @@ class _CustomNavigationBarState extends State<CustomNavigationBar> {
           ),
           pageIndex != 2
               ? Positioned(
-                  right: 28,
-                  bottom: 30,
-                  child:
-                  Stack(
-                    children: [
-                      context.watch<ListsBloc>().isEditMode
-                          ? SizedBox(
-                            height: 76,
-                            width: 76,
-                            child: SvgPicture.asset(
-                              AppIcons.redBucket,
-                              height: 18,
-                              width: 9,
-                            ),
-                          )
-                          : SizedBox(
-                            height: 76,
-                            width: 76,
-                            child: SvgPicture.asset(
-                              AppIcons.addCollection,
-                              height: 18,
-                              width: 9,
-                            ),
-                          ),
-                      Material(
-                        color: Colors.transparent,
-                        borderRadius: BorderRadius.circular(32),
-                        child: InkWell(
-                            borderRadius: BorderRadius.circular(32),
-                            onTap: () async{
-                              if(context.read<ListsBloc>().isEditMode){
-                                final confirmed = await confirmOperation(context, title: AppLocalizations.of(context)!.confirmDeleting, message: AppLocalizations.of(context)!.deleteSelectedCollection, action: AppLocalizations.of(context)!.delete, cancel: AppLocalizations.of(context)!.cancel);
-                                if(!confirmed) return;
-                                context.read<ListsBloc>().add(
-                                    const ListsEvent.deleteSelectedCollection(
-                                        collectionsList: []));
-                                context.read<ListsBloc>().isEditMode = false;
-                              }else{
-                                dialog();
-                              }
-                            },
-                            child: Container(
-                                width: 76, height: 76, color: Colors.transparent)),
+              right: 28,
+              bottom: 12,
+              child:
+              Stack(
+                children: [
+                  context
+                      .watch<ListsBloc>()
+                      .isEditMode
+                      ? SizedBox(
+                    height: 64,
+                    width: 64,
+                    child: Opacity(
+                      opacity: context.watch<ListsBloc>().listIdToDelete.isEmpty ? 0.5 : 1,
+                      child: SvgPicture.asset(
+                        AppIcons.redBucket,
+                        height: 18,
+                        width: 9,
                       ),
-                    ],
+                    ),
                   )
-                )
+                      : SizedBox(
+                    height: 64,
+                    width: 64,
+                    child: SvgPicture.asset(
+                      AppIcons.addCollection,
+                      height: 18,
+                      width: 9,
+                    ),
+                  ),
+                  Material(
+                    color: Colors.transparent,
+                    borderRadius: BorderRadius.circular(32),
+                    child: InkWell(
+                        borderRadius: BorderRadius.circular(32),
+                        onTap: () async {
+                          if (context
+                              .read<ListsBloc>()
+                              .isEditMode) {
+                            if(context.read<ListsBloc>().listIdToDelete.isEmpty) return;
+                            final confirmed = await confirmOperation(
+                                context, title: AppLocalizations.of(context)!
+                                .confirmDeleting,
+                                message: AppLocalizations.of(context)!
+                                    .deleteSelectedCollection,
+                                action: AppLocalizations.of(context)!.delete,
+                                cancel: AppLocalizations.of(context)!.cancel);
+                            if (!confirmed) return;
+                            context.read<ListsBloc>().add(
+                                const ListsEvent.deleteSelectedCollection(
+                                    collectionsList: []));
+                            context
+                                .read<ListsBloc>()
+                                .isEditMode = false;
+                          } else {
+                            CreateEditCollectionDialog().dialog(context);
+                          }
+                        },
+                        child: Container(
+                            width: 64, height: 64, color: Colors.transparent)),
+                  ),
+                ],
+              )
+          )
               : const SizedBox()
         ],
       ),
     );
   }
 
-  Future<void> dialog() {
-    return showDialog(
-        context: context,
-        builder: (_) {
-          return Dialog(
-            shape: const RoundedRectangleBorder(
-                borderRadius: BorderRadius.all(Radius.circular(15.0))),
-            backgroundColor: Colors.white,
-            child: Padding(
-              padding: const EdgeInsets.only(
-                  left: 12, top: 12, right: 12),
-              child: IntrinsicHeight(
-                child: Column(
-                  children: [
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        InkWell(
-                          onTap: () {
-                            Navigator.pop(context);
-                          },
-                          child: SvgPicture.asset(
-                            AppIcons.leftArrow,
-                            height: 12,
-                            width: 6,
-                          ),
-                        ),
-                        Expanded(
-                          child: Align(
-                            alignment: Alignment.center,
-                            child: Text(
-                              AppLocalizations.of(context)!.newCollection,
-                              style: AppTheme.themeData.textTheme.titleMedium!
-                                  .copyWith(fontSize: 18),
-                            ),
-                          ),
-                        ),
-                      ],
-                    ),
-                    Text(AppLocalizations.of(context)!.giveName,
-                        style: AppTheme.themeData.textTheme.labelSmall!
-                            .copyWith(color:Colors.black)),
-                    const SizedBox(
-                      height: 22,
-                    ),
-                    SizedBox(
-                      height: 45,
-                      child: TextField(
-                        textAlign: TextAlign.start,
-                        textAlignVertical: TextAlignVertical.top,
-                        style: AppTheme.themeData.textTheme.labelMedium!
-                            .copyWith(
-                                color: Colors.black,
-                                fontWeight: FontWeight.w700),
-                        controller: nameTextEditingController,
-                        decoration: InputDecoration(
-                            filled: true,
-                            enabledBorder: OutlineInputBorder(
-                                borderSide: BorderSide(
-                                    color: const Color(0xFF2B635A).withOpacity(0.15)
-                                ),
-                                borderRadius:
-                                const BorderRadius.all(Radius.circular(15))),
-                            border: OutlineInputBorder(
-                                borderSide: BorderSide(
-                                  color: const Color(0xFF2B635A).withOpacity(0.15)
-                                ),
-                                borderRadius:
-                                    const BorderRadius.all(Radius.circular(15)))),
-                      ),
-                    ),
-                    SizedBox(
-                      height: 54,
-                      width: double.infinity,
-                      child: TextButton(
-                        child: Text(AppLocalizations.of(context)!.done,
-                            style: AppTheme.themeData.textTheme.labelMedium!
-                                .copyWith(color: AppColors.mainAccent)),
-                        onPressed: () {
-                          if (nameTextEditingController.text.isNotEmpty) {
-                            if(context.read<ListsBloc>().state.collectionsList!.any((element) => element.collectionName == nameTextEditingController.text )){
-                            AppToast.showError(context, AppLocalizations.of(context)!.collectionExists);
-                            Navigator.of(context).pop();
-
-                            }else{
-                              context.read<ListsBloc>().add(
-                                  ListsEvent.createNewList(
-                                      name: nameTextEditingController.text));
-                              nameTextEditingController.clear();
-                              Navigator.of(context).pop();
-                            }
-
-                          }
-                        },
-                      ),
-                    )
-                  ],
-                ),
-              ),
-            ),
-          );
-        });
-  }
 }

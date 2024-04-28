@@ -26,7 +26,7 @@ import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import '../../../../../core/services/service_locator.dart';
 
 class CreateEditCard extends StatefulWidget {
-  CreateEditCard({Key? key, this.cardEntity, required this.collectionId})
+  const CreateEditCard({Key? key, this.cardEntity, required this.collectionId})
       : super(key: key);
   final CardEntity? cardEntity;
   final String collectionId;
@@ -36,8 +36,8 @@ class CreateEditCard extends StatefulWidget {
 }
 
 class CreateEditCardState extends State<CreateEditCard> {
-  String frontImageBase64 = '';
-  String backImageBase64 = '';
+  String? frontImageBase64;
+  String? backImageBase64;
 
   Image? frontImage;
   Image? backImage;
@@ -45,7 +45,7 @@ class CreateEditCardState extends State<CreateEditCard> {
   void changeFrontImage(String? imageBase64){
     if(imageBase64 == null){
       setState(() {
-        frontImageBase64 = '';
+        frontImageBase64 = null;
         frontImage = null;
       });
     }else{
@@ -59,7 +59,7 @@ class CreateEditCardState extends State<CreateEditCard> {
   void changeBackImage(String? imageBase64){
     if(imageBase64 == null){
       setState(() {
-        backImageBase64 = '';
+        backImageBase64 = null;
         backImage = null;
       });
     }else{
@@ -114,6 +114,8 @@ class CreateEditCardState extends State<CreateEditCard> {
   int maxLength = 100;
 
   final _fullCardBloc = sl<FullCardBloc>();
+
+  bool get _canCreate => (textLengthFront > 0 || frontImage != null) && (textLengthBack > 0 || backImage != null);
 
   void _frontControllerChanged() {
     int length = _frontController.document.toPlainText().length - 1;
@@ -262,6 +264,8 @@ class CreateEditCardState extends State<CreateEditCard> {
           child: Scaffold(
             backgroundColor: AppColors.background,
             appBar: AppBar(
+              scrolledUnderElevation: 0,
+              backgroundColor: Colors.white,
               automaticallyImplyLeading: false,
               title: GestureDetector(
                 onTap: () {
@@ -303,9 +307,15 @@ class CreateEditCardState extends State<CreateEditCard> {
                           style: AppTheme.themeData.textTheme.headlineLarge,
                         ),
                       ]),
-                      TextButton(
-                        onPressed: () {
-                          if (frontText.isNotEmpty && backText.isNotEmpty) {
+                      Opacity(
+                        opacity: _canCreate ? 1 : 0.5,
+                        child: TextButton(
+                          onPressed: () {
+                            if(!_canCreate){
+                              AppToast.showError(context,
+                                  AppLocalizations.of(context)!.errorEmptyCard);
+                              return;
+                            }
                             if (widget.cardEntity == null) {
                               CreateCardParam card = CreateCardParam(
                                   front: frontText,
@@ -329,16 +339,13 @@ class CreateEditCardState extends State<CreateEditCard> {
                                   cardParam: card,
                                   collectionId: widget.collectionId));
                             }
-                          } else {
-                            AppToast.showError(context,
-                                AppLocalizations.of(context)!.errorEmptyCard);
-                          }
-                        },
-                        child: Text(
-                          AppLocalizations.of(context)!.done,
-                          style:
-                              AppTheme.themeData.textTheme.titleLarge!.copyWith(
-                            fontSize: 20,
+                          },
+                          child: Text(
+                            AppLocalizations.of(context)!.done,
+                            style:
+                                AppTheme.themeData.textTheme.titleLarge!.copyWith(
+                              fontSize: 20,
+                            ),
                           ),
                         ),
                       ),
@@ -505,7 +512,7 @@ class CreateEditCardState extends State<CreateEditCard> {
                           horizontal: 4, vertical: 4)),
                   focusNode: _frontFocusNode,
                 ),
-                frontImageBase64.isNotEmpty
+                frontImageBase64 != null
                     ? Positioned(
                         bottom: 0,
                         left: 0,
@@ -567,35 +574,69 @@ class CreateEditCardState extends State<CreateEditCard> {
           Row(
             mainAxisAlignment: MainAxisAlignment.start,
             children: [
-              InkWell(
-                onTap: () async {
-                  final img = await ImagePicker()
-                      .pickImage(source: ImageSource.gallery, maxWidth: 300);
-                  if (img != null) {
-                    final byteData = await img.readAsBytes();
-                    final bytes = byteData.buffer.asUint8List();
-                    if (bytes.any((e) => e != 0)) {
-                      final base64 = base64Encode(bytes.toList());
-                      changeFrontImage(base64);
-                    }
-                  }
-                },
-                child: SvgPicture.asset(
-                  AppIcons.addImage,
-                  height: 76,
-                  width: 76,
-                ),
+              Stack(
+                children: [
+                  SvgPicture.asset(
+                    AppIcons.addImage,
+                    height: 76,
+                    width: 76,
+                  ),
+                  SizedBox(
+                    width: 76,
+                    height: 76,
+                    child: Material(
+                      borderRadius: BorderRadius.circular(36),
+                      color: Colors.transparent,
+                      child: InkWell(
+                        highlightColor: Colors.black.withOpacity(0.1),
+                        hoverColor: Colors.black.withOpacity(0.1),
+                        focusColor: Colors.black.withOpacity(0.1),
+                        splashColor: Colors.black.withOpacity(0.1),
+                        borderRadius: BorderRadius.circular(64),
+                        onTap: () async {
+                          final img = await ImagePicker()
+                              .pickImage(source: ImageSource.gallery, maxWidth: 300);
+                          if (img != null) {
+                            final byteData = await img.readAsBytes();
+                            final bytes = byteData.buffer.asUint8List();
+                            if (bytes.any((e) => e != 0)) {
+                              final base64 = base64Encode(bytes.toList());
+                              changeFrontImage(base64);
+                            }
+                          }
+                        },
+                      ),
+                    ),
+                  )
+                ],
               ),
               const SizedBox(width: 15),
-              InkWell(
-                onTap: () {
-                  _openDialog(context, true);
-                },
-                child: SvgPicture.asset(
-                  AppIcons.edit2,
-                  height: 76,
-                  width: 76,
-                ),
+              Stack(
+                children: [
+                  SvgPicture.asset(
+                    AppIcons.edit2,
+                    height: 76,
+                    width: 76,
+                  ),
+                  SizedBox(
+                    width: 76,
+                    height: 76,
+                    child: Material(
+                      borderRadius: BorderRadius.circular(36),
+                      color: Colors.transparent,
+                      child: InkWell(
+                        highlightColor: Colors.black.withOpacity(0.1),
+                        hoverColor: Colors.black.withOpacity(0.1),
+                        focusColor: Colors.black.withOpacity(0.1),
+                        splashColor: Colors.black.withOpacity(0.1),
+                        borderRadius: BorderRadius.circular(64),
+                        onTap: () async {
+                          _openDialog(context, true);
+                        },
+                      ),
+                    ),
+                  )
+                ],
               ),
             ],
           ),
@@ -640,7 +681,7 @@ class CreateEditCardState extends State<CreateEditCard> {
                     ),
                     focusNode: _backFocusNode,
                   ),
-                  backImageBase64.isNotEmpty
+                  backImageBase64 != null
                       ? Positioned(
                           bottom: 0,
                           left: 0,
@@ -701,38 +742,72 @@ class CreateEditCardState extends State<CreateEditCard> {
           Row(
             mainAxisAlignment: MainAxisAlignment.start,
             children: [
-              InkWell(
-                onTap: () async {
-                  final img = await ImagePicker()
-                      .pickImage(source: ImageSource.gallery, maxWidth: 300);
-                  if (img != null) {
-                    final byteData = await img.readAsBytes();
-                    final bytes = byteData.buffer.asUint8List();
-                    if (bytes.any((e) => e != 0)) {
-                      final base64 = base64Encode(bytes.toList());
-                      changeBackImage(base64);
-                    }
-                  }
-                },
-                child: SvgPicture.asset(
-                  AppIcons.addImage,
-                  height: 76,
-                  width: 76,
-                ),
+              Stack(
+                children: [
+                  SvgPicture.asset(
+                    AppIcons.addImage,
+                    height: 76,
+                    width: 76,
+                  ),
+                  SizedBox(
+                    width: 76,
+                    height: 76,
+                    child: Material(
+                      borderRadius: BorderRadius.circular(36),
+                      color: Colors.transparent,
+                      child: InkWell(
+                        highlightColor: Colors.black.withOpacity(0.1),
+                        hoverColor: Colors.black.withOpacity(0.1),
+                        focusColor: Colors.black.withOpacity(0.1),
+                        splashColor: Colors.black.withOpacity(0.1),
+                        borderRadius: BorderRadius.circular(64),
+                        onTap: () async {
+                          final img = await ImagePicker()
+                              .pickImage(source: ImageSource.gallery, maxWidth: 300);
+                          if (img != null) {
+                            final byteData = await img.readAsBytes();
+                            final bytes = byteData.buffer.asUint8List();
+                            if (bytes.any((e) => e != 0)) {
+                              final base64 = base64Encode(bytes.toList());
+                              changeBackImage(base64);
+                            }
+                          }
+                        },
+                      ),
+                    ),
+                  )
+                ],
               ),
               const SizedBox(width: 15),
-              InkWell(
-                onTap: () {
-                  _openDialog(context, false);
-                },
-                child: SvgPicture.asset(
-                  AppIcons.edit2,
-                  height: 76,
-                  width: 76,
-                ),
+              Stack(
+                children: [
+                  SvgPicture.asset(
+                    AppIcons.edit2,
+                    height: 76,
+                    width: 76,
+                  ),
+                  SizedBox(
+                    width: 76,
+                    height: 76,
+                    child: Material(
+                      borderRadius: BorderRadius.circular(36),
+                      color: Colors.transparent,
+                      child: InkWell(
+                        highlightColor: Colors.black.withOpacity(0.1),
+                        hoverColor: Colors.black.withOpacity(0.1),
+                        focusColor: Colors.black.withOpacity(0.1),
+                        splashColor: Colors.black.withOpacity(0.1),
+                        borderRadius: BorderRadius.circular(64),
+                        onTap: () async {
+                          _openDialog(context, false);
+                        },
+                      ),
+                    ),
+                  )
+                ],
               ),
             ],
-          ),
+          )
         ],
       ),
     );

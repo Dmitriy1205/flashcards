@@ -75,4 +75,8 @@ class AppStrings{
   static const String stillLearning = "Still learning";
   static const String finish = "Finish";
   static const String continueLearning = "Continue Learning";
+
+  static const String noCollections = "No collections yet";
+  static const String emptyCollection = "Collection is Empty";
+  static const String plusCreateNew = "+ Create new";
 }

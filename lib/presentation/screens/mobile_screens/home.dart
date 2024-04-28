@@ -35,7 +35,10 @@ class _HomeMobileState extends State<HomeMobile> {
       key: _scaffoldKey,
       backgroundColor: AppColors.background,
       appBar: AppBar(
+        scrolledUnderElevation: 0,
         automaticallyImplyLeading: false,
+        // elevation: 8,
+        backgroundColor: Colors.white,
         title: Column(
           children: [
             Padding(
@@ -48,7 +51,7 @@ class _HomeMobileState extends State<HomeMobile> {
                     style: AppTheme.themeData.textTheme.headlineLarge,
                   ),
                   Spacer(),
-                  _selectedPage == 0
+                  _selectedPage == 0 && (context.watch<ListsBloc>().state.collectionsList?.isNotEmpty ?? true)
                       ? GestureDetector(
                           onTap: () {
                             context.read<ListsBloc>().listIdToDelete.clear();

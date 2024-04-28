@@ -40,6 +40,8 @@ class _FinishLearningScreenState extends State<FinishLearningScreen> {
     return Scaffold(
       key: _scaffoldKey,
       appBar: AppBar(
+        scrolledUnderElevation: 0,
+        backgroundColor: Colors.white,
         title:
             Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
           InkWell(
@@ -192,7 +194,7 @@ class _FinishLearningScreenState extends State<FinishLearningScreen> {
               ),
             ),
             SizedBox(
-              height: 23,
+              height: 15,
             ),
             AppElevatedButton(
               text: AppLocalizations.of(context)!.continueLearning,

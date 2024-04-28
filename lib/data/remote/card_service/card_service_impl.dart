@@ -1,3 +1,4 @@
+import 'dart:developer';
 import 'dart:io';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
@@ -186,6 +187,8 @@ class CardServiceImpl extends CardService {
                 pdfs.docs[i].data());
           }
         }
+
+        await batch.commit();
       } on FirebaseException catch (e) {
         throw Exception("Exception createCard $e");
       }
@@ -297,6 +300,7 @@ class CardServiceImpl extends CardService {
         });
       }
     } catch (e) {
+      rethrow;
       throw const FormatException("Wrong data format");
     }
   }
@@ -309,8 +313,11 @@ class CardServiceImpl extends CardService {
         final excel = Excel.decodeBytes(file.readAsBytesSync());
         for (var table in excel.tables.keys) {
           for (var row in excel.tables[table]!.rows) {
+            int rowCount = 0;
             for (var cell in row) {
               if (cell == null) break;
+              if(rowCount == 2) break;
+              rowCount++;
               final value = cell.value;
               switch (value) {
                 case TextCellValue():
@@ -328,12 +335,11 @@ class CardServiceImpl extends CardService {
             }
           }
         }
-
         if (values.length < 4) return [];
         final dataStartIndex =
             values.indexWhere((e) => e.toLowerCase() == 'back') + 1;
         values = values.sublist(dataStartIndex);
-        print(values.toString());
+        print(values.last.toString());
         final cards = <(String, String)>[];
         for (int i = 0; i < values.length; i += 2) {
           cards.add((values[i], values[i + 1]));

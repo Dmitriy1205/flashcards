@@ -101,6 +101,7 @@ class _MobileForgotPasswordScreenState
                           child: AppTextField(
                             focusNode: _emailNode,
                             textController: _emailController,
+                            keyboardType: TextInputType.emailAddress,
                             hintText: AppLocalizations.of(context)!.enterEmail,
                             validator: !_validateEmail ? (_) => null : Validator(context).validateEmail,
                           ),

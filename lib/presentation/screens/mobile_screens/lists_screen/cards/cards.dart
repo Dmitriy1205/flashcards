@@ -11,11 +11,13 @@ import 'package:flashcards/presentation/blocs/cards/cards_bloc.dart';
 import 'package:flashcards/presentation/blocs/lists/lists_bloc.dart';
 import 'package:flashcards/presentation/screens/mobile_screens/lists_screen/cards/collection_pick.dart';
 import 'package:flashcards/presentation/widgets/loading_indicator.dart';
+import 'package:flashcards/presentation/widgets/platform_widgets.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flashcards/presentation/widgets/quill_text.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:go_router/go_router.dart';
+import '../../../../../core/const/images.dart';
 import '../../../../widgets/learn_dialog.dart';
 import 'create_edit_card.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
@@ -57,6 +59,8 @@ class _CardsState extends State<Cards> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        scrolledUnderElevation: 0,
+        backgroundColor: Colors.white,
         automaticallyImplyLeading: false,
         title: Column(children: [
           Row(
@@ -92,7 +96,7 @@ class _CardsState extends State<Cards> {
                   ]),
                 ),
               ),
-              context
+              (context.watch<CardsBloc>().state.cardsList?.isEmpty ?? false) ? const SizedBox.shrink() : context
                   .read<CardsBloc>()
                   .isEditMode
                   ? TextButton(
@@ -110,158 +114,127 @@ class _CardsState extends State<Cards> {
                   ),
                 ),
               )
-                  : Theme(
-                data: Theme.of(context).copyWith(
-                  splashColor: Colors.transparent, // <- Here
-                  highlightColor: Colors.transparent, // <- Here
-                  hoverColor: Colors.transparent, // <- Here
-                ),
-                child: DropdownButton<String>(
-                  isDense: true,
-                  padding: const EdgeInsets.only(
-                    right: 23,
-                  ),
-                  underline: const Text(''),
-                  borderRadius: const BorderRadius.only(
-                      bottomLeft: Radius.circular(7)),
-                  icon: SvgPicture.asset(
-                    AppIcons.menuIcon,
-                    height: 23,
-                    width: 23,
-                  ),
-                  items: [
-                    DropdownMenuItem<String>(
-                      value: 'false',
-                      child: InkWell(
-                        onTap: () {
-                          context.read<CardsBloc>().add(
-                              CardsEvent.shareCollection(
-                                  collectionId: widget.collectionId,
-                                  collectionName: widget.collectionName));
-                        },
-                        child: Row(
-                          children: [
-                            SvgPicture.asset(
-                              AppIcons.shareBlack,
-                              height: 23,
-                              width: 23,
-                            ),
-                            const SizedBox(width: 23),
-                            Text(
-                              AppLocalizations.of(context)!.share,
-                              style: AppTheme
-                                  .themeData.textTheme.labelMedium,
-                            ),
-                          ],
+                  : PlatformWidgets.contextMenu(
+                        child: Container(
+                          width: 60,
+                          height: 60,
+                          color: Colors.transparent,
+                          child: SvgPicture.asset(
+                            AppIcons.menuIcon,
+                            height: 23,
+                            width: 23,
+                          ),
                         ),
-                      ),
-                    ),
-                    DropdownMenuItem<String>(
-                      value: 'false',
-                      onTap: () {
-                        context
-                            .read<CardsBloc>()
-                            .isEditMode = true;
-                        setState(() {});
-                      },
-                      child: Row(
-                        children: [
-                          SvgPicture.asset(
-                            AppIcons.editBlack,
-                            height: 23,
-                            width: 23,
-                          ),
-                          const SizedBox(width: 23),
-                          Text(
-                            AppLocalizations.of(context)!.edit,
-                            style:
-                            AppTheme.themeData.textTheme.labelMedium,
-                          ),
+                        actions: [
+                          ContextMenuItem(child: Row(
+                            children: [
+                              SvgPicture.asset(
+                                AppIcons.shareBlack,
+                                height: 23,
+                                width: 23,
+                              ),
+                              const SizedBox(width: 23),
+                              Text(
+                                AppLocalizations.of(context)!.share,
+                                style: AppTheme
+                                    .themeData.textTheme.labelMedium,
+                              ),
+                            ],
+                          ), onTap: (){
+                            context.read<CardsBloc>().add(
+                                CardsEvent.shareCollection(
+                                    collectionId: widget.collectionId,
+                                    collectionName: widget.collectionName));
+                          }),
+                          ContextMenuItem(child: Row(
+                            children: [
+                              SvgPicture.asset(
+                                AppIcons.editBlack,
+                                height: 23,
+                                width: 23,
+                              ),
+                              const SizedBox(width: 23),
+                              Text(
+                                AppLocalizations.of(context)!.edit,
+                                style:
+                                AppTheme.themeData.textTheme.labelMedium,
+                              ),
+                            ],
+                          ), onTap: (){
+                            context
+                                .read<CardsBloc>()
+                                .isEditMode = true;
+                            context.read<CardsBloc>().cardsListToDelete.clear();
+                            setState(() {});
+                          }),
+                          ContextMenuItem(child: Row(
+                            children: [
+                              SvgPicture.asset(
+                                AppIcons.fileImport,
+                                height: 23,
+                                width: 23,
+                              ),
+                              const SizedBox(width: 23),
+                              Text(
+                                'File Import',
+                                style:
+                                AppTheme.themeData.textTheme.labelMedium,
+                              ),
+                            ],
+                          ), onTap: () async {
+                            final file = await FilePicker.platform.pickFiles(
+                                allowedExtensions: ["xlsx", "csv"],
+                                type: FileType.custom);
+                            if (!mounted) return;
+                            if (file == null) return;
+                            context.read<CardsBloc>().add(
+                                CardsEvent.importExcel(
+                                    path: file.paths.first!,
+                                    collectionId: widget.collectionId,
+                                    collectionName: widget.collectionName));
+                          },),
+                          ContextMenuItem(child: Row(
+                            children: [
+                              SvgPicture.asset(
+                                AppIcons.filePdf,
+                                height: 23,
+                                width: 23,
+                              ),
+                              const SizedBox(width: 23),
+                              Text(
+                                AppLocalizations.of(context)!.filePdf,
+                                style:
+                                AppTheme.themeData.textTheme.labelMedium,
+                              ),
+                            ],
+                          ), onTap: () {
+                            context.push("/attach_pdf", extra: {
+                              "collectionId": widget.collectionId,
+                              "collectionName": widget.collectionName
+                            });
+                          }),
+                          ContextMenuItem(child: Row(
+                            children: [
+                              SvgPicture.asset(
+                                AppIcons.learnNow,
+                                color: Colors.black,
+                                height: 23,
+                                width: 23,
+                              ),
+                              const SizedBox(width: 23),
+                              Text(
+                                AppLocalizations.of(context)!.learnNow,
+                                style:
+                                AppTheme.themeData.textTheme.labelMedium,
+                              ),
+                            ],
+                          ), onTap: (){
+                            showBottomMenu(
+                                context: context,
+                                selectedCollectionId: widget.collectionId);
+                          }),
                         ],
-                      ),
-                    ),
-                    DropdownMenuItem<String>(
-                      onTap: () async {
-                        final file = await FilePicker.platform.pickFiles(
-                            allowedExtensions: ["xlsx", "csv"],
-                            type: FileType.custom);
-                        if (!mounted) return;
-                        if (file == null) return;
-                        context.read<CardsBloc>().add(
-                            CardsEvent.importExcel(
-                                path: file.paths.first!,
-                                collectionId: widget.collectionId,
-                                collectionName: widget.collectionName));
-                      },
-                      value: 'false',
-                      child: Row(
-                        children: [
-                          SvgPicture.asset(
-                            AppIcons.fileImport,
-                            height: 23,
-                            width: 23,
-                          ),
-                          const SizedBox(width: 23),
-                          Text(
-                            'File Import',
-                            style:
-                            AppTheme.themeData.textTheme.labelMedium,
-                          ),
-                        ],
-                      ),
-                    ),
-                    DropdownMenuItem<String>(
-                      value: 'false',
-                      onTap: () {
-                        context.push("/attach_pdf", extra: {
-                          "collectionId": widget.collectionId,
-                          "collectionName": widget.collectionName
-                        });
-                      },
-                      child: Row(
-                        children: [
-                          SvgPicture.asset(
-                            AppIcons.filePdf,
-                            height: 23,
-                            width: 23,
-                          ),
-                          const SizedBox(width: 23),
-                          Text(
-                            AppLocalizations.of(context)!.filePdf,
-                            style:
-                            AppTheme.themeData.textTheme.labelMedium,
-                          ),
-                        ],
-                      ),
-                    ),
-                    DropdownMenuItem<String>(
-                      value: 'false',
-                      onTap: () {
-                        showBottomMenu(
-                            context: context,
-                            selectedCollectionId: widget.collectionId);
-                      },
-                      child: Row(
-                        children: [
-                          SvgPicture.asset(
-                            AppIcons.learnNow,
-                            color: Colors.black,
-                            height: 23,
-                            width: 23,
-                          ),
-                          const SizedBox(width: 23),
-                          Text(
-                            AppLocalizations.of(context)!.learnNow,
-                            style:
-                            AppTheme.themeData.textTheme.labelMedium,
-                          ),
-                        ],
-                      ),
-                    ),
-                  ],
-                  onChanged: (_) {},
-                ),
-              )
+                      )
             ],
           ),
         ]),
@@ -283,7 +256,41 @@ class _CardsState extends State<Cards> {
                     color: AppColors.background,
                     child: const LoadingIndicator());
               }, loaded: (data) {
-                return Column(
+                if(data.cardsList == null) return const SizedBox.shrink();
+                return (data.cardsList!.isEmpty ?? false) ? Container(
+                  color: AppColors.background,
+                  child: GestureDetector(
+                    onTap: (){
+                      Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) =>
+                                  CreateEditCard(collectionId: widget.collectionId)));
+                    },
+                    child: Center(
+                      child: Container(
+                        margin: const EdgeInsets.symmetric(horizontal: 24),
+                        width: double.infinity,
+                        decoration: BoxDecoration(
+                            color: Colors.white,
+                            borderRadius: BorderRadius.circular(16)
+                        ),
+                        height: 429,
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.center,
+                          mainAxisAlignment: MainAxisAlignment.spaceAround,
+                          children: [
+                            Text(AppLocalizations.of(context)!.noCollections, style: const TextStyle(fontSize: 22, fontWeight: FontWeight.bold, color: Color(0xFF474747)),),
+                            SizedBox(
+                                height: 256,
+                                child: Image.asset(AppImages.flashcardsEmpty)),
+                            Text(AppLocalizations.of(context)!.plusCreateNew, style: const TextStyle(fontSize: 18, fontWeight: FontWeight.bold, color: AppColors.mainAccent),),
+                          ],
+                        ),
+                      ),
+                    ),
+                  ),
+                ) : Column(
                   children: [
                     Container(
                       color: AppColors.background,
@@ -406,13 +413,17 @@ class _CardsState extends State<Cards> {
                                             );
                                           },
                                           child: ListTile(
-                                            title: QuillText(
+                                            title: card.front.first.values.first.trim() == "" ? const Align(
+                                                alignment: Alignment.centerLeft,
+                                                child: Icon(Icons.panorama)) : QuillText(
                                               content: card.front,
                                               style: const TextStyle(
                                                   fontWeight: FontWeight.w600,
                                                   color: AppColors.mainAccent),
                                             ),
-                                            subtitle: QuillText(
+                                            subtitle: card.back.first.values.first.trim() == "" ? const Align(
+                                                alignment: Alignment.centerLeft,
+                                                child: Icon(Icons.panorama)) : QuillText(
                                               content: card.back,
                                               style: const TextStyle(
                                                   fontWeight: FontWeight.w400,
@@ -563,7 +574,7 @@ class _FloatingActionButtons extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Positioned(
-      bottom: 30,
+      bottom: 16,
       right: 28,
       child: context
           .watch<CardsBloc>()
@@ -596,13 +607,13 @@ class _FloatingActionButtons extends StatelessWidget {
     return Opacity(
       opacity: active ? 1 : 0.5,
       child: SizedBox(
-        width: 76,
-        height: 76,
+        width: 64,
+        height: 64,
         child: Stack(
           children: [
             SizedBox(
-              height: 76,
-              width: 76,
+              height: 64,
+              width: 64,
               child: SvgPicture.asset(
                 assetPath,
                 height: 18,
@@ -616,7 +627,7 @@ class _FloatingActionButtons extends StatelessWidget {
                   borderRadius: BorderRadius.circular(32),
                   onTap: !active ? () {} : onTap,
                   child: Container(
-                      width: 76, height: 76, color: Colors.transparent)),
+                      width: 64, height: 64, color: Colors.transparent)),
             ),
           ],
         ),

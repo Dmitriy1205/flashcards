@@ -13,13 +13,13 @@ class ListsState with _$ListsState {
   bool? get isEditMode => maybeMap(
       viewCollections: (state) => state.isEditMode,
       orElse: () {
-        return null;
+        return false;
       });
 
   List<String>? get listToDelete => maybeMap(
       viewCollections: (state) => state.listToDelete,
       orElse: () {
-        return null;
+        return [];
       });
 
   const factory ListsState.initial() = _Initial;

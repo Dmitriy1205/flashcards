@@ -75,5 +75,8 @@
   "enter_password": "Geben Sie Ihr Passwort ein",
   "password_length_greater_than_8": "Die Länge des Passworts muss mindestens 8 Zeichen betragen",
   "at_least_one_uppercase": "Mindestens ein Großbuchstabe",
-  "at_least_one_digit": "Mindestens eine Ziffer"
+  "at_least_one_digit": "Mindestens eine Ziffer",
+  "noCollections": "Noch keine Sammlungen",
+  "emptyCollection": "Die Sammlung ist leer",
+  "plusCreateNew": "+ Neue erstellen"
 }

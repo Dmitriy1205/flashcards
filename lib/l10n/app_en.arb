@@ -75,5 +75,8 @@
   "enter_password": "Enter your password",
   "password_length_greater_than_8": "Password length must be at least 8 characters",
   "at_least_one_uppercase": "At least one uppercase letter",
-  "at_least_one_digit": "At least one digit"
+  "at_least_one_digit": "At least one digit",
+  "noCollections": "No collections yet",
+  "emptyCollection": "Collection is Empty",
+  "plusCreateNew": "+ Create new"
 }

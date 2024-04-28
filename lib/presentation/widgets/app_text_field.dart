@@ -15,6 +15,8 @@ class AppTextField extends StatelessWidget {
     this.width,
     this.height,
     this.maxLines,
+    this.autofillHints,
+    this.keyboardType,
     // this.onChange,
     this.hintText, this.suffixIcon, this.obscureText,
   }) : super(key: key);
@@ -31,6 +33,8 @@ class AppTextField extends StatelessWidget {
   final String? hintText;
   final Widget? suffixIcon;
   final bool? obscureText;
+  final List<String>? autofillHints;
+  final TextInputType? keyboardType;
 
   @override
   Widget build(BuildContext context) {
@@ -38,6 +42,8 @@ class AppTextField extends StatelessWidget {
       width: width,
       height: height,
       child: TextFormField(
+        keyboardType: keyboardType,
+        autofillHints: autofillHints,
         obscuringCharacter: '*',
         autovalidateMode:AutovalidateMode.onUserInteraction,
         validator: validator,

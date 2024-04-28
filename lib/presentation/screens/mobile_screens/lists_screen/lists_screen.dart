@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:flashcards/core/const/strings.dart';
 import 'package:flashcards/core/router/router.dart';
 import 'package:flashcards/core/themes/theme.dart';
@@ -51,6 +53,7 @@ class _ListsState extends State<Lists> {
       builder: (context, state) {
         return Container(
           child: state.maybeMap(
+            initial: (_) => const Center(child: CircularProgressIndicator()),
             loading: (_) => const Center(child: CircularProgressIndicator()),
             error: (e) => Center(
                 child: Text(

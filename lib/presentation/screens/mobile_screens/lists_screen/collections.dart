@@ -1,16 +1,19 @@
 import 'package:dialog_alert/dialog_alert.dart';
 import 'package:flashcards/core/const/colors.dart';
 import 'package:flashcards/core/const/icons.dart';
+import 'package:flashcards/core/const/images.dart';
 import 'package:flashcards/core/const/strings.dart';
 import 'package:flashcards/core/themes/theme.dart';
 import 'package:flashcards/core/utils/confirm_dialog.dart';
 import 'package:flashcards/domain/entities/collection_entity/collection_entity.dart';
 import 'package:flashcards/presentation/blocs/lists/lists_bloc.dart';
-import 'package:flashcards/presentation/widgets/create_edit_collection.dart';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+
+import '../../../widgets/create_edit_collection.dart';
 
 class Collections extends StatelessWidget {
   const Collections(
@@ -24,7 +27,33 @@ class Collections extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       color: AppColors.background,
-      child: ListView.builder(
+      child: collectionsList!.isEmpty ? GestureDetector(
+        onTap: (){
+          CreateEditCollectionDialog().dialog(context);
+        },
+        child: Center(
+          child: Container(
+            margin: const EdgeInsets.symmetric(horizontal: 24),
+            width: double.infinity,
+            decoration: BoxDecoration(
+              color: Colors.white,
+              borderRadius: BorderRadius.circular(16)
+            ),
+            height: 429,
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.center,
+              mainAxisAlignment: MainAxisAlignment.spaceAround,
+              children: [
+                Text(AppLocalizations.of(context)!.noCollections, style: TextStyle(fontSize: 22, fontWeight: FontWeight.bold, color: Color(0xFF474747)),),
+                SizedBox(
+                    height: 256,
+                    child: Image.asset(AppImages.collectionEmpty)),
+                Text(AppLocalizations.of(context)!.plusCreateNew, style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold, color: AppColors.mainAccent),),
+              ],
+            ),
+          ),
+        ),
+      ) : ListView.builder(
           physics: const BouncingScrollPhysics(),
           itemBuilder: (context, i) {
             return Padding(

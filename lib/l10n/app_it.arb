@@ -75,5 +75,8 @@
   "enter_password": "Inserisci la tua password",
   "password_length_greater_than_8": "La lunghezza della password deve contenere almeno 8 caratteri",
   "at_least_one_uppercase": "Almeno una lettera maiuscola",
-  "at_least_one_digit": "Almeno una cifra"
+  "at_least_one_digit": "Almeno una cifra",
+  "noCollections": "Nessuna raccolta ancora",
+  "emptyCollection": "La raccolta è vuota",
+  "plusCreateNew": "+ Crea nuova"
 }

@@ -36,10 +36,12 @@ class _LearnCardsState extends State<LearnCards> {
   final SwipeableCardSectionController _cardController =
       SwipeableCardSectionController();
   int _index = 1;
-  int learnNew = 0;
-  int unknowNew = 0;
-  int known = 0;
+  Map<CardEntity, bool> results = {};
   int learning = 0;
+  int known = 0;
+
+  int get learnedCount => results.values.where((learned) => learned).length;
+  int get notLearnedCount => results.values.where((learned) => !learned).length;
 
   @override
   void initState() {
@@ -124,8 +126,8 @@ class _LearnCardsState extends State<LearnCards> {
                   '/finish_learn_screen',
                   extra: {
                     "collectionId": widget.collectionId,
-                    "known": learnNew,
-                    "learning": unknowNew
+                    "known": learnedCount,
+                    "learning": widget.cards.length
                   },
                 );
               });
@@ -146,10 +148,19 @@ class _LearnCardsState extends State<LearnCards> {
                   child: Row(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
-                        SvgPicture.asset(
-                          AppIcons.leftArrow,
-                          height: 21,
-                          width: 19,
+                        GestureDetector(
+                          onTap: (){
+                            _cardController.goBack();
+                            if(_index <= 1) return;
+                            setState(() {
+                              _index--;
+                            });
+                          },
+                          child: SvgPicture.asset(
+                            AppIcons.leftArrow,
+                            height: 21,
+                            width: 19,
+                          ),
                         ),
                         Padding(
                           padding: const EdgeInsets.symmetric(horizontal: 35),
@@ -162,10 +173,18 @@ class _LearnCardsState extends State<LearnCards> {
                             ),
                           ),
                         ),
-                        SvgPicture.asset(
-                          AppIcons.rightArrow,
-                          height: 21,
-                          width: 19,
+                        GestureDetector(
+                          onTap: (){
+                            _cardController.goForward();
+                            setState(() {
+                              _index++;
+                            });
+                          },
+                          child: SvgPicture.asset(
+                            AppIcons.rightArrow,
+                            height: 21,
+                            width: 19,
+                          ),
                         ),
                       ]),
                 ),
@@ -182,7 +201,7 @@ class _LearnCardsState extends State<LearnCards> {
                               border:
                                   Border.all(color: AppColors.red, width: 2)),
                           child: Center(
-                              child: Text(unknowNew.toString(),
+                              child: Text(notLearnedCount.toString(),
                                   style: AppTheme
                                       .themeData.textTheme.labelMedium!
                                       .copyWith(
@@ -197,7 +216,7 @@ class _LearnCardsState extends State<LearnCards> {
                               border:
                                   Border.all(color: AppColors.green, width: 2)),
                           child: Center(
-                              child: Text(learnNew.toString(),
+                              child: Text(learnedCount.toString(),
                                   style: AppTheme
                                       .themeData.textTheme.labelMedium!
                                       .copyWith(
@@ -224,7 +243,7 @@ class _LearnCardsState extends State<LearnCards> {
                                             .copyWith(isLearned: false)));
                                 setState(() {
                                   _index += 1;
-                                  unknowNew += 1;
+                                  results[widget.cards[index]] = false;
                                 });
 
                                 break;
@@ -235,7 +254,7 @@ class _LearnCardsState extends State<LearnCards> {
                                             .copyWith(isLearned: true)));
                                 setState(() {
                                   _index += 1;
-                                  learnNew += 1;
+                                  results[widget.cards[index]] = true;
                                 });
                                 break;
                             }

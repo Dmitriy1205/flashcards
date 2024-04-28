@@ -75,5 +75,8 @@
   "enter_password": "Entrez votre mot de passe",
   "password_length_greater_than_8": "La longueur du mot de passe doit être d'au moins 8 caractères",
   "at_least_one_uppercase": "Au moins une lettre majuscule",
-  "at_least_one_digit": "Au moins un chiffre"
+  "at_least_one_digit": "Au moins un chiffre",
+  "noCollections": "Aucune collection pour le moment",
+  "emptyCollection": "La collection est vide",
+  "plusCreateNew": "+ Créer une nouvelle"
 }

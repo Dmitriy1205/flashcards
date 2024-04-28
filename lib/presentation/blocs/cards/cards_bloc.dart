@@ -159,7 +159,7 @@ class CardsBloc extends Bloc<CardsEvent, CardsState> {
 
   Future<void> _emptyCardsList(
       _EmptyCardsList event, Emitter<CardsState> emit) async {
-    emit(const CardsState.loaded(cardsList: []));
+    emit(const CardsState.loaded(cardsList: null));
   }
 
   Future<void> _swipeCard(_SwipeCard event, Emitter<CardsState> emit) async {

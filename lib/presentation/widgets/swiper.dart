@@ -97,6 +97,14 @@ class _CardsSectionState extends State<SwipeableCardsSection>
     });
   }
 
+  void _changeIndex(Direction dir){
+    if(dir == Direction.left){
+      goToPreviousCard();
+    }else if(dir == Direction.right){
+      goToNextCard();
+    }
+  }
+
   @override
   void initState() {
     super.initState();
@@ -106,6 +114,7 @@ class _CardsSectionState extends State<SwipeableCardsSection>
       cardController.listener = _triggerSwipe;
       // cardController.addItem = _appendItem;
       cardController.enableSwipeListener = _enableSwipe;
+      cardController.changeIndexListener = _changeIndex;
     }
 
     // Init cards
@@ -247,6 +256,23 @@ class _CardsSectionState extends State<SwipeableCardsSection>
     }
   }
 
+  void goToPreviousCard(){
+    print("index before is: $index");
+    if(index <= 0) return;
+    index--;
+    print("index after is: $index");
+    print("item to add: ${widget.items[index].toString()}");
+    cards = [widget.items[index], ...cards];
+    setState(() {});
+  }
+
+  void goToNextCard(){
+    if(index > widget.items.length - 1) return;
+    index++;
+    cards = [widget.items[index], ...cards];
+    setState(() {});
+  }
+
   void changeCardsOrder() {
     cards.removeAt(0);
     setState(() {
@@ -348,11 +374,13 @@ class CardsAnimation {
 typedef TriggerListener = void Function(Direction dir);
 typedef AppendItem = void Function(Widget item);
 typedef EnableSwipe = void Function(bool dir);
+typedef ChangeIndex = void Function(Direction dir);
 
 class SwipeableCardSectionController {
   late TriggerListener listener;
   late AppendItem addItem;
   late EnableSwipe enableSwipeListener;
+  late ChangeIndex changeIndexListener;
 
   void triggerSwipeLeft() {
     return listener.call(Direction.left);
@@ -360,6 +388,14 @@ class SwipeableCardSectionController {
 
   void triggerSwipeRight() {
     return listener.call(Direction.right);
+  }
+
+  void goForward(){
+    return changeIndexListener.call(Direction.right);
+  }
+
+  void goBack(){
+    return changeIndexListener.call(Direction.left);
   }
 
   void appendItem(Widget item) {

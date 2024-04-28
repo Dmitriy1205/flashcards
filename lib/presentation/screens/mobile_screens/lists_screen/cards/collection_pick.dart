@@ -30,6 +30,8 @@ class CollectionPick extends StatelessWidget {
       builder: (context,state) => Scaffold(
           backgroundColor: AppColors.background,
           appBar: AppBar(
+            scrolledUnderElevation: 0,
+            backgroundColor: Colors.white,
             automaticallyImplyLeading: false,
             title: Column(
               children: [

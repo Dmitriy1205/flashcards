@@ -11,8 +11,7 @@ part 'lists_bloc.freezed.dart';
 
 class ListsBloc extends Bloc<ListsEvent, ListsState> {
   ListsBloc({required this.collectionRepo})
-      : super(const ListsState.viewCollections(
-            collectionsList: [], isEditMode: false, listToDelete: [])) {
+      : super(const ListsState.initial()) {
     on<ListsEvent>(_mapEventToState);
 
     collectionRepo
