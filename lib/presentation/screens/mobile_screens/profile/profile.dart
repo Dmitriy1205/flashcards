@@ -98,7 +98,7 @@ class Profile extends StatelessWidget {
             ),
           ),
           const SizedBox(
-            height: 38,
+            height: 16,
           ),
           Padding(
             padding: const EdgeInsets.only(left: 27, right: 14),

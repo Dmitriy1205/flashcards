@@ -13,8 +13,8 @@ import '../../../domain/entities/card_entity/card_entity.dart';
 class CollectionServiceImpl extends CollectionServiceContract {
   CollectionServiceImpl(
       {required FirebaseFirestore fireStore,
-        required FirebaseStorage firebaseStorage,
-        required FirebaseAuth firebaseAuth})
+      required FirebaseStorage firebaseStorage,
+      required FirebaseAuth firebaseAuth})
       : _firebaseStorage = firebaseStorage,
         _fireStore = fireStore,
         _firebaseAuth = firebaseAuth;
@@ -25,7 +25,7 @@ class CollectionServiceImpl extends CollectionServiceContract {
 
   @override
   Future<void> createCollection({required String collectionName}) async {
-    try{
+    try {
       final doc = _fireStore
           .collection(FirestoreCollections.users)
           .doc(_firebaseAuth.currentUser!.uid)
@@ -36,9 +36,8 @@ class CollectionServiceImpl extends CollectionServiceContract {
         "id": doc.id,
         "createdAt": FieldValue.serverTimestamp()
       });
-    }  on FirebaseException catch(e){
+    } on FirebaseException catch (e) {
       throw Exception("Exception createCollection $e");
-
     }
   }
 
@@ -54,7 +53,7 @@ class CollectionServiceImpl extends CollectionServiceContract {
       await collections
           .doc(collectionId)
           .update({'collectionName': collectionName});
-    }  on FirebaseException catch (e) {
+    } on FirebaseException catch (e) {
       throw Exception("Exception deleteCollections $e");
     }
   }
@@ -68,11 +67,17 @@ class CollectionServiceImpl extends CollectionServiceContract {
           .doc(_firebaseAuth.currentUser!.uid)
           .collection(FirestoreCollections.collections);
       for (int i = 0; i < collectionsListToDelete.length; i++) {
-        final cardsRefs = await collections.doc(collectionsListToDelete[i]).collection("cards").get();
+        final cardsRefs = await collections
+            .doc(collectionsListToDelete[i])
+            .collection("cards")
+            .get();
         final batch = _fireStore.batch();
         batch.delete(collections.doc(collectionsListToDelete[i]));
-        for(var cardRef in cardsRefs.docs){
-          batch.delete(collections.doc(collectionsListToDelete[i]).collection("cards").doc(cardRef.id));
+        for (var cardRef in cardsRefs.docs) {
+          batch.delete(collections
+              .doc(collectionsListToDelete[i])
+              .collection("cards")
+              .doc(cardRef.id));
         }
         await batch.commit();
       }
@@ -86,22 +91,12 @@ class CollectionServiceImpl extends CollectionServiceContract {
     try {
       final collectionDocs = await _fireStore
           .collection(
-          "${FirestoreCollections.users}/${_firebaseAuth.currentUser!.uid}/${FirestoreCollections.collections}")
+              "${FirestoreCollections.users}/${_firebaseAuth.currentUser!.uid}/${FirestoreCollections.collections}")
           .get();
 
-      List<CollectionEntity> collectionList =
-      await Future.wait(collectionDocs.docs.map((collectionDoc) async {
-        final collectionData = collectionDoc.data();
-        var collectionEntity = CollectionEntity.fromJson(collectionData);
-
-        final cardsSnapshot =
-        await collectionDoc.reference.collection('cards').get();
-        final cardList = cardsSnapshot.docs
-            .map((card) => CardEntity.fromJson(card.data()))
-            .toList();
-
-        return collectionEntity.copyWith(cards: cardList);
-      }));
+      List<CollectionEntity> collectionList = collectionDocs.docs
+          .map((e) => CollectionEntity.fromJson(e.data()))
+          .toList();
 
       collectionList.sort((a, b) => b.createdAt!.compareTo(a.createdAt!));
       return collectionList;

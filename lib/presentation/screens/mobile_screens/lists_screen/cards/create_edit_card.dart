@@ -237,8 +237,6 @@ class CreateEditCardState extends State<CreateEditCard> {
           listener: (context, state) {
             state.maybeMap(
                 loaded: (state) {
-                  AppToast.showSuccess(
-                      context, AppLocalizations.of(context)!.success);
                   if (widget.cardEntity != null) {
                     router.pushReplacement(
                       '/view_card_mobile',

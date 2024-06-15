@@ -5,14 +5,13 @@ import 'package:flashcards/presentation/blocs/lists/lists_bloc.dart';
 import 'package:flashcards/presentation/screens/mobile_screens/lists_screen/learning_mode/learn.dart';
 import 'package:flashcards/presentation/screens/mobile_screens/profile/profile.dart';
 import 'package:flashcards/presentation/widgets/navigationBar.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'lists_screen/lists_screen.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class HomeMobile extends StatefulWidget {
-  const HomeMobile({Key? key}) : super(key: key);
-
   @override
   State<HomeMobile> createState() => _HomeMobileState();
 }

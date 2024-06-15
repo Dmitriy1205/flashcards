@@ -152,7 +152,7 @@ class _WebCollectionsState extends State<WebCollections> {
                                       fontWeight: FontWeight.w600),
                             ),
                             subtitle: Text(
-                              '${context.read<WebListBloc>().state.collectionsList![i].cards?.length ?? 0} ${AppLocalizations.of(context)!.cards.toLowerCase()}',
+                              '${context.read<WebListBloc>().state.collectionsList![i].cardsCount} ${AppLocalizations.of(context)!.cards.toLowerCase()}',
                               style: AppTheme.themeData.textTheme.labelSmall!
                                   .copyWith(color: Colors.black, fontSize: 14),
                             ),

@@ -14,6 +14,8 @@ import 'package:flashcards/domain/params/card_param/create_card_param.dart';
 import 'package:flashcards/domain/params/card_param/edit_card_param.dart';
 import 'package:share_plus/share_plus.dart';
 
+const int _cardsCollectionMaxCount = 1000;
+
 class CardServiceImpl extends CardService {
   CardServiceImpl(
       {required FirebaseFirestore fireStore,
@@ -35,6 +37,7 @@ class CardServiceImpl extends CardService {
           .collection(FirestoreCollections.collections)
           .doc(cardParam.collectionId);
 
+      await _throwExceptionIfMaxCardCountExceeded(collections, 1);
       final cards = collections.collection(FirestoreCollections.cards).doc();
       await collections.get().then((snapshot) {
         collectionName = snapshot.data()!['collectionName'].toString();
@@ -64,6 +67,8 @@ class CardServiceImpl extends CardService {
       }
 
       await batch.commit();
+    } on LocalizedException catch (_) {
+      rethrow;
     } on FirebaseException catch (e) {
       throw Exception("Exception createCard $e");
     }
@@ -142,10 +147,12 @@ class CardServiceImpl extends CardService {
   @override
   Future<void> shareCollection(
       {required String collectionId, required String collectionName}) async {
+    final primaryCollectionName = collectionName;
     collectionName = collectionName.replaceAll(' ', '%20');
     final result = await Share.shareWithResult(
-        'https://flashcards-5984c.web.app/collection_share?sender=${_firebaseAuth.currentUser!.uid}&collectionId=$collectionId&collectionName=$collectionName',
-        subject: 'Look what I made!');
+        'http://flashcards-5984c.web.app/collection_share?sender=${_firebaseAuth.currentUser!.uid}&collectionId=$collectionId&collectionName=$collectionName',
+        subject:
+            'Download my collection "$primaryCollectionName" via this link');
 
     if (result.status == ShareResultStatus.success) {
       try {
@@ -274,8 +281,17 @@ class CardServiceImpl extends CardService {
       required String collectionId,
       required String collectionName}) async {
     try {
+      final collections = _fireStore
+          .collection(FirestoreCollections.users)
+          .doc(_firebaseAuth.currentUser!.uid)
+          .collection(FirestoreCollections.collections)
+          .doc(collectionId);
       final file = File(path);
       final cards = splitContent(file);
+
+      await _throwExceptionIfMaxCardCountExceeded(collections, cards.length);
+
+      final batch = _fireStore.batch();
       for (int i = 0; i < cards.length; i++) {
         final doc = _fireStore
             .collection(FirestoreCollections.users)
@@ -284,7 +300,7 @@ class CardServiceImpl extends CardService {
             .doc(collectionId)
             .collection(FirestoreCollections.cards)
             .doc();
-        await doc.set({
+        batch.set(doc, {
           "id": doc.id,
           "backImage": "",
           "frontImage": "",
@@ -299,6 +315,9 @@ class CardServiceImpl extends CardService {
           "createdAt": FieldValue.serverTimestamp()
         });
       }
+      await batch.commit();
+    } on LocalizedException catch (_) {
+      rethrow;
     } catch (e) {
       rethrow;
       throw const FormatException("Wrong data format");
@@ -316,7 +335,7 @@ class CardServiceImpl extends CardService {
             int rowCount = 0;
             for (var cell in row) {
               if (cell == null) break;
-              if(rowCount == 2) break;
+              if (rowCount == 2) break;
               rowCount++;
               final value = cell.value;
               switch (value) {
@@ -351,13 +370,15 @@ class CardServiceImpl extends CardService {
         int frontRowIndex = -1;
         for (int i = 0; i < lines.length; i++) {
           final parts = lines[i].split(",").toList();
-          if(frontRowIndex == -1 || backRowIndex == -1){
-            frontRowIndex = parts.indexWhere((element) => element.toLowerCase().contains("front"));
-            backRowIndex = parts.indexWhere((element) => element.toLowerCase().contains("back"));
-            if(frontRowIndex != -1 && backRowIndex != -1){
+          if (frontRowIndex == -1 || backRowIndex == -1) {
+            frontRowIndex = parts.indexWhere(
+                (element) => element.toLowerCase().contains("front"));
+            backRowIndex = parts.indexWhere(
+                (element) => element.toLowerCase().contains("back"));
+            if (frontRowIndex != -1 && backRowIndex != -1) {
               continue;
             }
-          }else{
+          } else {
             values.add(parts[frontRowIndex]);
             values.add(parts[backRowIndex]);
           }
@@ -382,14 +403,16 @@ class CardServiceImpl extends CardService {
       required String fromCollectionId,
       required String toCollectionId}) async {
     try {
+      final collections = _fireStore
+          .collection(FirestoreCollections.users)
+          .doc(_firebaseAuth.currentUser!.uid)
+          .collection(FirestoreCollections.collections)
+          .doc(toCollectionId);
+
+      await _throwExceptionIfMaxCardCountExceeded(collections, cards.length);
+
       var batch = _fireStore.batch();
-      final collectionName = (await _fireStore
-              .collection(FirestoreCollections.users)
-              .doc(_firebaseAuth.currentUser!.uid)
-              .collection(FirestoreCollections.collections)
-              .doc(toCollectionId)
-              .get())
-          .get("collectionName");
+      final collectionName = (await collections.get()).get("collectionName");
       final newCards = cards.map((e) {
         return e.copyWith(
             collectionId: toCollectionId, collectionName: collectionName);
@@ -432,6 +455,8 @@ class CardServiceImpl extends CardService {
         }
       }
       await batch.commit();
+    } on LocalizedException catch (_) {
+      rethrow;
     } catch (e) {
       throw LocalizedException(message: 'Failed to move collection');
     }
@@ -467,15 +492,15 @@ class CardServiceImpl extends CardService {
   Future<void> copyToCollection(
       {required List<CardEntity> cards, required String toCollectionId}) async {
     try {
-      var batch = _fireStore.batch();
+      final collections = _fireStore
+          .collection(FirestoreCollections.users)
+          .doc(_firebaseAuth.currentUser!.uid)
+          .collection(FirestoreCollections.collections)
+          .doc(toCollectionId);
+      await _throwExceptionIfMaxCardCountExceeded(collections, cards.length);
       final fromCollectionId = cards.first.collectionId;
-      final collectionName = (await _fireStore
-              .collection(FirestoreCollections.users)
-              .doc(_firebaseAuth.currentUser!.uid)
-              .collection(FirestoreCollections.collections)
-              .doc(toCollectionId)
-              .get())
-          .get("collectionName");
+      final collectionName = (await collections.get()).get("collectionName");
+      var batch = _fireStore.batch();
       final newCards = cards.map((e) {
         return e.copyWith(
             collectionId: toCollectionId, collectionName: collectionName);
@@ -505,8 +530,26 @@ class CardServiceImpl extends CardService {
         batch.set(cardRef, card.toJson());
       }
       await batch.commit();
+    } on LocalizedException catch (_) {
+      rethrow;
     } catch (e) {
       throw LocalizedException(message: 'Failed to copy collection');
+    }
+  }
+
+  Future<void> _throwExceptionIfMaxCardCountExceeded(
+      DocumentReference collectionRef, int cardsCountToAdd) async {
+    final currentCardsCount = (await collectionRef
+                .collection(FirestoreCollections.cards)
+                .count()
+                .get())
+            .count ??
+        0;
+    final exceeds =
+        cardsCountToAdd + currentCardsCount > _cardsCollectionMaxCount;
+    if (exceeds) {
+      throw LocalizedException(
+          message: 'Maximum 1000 cards in collection can exist');
     }
   }
 }

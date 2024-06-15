@@ -3,11 +3,11 @@
 <plist version="1.0">
 <dict>
 	<key>CLIENT_ID</key>
-	<string>393510478049-0a6ajnahhrp200orlg169r85dsfefdj2.apps.googleusercontent.com</string>
+	<string>393510478049-udk0mjekfcf02g335re1q4h7q4knhiiq.apps.googleusercontent.com</string>
 	<key>REVERSED_CLIENT_ID</key>
-	<string>com.googleusercontent.apps.393510478049-0a6ajnahhrp200orlg169r85dsfefdj2</string>
+	<string>com.googleusercontent.apps.393510478049-udk0mjekfcf02g335re1q4h7q4knhiiq</string>
 	<key>ANDROID_CLIENT_ID</key>
-	<string>393510478049-ketfkj1s0apvatgbm8q53tam1i4kvkmp.apps.googleusercontent.com</string>
+	<string>393510478049-d6rjdqsmoshd1p2pa6qvaprgnv6ht509.apps.googleusercontent.com</string>
 	<key>API_KEY</key>
 	<string>AIzaSyCtbW3idPjLre5rUI83Wji3y9g3vlpfpPM</string>
 	<key>GCM_SENDER_ID</key>
@@ -15,7 +15,7 @@
 	<key>PLIST_VERSION</key>
 	<string>1</string>
 	<key>BUNDLE_ID</key>
-	<string>com.pandascode.flashcards</string>
+	<string>com.pandascode.flashcards.ios</string>
 	<key>PROJECT_ID</key>
 	<string>flashcards-5984c</string>
 	<key>STORAGE_BUCKET</key>
@@ -31,6 +31,6 @@
 	<key>IS_SIGNIN_ENABLED</key>
 	<true></true>
 	<key>GOOGLE_APP_ID</key>
-	<string>1:393510478049:ios:6d25417cdda020621b57a0</string>
+	<string>1:393510478049:ios:9db5cc099ba854041b57a0</string>
 </dict>
 </plist>

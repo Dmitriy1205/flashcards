@@ -43,7 +43,7 @@ class AuthRepositoryImpl implements AuthRepository {
     final nonce = _sha256ofString(rawNonce);
     var redirectURL =
         "https://flashcards-5984c.firebaseapp.com/__/auth/handler";
-    var clientID = "com.pandascode.flashcard";
+    var clientID = "com.pandascode.flashcards";
 
     try {
       final appleCredential = await SignInWithApple.getAppleIDCredential(

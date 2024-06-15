@@ -1,4 +1,5 @@
 import 'package:bloc/bloc.dart';
+import 'package:flashcards/core/exceptions/exceptions.dart';
 import 'package:flashcards/domain/entities/card_entity/card_entity.dart';
 import 'package:flashcards/domain/params/card_param/create_card_param.dart';
 import 'package:flashcards/domain/params/card_param/edit_card_param.dart';
@@ -47,11 +48,15 @@ class CardsBloc extends Bloc<CardsEvent, CardsState> {
   Future<void> _importExcel(_ImportExcel event, Emitter<CardsState> emit) async{
     final prevState = state;
     try{
+      emit(const CardsState.loading());
       await cardRepo.importExcel(path: event.path, collectionName: event.collectionName, collectionId: event.collectionId);
       emit(const CardsState.successfullyImported());
       final cards = await cardRepo.fetchCards(collectionId: event.collectionId);
       emit(CardsState.loaded(cardsList: cards));
     }on FormatException catch(e){
+      emit(CardsState.error(error: e.message));
+      emit(prevState);
+    } on LocalizedException catch(e){
       emit(CardsState.error(error: e.message));
       emit(prevState);
     }
@@ -64,6 +69,9 @@ class CardsBloc extends Bloc<CardsEvent, CardsState> {
       emit(const CardsState.successfullyCopied());
       emit(prevState);
     }on FormatException catch(e){
+      emit(CardsState.error(error: e.message));
+      emit(prevState);
+    } on LocalizedException catch(e){
       emit(CardsState.error(error: e.message));
       emit(prevState);
     }
@@ -79,32 +87,40 @@ class CardsBloc extends Bloc<CardsEvent, CardsState> {
     }on FormatException catch(e){
       emit(CardsState.error(error: e.message));
       emit(prevState);
+    } on LocalizedException catch(e){
+      emit(CardsState.error(error: e.message));
+      emit(prevState);
     }
   }
 
   Future<void> _initCard(_InitCard event, Emitter<CardsState> emit) async {
+    final prevState = state;
     try {
       emit(const CardsState.loading());
       final cardsList =
           await cardRepo.fetchCards(collectionId: event.collectionId);
       emit(CardsState.loaded(cardsList: cardsList));
-    } catch (e) {
-      emit(CardsState.error(error: e.toString()));
+    } on LocalizedException catch (e) {
+      emit(CardsState.error(error: e.message));
+      emit(prevState);
     }
   }
 
   Future<void> _shareCard(_ShareCard event, Emitter<CardsState> emit) async {
+    final prevState = state;
     try {
       await cardRepo.shareCollection(
           collectionId: event.collectionId,
           collectionName: event.collectionName);
-    } catch (e) {
-      emit(CardsState.error(error: e.toString()));
+    } on LocalizedException catch (e) {
+      emit(CardsState.error(error: e.message));
+      emit(prevState);
     }
   }
 
   Future<void> _createSharedCards(
       _CreateSharedCards event, Emitter<CardsState> emit) async {
+    final prevState = state;
     try {
       emit(const CardsState.loading());
       await cardRepo.createSharedCards(
@@ -112,38 +128,44 @@ class CardsBloc extends Bloc<CardsEvent, CardsState> {
 
       add(_InitCard(collectionId: event.collectionId));
       // _initCard(_InitCard(collectionId: event.collectionId,), emit);
-    } catch (e) {
-      emit(CardsState.error(error: e.toString()));
+    } on LocalizedException catch (e) {
+      emit(CardsState.error(error: e.message));
+      emit(prevState);
     }
   }
 
   Future<void> _createNewCard(
       _CreateNewCard event, Emitter<CardsState> emit) async {
+    final prevState = state;
     try {
       emit(const CardsState.loading());
       await cardRepo.createCard(cardParam: event.cardParam);
       final cardsList =
           await cardRepo.fetchCards(collectionId: event.collectionId);
       emit(CardsState.loaded(cardsList: cardsList));
-    } catch (e) {
-      emit(CardsState.error(error: e.toString()));
+    } on LocalizedException catch (e) {
+      emit(CardsState.error(error: e.message));
+      emit(prevState);
     }
   }
 
   Future<void> _editCard(_EditCard event, Emitter<CardsState> emit) async {
+    final prevState = state;
     try {
       emit(const CardsState.loading());
       cardRepo.editCard(cardParam: event.cardParam);
       final cardsList =
           await cardRepo.fetchCards(collectionId: event.collectionId);
       emit(CardsState.loaded(cardsList: cardsList));
-    } catch (e) {
-      emit(CardsState.error(error: e.toString()));
+    } on LocalizedException catch (e) {
+      emit(CardsState.error(error: e.message));
+      emit(prevState);
     }
   }
 
   Future<void> _deleteSelectedCards(
       _DeleteSelectedCards event, Emitter<CardsState> emit) async {
+    final prevState = state;
     try {
       emit(const CardsState.loading());
       await cardRepo.deleteCards(
@@ -152,8 +174,9 @@ class CardsBloc extends Bloc<CardsEvent, CardsState> {
       final cardsList =
           await cardRepo.fetchCards(collectionId: event.collectionId);
       emit(CardsState.loaded(cardsList: cardsList));
-    } catch (e) {
-      emit(CardsState.error(error: e.toString()));
+    } on LocalizedException catch (e) {
+      emit(CardsState.error(error: e.message));
+      emit(prevState);
     }
   }
 

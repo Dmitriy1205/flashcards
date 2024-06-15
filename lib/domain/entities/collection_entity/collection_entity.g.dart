@@ -11,9 +11,7 @@ _$CollectionEntityImpl _$$CollectionEntityImplFromJson(
     _$CollectionEntityImpl(
       id: json['id'] as String,
       collectionName: json['collectionName'] as String,
-      cards: (json['cards'] as List<dynamic>?)
-          ?.map((e) => CardEntity.fromJson(e as Map<String, dynamic>))
-          .toList(),
+      cardsCount: json['cardsCount'] as int? ?? 0,
       createdAt: FirebaseTimestampConverters.fromTimestamp(json['createdAt']),
     );
 
@@ -22,6 +20,6 @@ Map<String, dynamic> _$$CollectionEntityImplToJson(
     <String, dynamic>{
       'id': instance.id,
       'collectionName': instance.collectionName,
-      'cards': instance.cards,
+      'cardsCount': instance.cardsCount,
       'createdAt': instance.createdAt?.toIso8601String(),
     };

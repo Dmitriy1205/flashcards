@@ -29,8 +29,8 @@ class _ListsState extends State<Lists> {
       },
       listener: (context, state) {
         state.maybeMap(
-          operationSucceeded: (_){
-            AppToast.showSuccess(context, AppLocalizations.of(context)!.success);
+          error: (e){
+            AppToast.showError(context, e.error);
           },
           viewCards: (selectedCollection) {
             router.push(

@@ -32,8 +32,8 @@ class _LearnState extends State<Learn> {
       },
       listener: (context, state) {
         state.maybeMap(
-          operationSucceeded: (_) {
-            AppToast.showSuccess(context, AppLocalizations.of(context)!.success);
+          error: (e){
+            AppToast.showError(context, e.error);
           },
           orElse: () {},
         );

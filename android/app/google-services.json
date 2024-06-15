@@ -7,12 +7,56 @@
   "client": [
     {
       "client_info": {
+        "mobilesdk_app_id": "1:393510478049:android:51a45ceb37e8d85e1b57a0",
+        "android_client_info": {
+          "package_name": "com.pandascode.flashcard"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "393510478049-11vac3lm77l0273eq00v7j7q0q6c0let.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBRsGx7f0VBBKXGnZfnX4oryeWFfoCt0Is"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "393510478049-11vac3lm77l0273eq00v7j7q0q6c0let.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "393510478049-0a6ajnahhrp200orlg169r85dsfefdj2.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.pandascode.flashcards"
+              }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
         "mobilesdk_app_id": "1:393510478049:android:020ecddb810fc5e01b57a0",
         "android_client_info": {
           "package_name": "com.pandascode.flashcards"
         }
       },
       "oauth_client": [
+        {
+          "client_id": "393510478049-d6rjdqsmoshd1p2pa6qvaprgnv6ht509.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.pandascode.flashcards",
+            "certificate_hash": "61ddd8f02f173ff1107989c35706af1a2cef1e71"
+          }
+        },
         {
           "client_id": "393510478049-ketfkj1s0apvatgbm8q53tam1i4kvkmp.apps.googleusercontent.com",
           "client_type": 1,

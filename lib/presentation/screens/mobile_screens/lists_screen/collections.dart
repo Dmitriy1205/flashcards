@@ -133,7 +133,7 @@ class Collections extends StatelessWidget {
                             .copyWith(fontSize: 18),
                       ),
                       subtitle: Text(
-                        '${collectionsList[i].cards?.length ?? 0} ${AppLocalizations.of(context)!.cards.toLowerCase()}',
+                        '${collectionsList[i].cardsCount ?? 0} ${AppLocalizations.of(context)!.cards.toLowerCase()}',
                         style:
                             AppTheme.themeData.textTheme.labelSmall!.copyWith(
                           color: Colors.black,

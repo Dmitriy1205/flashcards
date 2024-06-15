@@ -78,28 +78,38 @@ final GoRouter router = GoRouter(
         : GoRoute(
             path: '/',
             pageBuilder: (c, s) =>
-                const MaterialPage(child: MobileSignInScreen()),
+                const MaterialPage(child: Scaffold(body: Center(child: CircularProgressIndicator(),))),
             redirect: (contest, state) {
               final st = _bloc.state;
               return st.maybeMap(
                   authenticated: (_) => '/mobile_home',
-                  unauthenticated: (_) => '/',
-                  userNotVerified: (_) => '/',
+                  unauthenticated: (_) => '/sign_in',
                   orElse: () => null);
             },
           ),
+    GoRoute(
+      path: '/sign_in',
+      pageBuilder: (c, s) =>
+      const MaterialPage(child: MobileSignInScreen()),
+      redirect: (contest, state) {
+        final st = _bloc.state;
+        return st.maybeMap(
+            authenticated: (_) => '/mobile_home',
+            orElse: () => null);
+      },
+    ),
     GoRoute(
         path: '/mobile_home',
         pageBuilder: (context, state) => fadeAnimation<void>(
               context: context,
               state: state,
-              child: const HomeMobile(),
+              child: HomeMobile(),
             ),
         redirect: (contest, state) {
           final st = _bloc.state;
           return st.maybeMap(
               authenticated: (_) => '/mobile_home',
-              unauthenticated: (_) => '/',
+              unauthenticated: (_) => '/sign_in',
               orElse: () => null);
         }),
     ShellRoute(
